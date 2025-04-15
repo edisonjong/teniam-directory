@@ -97,7 +97,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                         {link.title}
                       </Link>
                     </li>
-                  ),
+                  )
               )}
             </ul>
           </div>

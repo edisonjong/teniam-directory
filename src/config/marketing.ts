@@ -13,6 +13,11 @@ export const marketingConfig: MarketingConfig = {
       icon: "home",
     },
     {
+      title: "Home4",
+      href: "/home4",
+      icon: "home",
+    },
+    {
       title: "Search",
       href: "/search",
       icon: "search",

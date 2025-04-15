@@ -65,7 +65,7 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
       <header
         className={cn(
           "hidden md:flex justify-center bg-background/60 backdrop-blur-xl transition-all",
-          scroll ? (scrolled ? "border-b" : "bg-transparent") : "border-b",
+          scroll ? (scrolled ? "border-b" : "bg-transparent") : "border-b"
         )}
       >
         <Container className="flex h-16 items-center justify-between">
@@ -93,7 +93,7 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
                           isLinkActive(item.href)
                             ? "text-foreground font-semibold"
                             : "text-foreground/60",
-                          item.disabled && "cursor-not-allowed opacity-80",
+                          item.disabled && "cursor-not-allowed opacity-80"
                         )}
                       >
                         {item.title}
@@ -175,7 +175,7 @@ export function Navbar({ scroll = false, config }: NavBarProps) {
                               ? "bg-muted text-foreground"
                               : "text-muted-foreground hover:text-foreground",
                             item.disabled &&
-                              "cursor-not-allowed opacity-80 hover:bg-transparent hover:text-muted-foreground",
+                              "cursor-not-allowed opacity-80 hover:bg-transparent hover:text-muted-foreground"
                           )}
                         >
                           <Icon className="size-5" />

@@ -21,7 +21,7 @@ export default function UnsubscribePage() {
             setMessage(response.message || "You have been unsubscribed.");
           } else {
             setMessage(
-              response.message || "An error occurred. Please try again later.",
+              response.message || "An error occurred. Please try again later."
             );
           }
         })

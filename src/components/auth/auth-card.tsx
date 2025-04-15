@@ -7,7 +7,7 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader
+  CardHeader,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

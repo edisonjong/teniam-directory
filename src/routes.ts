@@ -43,6 +43,7 @@ export const publicRoutes = [
   "/loading(/.*)?",
   "/home2(/.*)?",
   "/home3(/.*)?",
+  "/home4(/.*)?",
 ];
 
 /**

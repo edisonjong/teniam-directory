@@ -30,15 +30,15 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background antialiased",
-          fontBricolage.className,
-          // fontSourceSans.className,
-          // fontSourceSerif.className,
-          // fontWorkSans.className,
-          fontSourceSerif.variable,
-          fontSourceSans.variable,
-          fontWorkSans.variable,
-          fontBricolage.variable,
+          "min-h-screen bg-background antialiased"
+          // fontBricolage.className,
+          // // fontSourceSans.className,
+          // // fontSourceSerif.className,
+          // // fontWorkSans.className,
+          // fontSourceSerif.variable,
+          // fontSourceSans.variable,
+          // fontWorkSans.variable,
+          // fontBricolage.variable,
         )}
       >
         <SessionProvider session={session}>

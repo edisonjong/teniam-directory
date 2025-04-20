@@ -37,6 +37,7 @@ export default function CustomPagination({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
+            size={"icon"}
             onClick={
               currentPage > 1
                 ? () => handlePageChange(currentPage - 1)
@@ -57,6 +58,7 @@ export default function CustomPagination({
               <PaginationEllipsis />
             ) : (
               <PaginationLink
+                size={"icon"}
                 onClick={() => handlePageChange(page)}
                 isActive={currentPage === page}
                 className={currentPage === page ? "" : "cursor-pointer"}
@@ -69,6 +71,7 @@ export default function CustomPagination({
 
         <PaginationItem>
           <PaginationNext
+            size={"icon"}
             onClick={
               currentPage < totalPages
                 ? () => handlePageChange(currentPage + 1)

@@ -21,7 +21,7 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   // const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isPublicRoute = publicRoutes.some((route) =>
-    new RegExp(`^${route}$`).test(nextUrl.pathname),
+    new RegExp(`^${route}$`).test(nextUrl.pathname)
   );
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
@@ -50,7 +50,7 @@ export default auth((req) => {
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
     return Response.redirect(
-      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl),
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
     );
   }
 

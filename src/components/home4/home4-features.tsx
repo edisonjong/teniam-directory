@@ -4,8 +4,8 @@ import { ReactNode } from "react";
 
 export default function Features() {
   return (
-    <section className="bg-zinc-50 py-4 md:py-8 dark:bg-transparent">
-      <div className="mx-auto max-w-5xl px-6">
+    <section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
+      <div className="@container mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
             Built to cover your needs
@@ -15,7 +15,7 @@ export default function Features() {
             repellendus.
           </p>
         </div>
-        <div className="mx-auto mt-8 grid max-w-sm gap-6 text-center md:mt-16 lg:max-w-full lg:grid-cols-3">
+        <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
           <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>

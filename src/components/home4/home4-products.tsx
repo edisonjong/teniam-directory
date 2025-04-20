@@ -3,17 +3,20 @@ import { Card } from "@/components/ui/card";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
-import Gemini from "../ui/Gemini";
-import Replit from "../ui/Replit";
-import MagicUI from "../ui/MagicUI";
-import VSCodium from "../ui/VSCodium";
-import MediaWiki from "../ui/MediaWiki";
-import GooglePaLM from "../ui/GooglePaLM";
+import {
+  Gemini,
+  GooglePaLM,
+  MagicUI,
+  MediaWiki,
+  Replit,
+  VSCodium,
+} from "../ui";
+// import { Gemini, Replit, MagicUI, VSCodium, MediaWiki, GooglePaLM } from '@/components/logos'
 
 export default function Products() {
   return (
     <section>
-      <div className="py-4">
+      <div className="py-32">
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
             <h2 className="text-balance text-3xl font-semibold md:text-4xl">
@@ -68,19 +71,6 @@ export default function Products() {
             >
               <GooglePaLM />
             </IntegrationCard>
-          </div>
-          <div className="my-10 flex justify-center">
-            <Button
-              asChild
-              variant="secondary"
-              size="sm"
-              className="gap-1 pr-2 shadow-none"
-            >
-              <Link href={""}>
-                View More
-                <ChevronRight className="ml-0 !size-3.5 opacity-50" />
-              </Link>
-            </Button>
           </div>
         </div>
       </div>

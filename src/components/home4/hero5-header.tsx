@@ -92,7 +92,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
 
             <div
               className={cn(
-                "bg-background data-[state=active]:block lg:data-[state=active]:flex mb-6 hidden w-full max-h-[90vh] overflow-y-auto flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent",
+                "bg-background data-[state=active]:block lg:data-[state=active]:flex mb-6 hidden w-full max-h-[90vh] overflow-y-auto flex-wrap items-center justify-end space-y-8  border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent",
                 menuState && "block"
               )}
             >
@@ -111,6 +111,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                   ))}
                 </ul>
               </div>
+
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 {user ? (
                   <div className="flex items-center">

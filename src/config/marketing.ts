@@ -2,18 +2,18 @@ import type { MarketingConfig } from "@/types";
 
 export const marketingConfig: MarketingConfig = {
   menus: [
+    // {
+    //   title: "Home2",
+    //   href: "/home2",
+    //   icon: "home",
+    // },
+    // {
+    //   title: "Home3",
+    //   href: "/home3",
+    //   icon: "home",
+    // },
     {
-      title: "Home2",
-      href: "/home2",
-      icon: "home",
-    },
-    {
-      title: "Home3",
-      href: "/home3",
-      icon: "home",
-    },
-    {
-      title: "Home4",
+      title: "Home",
       href: "/home4",
       icon: "home",
     },

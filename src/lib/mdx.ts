@@ -18,14 +18,30 @@ export function portableTextToMarkdown(body: any) {
 const serializers = {
   types: {
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    // image: ({ node }: any) => {
+    //   // don't use toMarkdown.getImageUrl, because it doesn't work
+    //   // const imageUrl = toMarkdown.getImageUrl({options: {}, node});
+    //   const imageUrl = urlForImage(node);
+    //   // console.log("node", node);
+    //   // console.log("mdx imageUrl", imageUrl);
+    //   return `![${node.alt || "image"}](${imageUrl.src})`;
+    // },
     image: ({ node }: any) => {
-      // don't use toMarkdown.getImageUrl, because it doesn't work
-      // const imageUrl = toMarkdown.getImageUrl({options: {}, node});
+      if (!node || !node.asset) {
+        console.warn("Missing image node or asset", node);
+        return ""; // or return a fallback string/image
+      }
+
       const imageUrl = urlForImage(node);
-      // console.log("node", node);
-      // console.log("mdx imageUrl", imageUrl);
+
+      if (!imageUrl || !imageUrl.src) {
+        console.warn("Image URL could not be resolved", imageUrl);
+        return "";
+      }
+
       return `![${node.alt || "image"}](${imageUrl.src})`;
     },
+
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     code: ({ node }: any) => {
       // From @sanity/code-input

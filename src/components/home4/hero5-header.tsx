@@ -40,7 +40,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
   }, [menuState]);
 
   return (
-    <header>
+    <header className=" mb-16">
       <nav
         data-state={menuState ? "active" : undefined}
         className="fixed z-20 w-full px-2"

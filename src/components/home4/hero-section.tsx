@@ -31,7 +31,6 @@ const transitionVariants = {
 export default function HeroSection() {
   return (
     <>
-      <HeroHeader scroll={true} config={marketingConfig} />
       <main className="overflow-hidden">
         <div
           aria-hidden

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { HeroHeader } from "./hero5-header";
 import { AnimatedGroup } from "../ui/animated-group";
 import { TextEffect } from "../ui/text-effect";
+import { marketingConfig } from "@/config/marketing";
 
 const transitionVariants = {
   item: {
@@ -30,7 +31,7 @@ const transitionVariants = {
 export default function HeroSection() {
   return (
     <>
-      <HeroHeader />
+      <HeroHeader scroll={true} config={marketingConfig} />
       <main className="overflow-hidden">
         <div
           aria-hidden

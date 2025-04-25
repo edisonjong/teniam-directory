@@ -67,12 +67,13 @@ export type FooterConfig = {
 
 export type NavItem = {
   title: string;
-  href: string;
+  href?: string;
   badge?: number;
   disabled?: boolean;
   external?: boolean;
   authorizeOnly?: UserRole;
   icon?: keyof typeof Icons;
+  key?: string;
 };
 
 export type NestedNavItem = {

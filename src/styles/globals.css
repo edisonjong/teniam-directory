@@ -230,3 +230,6 @@
   padding-right: 1rem;
   padding-left: 1rem;
 }
+html {
+  scroll-behavior: smooth;
+}

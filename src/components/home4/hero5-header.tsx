@@ -80,7 +80,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                 {links.map((item, index) => (
                   <li key={index}>
                     <Link
-                      href={item.href}
+                      href={item.href || "#"}
                       className="text-muted-foreground hover:text-accent-foreground block duration-150"
                     >
                       {item.title}

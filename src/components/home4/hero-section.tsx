@@ -146,8 +146,8 @@ export default function HeroSection() {
                       size="lg"
                       className="rounded-xl px-5 text-base"
                     >
-                      <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
+                      <Link href="/directories">
+                        <span className="text-nowrap">Browse All</span>
                       </Link>
                     </Button>
                   </div>
@@ -158,8 +158,8 @@ export default function HeroSection() {
                     variant="ghost"
                     className="h-10.5 rounded-xl px-5"
                   >
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
+                    <Link href="/auth/register">
+                      <span className="text-nowrap">Submit</span>
                     </Link>
                   </Button>
                 </AnimatedGroup>

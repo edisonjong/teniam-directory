@@ -44,6 +44,7 @@ export const publicRoutes = [
   "/home2(/.*)?",
   "/home3(/.*)?",
   "/home4(/.*)?",
+  "/directories(/.*)?",
 ];
 
 /**

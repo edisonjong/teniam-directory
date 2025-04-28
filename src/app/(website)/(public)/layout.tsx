@@ -3,6 +3,7 @@ import { HeroHeader } from "@/components/home4/hero5-header";
 import { BannerAd } from "@/components/layout/banner-ad";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import FooterSection from "@/components/ui/footer";
 import { marketingConfig } from "@/config/marketing";
 import { usePathname } from "next/navigation";
 
@@ -27,7 +28,8 @@ export default async function MarketingLayout({
       {/* {!hideNavbar && <Navbar scroll={true} config={marketingConfig} />} */}
 
       <main className="flex-1">{children}</main>
-      <Footer />
+      {/* <Footer /> */}
+      <FooterSection />
     </div>
   );
 }

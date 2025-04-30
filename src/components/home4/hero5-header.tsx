@@ -8,6 +8,7 @@ import { Logo } from "../logo";
 import { DashboardConfig, MarketingConfig } from "@/types";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { UserButton } from "../layout/user-button";
+import { ModeToggle } from "../layout/mode-toggle";
 
 interface NavBarProps {
   scroll?: boolean;
@@ -147,6 +148,9 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                         <span>Get Started</span>
                       </Link>
                     </Button>
+                    <div className="flex items-center gap-3">
+                      <ModeToggle />
+                    </div>
                   </>
                 )}
               </div>

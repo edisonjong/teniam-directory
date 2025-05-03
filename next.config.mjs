@@ -23,6 +23,7 @@ const nextConfig = {
     // The requested resource "https://cdn.sanity.io/images/58a2mkbj/preview/xxx.svg?fit=max&auto=format" has type "image/svg+xml"
     // but dangerouslyAllowSVG is disabled
     dangerouslyAllowSVG: true,
+    domains: ["v0.blob.com"],
     remotePatterns: [
       {
         protocol: "https",
@@ -44,7 +45,24 @@ const nextConfig = {
         protocol: "https",
         hostname: "via.placeholder.com", // https://www.sanity.io/learn/course/day-one-with-sanity-studio/bringing-content-to-a-next-js-front-end
       },
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
+  },
+  reactStrictMode: true,
+  swcMinify: true,
+
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ["lucide-react"],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };
 

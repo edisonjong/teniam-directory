@@ -9,11 +9,12 @@ import {
 import { auth } from "@/auth";
 import { Analytics } from "@/components/analytics/analytics";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
 import { constructMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
+import { BookmarkProvider } from "@/components/ui/bookmark-context";
 
 export const metadata = constructMetadata();
 
@@ -48,14 +49,17 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <BookmarkProvider>
+              {children}
 
-            {/* https://sonner.emilkowal.ski/toaster */}
-            <Toaster richColors position="top-right" offset={64} />
+              {/* https://sonner.emilkowal.ski/toaster */}
+              {/* <Toaster richColors position="top-right" offset={64} /> */}
+              <Toaster />
 
-            <TailwindIndicator />
+              <TailwindIndicator />
 
-            <Analytics />
+              <Analytics />
+            </BookmarkProvider>
           </ThemeProvider>
         </SessionProvider>
       </body>

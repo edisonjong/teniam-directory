@@ -202,7 +202,7 @@ const Sidebar = React.forwardRef<
             style={
               {
                 "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
-                backgroundColor: "hsl(var(--sidebar-background))", // Ensure solid background
+                // backgroundColor: "hsl(var(--sidebar-background))", // Ensure solid background
                 opacity: "1", // Force full opacity
               } as React.CSSProperties
             }

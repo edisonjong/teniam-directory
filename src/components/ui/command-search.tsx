@@ -289,6 +289,7 @@ export function CommandSearch() {
                       key={product.id}
                       onSelect={() => handleSelect(product)}
                       className="flex items-center py-3"
+                      value={product.title}
                     >
                       <div
                         className="flex items-center justify-center w-8 h-8 rounded-md mr-3"

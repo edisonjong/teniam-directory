@@ -5,12 +5,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bookmark, ChevronRight, Star } from "lucide-react";
 import Link from "next/link";
-// import { ShineBorder } from "@/components/ui/shine-border";
-// import { useBookmarks } from "./bookmark-context";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { useBookmarks } from "./bookmark-context";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { useBookmarks } from "./bookmark-context";
-import { ShineBorder } from "./shine-border";
 
 interface ProductCardProps {
   id: string;
@@ -156,7 +154,9 @@ export const ProductCard = React.memo(
               aria-pressed={bookmarked}
             >
               <Bookmark
-                className={`h-5 w-5 bookmark-icon ${bookmarked ? "bookmark-icon-active" : ""}`}
+                className={`h-5 w-5 bookmark-icon ${
+                  bookmarked ? "bookmark-icon-active" : ""
+                }`}
               />
               <span className="sr-only">
                 {bookmarked ? "Remove bookmark" : "Bookmark"}

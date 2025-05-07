@@ -323,7 +323,7 @@ function Content() {
             <Breadcrumb className="flex-1 min-w-0">
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">Tech Directory</BreadcrumbLink>
+                  <BreadcrumbLink href="/">Tech Directory</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem className="min-w-0">

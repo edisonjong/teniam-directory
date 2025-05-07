@@ -61,7 +61,7 @@ export function NavProjects({
               >
                 <Avatar className="mr-2 h-6 w-6 rounded-md overflow-hidden">
                   <AvatarImage
-                    src={item.avatar || "/placeholder.svg"}
+                    src={item.avatar ? item.avatar : undefined}
                     alt={item.name}
                     className="rounded-md object-cover w-full h-full"
                   />

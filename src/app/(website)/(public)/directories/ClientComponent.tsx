@@ -40,6 +40,7 @@ import {
   ArrowUpDown,
   Code,
   Filter,
+  HomeIcon,
   Megaphone,
   SortAsc,
   SortDesc,
@@ -326,8 +327,19 @@ function Content({ items }) {
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb className="flex-1 min-w-0">
               <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href={"/"} className="hidden md:block">
+                    <div className="flex items-center gap-1">
+                      <HomeIcon className="w-4 h-4" />
+                      <span>Home</span>
+                    </div>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/">Tech Directory</BreadcrumbLink>
+                  <BreadcrumbLink href="/directories">
+                    Tech Directory
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem className="min-w-0">
@@ -426,7 +438,7 @@ function Content({ items }) {
                   title={product.name}
                   description={product.description}
                   color={product.color || "#0070f3"}
-                  logo={product.logo || Code}
+                  logo={product.icon || Code}
                   featured={product.featured}
                   isAd={product.sponsor}
                   isHighlighted={product.id === highlightedProductId}

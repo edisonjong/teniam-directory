@@ -9,13 +9,22 @@ import { ShineBorder } from "@/components/ui/shine-border";
 import { useBookmarks } from "./bookmark-context";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-
+import Image from "next/image";
+import { urlForIcon } from "@/lib/image";
+interface LogoImage {
+  alt?: string;
+  asset: {
+    _ref: string;
+    _type: string;
+  };
+  blurDataURL?: string;
+}
 interface ProductCardProps {
   id: string;
   title: string;
   description: string;
   color: string;
-  logo: React.ElementType;
+  logo: LogoImage;
   featured?: boolean;
   isAd?: boolean;
   isHighlighted?: boolean;
@@ -28,7 +37,7 @@ export const ProductCard = React.memo(
     title,
     description,
     color,
-    logo: Logo,
+    logo,
     featured = false,
     isAd = false,
     isHighlighted = false,
@@ -38,6 +47,9 @@ export const ProductCard = React.memo(
     const { toast } = useToast();
     const bookmarked = isBookmarked(id);
     const cardRef = React.useRef<HTMLDivElement>(null);
+    const iconProps = logo ? urlForIcon(logo) : null;
+    const iconBlurDataURL = logo?.blurDataURL || null;
+
     const itemUrlPrefix = "/item";
     const handleBookmarkToggle = (e: React.MouseEvent) => {
       e.preventDefault();
@@ -124,7 +136,20 @@ export const ProductCard = React.memo(
               className="flex items-center justify-center rounded-md"
               style={{ color }}
             >
-              <Logo size={40} />
+              {iconProps && (
+                <Image
+                  src={iconProps?.src}
+                  alt={logo.alt || `icon of ${title}`}
+                  title={logo.alt || `icon of ${title}`}
+                  width={32}
+                  height={32}
+                  className="object-cover image-scale"
+                  {...(iconBlurDataURL && {
+                    placeholder: "blur",
+                    blurDataURL: iconBlurDataURL,
+                  })}
+                />
+              )}
             </div>
           </div>
 

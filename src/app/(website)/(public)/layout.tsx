@@ -30,6 +30,7 @@ export default async function MarketingLayout({
 
       <main className="flex-1">{children}</main>
       {/* <Footer /> */}
+      {!hideNavbar && <FooterSection />}
     </div>
   );
 }

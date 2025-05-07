@@ -51,7 +51,6 @@ export default function HomeLayout({
     <div className="">
       <HeroSection />
       {children}
-      <FooterSection />
     </div>
   );
 }

@@ -2,8 +2,17 @@ import ItemBreadCrumb from "@/components/item/item-bread-crumb";
 import SponsorItemCard from "@/components/item/item-card-sponsor";
 import ItemCustomMdx from "@/components/item/item-custom-mdx";
 import ItemGrid from "@/components/item/item-grid";
+import TechnologyStack from "@/components/item/technology-stack";
 import BackButton from "@/components/shared/back-button";
 import { UserAvatar } from "@/components/shared/user-avatar";
+import { useBookmarks } from "@/components/ui/bookmark-context";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { urlForIcon, urlForImage } from "@/lib/image";
@@ -20,7 +29,14 @@ import {
   sponsorItemListQuery,
 } from "@/sanity/lib/queries";
 import type { ItemFullInfo } from "@/types";
-import { GlobeIcon, HashIcon, LayoutGridIcon } from "lucide-react";
+import {
+  ArrowLeft,
+  Bookmark,
+  GlobeIcon,
+  HashIcon,
+  LayoutGridIcon,
+  Share2,
+} from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -75,8 +91,16 @@ export default async function ItemPage({ params }: ItemPageProps) {
     console.error("ItemPage, item not found");
     return notFound();
   }
-
+  const members = [
+    {
+      name: "Mubashir Hussan",
+      role: "Sanity Developer",
+      avatar: "https://avatars.githubusercontent.com/u/46175697?v=4",
+    },
+  ];
   const imageProps = item?.image ? urlForImage(item?.image) : null;
+  console.log("item", imageProps);
+
   const imageBlurDataURL = item?.image?.blurDataURL || null;
   const iconProps = item?.icon ? urlForIcon(item.icon) : null;
   const iconBlurDataURL = item?.icon?.blurDataURL || null;
@@ -86,16 +110,68 @@ export default async function ItemPage({ params }: ItemPageProps) {
   const sponsorItem = sponsorItems?.length
     ? sponsorItems[Math.floor(Math.random() * sponsorItems.length)]
     : null;
-
+  // Format category or tag names for display
+  const formatName = (name: string) => {
+    return name
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
   return (
     <div className="flex flex-col gap-8">
       {/* Header section */}
+      {/* Basic information */}
+      {/* <ItemBreadCrumb item={item} /> */}
+      <div className="mb-6">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/directories">
+                Tech Directory
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            {/* <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href={`/directories?category=${item.category}`}
+              >
+                {formatName(item.category)}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href={`/directories?subcategory=${item.subcategory}`}
+              >
+                {formatName(item.subcategory)}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <span>{item.title}</span>
+            </BreadcrumbItem> */}
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+        <Button variant="outline" size="sm" asChild>
+          <Link href="/directories">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Directory
+          </Link>
+        </Button>
+
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="mobile-touch-feedback">
+            <Share2 className="mr-2 h-4 w-4" />
+            Share
+          </Button>
+        </div>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         {/* Left column */}
-        <div className="lg:col-span-3 gap-8 flex flex-col">
-          {/* Basic information */}
-          <ItemBreadCrumb item={item} />
 
+        <div className="lg:col-span-3 gap-8 flex flex-col">
           {/* icon + name + description */}
           <div className="flex flex-1 items-center">
             <div className="flex flex-col gap-8">
@@ -148,34 +224,36 @@ export default async function ItemPage({ params }: ItemPageProps) {
         {/* Right column */}
         <div className="lg:col-span-2">
           {/* image */}
-          <div className="relative group overflow-hidden rounded-lg aspect-[16/9]">
+          <div className="relative group overflow-hidden rounded-lg aspect-[16/9] bg-black">
             <Link
-              href={`${itemLink}`}
+              href={itemLink}
               target="_blank"
               prefetch={false}
               className="relative block w-full h-full"
             >
-              {imageProps && (
+              {imageProps ? (
                 <Image
                   src={imageProps.src}
                   alt={item.image?.alt || `image for ${item.name}`}
                   title={item.image?.alt || `image for ${item.name}`}
                   loading="eager"
                   fill
-                  className="border w-full shadow-lg object-cover image-scale"
+                  className="border w-full shadow-lg object-cover image-scale z-0"
                   {...(imageBlurDataURL && {
                     placeholder: "blur",
                     blurDataURL: imageBlurDataURL,
                   })}
                 />
+              ) : (
+                <div className="absolute inset-0 bg-black z-0"></div>
               )}
               <div
-                className="absolute inset-0 flex items-center justify-center bg-black 
-                  bg-opacity-0 group-hover:bg-opacity-50 transition-opacity duration-300"
+                className="absolute inset-0 flex items-center justify-center bg-black/0 
+               group-hover:bg-black/50 transition-all duration-300 z-10"
               >
                 <span
                   className="text-white text-lg font-semibold 
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 >
                   Visit Website
                 </span>
@@ -194,7 +272,34 @@ export default async function ItemPage({ params }: ItemPageProps) {
             <h2 className="text-lg font-semibold mb-4">Introduction</h2>
             <ItemCustomMdx source={item.introduction} />
           </div>
-
+          {/* Author section - responsive design */}
+          <div className="mt-6 space-y-3 md:mt-8 mr-0 lg:mr-8">
+            {members.map((member, index) => (
+              <div
+                key={index}
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-0"
+              >
+                <div className="flex items-center gap-3 text-left">
+                  <img
+                    src={member.avatar || "/placeholder.svg"}
+                    alt={member.name}
+                    className="h-10 w-10 rounded-full object-cover border border-border md:h-12 md:w-12"
+                  />
+                  <div>
+                    <h3 className="text-sm font-medium md:text-base">
+                      {member.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground md:text-sm">
+                      {member.role}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  <time>Published April 25, 2023</time>
+                </div>
+              </div>
+            ))}
+          </div>
           <div className="flex items-center justify-start mt-16">
             <BackButton />
           </div>
@@ -205,7 +310,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
           <div className="flex flex-col space-y-8">
             <div className="flex flex-col space-y-4">
               {/* information */}
-              <div className="bg-muted/50 rounded-lg p-6">
+              {/* <div className="bg-muted/50 rounded-lg p-6">
                 <h2 className="text-lg font-semibold mb-4">Information</h2>
                 <ul className="space-y-4 text-sm">
                   {item.submitter && (
@@ -252,10 +357,10 @@ export default async function ItemPage({ params }: ItemPageProps) {
                     <span className="font-medium">{date}</span>
                   </li>
                 </ul>
-              </div>
+              </div> */}
 
               {/* categories */}
-              <div className="bg-muted/50 rounded-lg p-6">
+              {/* <div className="bg-muted/50 rounded-lg p-6">
                 <h2 className="text-lg font-semibold mb-4">Categories</h2>
                 <ul className="flex flex-wrap gap-4">
                   {item.categories?.map((category) => (
@@ -269,10 +374,10 @@ export default async function ItemPage({ params }: ItemPageProps) {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
 
               {/* tags */}
-              <div className="bg-muted/50 rounded-lg p-6">
+              {/* <div className="bg-muted/50 rounded-lg p-6">
                 <h2 className="text-lg font-semibold mb-4">Tags</h2>
                 <ul className="flex flex-wrap gap-4">
                   {item.tags?.map((tag) => (
@@ -288,6 +393,11 @@ export default async function ItemPage({ params }: ItemPageProps) {
                     </li>
                   ))}
                 </ul>
+              </div> */}
+
+              {/* core technologies */}
+              <div className="bg-muted/50 rounded-lg p-6">
+                <TechnologyStack />
               </div>
 
               {/* sponsor */}
@@ -303,7 +413,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
           <div className="flex items-center gap-2">
             <LayoutGridIcon className="w-4 h-4 text-indigo-500" />
             <h2 className="text-lg tracking-wider font-semibold text-gradient_indigo-purple">
-              More Products
+              Related Products
             </h2>
           </div>
 

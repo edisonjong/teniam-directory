@@ -19,6 +19,7 @@ interface ProductCardProps {
   featured?: boolean;
   isAd?: boolean;
   isHighlighted?: boolean;
+  slug: string;
 }
 
 export const ProductCard = React.memo(
@@ -31,12 +32,13 @@ export const ProductCard = React.memo(
     featured = false,
     isAd = false,
     isHighlighted = false,
+    slug,
   }: ProductCardProps) => {
     const { isBookmarked, toggleBookmark } = useBookmarks();
     const { toast } = useToast();
     const bookmarked = isBookmarked(id);
     const cardRef = React.useRef<HTMLDivElement>(null);
-
+    const itemUrlPrefix = "/item";
     const handleBookmarkToggle = (e: React.MouseEvent) => {
       e.preventDefault();
 
@@ -140,7 +142,7 @@ export const ProductCard = React.memo(
               size="sm"
               className="gap-1 pr-2 shadow-none transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
             >
-              <Link href={`/product/${id}`} prefetch={false}>
+              <Link href={`${itemUrlPrefix}/${slug}`} prefetch={false}>
                 Learn More
                 <ChevronRight className="ml-0 !size-3.5 opacity-50" />
               </Link>

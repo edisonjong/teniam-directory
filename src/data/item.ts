@@ -80,7 +80,7 @@ export async function getItems({
     "tag",
     tag,
     "hasSponsorItem",
-    hasSponsorItem,
+    hasSponsorItem
   );
 
   const itemsPerPage = hasSponsorItem ? ITEMS_PER_PAGE - 1 : ITEMS_PER_PAGE;
@@ -96,6 +96,7 @@ export async function getItems({
     filter,
     currentPage,
     itemsPerPage,
+    hasSponsorItem
   );
   const [totalCount, items] = await Promise.all([
     sanityFetch<number>({ query: countQuery }),
@@ -117,6 +118,7 @@ const buildQuery = (
   filter?: string,
   currentPage = 1,
   itemsPerPage = ITEMS_PER_PAGE,
+  hasSponsorItem?: boolean
 ) => {
   const orderDirection = reverse ? "desc" : "asc";
   const sortOrder = sortKey
@@ -145,22 +147,26 @@ const buildQuery = (
   const tagList = tag ? tag.split(",") : [];
   const tagCondition =
     tagList && tagList.length > 0
-      ? `&& count((tags[]->slug.current)[@ in [${tagList.map((t) => `"${t}"`).join(", ")}]]) == ${tagList.length}`
+      ? `&& count((tags[]->slug.current)[@ in [${tagList
+          .map((t) => `"${t}"`)
+          .join(", ")}]]) == ${tagList.length}`
       : "";
   const offsetStart = (currentPage - 1) * itemsPerPage;
   const offsetEnd = offsetStart + itemsPerPage;
 
   // @sanity-typegen-ignore
   const countQuery = `count(*[_type == "item" && defined(slug.current) 
-      && defined(publishDate) && forceHidden != true && sponsor != true
-      ${queryCondition} ${collectionCondition} ${categoryCondition} ${tagCondition}])`;
+  && defined(publishDate) && forceHidden != true 
+  ${!hasSponsorItem ? "&& sponsor != true" : ""}
+  ${queryCondition} ${collectionCondition} ${categoryCondition} ${tagCondition}])`;
   // @sanity-typegen-ignore
   const dataQuery = `*[_type == "item" && defined(slug.current) 
-      && defined(publishDate) && forceHidden != true && sponsor != true
-      ${queryCondition} ${collectionCondition} ${categoryCondition} ${tagCondition}] ${sortOrder} 
-      [${offsetStart}...${offsetEnd}] {
-      ${itemSimpleFields}
-    }`;
+  && defined(publishDate) && forceHidden != true 
+  ${!hasSponsorItem ? "&& sponsor != true" : ""}
+  ${queryCondition} ${collectionCondition} ${categoryCondition} ${tagCondition}] ${sortOrder} 
+  [${offsetStart}...${offsetEnd}] {
+  ${itemSimpleFields}
+}`;
   // console.log('buildQuery, countQuery', countQuery);
   // console.log("buildQuery, dataQuery", dataQuery);
   return { countQuery, dataQuery };

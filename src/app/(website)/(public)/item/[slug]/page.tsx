@@ -122,7 +122,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
       {/* Header section */}
       {/* Basic information */}
       {/* <ItemBreadCrumb item={item} /> */}
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -130,7 +130,7 @@ export default async function ItemPage({ params }: ItemPageProps) {
                 Tech Directory
               </BreadcrumbLink>
             </BreadcrumbItem>
-            {/* <BreadcrumbSeparator />
+            <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink
                 href={`/directories?category=${item.category}`}
@@ -149,10 +149,10 @@ export default async function ItemPage({ params }: ItemPageProps) {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <span>{item.title}</span>
-            </BreadcrumbItem> */}
+            </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-      </div>
+      </div> */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
         <Button variant="outline" size="sm" asChild>
           <Link href="/directories">

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { ChevronDown, type LucideIcon } from "lucide-react";
+import { ChevronDown, UploadIcon, type LucideIcon } from "lucide-react";
 
 import { TechDirectoryContext } from "./tech-directory-context";
 import {
@@ -15,6 +15,8 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { Button } from "./button";
+import Link from "next/link";
 
 export function NavMain({
   items,
@@ -103,6 +105,21 @@ export function NavMain({
 
   return (
     <SidebarGroup>
+      {/* <Button asChild size="lg" className="rounded-xl px-5 text-base">
+        <Link href="#link">
+          <span className="text-nowrap">Submit</span>
+        </Link>
+      </Button> */}
+      <Button asChild disabled className="group whitespace-nowrap">
+        <Link
+          href="/submit"
+          prefetch={false}
+          className="flex items-center justify-center space-x-2"
+        >
+          <UploadIcon className="w-4 h-4" />
+          <span>Submit</span>
+        </Link>
+      </Button>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
@@ -136,7 +153,9 @@ export function NavMain({
 
                   {/* Only render the submenu if the category is open */}
                   <div
-                    className={`overflow-hidden transition-all duration-200 ${openCategories[item.id] ? "max-h-96" : "max-h-0"}`}
+                    className={`overflow-hidden transition-all duration-200 ${
+                      openCategories[item.id] ? "max-h-96" : "max-h-0"
+                    }`}
                   >
                     <SidebarMenuSub>
                       {item.items.map((subItem) => (

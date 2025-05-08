@@ -1,6 +1,8 @@
 import Container from "@/components/container";
+import { HeroHeader } from "@/components/home4/hero5-header";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import FooterSection from "@/components/ui/footer";
 import { dashboardConfig } from "@/config/dashboard";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -20,13 +22,13 @@ export default async function ProtectedLayout({
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar scroll={false} config={dashboardConfig} />
-
+      {/* <Navbar scroll={false} config={dashboardConfig} /> */}
+      <HeroHeader scroll={true} config={dashboardConfig} />
       <main className="flex-1">
         <Container className="mt-8 pb-16">{children}</Container>
       </main>
 
-      <Footer />
+      <FooterSection />
     </div>
   );
 }

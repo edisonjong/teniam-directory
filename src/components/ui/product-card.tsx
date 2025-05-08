@@ -52,6 +52,7 @@ export const ProductCard = React.memo(
 
     const itemUrlPrefix = "/item";
     const handleBookmarkToggle = (e: React.MouseEvent) => {
+      debugger;
       e.preventDefault();
 
       // Store the current state before toggling
@@ -59,7 +60,7 @@ export const ProductCard = React.memo(
 
       // Toggle the bookmark
       toggleBookmark(id);
-
+      debugger;
       // Show toast notification when removing a bookmark
       if (wasBookmarked) {
         toast({

@@ -75,14 +75,11 @@ export default function Products() {
         </div>
       </div>
       <div className=" flex justify-center">
-        <Link href="/directories" className="cursor-pointer">
-          <button
-            type="button"
-            className=" cursor-pointer rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
-          >
-            View More
-          </button>
-        </Link>
+        <Button asChild size="lg">
+          <Link href="/directories" className="cursor-pointer">
+            <span>View More</span>
+          </Link>
+        </Button>
       </div>
     </section>
   );

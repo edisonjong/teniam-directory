@@ -46,6 +46,7 @@ export const publicRoutes = [
   "/home4(/.*)?",
   "/directories(/.*)?",
   "/product(/.*)?",
+  "/sections(/.*)?",
 ];
 
 /**

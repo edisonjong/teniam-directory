@@ -168,7 +168,11 @@ export const ProductCard = React.memo(
               size="sm"
               className="gap-1 pr-2 shadow-none transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
             >
-              <Link href={`${itemUrlPrefix}/${slug}`} prefetch={false}>
+              <Link
+                //  href={`${itemUrlPrefix}/${slug}`}
+                href={"/sections"}
+                prefetch={false}
+              >
                 Learn More
                 <ChevronRight className="ml-0 !size-3.5 opacity-50" />
               </Link>

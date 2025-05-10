@@ -12,6 +12,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Function to generate a consistent color based on the tag name
 function stringToColor(str: string) {
@@ -30,16 +31,34 @@ export function NavProjects({
   projects: {
     name: string;
     url: string;
-    id: string;
+    _id: string;
     avatar?: string;
+    slug: { current: string };
   }[];
   selectedTag: string | null;
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
   const { setSelectedTag } = React.useContext(TechDirectoryContext);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleTagClick = (tagId: string) => {
-    setSelectedTag(tagId === selectedTag ? null : tagId);
+  const handleTagClick = (item: {
+    _id: string;
+    slug: { current: string };
+    name: string;
+  }) => {
+    const newSelectedTag = item._id === selectedTag ? null : item._id;
+    setSelectedTag(newSelectedTag);
+
+    const newParams = new URLSearchParams(searchParams.toString());
+
+    if (newSelectedTag) {
+      newParams.set("tag", item.slug.current);
+    } else {
+      newParams.delete("tag");
+    }
+
+    router.push(`?${newParams.toString()}`, { scroll: false });
 
     // Close mobile sidebar when a selection is made
     if (isMobile) {
@@ -56,8 +75,8 @@ export function NavProjects({
           return (
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton
-                isActive={selectedTag === item.id}
-                onClick={() => handleTagClick(item.id)}
+                isActive={selectedTag === item._id}
+                onClick={() => handleTagClick(item)}
               >
                 <Avatar className="mr-2 h-6 w-6 rounded-md overflow-hidden">
                   <AvatarImage

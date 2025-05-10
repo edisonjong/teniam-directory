@@ -176,6 +176,8 @@
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
+  /* --sidebar-accent: oklch(0.8 0.1 250); */
+  /* --sidebar-accent: #d0d0f0; */
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
@@ -288,12 +290,15 @@ html {
 
 /* Add hover lift animation */
 .hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
@@ -396,7 +401,9 @@ html {
 
 /* Bookmark animation */
 .bookmark-icon {
-  transition: transform 0.2s ease, fill 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    fill 0.2s ease;
 }
 
 .bookmark-icon-active {

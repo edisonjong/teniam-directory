@@ -48,11 +48,11 @@ import {
 } from "lucide-react";
 import React from "react";
 
-export default function ClientComponent({ items }) {
+export default function ClientComponent({ items, groupList, tagList }) {
   return (
     <SidebarProvider>
       <TechDirectoryProvider>
-        <AppSidebar />
+        <AppSidebar categoryList={groupList} tagList={tagList} />
         <Content items={items} />
         {/* <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -93,7 +93,6 @@ export default function ClientComponent({ items }) {
 
 // Update the Content component to use the sortOrder from context
 function Content({ items }) {
-  console.log("items", items);
   const {
     selectedCategory,
     selectedTag,
@@ -197,7 +196,7 @@ function Content({ items }) {
     bookmarkedItems,
     sortOrder,
   ]);
-  console.log("filteredProducts", filteredProducts);
+
   // Get the title for the current view
   const getTitle = React.useCallback(() => {
     if (viewMode === "featured") {

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "./button";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function NavMain({
   items,
@@ -31,7 +32,8 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
-      id: string;
+      _id: string;
+      slug: string;
     }[];
   }[];
   selectedCategory: string | null;
@@ -42,61 +44,74 @@ export function NavMain({
   const [openCategories, setOpenCategories] = React.useState<
     Record<string, boolean>
   >({});
-
+  const router = useRouter();
+  const searchParams = useSearchParams();
   // Initialize open state for categories with items
-  React.useEffect(() => {
-    const initialState: Record<string, boolean> = {};
-    items.forEach((item) => {
-      if (item.items?.length) {
-        initialState[item.id] = false;
-      }
-    });
-    setOpenCategories(initialState);
-  }, [items]);
+  // React.useEffect(() => {
+  //   const initialState: Record<string, boolean> = {};
+  //   items.forEach((item) => {
+  //     if (item.items?.length) {
+  //       initialState[item.id] = false;
+  //     }
+  //   });
+  //   setOpenCategories(initialState);
+  // }, [items]);
 
   const handleCategoryClick = (categoryId: string) => {
     const item = items.find((item) => item.id === categoryId);
+    const newParams = new URLSearchParams(searchParams.toString());
 
     if (!item?.items?.length) {
-      // Special handling for Featured, Bookmarks, and Ads
       if (categoryId === "featured") {
         setViewMode("featured");
         setSelectedCategory(null);
+        newParams.delete("category");
+        newParams.set("view", "featured");
       } else if (categoryId === "bookmarks") {
         setViewMode("bookmarks");
         setSelectedCategory(null);
+        newParams.delete("category");
+        newParams.set("view", "bookmarks");
       } else if (categoryId === "ads") {
         setViewMode("ads");
         setSelectedCategory(null);
+        newParams.delete("category");
+        newParams.set("view", "ads");
       } else {
-        // Regular category
         setViewMode("all");
-        setSelectedCategory(
-          categoryId === selectedCategory ? null : categoryId
-        );
+        const newCategory = categoryId === selectedCategory ? null : categoryId;
+        setSelectedCategory(newCategory);
+
+        if (newCategory) {
+          newParams.set("category", newCategory);
+        } else {
+          newParams.delete("category");
+        }
       }
 
-      // Close mobile sidebar when a selection is made
-      if (isMobile) {
-        setOpenMobile(false);
-      }
+      router.push(`?${newParams.toString()}`);
+      if (isMobile) setOpenMobile(false);
     }
   };
 
-  const handleSubCategoryClick = (categoryId: string) => {
+  const handleSubCategoryClick = (slug: string) => {
     setViewMode("all");
-    setSelectedCategory(categoryId === selectedCategory ? null : categoryId);
+    const newCategory = slug === selectedCategory ? null : slug;
+    setSelectedCategory(newCategory);
 
-    // Close mobile sidebar when a selection is made
-    if (isMobile) {
-      setOpenMobile(false);
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (newCategory) {
+      newParams.set("category", newCategory);
+    } else {
+      newParams.delete("category");
     }
+
+    router.push(`?${newParams.toString()}`);
+    if (isMobile) setOpenMobile(false);
   };
 
   const toggleCategory = (categoryId: string, event: React.MouseEvent) => {
-    // Prevent the click from also triggering the parent's onClick
     event.stopPropagation();
-
     setOpenCategories((prev) => ({
       ...prev,
       [categoryId]: !prev[categoryId],
@@ -105,11 +120,6 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      {/* <Button asChild size="lg" className="rounded-xl px-5 text-base">
-        <Link href="#link">
-          <span className="text-nowrap">Submit</span>
-        </Link>
-      </Button> */}
       <Button asChild disabled className="group whitespace-nowrap">
         <Link
           href="/submit"
@@ -126,7 +136,6 @@ export function NavMain({
           const Icon = item.icon;
           const hasSubItems = item.items && item.items.length > 0;
 
-          // Check if this is a special category (featured, bookmarks, or ads)
           const isSpecialCategory =
             item.id === "featured" ||
             item.id === "bookmarks" ||
@@ -151,7 +160,6 @@ export function NavMain({
                     />
                   </SidebarMenuButton>
 
-                  {/* Only render the submenu if the category is open */}
                   <div
                     className={`overflow-hidden transition-all duration-200 ${
                       openCategories[item.id] ? "max-h-96" : "max-h-0"
@@ -159,10 +167,10 @@ export function NavMain({
                   >
                     <SidebarMenuSub>
                       {item.items.map((subItem) => (
-                        <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubItem key={subItem.slug}>
                           <SidebarMenuSubButton
-                            isActive={selectedCategory === subItem.id}
-                            onClick={() => handleSubCategoryClick(subItem.id)}
+                            isActive={selectedCategory === subItem.slug}
+                            onClick={() => handleSubCategoryClick(subItem.slug)}
                           >
                             {subItem.title}
                           </SidebarMenuSubButton>

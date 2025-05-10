@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Cpu, Globe, Boxes, Settings2 } from "lucide-react";
+import { Cpu, Globe, Boxes, Settings2, LucideIcon } from "lucide-react";
 import {
   Building,
   LineChart,
@@ -12,8 +12,6 @@ import {
   Megaphone,
 } from "lucide-react";
 
-// import { NavMain } from "./nav-main";
-// import { NavProjects } from "./nav-projects";
 import { NavUser } from "./nav-user";
 import { TeamSwitcher } from "./team-switcher";
 import {
@@ -26,8 +24,6 @@ import {
 import { TechDirectoryContext } from "./ui/tech-directory-context";
 import { NavMain } from "./ui/nav-main";
 import { NavProjects } from "./ui/nav-projects";
-// import { NavMain } from "./nav-main";
-// import { TechDirectoryContext } from "./tech-directory-context";
 
 // This is sample data.
 const data = {
@@ -51,168 +47,6 @@ const data = {
       name: "Evil Corp.",
       logo: Cpu,
       plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Build",
-      url: "#",
-      icon: Building,
-      id: "build",
-      items: [
-        {
-          title: "Code Frameworks",
-          url: "#",
-          id: "code-frameworks",
-        },
-        {
-          title: "Design Systems",
-          url: "#",
-          id: "design-systems",
-        },
-        {
-          title: "No-Code Solutions",
-          url: "#",
-          id: "no-code-solutions",
-        },
-        {
-          title: "SaaS Boilerplates",
-          url: "#",
-          id: "saas-boilerplates",
-        },
-        {
-          title: "Selling Templates",
-          url: "#",
-          id: "selling-templates",
-        },
-      ],
-    },
-    {
-      title: "Grow",
-      url: "#",
-      icon: LineChart,
-      id: "grow",
-      items: [
-        {
-          title: "Automation Tools",
-          url: "#",
-          id: "automation-tools",
-        },
-        {
-          title: "Collaboration Hubs",
-          url: "#",
-          id: "collaboration-hubs",
-        },
-        {
-          title: "E-Commerce Platforms",
-          url: "#",
-          id: "e-commerce-platforms",
-        },
-        {
-          title: "Marketing & Analytics",
-          url: "#",
-          id: "marketing-analytics",
-        },
-        {
-          title: "SEO & Performance",
-          url: "#",
-          id: "seo-performance",
-        },
-      ],
-    },
-    {
-      title: "Innovate",
-      url: "#",
-      icon: Lightbulb,
-      id: "innovate",
-      items: [
-        {
-          title: "AI Tools",
-          url: "#",
-          id: "ai-tools",
-        },
-        {
-          title: "AR/VR & Gaming",
-          url: "#",
-          id: "ar-vr-gaming",
-        },
-        {
-          title: "Data & Insights",
-          url: "#",
-          id: "data-insights",
-        },
-        {
-          title: "IoT & Robotics",
-          url: "#",
-          id: "iot-robotics",
-        },
-        {
-          title: "Web3 & Blockchain",
-          url: "#",
-          id: "web3-blockchain",
-        },
-      ],
-    },
-    {
-      title: "Future Tech",
-      url: "#",
-      icon: Rocket,
-      id: "future-tech",
-      items: [
-        {
-          title: "Green Tech",
-          url: "#",
-          id: "green-tech",
-        },
-        {
-          title: "Neurotech Interfaces",
-          url: "#",
-          id: "neurotech-interfaces",
-        },
-        {
-          title: "Quantum Computing",
-          url: "#",
-          id: "quantum-computing",
-        },
-        {
-          title: "Space Tech",
-          url: "#",
-          id: "space-tech",
-        },
-        {
-          title: "Synthetic Media",
-          url: "#",
-          id: "synthetic-media",
-        },
-      ],
-    },
-    {
-      title: "Featured",
-      url: "#",
-      icon: Star,
-      id: "featured",
-      items: [],
-    },
-    {
-      title: "Ads",
-      url: "#",
-      icon: Megaphone,
-      id: "ads",
-      items: [],
-    },
-    {
-      title: "Bookmarks",
-      url: "#",
-      icon: Bookmark,
-      id: "bookmarks",
-      items: [],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      id: "settings",
-      items: [],
     },
   ],
   projects: [
@@ -308,9 +142,87 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  categoryList,
+  tagList,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & {
+  categoryList: {
+    name: string;
+    slug: { current: string };
+    _id: string;
+    categories: {
+      name: string;
+      slug: { current: string };
+      _id: string;
+    }[];
+  }[];
+  tagList: any[];
+}) {
   const { selectedCategory, selectedTag } =
     React.useContext(TechDirectoryContext);
+
+  // Add icons based on category slug
+  function getIconForCategory(slug: string): LucideIcon {
+    const icons: Record<string, LucideIcon> = {
+      build: Building,
+      grow: LineChart,
+      innovate: Lightbulb,
+      "future-tech": Rocket,
+      featured: Star,
+      ads: Megaphone,
+      bookmarks: Bookmark,
+      settings: Settings2,
+      "learn-and-sell": Bookmark, // Add a default icon for new categories
+    };
+    return icons[slug] || Building; // Default to Building icon if not found
+  }
+  // Map the categoryList to the navMain format
+  const mappedCategories = categoryList.map((group) => ({
+    id: group._id,
+    title: group.name,
+    url: `#`,
+    icon: getIconForCategory(group.slug.current),
+    items: group.categories.map((category) => ({
+      _id: category._id,
+      title: category.name,
+      url: `#`,
+      slug: category.slug.current,
+    })),
+  }));
+
+  // Add static items (Featured, Ads, Bookmarks, Settings)
+  const staticItems = [
+    {
+      title: "Featured",
+      url: "#featured",
+      icon: Star,
+      id: "featured",
+      items: [],
+    },
+    {
+      title: "Ads",
+      url: "#ads",
+      icon: Megaphone,
+      id: "ads",
+      items: [],
+    },
+    {
+      title: "Bookmarks",
+      url: "#bookmarks",
+      icon: Bookmark,
+      id: "bookmarks",
+      items: [],
+    },
+    {
+      title: "Settings",
+      url: "#settings",
+      icon: Settings2,
+      id: "settings",
+      items: [],
+    },
+  ];
+  const navMainItems = [...mappedCategories, ...staticItems];
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -318,8 +230,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} selectedCategory={selectedCategory} />
-        <NavProjects projects={data.projects} selectedTag={selectedTag} />
+        <NavMain items={navMainItems} selectedCategory={selectedCategory} />
+        <NavProjects projects={tagList} selectedTag={selectedTag} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

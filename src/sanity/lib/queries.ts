@@ -20,7 +20,7 @@ const categoryFields = /* groq */ `
 
 export const groupFields = /* groq */ `
   ...,
-  "categories": *[_type=='category' && references(^._id)] | order(priority desc, _createdAt asc)
+  "categories": *[_type=='category' && references(^._id)] | order(priority asc, _createdAt asc)
   { 
     ..., 
   }
@@ -96,15 +96,18 @@ export const itemByIdQuery = defineQuery(`*[_type == "item" && _id == $id][0] {
   ${itemSimpleFields}
 }`);
 
-export const itemInfoBySlugQuery = defineQuery(`*[_type == "item" && slug.current == $slug][0] {
+export const itemInfoBySlugQuery =
+  defineQuery(`*[_type == "item" && slug.current == $slug][0] {
   ${itemSimpleFields}
 }`);
 
-export const itemFullInfoByIdQuery = defineQuery(`*[_type == "item" && _id == $id][0] {
+export const itemFullInfoByIdQuery =
+  defineQuery(`*[_type == "item" && _id == $id][0] {
   ${itemFields}
 }`);
 
-export const itemFullInfoBySlugQuery = defineQuery(`*[_type == "item" && slug.current == $slug 
+export const itemFullInfoBySlugQuery =
+  defineQuery(`*[_type == "item" && slug.current == $slug 
 && forceHidden != true] [0] {
   ${itemFieldsWithRelated}
 }`);
@@ -114,7 +117,8 @@ export const itemFullInfoBySlugQuery = defineQuery(`*[_type == "item" && slug.cu
  * but it is used to generate the type of ItemListQueryResult,
  * if you want to change this query, please update data/item.ts
  */
-export const itemListQuery = defineQuery(`*[_type == "item" && defined(slug.current) 
+export const itemListQuery =
+  defineQuery(`*[_type == "item" && defined(slug.current) 
   && defined(publishDate)
   && forceHidden != true
   && sponsor != true]
@@ -123,7 +127,8 @@ export const itemListQuery = defineQuery(`*[_type == "item" && defined(slug.curr
 }`);
 
 // get sponsor items
-export const sponsorItemListQuery = defineQuery(`*[_type == "item" && defined(slug.current) 
+export const sponsorItemListQuery =
+  defineQuery(`*[_type == "item" && defined(slug.current) 
   && defined(publishDate)
   && forceHidden != true
   && sponsor == true
@@ -133,7 +138,8 @@ export const sponsorItemListQuery = defineQuery(`*[_type == "item" && defined(sl
     ${itemSimpleFields}
 }`);
 
-export const itemListOfFeaturedQuery = defineQuery(`*[_type == "item" && defined(slug.current) 
+export const itemListOfFeaturedQuery =
+  defineQuery(`*[_type == "item" && defined(slug.current) 
   && defined(publishDate) 
   && forceHidden != true 
   && sponsor != true
@@ -142,7 +148,8 @@ export const itemListOfFeaturedQuery = defineQuery(`*[_type == "item" && defined
     ${itemSimpleFields}
 }`);
 
-export const itemListOfLatestQuery = defineQuery(`*[_type == "item" && defined(slug.current) 
+export const itemListOfLatestQuery =
+  defineQuery(`*[_type == "item" && defined(slug.current) 
   && defined(publishDate) 
   && forceHidden != true
   && sponsor != true] 
@@ -150,34 +157,40 @@ export const itemListOfLatestQuery = defineQuery(`*[_type == "item" && defined(s
     ${itemSimpleFields}
 }`);
 
-export const collectionListQuery = defineQuery(`*[_type == "collection" && defined(slug.current)] 
+export const collectionListQuery =
+  defineQuery(`*[_type == "collection" && defined(slug.current)] 
   | order(priority desc) {
     ${collectionFields}
 }`);
 
-export const collectionQuery = defineQuery(`*[_type == "collection" && slug.current == $slug][0] {
+export const collectionQuery =
+  defineQuery(`*[_type == "collection" && slug.current == $slug][0] {
   ${collectionFields}
 }`);
 
-export const groupListQuery = groq`*[_type=="group"] | order(priority desc, _createdAt asc) {
+export const groupListQuery = groq`*[_type=="group"] | order(priority asc, _createdAt asc) {
   ${groupFields}
 }`;
 
-export const categoryListQuery = defineQuery(`*[_type == "category" && defined(slug.current)] 
+export const categoryListQuery =
+  defineQuery(`*[_type == "category" && defined(slug.current)] 
   | order(priority desc) {
     ${categoryFields}
 }`);
 
-export const categoryQuery = defineQuery(`*[_type == "category" && slug.current == $slug][0] {
+export const categoryQuery =
+  defineQuery(`*[_type == "category" && slug.current == $slug][0] {
   ${categoryFields}
 }`);
 
-export const tagListQuery = defineQuery(`*[_type == "tag" && defined(slug.current)] 
+export const tagListQuery =
+  defineQuery(`*[_type == "tag" && defined(slug.current)] 
   | order(slug.current asc) {
     ${tagFields}
 }`);
 
-export const tagQuery = defineQuery(`*[_type == "tag" && slug.current == $slug][0] {
+export const tagQuery =
+  defineQuery(`*[_type == "tag" && slug.current == $slug][0] {
   ${tagFields}
 }`);
 
@@ -192,7 +205,8 @@ export const tagQuery = defineQuery(`*[_type == "tag" && slug.current == $slug][
  * but it is used to generate the type of SubmissionListQueryResult,
  * if you want to change this query, please update data/submission.ts
  */
-export const submissionListQuery = defineQuery(`*[_type == "item" && defined(slug.current)
+export const submissionListQuery =
+  defineQuery(`*[_type == "item" && defined(slug.current)
   && submitter._ref == $userId] 
   | order(_createdAt desc) {
     ${itemSimpleFields}

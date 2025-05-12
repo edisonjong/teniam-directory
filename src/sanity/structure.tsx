@@ -38,14 +38,14 @@ import tag from "./schemas/documents/directory/tag";
 import order from "./schemas/documents/order/order";
 import page from "./schemas/documents/page/page";
 import settings from "./schemas/documents/settings";
+import coreTechnologies from "./schemas/documents/directory/coreTechnologies";
 
 const singletonTypes: DocumentDefinition[] = [settings];
 
 // The StructureResolver is how we're changing the DeskTool structure to linking to document (named Singleton)
 // demo: https://github.com/javayhu/sanity-press/blob/main/sanity/src/structure.ts#L7
-export const structure = (
-  /* typeDefArray: DocumentDefinition[] */
-): StructureResolver => {
+export const structure = (): /* typeDefArray: DocumentDefinition[] */
+StructureResolver => {
   return (S) => {
     // Goes through all of the singletons and translates them into something the Structure tool can understand
     const singletonItems = singletonTypes.map((singletonType) => {
@@ -56,13 +56,13 @@ export const structure = (
           S.editor()
             .id(singletonType.name)
             .schemaType(singletonType.name)
-            .documentId(singletonType.name),
+            .documentId(singletonType.name)
         );
     });
 
     // other list items (like MediaTag)
     const otherListItems = S.documentTypeListItems().filter(
-      (listItem) => !schemaTypes.find((type) => type.name === listItem.getId()),
+      (listItem) => !schemaTypes.find((type) => type.name === listItem.getId())
     );
 
     // helper function
@@ -70,14 +70,14 @@ export const structure = (
       title: string,
       schemaType: string,
       icon: React.ComponentType<{ className?: string }>,
-      filter: string,
+      filter: string
     ) => {
       return S.listItem()
         .title(title)
         .schemaType(schemaType)
         .icon(icon)
         .child(
-          S.documentList().schemaType(schemaType).title(title).filter(filter),
+          S.documentList().schemaType(schemaType).title(title).filter(filter)
         );
     };
 
@@ -86,28 +86,28 @@ export const structure = (
       "Pending Submissions In Free Plan",
       item.name,
       ClockIcon,
-      '_type == "item" && pricePlan == "free" && freePlanStatus == "pending"',
+      '_type == "item" && pricePlan == "free" && freePlanStatus == "pending"'
     );
 
     const rejectedSubmissionsInFreePlan = createFilteredListItem(
       "Rejected Submissions In Free Plan",
       item.name,
       CloseCircleIcon,
-      '_type == "item" && pricePlan == "free" && freePlanStatus == "rejected"',
+      '_type == "item" && pricePlan == "free" && freePlanStatus == "rejected"'
     );
 
     const approvedSubmissionsInFreePlan = createFilteredListItem(
       "Approved Submissions In Free Plan",
       item.name,
       CheckmarkCircleIcon,
-      '_type == "item" && pricePlan == "free" && freePlanStatus == "approved"',
+      '_type == "item" && pricePlan == "free" && freePlanStatus == "approved"'
     );
 
     const itemsInFreePlan = createFilteredListItem(
       "All Items In Free Plan",
       item.name,
       ProjectsIcon,
-      '_type == "item" && pricePlan == "free"',
+      '_type == "item" && pricePlan == "free"'
     );
 
     const freePlanItemManagement = S.listItem()
@@ -121,7 +121,7 @@ export const structure = (
             rejectedSubmissionsInFreePlan,
             approvedSubmissionsInFreePlan,
             itemsInFreePlan,
-          ]),
+          ])
       );
 
     // submissions in pro plan
@@ -129,28 +129,28 @@ export const structure = (
       "Pending Submissions In Pro Plan",
       item.name,
       ClockIcon,
-      '_type == "item" && pricePlan == "pro" && proPlanStatus == "pending"',
+      '_type == "item" && pricePlan == "pro" && proPlanStatus == "pending"'
     );
 
     const failedSubmissionsInProPlan = createFilteredListItem(
       "Failed Submissions In Pro Plan",
       item.name,
       CloseCircleIcon,
-      '_type == "item" && pricePlan == "pro" && proPlanStatus == "failed"',
+      '_type == "item" && pricePlan == "pro" && proPlanStatus == "failed"'
     );
 
     const successSubmissionsInProPlan = createFilteredListItem(
       "Success Submissions In Pro Plan",
       item.name,
       CheckmarkCircleIcon,
-      '_type == "item" && pricePlan == "pro" && proPlanStatus == "success"',
+      '_type == "item" && pricePlan == "pro" && proPlanStatus == "success"'
     );
 
     const itemsInProPlan = createFilteredListItem(
       "All Items In Pro Plan",
       item.name,
       DiamondIcon,
-      '_type == "item" && pricePlan == "pro"',
+      '_type == "item" && pricePlan == "pro"'
     );
 
     const proPlanItemManagement = S.listItem()
@@ -164,7 +164,7 @@ export const structure = (
             failedSubmissionsInProPlan,
             successSubmissionsInProPlan,
             itemsInProPlan,
-          ]),
+          ])
       );
 
     // featured items
@@ -172,7 +172,7 @@ export const structure = (
       "Featured Items",
       item.name,
       StarFilledIcon,
-      '_type == "item" && featured == true',
+      '_type == "item" && featured == true'
     );
 
     // sponsor items
@@ -180,7 +180,7 @@ export const structure = (
       "Sponsor Items",
       item.name,
       ConfettiIcon,
-      '_type == "item" && sponsor == true',
+      '_type == "item" && sponsor == true'
     );
 
     // published items
@@ -188,14 +188,14 @@ export const structure = (
       "Published Items",
       item.name,
       TaskIcon,
-      '_type == "item" && publishDate != null',
+      '_type == "item" && publishDate != null'
     );
 
     const unpublishedItems = createFilteredListItem(
       "Unpublished Items",
       item.name,
       ClockIcon,
-      '_type == "item" && publishDate == null',
+      '_type == "item" && publishDate == null'
     );
 
     const allItems = S.documentTypeListItem(item.name)
@@ -212,8 +212,8 @@ export const structure = (
             S.documentList()
               .title("Items")
               .filter('_type == "item" && submitter._ref == $userId')
-              .params({ userId }),
-          ),
+              .params({ userId })
+          )
       );
 
     // failed orders
@@ -221,7 +221,7 @@ export const structure = (
       "Failed Orders",
       order.name,
       CloseCircleIcon,
-      '_type == "order" && status == "failed"',
+      '_type == "order" && status == "failed"'
     );
 
     // success orders
@@ -229,7 +229,7 @@ export const structure = (
       "Success Orders",
       order.name,
       CheckmarkCircleIcon,
-      '_type == "order" && status == "success"',
+      '_type == "order" && status == "success"'
     );
 
     // all orders
@@ -252,8 +252,8 @@ export const structure = (
             S.documentList()
               .title("Items")
               .filter('_type == "item" && $collectionId in collections[]._ref')
-              .params({ collectionId }),
-          ),
+              .params({ collectionId })
+          )
       );
 
     // groups
@@ -271,8 +271,8 @@ export const structure = (
             S.documentList()
               .title("Categories")
               .filter('_type == "category" && $groupId == group._ref')
-              .params({ groupId }),
-          ),
+              .params({ groupId })
+          )
       );
 
     // categories
@@ -290,8 +290,8 @@ export const structure = (
             S.documentList()
               .title("Posts")
               .filter('_type == "item" && $categoryId in categories[]._ref')
-              .params({ categoryId }),
-          ),
+              .params({ categoryId })
+          )
       );
 
     // tags
@@ -309,10 +309,29 @@ export const structure = (
             S.documentList()
               .title("Posts")
               .filter('_type == "item" && $tagId in tags[]._ref')
-              .params({ tagId }),
-          ),
+              .params({ tagId })
+          )
       );
+    // collections
+    const allTechnologies = S.documentTypeListItem(coreTechnologies.name)
+      .title("All Technologies")
+      .icon(TiersIcon);
 
+    const itemsByTechnologies = S.listItem()
+      .title("Items By Technologies")
+      .icon(MasterDetailIcon)
+      .child(
+        S.documentTypeList(coreTechnologies.name)
+          .title("Items by Collection")
+          .child((technologyId) =>
+            S.documentList()
+              .title("Items")
+              .filter(
+                '_type == "item" && $technologyId in coreTechnologies[]._ref'
+              )
+              .params({ technologyId })
+          )
+      );
     // blog categories
     const allBlogCategories = S.documentTypeListItem(blogCategory.name)
       .title("All Blog Categories")
@@ -328,8 +347,8 @@ export const structure = (
             S.documentList()
               .title("Posts")
               .filter('_type == "blogPost" && $categoryId in categories[]._ref')
-              .params({ categoryId }),
-          ),
+              .params({ categoryId })
+          )
       );
 
     return S.list()
@@ -346,22 +365,24 @@ export const structure = (
           .title("Item management")
           .icon(DashboardIcon)
           .child(
-            S.list().title("Item management").items([
-              allItems,
-              freePlanItemManagement,
-              proPlanItemManagement,
-              S.divider(),
+            S.list()
+              .title("Item management")
+              .items([
+                allItems,
+                freePlanItemManagement,
+                proPlanItemManagement,
+                S.divider(),
 
-              sponsorItems,
-              featuredItems,
-              publishedItems,
-              unpublishedItems,
+                sponsorItems,
+                featuredItems,
+                publishedItems,
+                unpublishedItems,
 
-              S.divider(),
-              itemsBySubmitter,
-              itemsByCategory,
-              itemsByTag,
-            ]),
+                S.divider(),
+                itemsBySubmitter,
+                itemsByCategory,
+                itemsByTag,
+              ])
           ),
 
         S.divider(),
@@ -372,7 +393,7 @@ export const structure = (
           .child(
             S.list()
               .title("Collection management")
-              .items([allCollections, itemsByCollection]),
+              .items([allCollections, itemsByCollection])
           ),
 
         S.listItem()
@@ -381,7 +402,7 @@ export const structure = (
           .child(
             S.list()
               .title("Group management")
-              .items([allGroups, categoriesByGroup]),
+              .items([allGroups, categoriesByGroup])
           ),
 
         // S.documentTypeListItem(category.name)
@@ -392,7 +413,7 @@ export const structure = (
           .child(
             S.list()
               .title("Category management")
-              .items([allCategories, itemsByCategory]),
+              .items([allCategories, itemsByCategory])
           ),
 
         // S.documentTypeListItem(tag.name)
@@ -401,6 +422,15 @@ export const structure = (
           .title("Tag management")
           .icon(TagsIcon)
           .child(S.list().title("Tag management").items([allTags, itemsByTag])),
+
+        S.listItem()
+          .title("Core Technologies management")
+          .icon(ColorWheelIcon)
+          .child(
+            S.list()
+              .title("Core Technologies management")
+              .items([allTechnologies, itemsByTechnologies])
+          ),
 
         S.divider(),
 
@@ -414,7 +444,7 @@ export const structure = (
           .child(
             S.list()
               .title("Blog Category management")
-              .items([allBlogCategories, postsByCategory]),
+              .items([allBlogCategories, postsByCategory])
           ),
 
         S.divider(),
@@ -428,7 +458,7 @@ export const structure = (
           .child(
             S.list()
               .title("Order management")
-              .items([successOrders, failedOrders, S.divider(), allOrders]),
+              .items([successOrders, failedOrders, S.divider(), allOrders])
           ),
 
         S.divider(),
@@ -445,7 +475,7 @@ export const structure = (
                 S.documentTypeListItem(account.name).icon(UsersIcon),
                 S.documentTypeListItem(verificationToken.name).icon(TokenIcon),
                 S.documentTypeListItem(passwordResetToken.name).icon(TokenIcon),
-              ]),
+              ])
           ),
 
         S.divider(),

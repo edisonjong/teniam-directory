@@ -7,6 +7,7 @@ import blogCategory from "./documents/blog/blog-category";
 import blogPost from "./documents/blog/blog-post";
 import category from "./documents/directory/category";
 import collection from "./documents/directory/collection";
+import coreTechnologies from "./documents/directory/coreTechnologies";
 import group from "./documents/directory/group";
 import item from "./documents/directory/item";
 import tag from "./documents/directory/tag";
@@ -21,6 +22,7 @@ export const schemaTypes = [
   category,
   group,
   collection,
+  coreTechnologies,
 
   // blog
   blogPost,

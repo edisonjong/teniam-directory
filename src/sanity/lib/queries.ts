@@ -71,6 +71,7 @@ export const itemSimpleFields = /* groq */ `
   collections[]->,
   categories[]->,
   tags[]->,
+  coreTechnologies[]->,
 `;
 
 const itemFields = /* groq */ `

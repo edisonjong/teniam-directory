@@ -47,6 +47,7 @@ export function NavMain({
   const router = useRouter();
   const searchParams = useSearchParams();
   // Initialize open state for categories with items
+  // close existing tab if new one open
   // React.useEffect(() => {
   //   const initialState: Record<string, boolean> = {};
   //   items.forEach((item) => {
@@ -66,17 +67,17 @@ export function NavMain({
         setViewMode("featured");
         setSelectedCategory(null);
         newParams.delete("category");
-        newParams.set("view", "featured");
+        newParams.set("f", "featured");
       } else if (categoryId === "bookmarks") {
         setViewMode("bookmarks");
         setSelectedCategory(null);
         newParams.delete("category");
         newParams.set("view", "bookmarks");
       } else if (categoryId === "ads") {
-        setViewMode("ads");
+        setViewMode("sponsor");
         setSelectedCategory(null);
         newParams.delete("category");
-        newParams.set("view", "ads");
+        newParams.set("f", "sponsor");
       } else {
         setViewMode("all");
         const newCategory = categoryId === selectedCategory ? null : categoryId;

@@ -47,7 +47,8 @@ export function NavProjects({
     slug: { current: string };
     name: string;
   }) => {
-    const newSelectedTag = item._id === selectedTag ? null : item._id;
+    const newSelectedTag =
+      item.slug.current === selectedTag ? null : item.slug.current;
     setSelectedTag(newSelectedTag);
 
     const newParams = new URLSearchParams(searchParams.toString());

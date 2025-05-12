@@ -49,50 +49,19 @@ import {
 import React from "react";
 
 export default function ClientComponent({ items, groupList, tagList }) {
+  console.log("items", items);
   return (
     <SidebarProvider>
       <TechDirectoryProvider>
         <AppSidebar categoryList={groupList} tagList={tagList} />
-        <Content items={items} />
-        {/* <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-            <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
-              <Separator
-                orientation="vertical"
-                className="mr-2 data-[orientation=vertical]:h-4"
-              />
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="#">
-                      Building Your Application
-                    </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator className="hidden md:block" />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
-          </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-              <div className="bg-muted/50 aspect-video rounded-xl" />
-              <div className="bg-muted/50 aspect-video rounded-xl" />
-              <div className="bg-muted/50 aspect-video rounded-xl" />
-            </div>
-            <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
-          </div>
-        </SidebarInset> */}
+        <Content items={items} categoryList={groupList} tagList={tagList} />
       </TechDirectoryProvider>
     </SidebarProvider>
   );
 }
 
 // Update the Content component to use the sortOrder from context
-function Content({ items }) {
+function Content({ items, categoryList, tagList }) {
   const {
     selectedCategory,
     selectedTag,
@@ -135,75 +104,14 @@ function Content({ items }) {
     }
   }, [filterKey, debouncedFilterKey, isLoading]);
 
-  // Filter products based on selected category, tag, featured status, view mode, and sort order
-  const filteredProducts = React.useMemo(() => {
-    // First filter by view mode
-    let filtered = items;
-
-    if (viewMode === "featured") {
-      filtered = items.filter((product) => product.featured);
-    } else if (viewMode === "bookmarks") {
-      filtered = items.filter((product) =>
-        bookmarkedItems.includes(product.id)
-      );
-    } else if (viewMode === "ads") {
-      filtered = items.filter((product) => product.isAd);
-    }
-
-    // Then apply additional filters
-    filtered = filtered?.filter((product: any) => {
-      // Check if product matches the selected category (main category or subcategory)
-      const categoryMatch = selectedCategory
-        ? product.category === selectedCategory ||
-          product.subcategory === selectedCategory
-        : true;
-
-      // Check if product matches the selected tag
-      const tagMatch = selectedTag ? product.tags.includes(selectedTag) : true;
-
-      // Check if product matches the featured filter
-      const featuredMatch = selectedFeatured ? product.featured === true : true;
-
-      return categoryMatch && tagMatch && featuredMatch;
-    });
-
-    // Apply sorting
-    if (sortOrder !== "default") {
-      return [...filtered].sort((a, b) => {
-        switch (sortOrder) {
-          case "newest":
-            // For demo purposes, we'll use the id as a proxy for creation date
-            // In a real app, you'd use actual timestamps
-            return Number.parseInt(b.id) - Number.parseInt(a.id);
-          case "oldest":
-            return Number.parseInt(a.id) - Number.parseInt(b.id);
-          case "a-z":
-            return a.title.localeCompare(b.title);
-          case "z-a":
-            return b.title.localeCompare(a.title);
-          default:
-            return 0;
-        }
-      });
-    }
-
-    return filtered;
-  }, [
-    selectedCategory,
-    selectedTag,
-    selectedFeatured,
-    viewMode,
-    bookmarkedItems,
-    sortOrder,
-  ]);
-
   // Get the title for the current view
   const getTitle = React.useCallback(() => {
+    debugger;
     if (viewMode === "featured") {
       return "Featured";
     } else if (viewMode === "bookmarks") {
       return "Bookmarks";
-    } else if (viewMode === "ads") {
+    } else if (viewMode === "sponsor") {
       return "Sponsored";
     }
 
@@ -230,6 +138,7 @@ function Content({ items }) {
     }
 
     if (selectedTag) {
+      debugger;
       parts.push(formatId(selectedTag));
     }
 
@@ -251,7 +160,7 @@ function Content({ items }) {
         setSelectedFeatured(true);
         setViewMode("all");
       } else if (value === "ads") {
-        setViewMode("ads");
+        setViewMode("sponsor");
         setSelectedFeatured(false);
       } else {
         setSelectedFeatured(false);
@@ -352,7 +261,11 @@ function Content({ items }) {
 
           <div className="flex items-center gap-2 ml-2">
             {/* Enhanced Search Component */}
-            <CommandSearch />
+            <CommandSearch
+              categoryList={categoryList}
+              tagList={tagList}
+              items={items}
+            />
 
             {/* Filter Dropdown - Icon Only */}
             <DropdownMenu>
@@ -424,8 +337,8 @@ function Content({ items }) {
 
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProducts.length > 0 ? (
-            filteredProducts.map((product, index) => (
+          {items.length > 0 ? (
+            items.map((product, index) => (
               <AnimatedCard
                 key={product.id}
                 delay={index * 50}

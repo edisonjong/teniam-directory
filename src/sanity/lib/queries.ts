@@ -184,12 +184,16 @@ export const categoryQuery =
   ${categoryFields}
 }`);
 
+// export const tagListQuery =
+//   defineQuery(`*[_type == "tag" && defined(slug.current)]
+//   | order(slug.current asc) {
+//     ${tagFields}
+// }`);
 export const tagListQuery =
   defineQuery(`*[_type == "tag" && defined(slug.current)] 
-  | order(slug.current asc) {
+  | order(name asc) {
     ${tagFields}
 }`);
-
 export const tagQuery =
   defineQuery(`*[_type == "tag" && slug.current == $slug][0] {
   ${tagFields}

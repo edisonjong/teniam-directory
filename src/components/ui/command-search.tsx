@@ -31,7 +31,8 @@ import { useDebounce } from "@/hooks/use-debounce";
 // import { Badge } from "./ui/badge";
 // import { useDebounce } from "@/lib/use-debounce";
 
-export function CommandSearch() {
+export function CommandSearch({ categoryList, tagList, items }) {
+  console.log("tagList", tagList);
   const router = useRouter();
   const {
     setSelectedCategory,
@@ -369,14 +370,14 @@ export function CommandSearch() {
               <CommandSeparator />
 
               <CommandGroup heading="Popular Tags">
-                {allTags.slice(0, 8).map((tag) => (
+                {tagList.slice(0, 8).map((tag) => (
                   <CommandItem
                     key={tag}
-                    onSelect={() => handleTagSelect(tag)}
+                    onSelect={() => handleTagSelect(tag.slug.current)}
                     className="py-2"
                   >
                     <Tag className="mr-2 h-3.5 w-3.5" />
-                    <span>{tag}</span>
+                    <span>{tag.name}</span>
                   </CommandItem>
                 ))}
               </CommandGroup>
@@ -409,7 +410,7 @@ export function CommandSearch() {
                 <CommandItem
                   onSelect={() => {
                     setOpen(false);
-                    setViewMode("ads");
+                    setViewMode("sponsor");
                     setHighlightedProductId(null);
                   }}
                   className="py-2"

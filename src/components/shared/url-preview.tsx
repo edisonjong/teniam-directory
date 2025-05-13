@@ -1,18 +1,20 @@
-"use client";
-import type React from "react";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+'use client';
+import type React from 'react';
+import { useState, useEffect } from 'react';
+import Image, { ImageProps } from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface UrlPreviewProps {
   url: string;
   className?: string;
+  item?: any;
+  imageProps?: any;
 }
 
 // Fallback component that mimics a URL preview
 const FallbackPreview: React.FC<{ url: string }> = ({ url }) => {
   // Extract domain for display
-  const domain = url.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+  const domain = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow">
@@ -46,7 +48,13 @@ const FallbackPreview: React.FC<{ url: string }> = ({ url }) => {
 };
 
 // Custom URL preview component that uses a simple iframe approach
-export const UrlPreview: React.FC<UrlPreviewProps> = ({ url, className }) => {
+export const UrlPreview: React.FC<UrlPreviewProps> = ({
+  url,
+  className,
+  imageProps,
+  item,
+}) => {
+  console.log('item', item);
   const [mounted, setMounted] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -65,7 +73,7 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({ url, className }) => {
   }
 
   return (
-    <div className={cn("w-full", className)}>
+    <div className={cn('w-full', className)}>
       <div className="flex flex-col overflow-hidden rounded-xl border shadow-lg">
         {/* Browser chrome */}
         <div className="flex h-8 items-center border-b bg-muted px-2 sm:h-10 sm:px-4">
@@ -89,8 +97,10 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({ url, className }) => {
           {/* Use a wrapper div with padding-bottom to maintain aspect ratio */}
           <div className="relative pb-[56.25%]">
             <Image
-              src="https://sjc.microlink.io/1L4TCv65Tu2XCBOEIWyJpLIw6Scnfu-KQFzi6rab7tk2kywjLz13dGzKsAHAEkeqGVRJprtmsiIQiVt56c76AQ.jpeg"
-              alt="Tailwind CSS Website Preview"
+              src={imageProps.src}
+              alt={item.image?.alt || `image for ${item.name}`}
+              title={item.image?.alt || `image for ${item.name}`}
+              loading="eager"
               fill
               className="object-contain"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 60vw"

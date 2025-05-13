@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import * as React from "react";
+import * as React from 'react';
 
 type BookmarkContextType = {
   bookmarkedItems: string[];
@@ -19,14 +19,28 @@ export function BookmarkProvider({ children }: { children: React.ReactNode }) {
   const [bookmarkedItems, setBookmarkedItems] = React.useState<string[]>([]);
 
   // Initialize from localStorage on client-side only
+  // React.useEffect(() => {
+  //   const storedBookmarks = localStorage.getItem('bookmarkedItems');
+  //   if (storedBookmarks) {
+  //     try {
+  //       setBookmarkedItems(JSON.parse(storedBookmarks));
+  //     } catch (e) {
+  //       console.error('Failed to parse bookmarks from localStorage', e);
+  //       setBookmarkedItems([]);
+  //     }
+  //   }
+  // }, []);
   React.useEffect(() => {
-    const storedBookmarks = localStorage.getItem("bookmarkedItems");
-    if (storedBookmarks) {
-      try {
-        setBookmarkedItems(JSON.parse(storedBookmarks));
-      } catch (e) {
-        console.error("Failed to parse bookmarks from localStorage", e);
-        setBookmarkedItems([]);
+    if (typeof window !== 'undefined') {
+      // Ensure it only runs on the client-side
+      const storedBookmarks = localStorage.getItem('bookmarkedItems');
+      if (storedBookmarks) {
+        try {
+          setBookmarkedItems(JSON.parse(storedBookmarks));
+        } catch (e) {
+          console.error('Failed to parse bookmarks from localStorage', e);
+          setBookmarkedItems([]);
+        }
       }
     }
   }, []);
@@ -39,9 +53,9 @@ export function BookmarkProvider({ children }: { children: React.ReactNode }) {
 
       // Save to localStorage with error handling
       try {
-        localStorage.setItem("bookmarkedItems", JSON.stringify(newBookmarks));
+        localStorage.setItem('bookmarkedItems', JSON.stringify(newBookmarks));
       } catch (e) {
-        console.error("Failed to save bookmarks to localStorage", e);
+        console.error('Failed to save bookmarks to localStorage', e);
       }
       return newBookmarks;
     });

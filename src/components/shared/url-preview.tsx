@@ -37,7 +37,7 @@ const FallbackPreview: React.FC<{ url: string }> = ({ url }) => {
           Visit this website to learn more about its content and services.
         </p>
       </div>
-      <div className="flex items-center p-4 pt-0 sm:p-6 sm:pt-0">
+      <div className="flex items-center  pt-0 sm:p-6 sm:pt-0">
         <div className="flex items-center text-xs text-muted-foreground sm:text-sm">
           <span className="line-clamp-1">{url}</span>
         </div>
@@ -93,7 +93,7 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
             </div>
           )}
-          <div className="relative pb-[56.25%]">
+          <div className="relative pb-[53.25%]">
             <Image
               src={imageUrl}
               alt={imageAlt}

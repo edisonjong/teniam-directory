@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { Globe } from 'lucide-react';
+import { ArrowLeft, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlPreview } from '@/components/shared/url-preview';
-import { TailwindLogo } from '@/components/logo';
+import { Logo, TailwindLogo } from '@/components/logo';
 import SubscribeSection from '../subscribe-section';
 import IntegrationsSection from '../integrations-section';
 import { sanityFetch } from '@/sanity/lib/fetch';
@@ -60,7 +60,14 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
         <div className="relative pt-12 md:pt-24">
           <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
           <div className="mx-auto max-w-7xl px-6">
-            <div className="flex justify-end mb-6">
+            <div className="flex justify-between mb-8">
+              <Button variant="outline" size="sm" asChild>
+                <Link href="/directories">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Directory
+                </Link>
+              </Button>
+
               <ShareButton />
             </div>
 
@@ -74,30 +81,36 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                   className="mb-6"
                 >
                   <Link href={itemLink}>
-                    <div className="flex w-full items-center gap-4">
-                      {iconProps?.src && (
-                        <Image
-                          src={iconProps.src}
-                          alt={item.icon?.alt || `icon of ${item.name}`}
-                          title={item.icon?.alt || `icon of ${item.name}`}
-                          width={32}
-                          height={32}
-                          className="object-cover image-scale"
-                          {...(iconBlurDataURL && {
-                            placeholder: 'blur',
-                            blurDataURL: iconBlurDataURL,
-                          })}
-                        />
-                      )}
-                      <h1
-                        className={cn(
-                          'text-4xl tracking-wider font-bold flex items-center gap-2',
-                          item.featured &&
-                            'text-gradient_indigo-purple font-semibold'
+                    <div className="flex  items-center space-x-3">
+                      <div className="flex items-center justify-center  w-15 h-15 rounded-lg border border-gray-300">
+                        {iconProps?.src ? (
+                          <Image
+                            src={iconProps.src}
+                            alt={item.icon?.alt || `icon of ${item.name}`}
+                            title={item.icon?.alt || `icon of ${item.name}`}
+                            width={32}
+                            height={32}
+                            className="object-contain"
+                            {...(iconBlurDataURL && {
+                              placeholder: 'blur',
+                              blurDataURL: iconBlurDataURL,
+                            })}
+                          />
+                        ) : (
+                          <span className="text-gray-600 text-3xl font-bold">{`<>`}</span>
                         )}
-                      >
-                        {item.name}
-                      </h1>
+                      </div>
+                      <div>
+                        <h1
+                          className={cn(
+                            'text-4xl tracking-wider font-bold flex items-center gap-2',
+                            item.featured &&
+                              'text-gradient_indigo-purple font-semibold'
+                          )}
+                        >
+                          {item.name}
+                        </h1>
+                      </div>
                     </div>
                   </Link>
                 </MotionWrapper>
@@ -184,7 +197,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.9 }}
                 >
-                  <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative w-full overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
+                  <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative w-full overflow-hidden rounded-2xl border  shadow-lg shadow-zinc-950/15 ring-1">
                     <UrlPreview
                       url={itemLink}
                       className="w-full"
@@ -203,33 +216,41 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                   <h3 className="mb-6 text-lg font-medium">
                     Core Technologies
                   </h3>
-                  <div className="grid grid-cols-1 gap-4 gap-y-6">
-                    {item?.coreTechnologies?.map((tech, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        {tech?.icon && (
-                          <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
-                            <Image
-                              src={urlForIcon(tech.icon)?.src || ''}
-                              alt={tech.icon.alt || `icon of ${tech.name}`}
-                              title={tech.icon.alt || `icon of ${tech.name}`}
-                              height={40}
-                              width={40}
-                              className="object-cover image-scale"
-                              loading="lazy"
-                            />
+
+                  {item?.coreTechnologies &&
+                  item.coreTechnologies.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-4 gap-y-6">
+                      {item.coreTechnologies.map((tech, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          {tech?.icon && (
+                            <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
+                              <Image
+                                src={urlForIcon(tech.icon)?.src || ''}
+                                alt={tech.icon.alt || `icon of ${tech.name}`}
+                                title={tech.icon.alt || `icon of ${tech.name}`}
+                                height={40}
+                                width={40}
+                                className="object-cover image-scale"
+                                loading="lazy"
+                              />
+                            </div>
+                          )}
+                          <div>
+                            <span className="block text-sm font-medium">
+                              {tech.name}
+                            </span>
+                            <span className="text-muted-foreground block text-xs">
+                              {tech.description}
+                            </span>
                           </div>
-                        )}
-                        <div>
-                          <span className="block text-sm font-medium">
-                            {tech.name}
-                          </span>
-                          <span className="text-muted-foreground block text-xs">
-                            {tech.description}
-                          </span>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground italic">
+                      No core technologies added.
+                    </p>
+                  )}
                 </MotionWrapper>
               </div>
             </div>

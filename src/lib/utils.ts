@@ -1,10 +1,10 @@
-import { siteConfig } from "@/config/site";
-import type { ItemInfo } from "@/types";
-import { type ClassValue, clsx } from "clsx";
-import type { ReadonlyURLSearchParams } from "next/navigation";
-import { twMerge } from "tailwind-merge";
-import { slugify as transliterateSlugify } from "transliteration";
-import { PricePlans } from "./submission";
+import { siteConfig } from '@/config/site';
+import type { ItemInfo } from '@/types';
+import { type ClassValue, clsx } from 'clsx';
+import type { ReadonlyURLSearchParams } from 'next/navigation';
+import { twMerge } from 'tailwind-merge';
+import { slugify as transliterateSlugify } from 'transliteration';
+import { PricePlans } from './submission';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -18,9 +18,9 @@ export function slugify(str: string): string {
   return transliterated
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, "") // Remove non-word chars (except spaces and dashes)
-    .replace(/[\s_-]+/g, "-") // Replace spaces and underscores with a single dash
-    .replace(/^-+|-+$/g, "") // Remove leading/trailing dashes
+    .replace(/[^\w\s-]/g, '') // Remove non-word chars (except spaces and dashes)
+    .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with a single dash
+    .replace(/^-+|-+$/g, '') // Remove leading/trailing dashes
     .slice(0, 100);
 }
 
@@ -30,8 +30,8 @@ export function slugify(str: string): string {
 export function getLocaleDate(input: string | number): string {
   const date = new Date(input);
   const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
   return `${year}/${month}/${day}`;
 }
 
@@ -40,10 +40,10 @@ export function getLocaleDate(input: string | number): string {
  */
 export function formatLongDate(date: string | number): string {
   const dateObj = new Date(date);
-  return dateObj.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
+  return dateObj.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
   });
 }
 
@@ -52,10 +52,10 @@ export function formatLongDate(date: string | number): string {
  */
 export const createUrl = (
   pathname: string,
-  params: URLSearchParams | ReadonlyURLSearchParams,
+  params: URLSearchParams | ReadonlyURLSearchParams
 ) => {
   const paramsString = params.toString();
-  const queryString = `${paramsString.length ? "?" : ""}${paramsString}`;
+  const queryString = `${paramsString.length ? '?' : ''}${paramsString}`;
   return `${pathname}${queryString}`;
 };
 
@@ -66,7 +66,8 @@ export function absoluteUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL ??
+const baseUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
   `http://localhost:${process.env.PORT ?? 3000}`;
 
 export function getBaseUrl(): string {
@@ -78,10 +79,12 @@ export function getBaseUrl(): string {
  */
 export function checkValidSponsor(item: ItemInfo) {
   const now = new Date();
-  return item.pricePlan.toUpperCase() === PricePlans.SPONSOR.toUpperCase() 
-    && item.sponsorPlanStatus === "success"
-    && new Date(item.sponsorStartDate) <= now
-    && new Date(item.sponsorEndDate) >= now;
+  return (
+    item.pricePlan.toUpperCase() === PricePlans.SPONSOR.toUpperCase() &&
+    item.sponsorPlanStatus === 'success' &&
+    new Date(item.sponsorStartDate) <= now &&
+    new Date(item.sponsorEndDate) >= now
+  );
 }
 
 /**
@@ -137,14 +140,14 @@ export function getItemTargetLinkInWebsite(item: ItemInfo) {
 
     // make sure the link is valid, has http:// or https:// as prefix
     const url = new URL(item.link);
-    url.search = url.search ? `${url.search}&${utmParams}` : `?${utmParams}`;
+    // url.search = url.search ? `${url.search}&${utmParams}` : `?${utmParams}`;
 
     return url.toString();
   } catch (error) {
     console.error(
-      "getItemTargetLinkInWebsite, invalid link:",
+      'getItemTargetLinkInWebsite, invalid link:',
       item.link,
-      error,
+      error
     );
     return item.link;
   }
@@ -153,15 +156,15 @@ export function getItemTargetLinkInWebsite(item: ItemInfo) {
 ///////////////// methods below are not used in the app //////////////////
 
 export function nFormatter(num: number, digits?: number) {
-  if (!num) return "0";
+  if (!num) return '0';
   const lookup = [
-    { value: 1, symbol: "" },
-    { value: 1e3, symbol: "K" },
-    { value: 1e6, symbol: "M" },
-    { value: 1e9, symbol: "G" },
-    { value: 1e12, symbol: "T" },
-    { value: 1e15, symbol: "P" },
-    { value: 1e18, symbol: "E" },
+    { value: 1, symbol: '' },
+    { value: 1e3, symbol: 'K' },
+    { value: 1e6, symbol: 'M' },
+    { value: 1e9, symbol: 'G' },
+    { value: 1e12, symbol: 'T' },
+    { value: 1e15, symbol: 'P' },
+    { value: 1e18, symbol: 'E' },
   ];
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
   const item = lookup
@@ -169,12 +172,12 @@ export function nFormatter(num: number, digits?: number) {
     .reverse()
     .find((item) => num >= item.value);
   return item
-    ? (num / item.value).toFixed(digits || 1).replace(rx, "$1") + item.symbol
-    : "0";
+    ? (num / item.value).toFixed(digits || 1).replace(rx, '$1') + item.symbol
+    : '0';
 }
 
 export function capitalize(str: string) {
-  if (!str || typeof str !== "string") return str;
+  if (!str || typeof str !== 'string') return str;
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
@@ -184,6 +187,6 @@ export const truncate = (str: string, length: number) => {
 };
 
 export function nl2br(str?: string) {
-  if (!str) return "";
-  return str.split("\n").join("<br>");
+  if (!str) return '';
+  return str.split('\n').join('<br>');
 }

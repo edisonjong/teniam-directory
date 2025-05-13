@@ -1,7 +1,8 @@
 'use client';
+
 import type React from 'react';
 import { useState, useEffect } from 'react';
-import Image, { ImageProps } from 'next/image';
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface UrlPreviewProps {
@@ -13,13 +14,11 @@ interface UrlPreviewProps {
 
 // Fallback component that mimics a URL preview
 const FallbackPreview: React.FC<{ url: string }> = ({ url }) => {
-  // Extract domain for display
   const domain = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
 
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow">
       <div className="relative bg-muted">
-        {/* Use a wrapper div with padding-bottom to maintain aspect ratio */}
         <div className="relative pb-[56.25%]">
           <Image
             src="/placeholder.svg?height=400&width=800"
@@ -47,28 +46,28 @@ const FallbackPreview: React.FC<{ url: string }> = ({ url }) => {
   );
 };
 
-// Custom URL preview component that uses a simple iframe approach
 export const UrlPreview: React.FC<UrlPreviewProps> = ({
   url,
   className,
   imageProps,
   item,
 }) => {
-  console.log('item', item);
   const [mounted, setMounted] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
-    // Reset error state when URL changes
     setError(false);
     setIsLoading(true);
   }, [url]);
 
   if (!mounted) return null;
 
-  if (error) {
+  const imageUrl = imageProps?.src || item?.image?.src || '/placeholder.svg';
+  const imageAlt = item?.image?.alt || 'Preview image';
+
+  if (error || !imageUrl) {
     return <FallbackPreview url={url} />;
   }
 
@@ -87,25 +86,27 @@ export const UrlPreview: React.FC<UrlPreviewProps> = ({
           </div>
         </div>
 
-        {/* Image container with improved responsive styling */}
+        {/* Image container */}
         <div className="relative bg-muted">
           {isLoading && (
             <div className="absolute inset-0 z-10 flex items-center justify-center">
               <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
             </div>
           )}
-          {/* Use a wrapper div with padding-bottom to maintain aspect ratio */}
           <div className="relative pb-[56.25%]">
             <Image
-              src={imageProps.src}
-              alt={item.image?.alt || `image for ${item.name}`}
-              title={item.image?.alt || `image for ${item.name}`}
+              src={imageUrl}
+              alt={imageAlt}
+              title={imageAlt}
               loading="eager"
               fill
               className="object-contain"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 60vw"
               priority
-              onError={() => setError(true)}
+              onError={() => {
+                console.error('Image failed to load:', imageUrl);
+                setError(true);
+              }}
               onLoad={() => setIsLoading(false)}
             />
           </div>

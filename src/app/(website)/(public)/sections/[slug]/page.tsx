@@ -37,24 +37,15 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
       query: sponsorItemListQuery,
     }),
   ]);
-  console.log('item', item);
+
   if (!item) {
     console.error('ItemPage, item not found');
     return notFound();
   }
-  const members = [
-    {
-      name: 'Mubashir Hussan',
-      role: 'Sanity Developer',
-      avatar: 'https://avatars.githubusercontent.com/u/46175697?v=4',
-    },
-  ];
-  const imageProps = item?.image ? urlForImage(item?.image) : null;
-  console.log('item', imageProps);
 
+  const imageProps = item?.image ? urlForImage(item.image) : null;
   const imageBlurDataURL = item?.image?.blurDataURL || null;
   const iconProps = item?.icon ? urlForIcon(item.icon) : null;
-  //   const technologyIconProps = item?.icon ? urlForIcon(item.icon) : null;
   const iconBlurDataURL = item?.icon?.blurDataURL || null;
   const publishDate = item.publishDate || item._createdAt;
   const date = getLocaleDate(publishDate);
@@ -62,6 +53,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
   const sponsorItem = sponsorItems?.length
     ? sponsorItems[Math.floor(Math.random() * sponsorItems.length)]
     : null;
+
   return (
     <main className="overflow-x-hidden">
       <section>
@@ -83,11 +75,11 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 >
                   <Link href={itemLink}>
                     <div className="flex w-full items-center gap-4">
-                      {iconProps && (
+                      {iconProps?.src && (
                         <Image
-                          src={iconProps?.src}
-                          alt={item.icon.alt || `icon of ${item.name}`}
-                          title={item.icon.alt || `icon of ${item.name}`}
+                          src={iconProps.src}
+                          alt={item.icon?.alt || `icon of ${item.name}`}
+                          title={item.icon?.alt || `icon of ${item.name}`}
                           width={32}
                           height={32}
                           className="object-cover image-scale"
@@ -116,7 +108,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="relative z-10 max-w-xl text-3xl font-medium sm:text-4xl lg:text-5xl"
                 >
-                  {`${item.description}`}
+                  {item.description}
                 </MotionHeading>
 
                 <MotionWrapper
@@ -143,7 +135,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     variant="ghost"
                     className="h-10.5 rounded-xl px-5"
                   >
-                    <Link href="#link">Submit</Link>
+                    <Link href="/submit">Submit</Link>
                   </Button>
                 </MotionWrapper>
 
@@ -172,15 +164,15 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     />
                     <div>
                       <h3 className="text-sm font-medium md:text-base">
-                        {item?.submitter?.name}
+                        {item?.submitter?.name || 'Anonymous'}
                       </h3>
                       <p className="text-xs text-muted-foreground md:text-sm">
-                        {item?.submitter?.role}
+                        {item?.submitter?.role || 'Contributor'}
                       </p>
                     </div>
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    <time dateTime="2023-04-25"> {date}</time>
+                    <time dateTime={publishDate}> {date}</time>
                   </div>
                 </MotionWrapper>
               </div>
@@ -212,19 +204,21 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     Core Technologies
                   </h3>
                   <div className="grid grid-cols-1 gap-4 gap-y-6">
-                    {item?.coreTechnologies.map((tech, index) => (
+                    {item?.coreTechnologies?.map((tech, index) => (
                       <div key={index} className="flex items-start gap-3">
-                        <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
-                          <Image
-                            src={tech?.icon ? urlForIcon(tech.icon) : null}
-                            alt={tech.icon.alt || `icon of ${tech.name}`}
-                            title={tech.icon.alt || `icon of ${tech.name}`}
-                            height="40"
-                            width="40"
-                            className="object-cover image-scale"
-                            loading="lazy"
-                          />
-                        </div>
+                        {tech?.icon && (
+                          <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
+                            <Image
+                              src={urlForIcon(tech.icon)?.src || ''}
+                              alt={tech.icon.alt || `icon of ${tech.name}`}
+                              title={tech.icon.alt || `icon of ${tech.name}`}
+                              height={40}
+                              width={40}
+                              className="object-cover image-scale"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
                         <div>
                           <span className="block text-sm font-medium">
                             {tech.name}

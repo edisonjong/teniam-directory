@@ -13,6 +13,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useRouter, useSearchParams } from "next/navigation";
+// import { Brain, LucideIcon } from "lucide-react";
+import * as Icons from "lucide-react";
 
 // Function to generate a consistent color based on the tag name
 function stringToColor(str: string) {
@@ -33,6 +35,7 @@ export function NavProjects({
     url?: string;
     _id: string;
     avatar?: string;
+    icon?: string;
     slug: { current: string };
   }[];
   selectedCategory: string | null;
@@ -46,6 +49,7 @@ export function NavProjects({
     _id: string;
     slug: { current: string };
     name: string;
+    icon?: string;
   }) => {
     debugger;
     const newSelectedCategory =
@@ -73,6 +77,11 @@ export function NavProjects({
       <SidebarGroupLabel>Categories</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => {
+          const Icon =
+            ((item.icon &&
+              Icons[item.icon as keyof typeof Icons]) as Icons.LucideIcon) ||
+            Icons.Brain;
+
           const bgColor = stringToColor(item.name);
           return (
             <SidebarMenuItem key={item.name}>
@@ -80,19 +89,8 @@ export function NavProjects({
                 isActive={selectedCategory === item.slug.current}
                 onClick={() => handleCategoryClick(item)}
               >
-                <Avatar className="mr-2 h-6 w-6 rounded-md overflow-hidden">
-                  <AvatarImage
-                    src={item.avatar ? item.avatar : undefined}
-                    alt={item.name}
-                    className="rounded-md object-cover w-full h-full"
-                  />
-                  <AvatarFallback
-                    className="rounded-md text-xs flex items-center justify-center"
-                    style={{ backgroundColor: bgColor }}
-                  >
-                    {item.name.substring(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+                {Icon && <Icon className="h-4 w-4" />}
+
                 <span>{item.name}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>

@@ -31,20 +31,11 @@ export default defineType({
     }),
     defineField({
       name: "icon",
-      title: "Icon",
-      type: "image",
-      fields: [
-        {
-          name: "alt",
-          type: "string",
-          title: "Alternative Text",
-          description: "Important for SEO and accessiblity",
-          initialValue: (_, parent) => {
-            return `Icon for ${parent?.name || "item"}`;
-          },
-        },
-      ],
+      title: "Icon Name",
+      type: "string",
+      validation: (rule) => rule.required(),
     }),
+
     defineField({
       name: "group",
       title: "Group",

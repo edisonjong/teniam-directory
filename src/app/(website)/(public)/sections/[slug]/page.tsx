@@ -1,27 +1,27 @@
-import Link from 'next/link';
-import { ArrowLeft, Globe } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { UrlPreview } from '@/components/shared/url-preview';
-import { Logo, TailwindLogo } from '@/components/logo';
-import SubscribeSection from '../subscribe-section';
-import IntegrationsSection from '../integrations-section';
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { ItemFullInfo } from '@/types';
-import ShareButton from '@/components/shared/share-button';
+import Link from "next/link";
+import { ArrowLeft, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { UrlPreview } from "@/components/shared/url-preview";
+import { Logo, TailwindLogo } from "@/components/logo";
+import SubscribeSection from "../subscribe-section";
+import IntegrationsSection from "../integrations-section";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { ItemFullInfo } from "@/types";
+import ShareButton from "@/components/shared/share-button";
 import {
   itemFullInfoBySlugQuery,
   sponsorItemListQuery,
-} from '@/sanity/lib/queries';
-import { SponsorItemListQueryResult } from '@/sanity.types';
-import { notFound } from 'next/navigation';
+} from "@/sanity/lib/queries";
+import { SponsorItemListQueryResult } from "@/sanity.types";
+import { notFound } from "next/navigation";
 import {
   MotionHeading,
   MotionWrapper,
-} from '@/components/shared/motion-animation';
-import { urlForIcon, urlForImage } from '@/lib/image';
-import { cn, getItemTargetLinkInWebsite, getLocaleDate } from '@/lib/utils';
-import Image from 'next/image';
-import ItemCustomMdx from '@/components/item/item-custom-mdx';
+} from "@/components/shared/motion-animation";
+import { urlForIcon, urlForImage } from "@/lib/image";
+import { cn, getItemTargetLinkInWebsite, getLocaleDate } from "@/lib/utils";
+import Image from "next/image";
+import ItemCustomMdx from "@/components/item/item-custom-mdx";
 
 interface ItemPageProps {
   params: { slug: string };
@@ -37,9 +37,9 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
       query: sponsorItemListQuery,
     }),
   ]);
-
+  console.log("item", item);
   if (!item) {
-    console.error('ItemPage, item not found');
+    console.error("ItemPage, item not found");
     return notFound();
   }
 
@@ -92,7 +92,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                             height={32}
                             className="object-contain"
                             {...(iconBlurDataURL && {
-                              placeholder: 'blur',
+                              placeholder: "blur",
                               blurDataURL: iconBlurDataURL,
                             })}
                           />
@@ -103,9 +103,9 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                       <div>
                         <h1
                           className={cn(
-                            'text-4xl tracking-wider font-bold flex items-center gap-2',
+                            "text-4xl tracking-wider font-bold flex items-center gap-2",
                             item.featured &&
-                              'text-gradient_indigo-purple font-semibold'
+                              "text-gradient_indigo-purple font-semibold"
                           )}
                         >
                           {item.name}
@@ -116,8 +116,8 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 </MotionWrapper>
 
                 <MotionHeading
-                  initial={{ opacity: 0, y: 20, filter: 'blur(12px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  initial={{ opacity: 0, y: 20, filter: "blur(12px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="relative z-10 max-w-xl text-3xl font-medium sm:text-4xl lg:text-5xl"
                 >
@@ -160,7 +160,32 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 >
                   <ItemCustomMdx source={item.introduction} />
                 </MotionWrapper>
-
+                {item?.tags && item.tags.length > 0 && (
+                  <MotionWrapper
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1.0 }}
+                    className="mt-6 flex flex-wrap gap-2"
+                  >
+                    <h3 className="mb-6 text-lg font-medium">Tags</h3>
+                    {item?.tags && item?.tags?.length > 0 ? (
+                      item.tags.map((tag, index: number) => (
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          key={index}
+                          className="gap-1 pr-2 shadow-none transition-all duration-300 pointer-events-none cursor-default"
+                        >
+                          #{tag.name}
+                        </Button>
+                      ))
+                    ) : (
+                      <p className="text-sm text-muted-foreground italic">
+                        No tags added.
+                      </p>
+                    )}
+                  </MotionWrapper>
+                )}
                 <div className="border-t border-dashed my-8" />
 
                 <MotionWrapper
@@ -177,10 +202,10 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     />
                     <div>
                       <h3 className="text-sm font-medium md:text-base">
-                        {item?.submitter?.name || 'Anonymous'}
+                        {item?.submitter?.name || "Anonymous"}
                       </h3>
                       <p className="text-xs text-muted-foreground md:text-sm">
-                        {item?.submitter?.role || 'Contributor'}
+                        {item?.submitter?.role || "Contributor"}
                       </p>
                     </div>
                   </div>
@@ -225,7 +250,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                           {tech?.icon && (
                             <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
                               <Image
-                                src={urlForIcon(tech.icon)?.src || ''}
+                                src={urlForIcon(tech.icon)?.src || ""}
                                 alt={tech.icon.alt || `icon of ${tech.name}`}
                                 title={tech.icon.alt || `icon of ${tech.name}`}
                                 height={40}

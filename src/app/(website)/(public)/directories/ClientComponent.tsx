@@ -105,7 +105,6 @@ function Content({ items, categoryList }) {
 
   // Get the title for the current view
   const getTitle = React.useCallback(() => {
-    debugger;
     if (viewMode === "featured") {
       return "Featured";
     } else if (viewMode === "bookmarks") {
@@ -137,7 +136,6 @@ function Content({ items, categoryList }) {
     }
 
     if (selectedTag) {
-      debugger;
       parts.push(formatId(selectedTag));
     }
 

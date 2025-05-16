@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Bookmark, ChevronRight, Star } from 'lucide-react';
-import Link from 'next/link';
-import { ShineBorder } from '@/components/ui/shine-border';
-import { useBookmarks } from './bookmark-context';
-import { useToast } from '@/hooks/use-toast';
-import { ToastAction } from '@/components/ui/toast';
-import Image from 'next/image';
-import { urlForIcon } from '@/lib/image';
+import React from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Bookmark, ChevronRight, Star } from "lucide-react";
+import Link from "next/link";
+import { ShineBorder } from "@/components/ui/shine-border";
+import { useBookmarks } from "./bookmark-context";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
+import Image from "next/image";
+import { urlForIcon } from "@/lib/image";
 interface LogoImage {
   alt?: string;
   asset: {
@@ -50,9 +50,8 @@ export const ProductCard = React.memo(
     const iconProps = logo ? urlForIcon(logo) : null;
     const iconBlurDataURL = logo?.blurDataURL || null;
 
-    const itemUrlPrefix = '/sections';
+    const itemUrlPrefix = "/sections";
     const handleBookmarkToggle = (e: React.MouseEvent) => {
-      debugger;
       e.preventDefault();
 
       // Store the current state before toggling
@@ -60,11 +59,11 @@ export const ProductCard = React.memo(
 
       // Toggle the bookmark
       toggleBookmark(id);
-      debugger;
+
       // Show toast notification when removing a bookmark
       if (wasBookmarked) {
         toast({
-          title: 'Bookmark removed',
+          title: "Bookmark removed",
           description: `"${title}" has been removed from your bookmarks`,
           action: (
             <ToastAction
@@ -77,7 +76,7 @@ export const ProductCard = React.memo(
         });
       } else {
         toast({
-          title: 'Bookmark added',
+          title: "Bookmark added",
           description: `"${title}" has been added to your bookmarks`,
         });
       }
@@ -87,17 +86,17 @@ export const ProductCard = React.memo(
     React.useEffect(() => {
       if (isHighlighted && cardRef.current) {
         cardRef.current.classList.add(
-          'ring-4',
-          'ring-primary',
-          'ring-opacity-70'
+          "ring-4",
+          "ring-primary",
+          "ring-opacity-70"
         );
 
         const timer = setTimeout(() => {
           if (cardRef.current) {
             cardRef.current.classList.remove(
-              'ring-4',
-              'ring-primary',
-              'ring-opacity-70'
+              "ring-4",
+              "ring-primary",
+              "ring-opacity-70"
             );
           }
         }, 3000);
@@ -111,13 +110,13 @@ export const ProductCard = React.memo(
         id={`product-${id}`}
         ref={cardRef}
         className={`p-6 relative overflow-hidden transition-all duration-300 ${
-          isHighlighted ? 'shadow-lg scale-[1.02]' : ''
+          isHighlighted ? "shadow-lg scale-[1.02]" : ""
         } hover:bg-card/80 hover:border-primary/20 sm:hover:shadow-md mobile-touch-feedback`}
       >
         {isAd && (
           <ShineBorder
             borderWidth={2}
-            shineColor={['#FF4785', '#4353FF', '#00A389']}
+            shineColor={["#FF4785", "#4353FF", "#00A389"]}
           />
         )}
         <div className="relative flex flex-col h-full">
@@ -146,7 +145,7 @@ export const ProductCard = React.memo(
                   height={32}
                   className="object-cover image-scale"
                   {...(iconBlurDataURL && {
-                    placeholder: 'blur',
+                    placeholder: "blur",
                     blurDataURL: iconBlurDataURL,
                   })}
                 />
@@ -182,16 +181,16 @@ export const ProductCard = React.memo(
               size="icon"
               onClick={handleBookmarkToggle}
               className="ml-auto bookmark-button mobile-touch-feedback"
-              aria-label={bookmarked ? 'Remove bookmark' : 'Add bookmark'}
+              aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
               aria-pressed={bookmarked}
             >
               <Bookmark
                 className={`h-5 w-5 bookmark-icon ${
-                  bookmarked ? 'bookmark-icon-active' : ''
+                  bookmarked ? "bookmark-icon-active" : ""
                 }`}
               />
               <span className="sr-only">
-                {bookmarked ? 'Remove bookmark' : 'Bookmark'}
+                {bookmarked ? "Remove bookmark" : "Bookmark"}
               </span>
             </Button>
           </div>
@@ -201,4 +200,4 @@ export const ProductCard = React.memo(
   }
 );
 
-ProductCard.displayName = 'ProductCard';
+ProductCard.displayName = "ProductCard";

@@ -51,7 +51,6 @@ export function NavProjects({
     name: string;
     icon?: string;
   }) => {
-    debugger;
     const newSelectedCategory =
       item.slug.current === selectedCategory ? null : item.slug.current;
     setSelectedCategory(newSelectedCategory);

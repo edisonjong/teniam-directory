@@ -89,7 +89,6 @@ export function CommandSearch({ items }) {
 
   // Filter and group search results
   const searchResults = React.useMemo(() => {
-    debugger;
     if (!debouncedSearchQuery) return [];
 
     const query = debouncedSearchQuery.toLowerCase();
@@ -106,7 +105,6 @@ export function CommandSearch({ items }) {
   console.log("searchResults", searchResults);
   // Handle selecting a search result
   const handleSelect = (product: (typeof items)[0]) => {
-    debugger;
     // Close the dialog
     setOpen(false);
 

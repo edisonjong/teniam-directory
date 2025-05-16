@@ -160,16 +160,17 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 >
                   <ItemCustomMdx source={item.introduction} />
                 </MotionWrapper>
-                {item?.tags && item.tags.length > 0 && (
-                  <MotionWrapper
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.0 }}
-                    className="mt-6 flex flex-wrap gap-2"
-                  >
-                    <h3 className="mb-6 text-lg font-medium">Tags</h3>
-                    {item?.tags && item?.tags?.length > 0 ? (
-                      item.tags.map((tag, index: number) => (
+                <h3 className="mt-6 mb-2 text-lg font-medium">Tags</h3>
+                <MotionWrapper
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.0 }}
+                  className=" flex flex-wrap gap-2 items-baseline"
+                >
+                  {item?.tags && item?.tags?.length > 0 ? (
+                    Array(10)
+                      .fill(item.tags[0])
+                      .map((tag, index: number) => (
                         <Button
                           variant="secondary"
                           size="sm"
@@ -179,13 +180,13 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                           #{tag.name}
                         </Button>
                       ))
-                    ) : (
-                      <p className="text-sm text-muted-foreground italic">
-                        No tags added.
-                      </p>
-                    )}
-                  </MotionWrapper>
-                )}
+                  ) : (
+                    <p className="text-sm text-muted-foreground italic">
+                      No tags added.
+                    </p>
+                  )}
+                </MotionWrapper>
+
                 <div className="border-t border-dashed my-8" />
 
                 <MotionWrapper

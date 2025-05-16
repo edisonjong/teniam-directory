@@ -168,18 +168,16 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                   className=" flex flex-wrap gap-2 items-baseline"
                 >
                   {item?.tags && item?.tags?.length > 0 ? (
-                    Array(10)
-                      .fill(item.tags[0])
-                      .map((tag, index: number) => (
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          key={index}
-                          className="gap-1 pr-2 shadow-none transition-all duration-300 pointer-events-none cursor-default"
-                        >
-                          #{tag.name}
-                        </Button>
-                      ))
+                    item?.tags?.map((tag, index: number) => (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        key={index}
+                        className="gap-1 pr-2 shadow-none transition-all duration-300 pointer-events-none cursor-default"
+                      >
+                        #{tag.name}
+                      </Button>
+                    ))
                   ) : (
                     <p className="text-sm text-muted-foreground italic">
                       No tags added.

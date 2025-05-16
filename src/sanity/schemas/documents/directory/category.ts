@@ -30,6 +30,22 @@ export default defineType({
       rows: 3,
     }),
     defineField({
+      name: "icon",
+      title: "Icon",
+      type: "image",
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alternative Text",
+          description: "Important for SEO and accessiblity",
+          initialValue: (_, parent) => {
+            return `Icon for ${parent?.name || "item"}`;
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "group",
       title: "Group",
       type: "reference",

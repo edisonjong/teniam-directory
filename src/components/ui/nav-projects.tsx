@@ -38,7 +38,7 @@ export function NavProjects({
   selectedTag: string | null;
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
-  const { setSelectedTag } = React.useContext(TechDirectoryContext);
+  const { setSelectedCategory } = React.useContext(TechDirectoryContext);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -47,16 +47,16 @@ export function NavProjects({
     slug: { current: string };
     name: string;
   }) => {
-    const newSelectedTag =
+    const newSelectedCategory =
       item.slug.current === selectedTag ? null : item.slug.current;
-    setSelectedTag(newSelectedTag);
+    setSelectedCategory(newSelectedCategory);
 
     const newParams = new URLSearchParams(searchParams.toString());
 
-    if (newSelectedTag) {
-      newParams.set("tag", item.slug.current);
+    if (newSelectedCategory) {
+      newParams.set("category", item.slug.current);
     } else {
-      newParams.delete("tag");
+      newParams.delete("category");
     }
 
     router.push(`?${newParams.toString()}`, { scroll: false });

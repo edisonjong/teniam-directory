@@ -269,6 +269,18 @@ export type Category = {
   name?: string;
   slug?: Slug;
   description?: string;
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
   group?: {
     _ref: string;
     _type: "reference";
@@ -698,6 +710,18 @@ export type ItemByIdQueryResult = {
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -856,6 +880,18 @@ export type ItemInfoBySlugQueryResult = {
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -1014,6 +1050,18 @@ export type ItemFullInfoByIdQueryResult = {
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -1175,6 +1223,18 @@ export type ItemFullInfoBySlugQueryResult = {
       name?: string;
       slug?: Slug;
       description?: string;
+      icon?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt?: string;
+        _type: "image";
+      };
       group?: {
         _ref: string;
         _type: "reference";
@@ -1330,6 +1390,18 @@ export type ItemFullInfoBySlugQueryResult = {
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -1488,6 +1560,18 @@ export type ItemListQueryResult = Array<{
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -1646,6 +1730,18 @@ export type SponsorItemListQueryResult = Array<{
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -1804,6 +1900,18 @@ export type ItemListOfFeaturedQueryResult = Array<{
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -1962,6 +2070,18 @@ export type ItemListOfLatestQueryResult = Array<{
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -2079,6 +2199,18 @@ export type GroupListQueryResult = Array<{
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";
@@ -2099,6 +2231,18 @@ export type CategoryListQueryResult = Array<{
   name?: string;
   slug?: Slug;
   description?: string;
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
   group?: {
     _ref: string;
     _type: "reference";
@@ -2118,6 +2262,18 @@ export type CategoryQueryResult = {
   name?: string;
   slug?: Slug;
   description?: string;
+  icon?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
   group?: {
     _ref: string;
     _type: "reference";
@@ -2266,6 +2422,18 @@ export type SubmissionListQueryResult = Array<{
     name?: string;
     slug?: Slug;
     description?: string;
+    icon?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
     group?: {
       _ref: string;
       _type: "reference";

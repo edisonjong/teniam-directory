@@ -79,7 +79,7 @@ export function NavProjects({
           const Icon =
             ((item.icon &&
               Icons[item.icon as keyof typeof Icons]) as Icons.LucideIcon) ||
-            Icons.Brain;
+            Icons.Dot;
 
           const bgColor = stringToColor(item.name);
           return (

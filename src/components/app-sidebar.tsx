@@ -158,8 +158,7 @@ export function AppSidebar({
     }[];
   }[];
 }) {
-  const { selectedCategory, selectedTag } =
-    React.useContext(TechDirectoryContext);
+  const { selectedCategory } = React.useContext(TechDirectoryContext);
 
   // Add icons based on category slug
   // function getIconForCategory(slug: string): LucideIcon {
@@ -223,7 +222,10 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMainItems} selectedCategory={selectedCategory} />
-        <NavProjects projects={categoryList} selectedTag={selectedTag} />
+        <NavProjects
+          projects={categoryList}
+          selectedCategory={selectedCategory}
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

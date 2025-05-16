@@ -26,7 +26,7 @@ function stringToColor(str: string) {
 
 export function NavProjects({
   projects,
-  selectedTag,
+  selectedCategory,
 }: {
   projects: {
     name: string;
@@ -35,20 +35,21 @@ export function NavProjects({
     avatar?: string;
     slug: { current: string };
   }[];
-  selectedTag: string | null;
+  selectedCategory: string | null;
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
   const { setSelectedCategory } = React.useContext(TechDirectoryContext);
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const handleTagClick = (item: {
+  const handleCategoryClick = (item: {
     _id: string;
     slug: { current: string };
     name: string;
   }) => {
+    debugger;
     const newSelectedCategory =
-      item.slug.current === selectedTag ? null : item.slug.current;
+      item.slug.current === selectedCategory ? null : item.slug.current;
     setSelectedCategory(newSelectedCategory);
 
     const newParams = new URLSearchParams(searchParams.toString());
@@ -76,8 +77,8 @@ export function NavProjects({
           return (
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton
-                isActive={selectedTag === item._id}
-                onClick={() => handleTagClick(item)}
+                isActive={selectedCategory === item.slug.current}
+                onClick={() => handleCategoryClick(item)}
               >
                 <Avatar className="mr-2 h-6 w-6 rounded-md overflow-hidden">
                   <AvatarImage

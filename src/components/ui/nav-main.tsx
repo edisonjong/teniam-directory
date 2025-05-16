@@ -121,7 +121,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <Button asChild disabled className="group whitespace-nowrap">
+      <Button asChild disabled className="group whitespace-nowrap mb-2">
         <Link
           href="/submit"
           prefetch={false}

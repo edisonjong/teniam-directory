@@ -48,20 +48,19 @@ import {
 } from "lucide-react";
 import React from "react";
 
-export default function ClientComponent({ items, groupList, tagList }) {
-  console.log("items", items);
+export default function ClientComponent({ items, categoryList }) {
   return (
     <SidebarProvider>
       <TechDirectoryProvider>
-        <AppSidebar categoryList={groupList} tagList={tagList} />
-        <Content items={items} categoryList={groupList} tagList={tagList} />
+        <AppSidebar categoryList={categoryList} />
+        <Content items={items} categoryList={categoryList} />
       </TechDirectoryProvider>
     </SidebarProvider>
   );
 }
 
 // Update the Content component to use the sortOrder from context
-function Content({ items, categoryList, tagList }) {
+function Content({ items, categoryList }) {
   const {
     selectedCategory,
     selectedTag,
@@ -261,11 +260,7 @@ function Content({ items, categoryList, tagList }) {
 
           <div className="flex items-center gap-2 ml-2">
             {/* Enhanced Search Component */}
-            <CommandSearch
-              categoryList={categoryList}
-              tagList={tagList}
-              items={items}
-            />
+            <CommandSearch items={items} />
 
             {/* Filter Dropdown - Icon Only */}
             <DropdownMenu>

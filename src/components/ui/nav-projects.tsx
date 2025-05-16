@@ -30,7 +30,7 @@ export function NavProjects({
 }: {
   projects: {
     name: string;
-    url: string;
+    url?: string;
     _id: string;
     avatar?: string;
     slug: { current: string };
@@ -69,7 +69,7 @@ export function NavProjects({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Tags</SidebarGroupLabel>
+      <SidebarGroupLabel>Categories</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => {
           const bgColor = stringToColor(item.name);

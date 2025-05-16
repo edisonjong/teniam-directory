@@ -3,8 +3,16 @@ import { DEFAULT_SORT, SORT_FILTER_LIST } from "@/lib/constants";
 import React from "react";
 import ClientComponent from "./ClientComponent";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { GroupListQueryResult, TagListQueryResult } from "@/sanity.types";
-import { groupListQuery, tagListQuery } from "@/sanity/lib/queries";
+import {
+  CategoryListQueryResult,
+  GroupListQueryResult,
+  TagListQueryResult,
+} from "@/sanity.types";
+import {
+  categoryListQuery,
+  groupListQuery,
+  tagListQuery,
+} from "@/sanity/lib/queries";
 
 const Page = async ({
   searchParams,
@@ -36,18 +44,18 @@ const Page = async ({
     currentPage,
     hasSponsorItem,
   });
-  const [groupList, tagList] = await Promise.all([
-    sanityFetch<GroupListQueryResult>({
-      query: groupListQuery,
+  const [categoryList] = await Promise.all([
+    sanityFetch<CategoryListQueryResult>({
+      query: categoryListQuery,
     }),
-    sanityFetch<TagListQueryResult>({
-      query: tagListQuery,
-    }),
+    // sanityFetch<TagListQueryResult>({
+    //   query: tagListQuery,
+    // }),
   ]);
 
   return (
     <div>
-      <ClientComponent items={items} groupList={groupList} tagList={tagList} />
+      <ClientComponent items={items} categoryList={categoryList} />
     </div>
   );
 };

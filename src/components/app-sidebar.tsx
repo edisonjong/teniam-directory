@@ -144,7 +144,7 @@ const data = {
 
 export function AppSidebar({
   categoryList,
-  tagList,
+  // tagList,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {
   categoryList: {
@@ -157,39 +157,38 @@ export function AppSidebar({
       _id: string;
     }[];
   }[];
-  tagList: any[];
 }) {
   const { selectedCategory, selectedTag } =
     React.useContext(TechDirectoryContext);
 
   // Add icons based on category slug
-  function getIconForCategory(slug: string): LucideIcon {
-    const icons: Record<string, LucideIcon> = {
-      build: Building,
-      grow: LineChart,
-      innovate: Lightbulb,
-      "future-tech": Rocket,
-      featured: Star,
-      ads: Megaphone,
-      bookmarks: Bookmark,
-      settings: Settings2,
-      "learn-and-sell": Bookmark, // Add a default icon for new categories
-    };
-    return icons[slug] || Building; // Default to Building icon if not found
-  }
+  // function getIconForCategory(slug: string): LucideIcon {
+  //   const icons: Record<string, LucideIcon> = {
+  //     build: Building,
+  //     grow: LineChart,
+  //     innovate: Lightbulb,
+  //     "future-tech": Rocket,
+  //     featured: Star,
+  //     ads: Megaphone,
+  //     bookmarks: Bookmark,
+  //     settings: Settings2,
+  //     "learn-and-sell": Bookmark, // Add a default icon for new categories
+  //   };
+  //   return icons[slug] || Building; // Default to Building icon if not found
+  // }
   // Map the categoryList to the navMain format
-  const mappedCategories = categoryList.map((group) => ({
-    id: group._id,
-    title: group.name,
-    url: `#`,
-    icon: getIconForCategory(group.slug.current),
-    items: group.categories.map((category) => ({
-      _id: category._id,
-      title: category.name,
-      url: `#`,
-      slug: category.slug.current,
-    })),
-  }));
+  // const mappedCategories = categoryList.map((group) => ({
+  //   id: group._id,
+  //   title: group.name,
+  //   url: `#`,
+  //   icon: getIconForCategory(group.slug.current),
+  //   items: group.categories.map((category) => ({
+  //     _id: category._id,
+  //     title: category.name,
+  //     url: `#`,
+  //     slug: category.slug.current,
+  //   })),
+  // }));
 
   // Add static items (Featured, Ads, Bookmarks, Settings)
   const staticItems = [
@@ -214,15 +213,8 @@ export function AppSidebar({
       id: "bookmarks",
       items: [],
     },
-    {
-      title: "Settings",
-      url: "#settings",
-      icon: Settings2,
-      id: "settings",
-      items: [],
-    },
   ];
-  const navMainItems = [...mappedCategories, ...staticItems];
+  const navMainItems = [...staticItems];
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -231,7 +223,7 @@ export function AppSidebar({
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMainItems} selectedCategory={selectedCategory} />
-        <NavProjects projects={tagList} selectedTag={selectedTag} />
+        <NavProjects projects={categoryList} selectedTag={selectedTag} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

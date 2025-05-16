@@ -82,14 +82,14 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 >
                   <Link href={itemLink}>
                     <div className="flex  items-center space-x-3">
-                      <div className="flex items-center justify-center  w-15 h-15 rounded-lg border border-gray-300">
+                      <div className="flex items-center justify-center w-16 h-16 rounded-lg border border-gray-300">
                         {iconProps?.src ? (
                           <Image
                             src={iconProps.src}
                             alt={item.icon?.alt || `icon of ${item.name}`}
                             title={item.icon?.alt || `icon of ${item.name}`}
-                            width={32}
-                            height={32}
+                            width={28}
+                            height={28}
                             className="object-contain"
                             {...(iconBlurDataURL && {
                               placeholder: "blur",

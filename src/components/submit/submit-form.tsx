@@ -101,13 +101,28 @@ export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
     });
   });
 
-  const handleUploadChange = (status: {
+  // const handleUploadChange = (status: {
+  //   isUploading: boolean;
+  //   imageId?: string;
+  // }) => {
+  //   debugger;
+  //   setIsUploading(status.isUploading);
+  //   if (status.imageId) {
+  //     form.setValue("imageId", status.imageId);
+  //   }
+  // };
+
+  const handleUploadChange = ({
+    isUploading,
+    imageId,
+  }: {
     isUploading: boolean;
     imageId?: string;
   }) => {
-    setIsUploading(status.isUploading);
-    if (status.imageId) {
-      form.setValue("imageId", status.imageId);
+    debugger;
+    setIsUploading(isUploading);
+    if (imageId) {
+      form.setValue("imageId", imageId);
     }
   };
 
@@ -115,6 +130,7 @@ export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
     isUploading: boolean;
     imageId?: string;
   }) => {
+    debugger;
     setIsUploading(status.isUploading);
     if (status.imageId && SUPPORT_ITEM_ICON) {
       form.setValue("iconId" as keyof SubmitFormData, status.imageId);
@@ -154,15 +170,15 @@ export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
       if (data.categories) {
         form.setValue(
           "categories",
-          data.categories.map((category) =>
-            categoryList.find((c) => c.name === category)?._id,
-          ),
+          data.categories.map(
+            (category) => categoryList.find((c) => c.name === category)?._id
+          )
         );
       }
       if (data.tags) {
         form.setValue(
           "tags",
-          data.tags.map((tag) => tagList.find((t) => t.name === tag)?._id),
+          data.tags.map((tag) => tagList.find((t) => t.name === tag)?._id)
         );
       }
 
@@ -229,14 +245,22 @@ export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
                             <DialogHeader>
                               <DialogTitle>AI Autofill</DialogTitle>
                               <DialogDescription>
-                                Would you like AI to automatically fill in the form by the URL? It may take some time, so please wait patiently.
+                                Would you like AI to automatically fill in the
+                                form by the URL? It may take some time, so
+                                please wait patiently.
                               </DialogDescription>
                             </DialogHeader>
                             <div className="flex justify-end gap-2">
-                              <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                              <Button
+                                variant="outline"
+                                onClick={() => setDialogOpen(false)}
+                              >
                                 Cancel
                               </Button>
-                              <Button onClick={handleAIFetch} disabled={isAIProcessing}>
+                              <Button
+                                onClick={handleAIFetch}
+                                disabled={isAIProcessing}
+                              >
                                 {isAIProcessing ? (
                                   <>
                                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -423,7 +447,7 @@ export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
           <CardFooter
             className={cn(
               "flex flex-col items-stretch space-y-4 border-t bg-accent px-6 py-4",
-              "sm:flex-row sm:justify-between sm:space-y-0",
+              "sm:flex-row sm:justify-between sm:space-y-0"
             )}
           >
             <Button
@@ -508,7 +532,7 @@ export function SubmitFormSkeleton() {
       <CardFooter
         className={cn(
           "flex flex-col items-stretch space-y-4 border-t bg-accent px-6 py-4",
-          "sm:flex-row sm:justify-between sm:space-y-0",
+          "sm:flex-row sm:justify-between sm:space-y-0"
         )}
       >
         <Skeleton className="h-12 w-full sm:w-32" />

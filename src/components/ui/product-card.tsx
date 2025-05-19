@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import Image from "next/image";
 import { urlForIcon } from "@/lib/image";
-interface LogoImage {
+export interface LogoImage {
   alt?: string;
   asset: {
     _ref: string;
@@ -24,7 +24,7 @@ interface ProductCardProps {
   title: string;
   description: string;
   color: string;
-  logo: LogoImage;
+  logo?: LogoImage;
   featured?: boolean;
   isAd?: boolean;
   isHighlighted?: boolean;
@@ -50,7 +50,7 @@ export const ProductCard = React.memo(
     const iconProps = logo ? urlForIcon(logo) : null;
     const iconBlurDataURL = logo?.blurDataURL || null;
 
-    const itemUrlPrefix = "/sections";
+    const itemUrlPrefix = "/item";
     const handleBookmarkToggle = (e: React.MouseEvent) => {
       e.preventDefault();
 

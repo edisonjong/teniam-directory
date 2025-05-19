@@ -1066,6 +1066,7 @@ export type ItemFullInfoByIdQueryResult = {
 export type ItemFullInfoBySlugQueryResult = {
   introduction: string | null;
   related: Array<{
+    color: string;
     _id: string;
     _createdAt: string;
     name: string | null;
@@ -1283,6 +1284,7 @@ export type ItemFullInfoBySlugQueryResult = {
     | "The item is not good fit for our directory"
     | null;
   submitter: {
+    avatar: string;
     _id: string;
     _type: "user";
     _createdAt: string;

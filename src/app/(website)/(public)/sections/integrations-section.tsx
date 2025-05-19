@@ -13,7 +13,7 @@ import Link from "next/link";
 import type * as React from "react";
 // import { Gemini, Replit, MagicUI, VSCodium, MediaWiki, GooglePaLM } from "@/components/icons/logos"
 
-export default function IntegrationsSection() {
+export default function IntegrationsSection({ relatedItems }) {
   return (
     <section>
       <div className="py-16 md:py-32">

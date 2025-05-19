@@ -31,6 +31,7 @@ import {
   TechDirectoryContext,
   TechDirectoryProvider,
 } from "@/components/ui/tech-directory-context";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useDebounce } from "@/hooks/use-debounce";
 
@@ -74,7 +75,6 @@ function Content({ items, categoryList }) {
   } = React.useContext(TechDirectoryContext);
   const { bookmarkedItems } = useBookmarks();
   const [isLoading, setIsLoading] = React.useState(true);
-
   // Track filter changes to trigger loading state
   const filterKey = `${selectedCategory}-${selectedTag}-${selectedFeatured}-${viewMode}-${sortOrder}`;
   const debouncedFilterKey = useDebounce(filterKey, 300);
@@ -168,13 +168,53 @@ function Content({ items, categoryList }) {
   );
 
   // Handle sort selection
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const handleSortChange = React.useCallback(
     (value: string) => {
-      setSortOrder(value as "default" | "newest" | "oldest" | "a-z" | "z-a");
-    },
-    [setSortOrder]
-  );
+      const params = new URLSearchParams(searchParams.toString());
 
+      setSortOrder(value as "default" | "newest" | "oldest" | "a-z" | "z-a");
+
+      if (value === "default") {
+        params.delete("sort");
+      } else if (value === "newest") {
+        params.set("sort", "date-desc");
+      } else if (value === "oldest") {
+        params.set("sort", "date-asc");
+      } else if (value === "a-z") {
+        params.set("sort", "name-asc");
+      } else if (value === "z-a") {
+        params.set("sort", "name-desc");
+      }
+
+      const newParams = params.toString();
+      router.push(`?${newParams}`);
+    },
+    [router, searchParams, setSortOrder]
+  );
+  React.useEffect(() => {
+    const sortParam = searchParams.get("sort");
+
+    switch (sortParam) {
+      case "date-asc":
+        setSortOrder("oldest");
+        break;
+      case "date-desc":
+        setSortOrder("newest");
+        break;
+      case "name-asc":
+        setSortOrder("a-z");
+        break;
+      case "name-desc":
+        setSortOrder("z-a");
+        break;
+      default:
+        setSortOrder("default");
+        break;
+    }
+  }, [searchParams, setSortOrder]);
   // Get sort icon based on current sort order
   const getSortIcon = React.useCallback(() => {
     switch (sortOrder) {

@@ -13,7 +13,7 @@ export const SUPPORT_CATEGORY_GROUP = true;
 // NOTE: if you set true, you should make sure the item icon is available
 export const SUPPORT_ITEM_ICON = true;
 // number of items per page
-export const ITEMS_PER_PAGE = 12;
+export const ITEMS_PER_PAGE = 1000;
 // number of collections per page
 export const COLLECTIONS_PER_PAGE = 12;
 // number of posts per page

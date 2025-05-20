@@ -49,7 +49,7 @@ export default function ContactSection() {
               <Label htmlFor="email">Work Email</Label>
               <Input type="email" id="email" required />
             </div>
-
+            {/* 
             <div>
               <Label htmlFor="country">Country/Region</Label>
               <Select>
@@ -62,7 +62,7 @@ export default function ContactSection() {
                   <SelectItem value="3">France</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
 
             <div>
               <Label htmlFor="website">Company Website</Label>

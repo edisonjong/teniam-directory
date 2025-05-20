@@ -8,7 +8,7 @@ const links = [
   },
   {
     title: "Blog",
-    href: "#",
+    href: "https://blogs.teniam.com/",
   },
   {
     title: "Privacy Policy",

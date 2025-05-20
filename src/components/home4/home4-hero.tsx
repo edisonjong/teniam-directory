@@ -113,7 +113,7 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-8 text-balance text-4xl md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
-                  Modern Solutions for Customer Engagement
+                  Discover the Ultimate Tech Directory for Your Next Project
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -123,8 +123,9 @@ export default function HeroSection() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Highly customizable components for building modern websites
-                  and applications that look and feel the way you mean it.
+                  Explore a curated collection of cutting-edge tools,
+                  frameworks, and platforms designed for developers, startups,
+                  and innovators — all in one place.
                 </TextEffect>
 
                 <AnimatedGroup

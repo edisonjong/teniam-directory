@@ -301,7 +301,7 @@ function Content({ items, categoryList }) {
             <CommandSearch items={items} />
 
             {/* Filter Dropdown - Icon Only */}
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
@@ -327,7 +327,7 @@ function Content({ items, categoryList }) {
                   <span>Sponsored</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
 
             {/* Sort Dropdown - Icon Only */}
             <DropdownMenu>

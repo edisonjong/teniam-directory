@@ -60,7 +60,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                 aria-label="home"
                 className="flex items-center space-x-2"
               >
-                <Logo />
+                <Logo className="rounded-full" src="/logo.png" />
                 <h4 className="font-bold ml-1">Teniam</h4>
               </Link>
               <button

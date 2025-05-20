@@ -4,6 +4,7 @@ import Features from "./home4-features";
 import CallToAction from "./home4-call-to-action";
 import Pricing from "./pricing";
 import FAQs from "./faqs";
+import { NewsletterCard } from "../newsletter/newsletter-card";
 
 function HomeContent() {
   return (
@@ -23,6 +24,9 @@ function HomeContent() {
       </div>
       <div id="about">
         <CallToAction />
+      </div>
+      <div>
+        <NewsletterCard transparentBg={true} />
       </div>
     </>
   );

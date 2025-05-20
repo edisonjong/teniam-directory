@@ -176,7 +176,7 @@ export default function FooterSection() {
         </div>
         <span className="text-muted-foreground block text-center text-sm">
           {" "}
-          © {new Date().getFullYear()} Tailus UI, All rights reserved
+          © 2025 Teniam. All rights reserved.
         </span>
       </div>
     </footer>

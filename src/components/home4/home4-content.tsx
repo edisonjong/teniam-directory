@@ -3,6 +3,7 @@ import Products from "./home4-products";
 import Features from "./home4-features";
 import CallToAction from "./home4-call-to-action";
 import Pricing from "./pricing";
+import FAQs from "./faqs";
 
 function HomeContent() {
   return (
@@ -16,6 +17,9 @@ function HomeContent() {
 
       <div id="pricing">
         <Pricing />
+      </div>
+      <div id="faq">
+        <FAQs />
       </div>
       <div id="about">
         <CallToAction />

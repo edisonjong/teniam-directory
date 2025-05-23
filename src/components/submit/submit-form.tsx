@@ -32,6 +32,7 @@ import { SubmitSchema } from "@/lib/schemas";
 import { cn } from "@/lib/utils";
 import type {
   CategoryListQueryResult,
+  CoreTechnologyListQueryResult,
   TagListQueryResult,
 } from "@/sanity.types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,6 +45,7 @@ import { toast } from "sonner";
 interface SubmitFormProps {
   tagList: TagListQueryResult;
   categoryList: CategoryListQueryResult;
+  coreTechnologyList: CoreTechnologyListQueryResult;
 }
 
 /**
@@ -53,7 +55,11 @@ interface SubmitFormProps {
  * 2. React Hook Form
  * https://react-hook-form.com/get-started
  */
-export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
+export function SubmitForm({
+  tagList,
+  categoryList,
+  coreTechnologyList,
+}: SubmitFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isUploading, setIsUploading] = useState(false);
@@ -73,6 +79,7 @@ export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
       imageId: "",
       tags: [],
       categories: [],
+      coreTechnologies: [],
       ...(SUPPORT_ITEM_ICON ? { iconId: "" } : {}),
     },
   });
@@ -338,6 +345,30 @@ export function SubmitForm({ tagList, categoryList }: SubmitFormProps) {
                         onValueChange={(selected) => field.onChange(selected)}
                         value={field.value}
                         placeholder="Select tags"
+                        variant="default"
+                        maxCount={3}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="coreTechnologies"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Core Technologies</FormLabel>
+                    <FormControl>
+                      <MultiSelect
+                        className="shadow-none"
+                        options={coreTechnologyList.map((technology) => ({
+                          value: technology._id,
+                          label: technology.name || "",
+                        }))}
+                        onValueChange={(selected) => field.onChange(selected)}
+                        value={field.value}
+                        placeholder="Select core technologies"
                         variant="default"
                         maxCount={3}
                       />

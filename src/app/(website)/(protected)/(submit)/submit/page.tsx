@@ -3,10 +3,15 @@ import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 import type {
   CategoryListQueryResult,
+  CoreTechnologyListQueryResult,
   TagListQueryResult,
 } from "@/sanity.types";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { categoryListQuery, tagListQuery } from "@/sanity/lib/queries";
+import {
+  categoryListQuery,
+  coreTechnologyListQuery,
+  tagListQuery,
+} from "@/sanity/lib/queries";
 
 export const metadata = constructMetadata({
   title: "Submit your product (1/3)",
@@ -15,14 +20,23 @@ export const metadata = constructMetadata({
 });
 
 export default async function SubmitPage() {
-  const [categoryList, tagList] = await Promise.all([
+  const [categoryList, tagList, coreTechnologyList] = await Promise.all([
     sanityFetch<CategoryListQueryResult>({
       query: categoryListQuery,
     }),
     sanityFetch<TagListQueryResult>({
       query: tagListQuery,
     }),
+    sanityFetch<CoreTechnologyListQueryResult>({
+      query: coreTechnologyListQuery,
+    }),
   ]);
 
-  return <SubmitForm tagList={tagList} categoryList={categoryList} />;
+  return (
+    <SubmitForm
+      tagList={tagList}
+      categoryList={categoryList}
+      coreTechnologyList={coreTechnologyList}
+    />
+  );
 }

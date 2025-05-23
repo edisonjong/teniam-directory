@@ -2070,6 +2070,60 @@ export type CollectionQueryResult = {
   } | null;
   priority?: number;
 } | null;
+// Variable: coreTechnologyListQuery
+// Query: *[_type == "coreTechnologies" && defined(slug.current)]   | order(priority desc) {      ...,  icon {    ...,    "blurDataURL": asset->metadata.lqip,    "imageColor": asset->metadata.palette.dominant.background,  },}
+export type CoreTechnologyListQueryResult = Array<{
+  _id: string;
+  _type: "coreTechnologies";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  description?: string;
+  icon: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    blurDataURL: string | null;
+    imageColor: string | null;
+  } | null;
+  priority?: number;
+}>;
+// Variable: coreTechnologyQuery
+// Query: *[_type == "coreTechnologies" && slug.current == $slug][0] {    ...,  icon {    ...,    "blurDataURL": asset->metadata.lqip,    "imageColor": asset->metadata.palette.dominant.background,  },}
+export type CoreTechnologyQueryResult = {
+  _id: string;
+  _type: "coreTechnologies";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  description?: string;
+  icon: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    blurDataURL: string | null;
+    imageColor: string | null;
+  } | null;
+  priority?: number;
+} | null;
 // Variable: groupListQuery
 // Query: *[_type=="group"] | order(priority desc, _createdAt asc) {    ...,  "categories": *[_type=='category' && references(^._id)] | order(priority desc, _createdAt asc)  {     ...,   }}
 export type GroupListQueryResult = Array<{
@@ -2852,6 +2906,8 @@ declare module "@sanity/client" {
     '*[_type == "item" && defined(slug.current) \n  && defined(publishDate) \n  && forceHidden != true\n  && sponsor != true] \n  | order(coalesce(featured, false) desc, publishDate desc) [0...$count] {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemListOfLatestQueryResult;
     '*[_type == "collection" && defined(slug.current)] \n  | order(priority desc) {\n    \n  ...,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n\n}': CollectionListQueryResult;
     '*[_type == "collection" && slug.current == $slug][0] {\n  \n  ...,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n\n}': CollectionQueryResult;
+    '*[_type == "coreTechnologies" && defined(slug.current)] \n  | order(priority desc) {\n    \n  ...,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n\n}': CoreTechnologyListQueryResult;
+    '*[_type == "coreTechnologies" && slug.current == $slug][0] {\n  \n  ...,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n\n}': CoreTechnologyQueryResult;
     '*[_type=="group"] | order(priority desc, _createdAt asc) {\n  \n  ...,\n  "categories": *[_type==\'category\' && references(^._id)] | order(priority desc, _createdAt asc)\n  { \n    ..., \n  }\n\n}': GroupListQueryResult;
     '*[_type == "category" && defined(slug.current)] \n  | order(priority desc) {\n    \n  ...,\n\n}': CategoryListQueryResult;
     '*[_type == "category" && slug.current == $slug][0] {\n  \n  ...,\n\n}': CategoryQueryResult;

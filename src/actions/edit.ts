@@ -39,6 +39,7 @@ type BaseEditFormData = {
   introduction: string;
   tags: string[];
   categories: string[];
+  coreTechnologies: string[];
   imageId: string;
   pricePlan: string;
   planStatus: string;
@@ -57,7 +58,7 @@ export type ServerActionResponse = {
  * https://nextjs.org/learn/dashboard-app/mutating-data
  */
 export async function edit(
-  formData: EditFormData,
+  formData: EditFormData
 ): Promise<ServerActionResponse> {
   try {
     const user = await currentUser();
@@ -76,6 +77,7 @@ export async function edit(
       imageId,
       tags,
       categories,
+      coreTechnologies,
       pricePlan,
       planStatus,
       ...rest
@@ -126,6 +128,11 @@ export async function edit(
         _ref: category,
         _key: index.toString(),
       })),
+      coreTechnologies: coreTechnologies.map((coreTechnologies, index) => ({
+        _type: "reference",
+        _ref: coreTechnologies,
+        _key: index.toString(),
+      })),
       image: {
         _type: "image",
         alt: `image of ${name}`,
@@ -163,7 +170,7 @@ export async function edit(
         user.email,
         name,
         statusLink,
-        reviewLink,
+        reviewLink
       );
     }
 

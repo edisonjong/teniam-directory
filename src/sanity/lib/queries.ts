@@ -34,7 +34,14 @@ export const collectionFields = /* groq */ `
     "imageColor": asset->metadata.palette.dominant.background,
   },
 `;
-
+export const coreTechnologyFields = /* groq */ `
+  ...,
+  icon {
+    ...,
+    "blurDataURL": asset->metadata.lqip,
+    "imageColor": asset->metadata.palette.dominant.background,
+  },
+`;
 // also used in file data/item.ts and data/submission.ts
 export const itemSimpleFields = /* groq */ `
   _id,
@@ -167,6 +174,16 @@ export const collectionListQuery =
 export const collectionQuery =
   defineQuery(`*[_type == "collection" && slug.current == $slug][0] {
   ${collectionFields}
+}`);
+export const coreTechnologyListQuery =
+  defineQuery(`*[_type == "coreTechnologies" && defined(slug.current)] 
+  | order(priority desc) {
+    ${coreTechnologyFields}
+}`);
+
+export const coreTechnologyQuery =
+  defineQuery(`*[_type == "coreTechnologies" && slug.current == $slug][0] {
+  ${coreTechnologyFields}
 }`);
 
 export const groupListQuery = groq`*[_type=="group"] | order(priority asc, _createdAt asc) {

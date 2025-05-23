@@ -32,6 +32,10 @@ export const baseSubmitSchema = {
       message: "Introduction must be 4096 or fewer characters long",
     }),
   tags: z.array(z.string()).min(1, { message: "Must select at least one tag" }),
+  coreTechnologies: z
+    .array(z.string())
+    .min(1, { message: "Must select at least one technology" }),
+
   categories: z
     .array(z.string())
     .min(1, { message: "Must select at least one category" }),
@@ -75,7 +79,7 @@ export const SettingsSchema = z
     {
       message: "New password is required!",
       path: ["newPassword"],
-    },
+    }
   )
   .refine(
     (data) => {
@@ -88,7 +92,7 @@ export const SettingsSchema = z
     {
       message: "Password is required!",
       path: ["password"],
-    },
+    }
   );
 
 export const UserNameSchema = z.object({
@@ -132,7 +136,7 @@ export const UserPasswordSchema = z
     {
       message: "Password is required",
       path: ["password"],
-    },
+    }
   )
   .refine(
     (data) => {
@@ -145,7 +149,7 @@ export const UserPasswordSchema = z
     {
       message: "New password is required",
       path: ["newPassword"],
-    },
+    }
   )
   .refine(
     (data) => {
@@ -158,7 +162,7 @@ export const UserPasswordSchema = z
     {
       message: "Passwords do not match",
       path: ["confirmPassword"],
-    },
+    }
   );
 
 export type UserPasswordData = z.infer<typeof UserPasswordSchema>;

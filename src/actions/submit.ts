@@ -15,6 +15,7 @@ type BaseSubmitFormData = {
   introduction: string;
   imageId: string;
   tags: string[];
+  coreTechnologies: [];
   categories: string[];
 };
 
@@ -32,7 +33,7 @@ export type ServerActionResponse = {
  * https://nextjs.org/learn/dashboard-app/mutating-data
  */
 export async function submit(
-  formData: SubmitFormData,
+  formData: SubmitFormData
 ): Promise<ServerActionResponse> {
   try {
     const user = await currentUser();
@@ -49,6 +50,7 @@ export async function submit(
       imageId,
       tags,
       categories,
+      coreTechnologies,
       ...rest
     } = SubmitSchema.parse(formData);
     const iconId = "iconId" in rest ? rest.iconId : undefined;
@@ -58,7 +60,7 @@ export async function submit(
     // check if the slug already exists
     const existingItem = await sanityClient.fetch(
       `*[_type == "item" && slug.current == $slug][0]`,
-      { slug },
+      { slug }
     );
     if (existingItem) {
       const slugLink = slugify(link.replace(/^https?:\/\//, ""));
@@ -94,6 +96,11 @@ export async function submit(
       categories: categories.map((category, index) => ({
         _type: "reference",
         _ref: category,
+        _key: index.toString(),
+      })),
+      coreTechnologies: coreTechnologies.map((coreTechnologies, index) => ({
+        _type: "reference",
+        _ref: coreTechnologies,
         _key: index.toString(),
       })),
       image: {

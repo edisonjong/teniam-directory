@@ -4,11 +4,13 @@ import { currentUser } from "@/lib/auth";
 import { constructMetadata } from "@/lib/metadata";
 import type {
   CategoryListQueryResult,
+  CoreTechnologyListQueryResult,
   TagListQueryResult,
 } from "@/sanity.types";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
   categoryListQuery,
+  coreTechnologyListQuery,
   itemFullInfoByIdQuery,
   tagListQuery,
 } from "@/sanity/lib/queries";
@@ -39,7 +41,7 @@ export default async function EditPage({ params }: EditPageProps) {
     return redirect("/auth/login");
   }
 
-  const [item, categoryList, tagList] = await Promise.all([
+  const [item, categoryList, tagList, coreTechnologyList] = await Promise.all([
     sanityFetch<ItemFullInfo>({
       query: itemFullInfoByIdQuery,
       params: { id: params.id },
@@ -50,17 +52,28 @@ export default async function EditPage({ params }: EditPageProps) {
     sanityFetch<TagListQueryResult>({
       query: tagListQuery,
     }),
+    sanityFetch<CoreTechnologyListQueryResult>({
+      query: coreTechnologyListQuery,
+    }),
   ]);
 
   if (!item) {
     console.error("EditPage, item not found");
     return notFound();
   }
+  console.log("coreTechnologyList", coreTechnologyList);
   // redirect to dashboard if the item is not submitted by the user
   if (item.submitter._id !== user.id) {
     console.error("EditPage, user not match");
     return redirect("/dashboard");
   }
 
-  return <EditForm item={item} tagList={tagList} categoryList={categoryList} />;
+  return (
+    <EditForm
+      item={item}
+      tagList={tagList}
+      categoryList={categoryList}
+      coreTechnologyList={coreTechnologyList}
+    />
+  );
 }

@@ -25,6 +25,7 @@ import { PricePlans } from "@/lib/submission";
 import { cn } from "@/lib/utils";
 import type {
   CategoryListQueryResult,
+  CoreTechnologyListQueryResult,
   TagListQueryResult,
 } from "@/sanity.types";
 import type { ItemFullInfo } from "@/types";
@@ -39,6 +40,7 @@ interface EditFormProps {
   item: ItemFullInfo;
   tagList: TagListQueryResult;
   categoryList: CategoryListQueryResult;
+  coreTechnologyList: CoreTechnologyListQueryResult;
 }
 
 /**
@@ -48,7 +50,12 @@ interface EditFormProps {
  * 2. React Hook Form
  * https://react-hook-form.com/get-started
  */
-export function EditForm({ item, tagList, categoryList }: EditFormProps) {
+export function EditForm({
+  item,
+  tagList,
+  categoryList,
+  coreTechnologyList,
+}: EditFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isUploading, setIsUploading] = useState(false);
@@ -62,12 +69,13 @@ export function EditForm({ item, tagList, categoryList }: EditFormProps) {
       link: item.link,
       description: item.description,
       introduction: item.introduction,
-      ...(SUPPORT_ITEM_ICON
-        ? { iconId: item.icon?.asset?._ref ?? "" }
-        : {}),
+      ...(SUPPORT_ITEM_ICON ? { iconId: item.icon?.asset?._ref ?? "" } : {}),
       imageId: item.image?.asset?._ref,
       tags: item.tags.map((tag) => tag._id),
       categories: item.categories.map((category) => category._id),
+      coreTechnologies: item.coreTechnologies?.map(
+        (technology) => technology._id
+      ),
       pricePlan: item.pricePlan,
       planStatus:
         item.pricePlan === PricePlans.FREE
@@ -209,6 +217,30 @@ export function EditForm({ item, tagList, categoryList }: EditFormProps) {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="coreTechnologies"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormLabel>Core Technologies</FormLabel>
+                    <FormControl>
+                      <MultiSelect
+                        className="shadow-none"
+                        options={coreTechnologyList?.map((technology) => ({
+                          value: technology._id,
+                          label: technology.name || "",
+                        }))}
+                        onValueChange={(selected) => field.onChange(selected)}
+                        value={field.value}
+                        placeholder="Select technologies"
+                        variant="default"
+                        maxCount={3}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             <FormField
@@ -269,7 +301,9 @@ export function EditForm({ item, tagList, categoryList }: EditFormProps) {
                         <div className="mt-4 w-full h-[370px]">
                           <ImageUpload
                             onUploadChange={handleUploadIconChange}
-                            currentImageUrl={item.icon ? urlForImage(item.icon).src : ""}
+                            currentImageUrl={
+                              item.icon ? urlForImage(item.icon).src : ""
+                            }
                             type="icon"
                           />
                         </div>
@@ -310,7 +344,7 @@ export function EditForm({ item, tagList, categoryList }: EditFormProps) {
           <CardFooter
             className={cn(
               "flex flex-col items-stretch space-y-4 border-t bg-accent px-6 py-4",
-              "sm:flex-row sm:justify-between sm:space-y-0 sm:gap-4",
+              "sm:flex-row sm:justify-between sm:space-y-0 sm:gap-4"
             )}
           >
             <Button
@@ -407,7 +441,7 @@ export function EditFormSkeleton() {
       <CardFooter
         className={cn(
           "flex flex-col items-stretch space-y-4 border-t bg-accent px-6 py-4",
-          "sm:flex-row sm:justify-between sm:space-y-0 sm:gap-4",
+          "sm:flex-row sm:justify-between sm:space-y-0 sm:gap-4"
         )}
       >
         <Skeleton className="h-12 w-full sm:w-32" />

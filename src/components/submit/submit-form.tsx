@@ -126,7 +126,6 @@ export function SubmitForm({
     isUploading: boolean;
     imageId?: string;
   }) => {
-    debugger;
     setIsUploading(isUploading);
     if (imageId) {
       form.setValue("imageId", imageId);
@@ -137,7 +136,6 @@ export function SubmitForm({
     isUploading: boolean;
     imageId?: string;
   }) => {
-    debugger;
     setIsUploading(status.isUploading);
     if (status.imageId && SUPPORT_ITEM_ICON) {
       form.setValue("iconId" as keyof SubmitFormData, status.imageId);
@@ -186,6 +184,15 @@ export function SubmitForm({
         form.setValue(
           "tags",
           data.tags.map((tag) => tagList.find((t) => t.name === tag)?._id)
+        );
+      }
+      if (data.coreTechnologies) {
+        form.setValue(
+          "coreTechnologies",
+          data.coreTechnologies.map(
+            (technology) =>
+              coreTechnologyList.find((t) => t.name === technology)?._id
+          )
         );
       }
 

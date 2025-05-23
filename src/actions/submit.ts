@@ -15,7 +15,7 @@ type BaseSubmitFormData = {
   introduction: string;
   imageId: string;
   tags: string[];
-  coreTechnologies: [];
+  coreTechnologies: string[];
   categories: string[];
 };
 

@@ -1,9 +1,9 @@
 "use server";
 
 import { slugify } from "@/lib/utils";
-import type { Category, Tag } from "@/sanity.types";
+import type { Category, CoreTechnologies, Tag } from "@/sanity.types";
 import { sanityClient } from "@/sanity/lib/client";
-import { deepseek } from '@ai-sdk/deepseek';
+import { deepseek } from "@ai-sdk/deepseek";
 import { google } from "@ai-sdk/google";
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
@@ -29,6 +29,9 @@ const WebsiteInfoSchema = z.object({
   tags: z
     .array(z.string())
     .describe("Array of tag names that best match the content"),
+  coreTechnologies: z
+    .array(z.string())
+    .describe("Array of core technologies names that best match the content"),
   image: z.string().describe("Website screenshot image URL"),
   icon: z.string().describe("Website logo image URL"),
   imageId: z
@@ -94,6 +97,8 @@ export const fetchWebsiteInfo = async (url: string) => {
     introduction: fetchedData.object.introduction,
     categories: fetchedData.object.categories,
     tags: fetchedData.object.tags,
+    coreTechnologies: fetchedData.object.coreTechnologies,
+
     // image: microlinkData?.image?.url, // maybe we can use Microlink to get the screenshot as fallback
     image: fetchedData.object.image,
     // icon: microlinkData?.logo?.url, // maybe we can use Microlink to get the logo as fallback
@@ -152,11 +157,16 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
   try {
     // get all categories and tags
     const categories = await sanityClient.fetch<Category[]>(
-      `*[_type == "category"]`,
+      `*[_type == "category"]`
     );
     const tags = await sanityClient.fetch<Tag[]>(`*[_type == "tag"]`);
+    const coreTechnologies = await sanityClient.fetch<CoreTechnologies[]>(
+      `*[_type == "coreTechnologies"]`
+    );
+
     const availableCategories = categories.map((cat) => cat.name);
     const availableTags = tags.map((tag) => tag.name);
+    const availableCoreTechnologies = coreTechnologies.map((tag) => tag.name);
 
     const response = await fetch(url);
     // TODO: we need to convert htmlContent to simple content for AI to analyze (save time and cost)
@@ -164,20 +174,29 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
     // Google Gemini model support more tokens than DeepSeek model, so we prefer Google Gemini model
     // Thanks to Justin3go for the code: https://github.com/MkdirsHQ/mkdirs-template/discussions/50
     const htmlContent = (await response.text())
-      .replace(/class="[^"]*"/g, '')
-      .replace(/<svg[^>]*>.*?<\/svg>/g, '')
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+      .replace(/class="[^"]*"/g, "")
+      .replace(/<svg[^>]*>.*?<\/svg>/g, "")
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
 
     let aiModel = null;
-    if (process.env.DEFAULT_AI_PROVIDER === "google" && process.env.GOOGLE_GENERATIVE_AI_API_KEY !== undefined) {
+    if (
+      process.env.DEFAULT_AI_PROVIDER === "google" &&
+      process.env.GOOGLE_GENERATIVE_AI_API_KEY !== undefined
+    ) {
       aiModel = google("gemini-2.0-flash-exp", {
         structuredOutputs: true,
       });
-    } else if (process.env.DEFAULT_AI_PROVIDER === "deepseek" && process.env.DEEPSEEK_API_KEY !== undefined) {
+    } else if (
+      process.env.DEFAULT_AI_PROVIDER === "deepseek" &&
+      process.env.DEEPSEEK_API_KEY !== undefined
+    ) {
       aiModel = deepseek("deepseek-chat", {
         // structuredOutputs: true,
       });
-    } else if (process.env.DEFAULT_AI_PROVIDER === "openai" && process.env.OPENAI_API_KEY !== undefined) {
+    } else if (
+      process.env.DEFAULT_AI_PROVIDER === "openai" &&
+      process.env.OPENAI_API_KEY !== undefined
+    ) {
       aiModel = openai("gpt-4o-mini", {
         structuredOutputs: true,
       });
@@ -201,6 +220,9 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       
       Available Tags:
       ${availableTags.join(", ")}
+
+       Available Core Technologies:
+      ${availableCoreTechnologies.join(", ")}
       
       Please analyze the content and provide:
       1. A concise title (just the name, no description)
@@ -208,8 +230,9 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       3. A detailed introduction in markdown format (include key features and use cases)
       4. Select appropriate categories from the available categories list (return array of names)
       5. Select relevant tags from the available tags list (return array of names)
-      6. Provide a screenshot image full URL, choose open graph image URL if possible
-      7. Provide a website logo full URL, choose website favicon URL if possible
+      6. Select relevant core technologies from the available core technologies list (return array of names)
+      7. Provide a screenshot image full URL, choose open graph image URL if possible
+      8. Provide a website logo full URL, choose website favicon URL if possible
       
       Focus on technical aspects and practical applications. If the content is a tool or service, 
       emphasize its main features, target users, and unique selling points.`,
@@ -217,17 +240,25 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
 
     // console.log("fetchWebsiteInfoWithAI, url:", url, "result:", result);
 
-    // filter AI generated categories and tags to make sure they are in the available categories and tags
-    const filteredCategories = result.object.categories.filter((category) => availableCategories.includes(category));
-    const filteredTags = result.object.tags.filter((tag) => availableTags.includes(tag));
+    // filter AI generated categories, tags and core technologies to make sure they are in the available categories, tags and core technologies
+    const filteredCategories = result.object.categories.filter((category) =>
+      availableCategories.includes(category)
+    );
+    const filteredTags = result.object.tags.filter((tag) =>
+      availableTags.includes(tag)
+    );
+    const filteredCoreTechnologies = result.object.coreTechnologies.filter(
+      (technology) => availableCoreTechnologies.includes(technology)
+    );
     result.object.categories = filteredCategories;
     result.object.tags = filteredTags;
+    result.object.coreTechnologies = filteredCoreTechnologies;
 
     return result;
   } catch (error) {
     console.error(
       `fetchWebsiteInfoWithAI, error processing url for ${url}:`,
-      error,
+      error
     );
     return null;
   }

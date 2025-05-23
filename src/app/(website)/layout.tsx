@@ -9,12 +9,13 @@ import {
 import { auth } from "@/auth";
 import { Analytics } from "@/components/analytics/analytics";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { Toaster } from "@/components/ui/toaster";
+// import { Toaster } from "@/components/ui/toaster";
 import { constructMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { BookmarkProvider } from "@/components/ui/bookmark-context";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = constructMetadata();
 
@@ -53,8 +54,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               {children}
 
               {/* https://sonner.emilkowal.ski/toaster */}
-              {/* <Toaster richColors position="top-right" offset={64} /> */}
-              <Toaster />
+              <Toaster richColors position="top-right" offset={64} />
+              {/* <Toaster /> */}
 
               <TailwindIndicator />
 

@@ -33,7 +33,7 @@ export function CommandSearch({ items }) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
   const [recentSearches, setRecentSearches] = React.useState<string[]>([]);
-  console.log("items", items);
+
   // Load recent searches from localStorage on component mount
   React.useEffect(() => {
     const savedSearches = localStorage.getItem("recentSearches");
@@ -112,7 +112,7 @@ export function CommandSearch({ items }) {
     saveToRecentSearches(searchQuery);
 
     // Navigate to the product details page
-    router.push(`/sections/${product.slug.current}`);
+    router.push(`/item/${product.slug.current}`);
   };
 
   // Handle clicking on a recent search

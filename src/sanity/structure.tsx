@@ -312,7 +312,7 @@ StructureResolver => {
               .params({ tagId })
           )
       );
-    // collections
+    // core technologies
     const allTechnologies = S.documentTypeListItem(coreTechnologies.name)
       .title("All Technologies")
       .icon(TiersIcon);
@@ -322,7 +322,7 @@ StructureResolver => {
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(coreTechnologies.name)
-          .title("Items by Collection")
+          .title("Items by Core Technology")
           .child((technologyId) =>
             S.documentList()
               .title("Items")

@@ -311,6 +311,8 @@ export type Item = {
   name?: string;
   slug?: Slug;
   featured?: boolean;
+  bookmark?: boolean;
+
   link?: string;
   affiliateLink?: string;
   description?: string;
@@ -598,6 +600,8 @@ export type ItemByIdQueryResult = {
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -757,6 +761,8 @@ export type ItemInfoBySlugQueryResult = {
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -916,6 +922,8 @@ export type ItemFullInfoByIdQueryResult = {
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -1079,6 +1087,8 @@ export type ItemFullInfoBySlugQueryResult = {
     sponsorEndDate: string | null;
     note: string | null;
     featured: boolean | null;
+    bookmark: boolean | null;
+
     icon: {
       asset?: {
         _ref: string;
@@ -1235,6 +1245,8 @@ export type ItemFullInfoBySlugQueryResult = {
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -1395,6 +1407,8 @@ export type ItemListQueryResult = Array<{
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -1554,6 +1568,8 @@ export type SponsorItemListQueryResult = Array<{
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -1713,6 +1729,8 @@ export type ItemListOfFeaturedQueryResult = Array<{
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -1872,6 +1890,8 @@ export type ItemListOfLatestQueryResult = Array<{
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -2234,6 +2254,8 @@ export type SubmissionListQueryResult = Array<{
   sponsorEndDate: string | null;
   note: string | null;
   featured: boolean | null;
+  bookmark: boolean | null;
+
   icon: {
     asset?: {
       _ref: string;
@@ -2896,14 +2918,14 @@ export type PageListQueryForSitemapResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "item" && _id == $id][0] {\n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemByIdQueryResult;
-    '*[_type == "item" && slug.current == $slug][0] {\n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemInfoBySlugQueryResult;
-    '*[_type == "item" && _id == $id][0] {\n  \n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n  introduction,\n\n}': ItemFullInfoByIdQueryResult;
+    '*[_type == "item" && _id == $id][0] {\n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemByIdQueryResult;
+    '*[_type == "item" && slug.current == $slug][0] {\n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemInfoBySlugQueryResult;
+    '*[_type == "item" && _id == $id][0] {\n  \n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n  introduction,\n\n}': ItemFullInfoByIdQueryResult;
     '*[_type == "item" && slug.current == $slug \n&& forceHidden != true] [0] {\n  \n  introduction,\n  "related": *[_type == "item" && defined(slug.current) \n    && defined(publishDate) \n    && forceHidden != true\n    && sponsor != true\n    && count(categories[@._ref in ^.^.categories[]._ref]) > 0 && _id != ^._id] \n    | order(publishedDate desc, _createdAt desc) [0...3] {\n      \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n  },\n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  categories[]->,\n coreTechnologies[]->,\n tags[]->,\n\n\n}': ItemFullInfoBySlugQueryResult;
-    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate)\n  && forceHidden != true\n  && sponsor != true]\n  | order(coalesce(featured, false) desc, publishDate desc) {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemListQueryResult;
-    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate)\n  && forceHidden != true\n  && sponsor == true\n  && sponsorStartDate <= now()\n  && sponsorEndDate >= now()] \n  | order(coalesce(featured, false) desc, publishDate desc) {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n  categories[]->,\n  tags[]->,\n\n}': SponsorItemListQueryResult;
-    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate) \n  && forceHidden != true \n  && sponsor != true\n  && featured == true] \n  | order(coalesce(featured, false) desc, publishDate desc) [0...$count] {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemListOfFeaturedQueryResult;
-    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate) \n  && forceHidden != true\n  && sponsor != true] \n  | order(coalesce(featured, false) desc, publishDate desc) [0...$count] {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemListOfLatestQueryResult;
+    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate)\n  && forceHidden != true\n  && sponsor != true]\n  | order(coalesce(featured, false) desc, publishDate desc) {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemListQueryResult;
+    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate)\n  && forceHidden != true\n  && sponsor == true\n  && sponsorStartDate <= now()\n  && sponsorEndDate >= now()] \n  | order(coalesce(featured, false) desc, publishDate desc) {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n  categories[]->,\n  tags[]->,\n\n}': SponsorItemListQueryResult;
+    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate) \n  && forceHidden != true \n  && sponsor != true\n  && featured == true] \n  | order(coalesce(featured, false) desc, publishDate desc) [0...$count] {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemListOfFeaturedQueryResult;
+    '*[_type == "item" && defined(slug.current) \n  && defined(publishDate) \n  && forceHidden != true\n  && sponsor != true] \n  | order(coalesce(featured, false) desc, publishDate desc) [0...$count] {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemListOfLatestQueryResult;
     '*[_type == "collection" && defined(slug.current)] \n  | order(priority desc) {\n    \n  ...,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n\n}': CollectionListQueryResult;
     '*[_type == "collection" && slug.current == $slug][0] {\n  \n  ...,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n\n}': CollectionQueryResult;
     '*[_type == "coreTechnologies" && defined(slug.current)] \n  | order(priority desc) {\n    \n  ...,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n\n}': CoreTechnologyListQueryResult;
@@ -2913,7 +2935,7 @@ declare module "@sanity/client" {
     '*[_type == "category" && slug.current == $slug][0] {\n  \n  ...,\n\n}': CategoryQueryResult;
     '*[_type == "tag" && defined(slug.current)] \n  | order(slug.current asc) {\n    \n  ...,\n\n}': TagListQueryResult;
     '*[_type == "tag" && slug.current == $slug][0] {\n  \n  ...,\n\n}': TagQueryResult;
-    '*[_type == "item" && defined(slug.current)\n  && submitter._ref == $userId] \n  | order(_createdAt desc) {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': SubmissionListQueryResult;
+    '*[_type == "item" && defined(slug.current)\n  && submitter._ref == $userId] \n  | order(_createdAt desc) {\n    \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': SubmissionListQueryResult;
     '\n  *[_type == "page" && slug.current == $slug][0] {\n    ...,\n    body[]{\n      ...,\n      markDefs[]{\n        ...,\n        _type == "internalLink" => {\n          "slug": @.reference->slug\n        }\n      }\n    },\n  }\n': PageQueryResult;
     '\n  *[_type == "blogCategory" && defined(slug.current)] \n  | order(priority desc) {\n    \n  name,\n  slug,\n  description,\n  priority,\n\n}': BlogCategoryListQueryResult;
     '\n  *[_type == "blogCategory" && slug.current == $slug][0] {\n    \n  name,\n  slug,\n  description,\n  priority,\n\n  }\n': BlogCategoryMetadateQueryResult;

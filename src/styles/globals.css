@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+/* @import "tw-animate-css"; */
+@import "animate.css";
 /* Custom Theme Configuration */
 /* @layer base {
   :root {
@@ -375,7 +376,6 @@ html {
     opacity: 0.8;
   }
 }
-
 /* Bookmark loading animation */
 .bookmark-loading {
   position: relative;

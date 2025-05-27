@@ -56,6 +56,7 @@ export const itemSimpleFields = /* groq */ `
   sponsorEndDate,
   note,
   featured,
+   "bookmark": coalesce(bookmark, false),
   icon {
     ...,
     "blurDataURL": asset->metadata.lqip,

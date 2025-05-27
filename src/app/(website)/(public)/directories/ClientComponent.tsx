@@ -151,21 +151,21 @@ function Content({ items, categoryList }) {
   }, []);
 
   // Handle filter selection
-  const handleFilterChange = React.useCallback(
-    (value: string) => {
-      if (value === "featured") {
-        setSelectedFeatured(true);
-        setViewMode("all");
-      } else if (value === "ads") {
-        setViewMode("sponsor");
-        setSelectedFeatured(false);
-      } else {
-        setSelectedFeatured(false);
-        setViewMode("all");
-      }
-    },
-    [setSelectedFeatured, setViewMode]
-  );
+  // const handleFilterChange = React.useCallback(
+  //   (value: string) => {
+  //     if (value === "featured") {
+  //       setSelectedFeatured(true);
+  //       setViewMode("all");
+  //     } else if (value === "ads") {
+  //       setViewMode("sponsor");
+  //       setSelectedFeatured(false);
+  //     } else {
+  //       setSelectedFeatured(false);
+  //       setViewMode("all");
+  //     }
+  //   },
+  //   [setSelectedFeatured, setViewMode]
+  // );
 
   // Handle sort selection
   const router = useRouter();

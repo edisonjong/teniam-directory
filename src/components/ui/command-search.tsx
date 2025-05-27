@@ -102,7 +102,7 @@ export function CommandSearch({ items }) {
       return titleMatch || descriptionMatch;
     });
   }, [debouncedSearchQuery, items]);
-  console.log("searchResults", searchResults);
+
   // Handle selecting a search result
   const handleSelect = (product: (typeof items)[0]) => {
     // Close the dialog

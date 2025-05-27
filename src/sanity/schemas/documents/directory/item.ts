@@ -44,6 +44,14 @@ export default defineType({
         "If the item is featured, it will be displayed in the featured section",
     }),
     defineField({
+      name: "bookmark",
+      title: "Mark as Bookmark",
+      type: "boolean",
+      initialValue: false,
+      description:
+        "If the item is bookmark, it will be displayed in the bookmarked section",
+    }),
+    defineField({
       name: "link",
       title: "Link",
       type: "string",
@@ -300,6 +308,7 @@ export default defineType({
       group: "status",
       initialValue: false,
     }),
+
     // sponsor related fields
     defineField({
       name: "sponsor",
@@ -369,8 +378,8 @@ export default defineType({
         pricePlan.toUpperCase() === PricePlans.FREE.toUpperCase()
           ? freePlanStatus
           : pricePlan.toUpperCase() === PricePlans.PRO.toUpperCase()
-          ? proPlanStatus
-          : sponsorPlanStatus;
+            ? proPlanStatus
+            : sponsorPlanStatus;
       const time = date
         ? `date: ${format(parseISO(date), "yyyy/MM/dd")}`
         : "not published";

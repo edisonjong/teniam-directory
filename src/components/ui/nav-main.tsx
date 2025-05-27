@@ -72,7 +72,7 @@ export function NavMain({
         setViewMode("bookmarks");
         setSelectedCategory(null);
         newParams.delete("category");
-        newParams.set("view", "bookmarks");
+        newParams.set("f", "bookmark");
       } else if (categoryId === "ads") {
         setViewMode("sponsor");
         setSelectedCategory(null);

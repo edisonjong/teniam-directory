@@ -7,10 +7,10 @@ import { Bookmark, ChevronRight, Star } from "lucide-react";
 import Link from "next/link";
 import { ShineBorder } from "@/components/ui/shine-border";
 import { useBookmarks } from "./bookmark-context";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 import Image from "next/image";
 import { urlForIcon } from "@/lib/image";
+import { toast } from "sonner";
+
 export interface LogoImage {
   alt?: string;
   asset: {
@@ -44,7 +44,7 @@ export const ProductCard = React.memo(
     slug,
   }: ProductCardProps) => {
     const { isBookmarked, toggleBookmark } = useBookmarks();
-    const { toast } = useToast();
+
     const bookmarked = isBookmarked(id);
     const cardRef = React.useRef<HTMLDivElement>(null);
     const iconProps = logo ? urlForIcon(logo) : null;
@@ -61,24 +61,42 @@ export const ProductCard = React.memo(
       toggleBookmark(id);
 
       // Show toast notification when removing a bookmark
+
       if (wasBookmarked) {
-        toast({
-          title: "Bookmark removed",
-          description: `"${title}" has been removed from your bookmarks`,
-          action: (
-            <ToastAction
-              altText="Undo removal"
-              onClick={() => toggleBookmark(id)}
+        toast.custom((t) => (
+          <div className="flex items-start gap-4 p-4 bg-white dark:bg-zinc-900 rounded shadow-lg border border-border">
+            <div className="flex-1">
+              <p className="font-semibold text-sm text-red-600">
+                Bookmark removed
+              </p>
+              <p className="text-sm text-muted-foreground">
+                “{title}” has been removed from your bookmarks.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                toggleBookmark(id);
+                toast.dismiss(t); // close the toast
+              }}
+              className="text-sm font-medium text-primary hover:underline"
             >
               Undo
-            </ToastAction>
-          ),
-        });
+            </button>
+          </div>
+        ));
       } else {
-        toast({
-          title: "Bookmark added",
-          description: `"${title}" has been added to your bookmarks`,
-        });
+        toast.custom(() => (
+          <div className="flex items-start gap-4 p-4 bg-white dark:bg-zinc-900 rounded shadow-lg border border-border">
+            <div>
+              <p className="font-semibold text-sm text-green-600">
+                Bookmark added
+              </p>
+              <p className="text-sm text-muted-foreground">
+                “{title}” has been added to your bookmarks.
+              </p>
+            </div>
+          </div>
+        ));
       }
     };
 

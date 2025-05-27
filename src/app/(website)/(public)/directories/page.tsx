@@ -52,7 +52,7 @@ const Page = async ({
     //   query: tagListQuery,
     // }),
   ]);
-
+  console.log("items", items);
   return (
     <div>
       <ClientComponent items={items} categoryList={categoryList} />

@@ -46,28 +46,26 @@ export const ProductCard = React.memo(
     isAd = false,
     isHighlighted = false,
     slug,
-    bookmark = false,
+    bookmark,
     onBookmarkToggle = () => {},
   }: ProductCardProps) => {
     const cardRef = React.useRef<HTMLDivElement>(null);
     const iconProps = logo ? urlForIcon(logo) : null;
     const iconBlurDataURL = logo?.blurDataURL || null;
-    const [bookmarked, setBookmarked] = useState<boolean>(bookmark);
+    const [bookmarked, setBookmarked] = useState<boolean>();
     const [loading, setLoading] = useState<boolean>(false); // <-- New loading state
     const user = useCurrentUser();
     const router = useRouter();
-
+    console.log("bookmarked", bookmarked);
     // Use next/navigation hook to read query params
-    const searchParams = useSearchParams();
-    const filterParam = searchParams.get("f");
-
     const itemUrlPrefix = "/item";
-
     const toggleBookmark = async (id: string) => {
       const updatedBookmark = await toggleBookmarkById(id);
       return updatedBookmark;
     };
-
+    useEffect(() => {
+      setBookmarked(bookmark);
+    }, [bookmark]);
     const handleBookmarkToggle = async (e: React.MouseEvent) => {
       e.preventDefault();
       if (!user) {
@@ -82,8 +80,6 @@ export const ProductCard = React.memo(
       setBookmarked(!bookmarked);
 
       try {
-        const updatedBookmark = await toggleBookmark(id);
-
         if (wasBookmarked) {
           toast.custom((t) => (
             <div className="flex items-start gap-4 p-4 bg-white dark:bg-zinc-900 rounded shadow-lg border border-border">
@@ -109,6 +105,7 @@ export const ProductCard = React.memo(
               </button>
             </div>
           ));
+          await toggleBookmark(id);
           onBookmarkToggle(id);
         } else {
           toast.custom(() => (
@@ -123,6 +120,8 @@ export const ProductCard = React.memo(
               </div>
             </div>
           ));
+          await toggleBookmark(id);
+
           onBookmarkToggle(id);
         }
       } catch (err) {

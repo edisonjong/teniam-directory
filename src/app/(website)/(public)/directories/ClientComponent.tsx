@@ -81,6 +81,7 @@ function Content({ items, categoryList }) {
   const debouncedFilterKey = useDebounce(filterKey, 300);
   const [bookmarkProducts, setBookmarkProducts] = useState([]);
   const [error, setError] = useState(null);
+  console.log("bookmarkProducts", bookmarkProducts);
   // Simulate data loading
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -257,9 +258,6 @@ function Content({ items, categoryList }) {
     }
   }, [highlightedProductId]);
 
-  // For development/testing purposes, uncomment the line below to test avatar behavior
-  // return <AvatarTest />
-  // Remove from list if filter is 'bookmark'
   useEffect(() => {
     if (filterParam === "bookmark") {
       const fetchBookmarks = async () => {
@@ -279,13 +277,11 @@ function Content({ items, categoryList }) {
   }, [filterParam]); // Add dependencies as needed
   const handleBookmarkToggle = async (id: string) => {
     if (filterParam === "bookmark") {
-      // newParams.set("f", "bookmark");
-      const filterdBookmark = await fetchFilteredItems("bookmark");
-      setBookmarkProducts(filterdBookmark);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const filteredBookmark = await fetchFilteredItems("bookmark");
+      setBookmarkProducts(filteredBookmark);
     }
   };
-  // Add the AvatarTest component to the Content component for testing
-  // Find the return statement in the Content component and add this after the isLoading check:
 
   if (isLoading) {
     return <DashboardSkeleton />;

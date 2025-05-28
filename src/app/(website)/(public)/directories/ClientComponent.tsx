@@ -47,7 +47,8 @@ import {
   SortDesc,
   Star,
 } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchFilteredItems } from "@/actions/toggle-bookmark";
 
 export default function ClientComponent({ items, categoryList }) {
   return (
@@ -73,12 +74,13 @@ function Content({ items, categoryList }) {
     setSortOrder,
     highlightedProductId,
   } = React.useContext(TechDirectoryContext);
-  const { bookmarkedItems } = useBookmarks();
+  // const { bookmarkedItems } = useBookmarks();
   const [isLoading, setIsLoading] = React.useState(true);
   // Track filter changes to trigger loading state
   const filterKey = `${selectedCategory}-${selectedTag}-${selectedFeatured}-${viewMode}-${sortOrder}`;
   const debouncedFilterKey = useDebounce(filterKey, 300);
-
+  const [bookmarkProducts, setBookmarkProducts] = useState([]);
+  const [error, setError] = useState(null);
   // Simulate data loading
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -230,6 +232,8 @@ function Content({ items, categoryList }) {
         return <ArrowUpDown className="h-4 w-4" />;
     }
   }, [sortOrder]);
+  const filterParam = searchParams.get("f");
+  const newParams = new URLSearchParams(searchParams.toString());
 
   // Scroll to highlighted product when it changes
   React.useEffect(() => {
@@ -253,16 +257,39 @@ function Content({ items, categoryList }) {
     }
   }, [highlightedProductId]);
 
+  // For development/testing purposes, uncomment the line below to test avatar behavior
+  // return <AvatarTest />
+  // Remove from list if filter is 'bookmark'
+  useEffect(() => {
+    if (filterParam === "bookmark") {
+      const fetchBookmarks = async () => {
+        setIsLoading(true);
+        try {
+          const filteredBookmark = await fetchFilteredItems("bookmark");
+          setBookmarkProducts(filteredBookmark);
+        } catch (err) {
+          setError(err.message || "Failed to fetch bookmarks");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      fetchBookmarks();
+    }
+  }, [filterParam]); // Add dependencies as needed
+  const handleBookmarkToggle = async (id: string) => {
+    if (filterParam === "bookmark") {
+      // newParams.set("f", "bookmark");
+      const filterdBookmark = await fetchFilteredItems("bookmark");
+      setBookmarkProducts(filterdBookmark);
+    }
+  };
   // Add the AvatarTest component to the Content component for testing
   // Find the return statement in the Content component and add this after the isLoading check:
 
   if (isLoading) {
     return <DashboardSkeleton />;
   }
-
-  // For development/testing purposes, uncomment the line below to test avatar behavior
-  // return <AvatarTest />
-
   return (
     <SidebarInset className="mobile-safe-area">
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -370,7 +397,39 @@ function Content({ items, categoryList }) {
 
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {items.length > 0 ? (
+          {filterParam === "bookmark" ? (
+            bookmarkProducts.length > 0 ? (
+              bookmarkProducts.map((product, index) => (
+                <AnimatedCard
+                  key={product.id}
+                  delay={index * 50}
+                  threshold={0.1}
+                  rootMargin="20px"
+                >
+                  <ProductCard
+                    id={product._id ? product._id : null}
+                    title={product.name}
+                    description={product.description}
+                    color={product.color || "#0070f3"}
+                    logo={product.icon || Code}
+                    featured={product.featured}
+                    isAd={product.sponsor}
+                    isHighlighted={product.id === highlightedProductId}
+                    slug={product.slug.current}
+                    bookmark={product.bookmark}
+                    onBookmarkToggle={handleBookmarkToggle}
+                  />
+                </AnimatedCard>
+              ))
+            ) : (
+              <div className="col-span-3 text-center py-12">
+                <h3 className="text-xl font-medium">No bookmarks found</h3>
+                <p className="text-muted-foreground mt-2">
+                  You haven't bookmarked any products yet
+                </p>
+              </div>
+            )
+          ) : items.length > 0 ? (
             items.map((product, index) => (
               <AnimatedCard
                 key={product.id}
@@ -388,6 +447,8 @@ function Content({ items, categoryList }) {
                   isAd={product.sponsor}
                   isHighlighted={product.id === highlightedProductId}
                   slug={product.slug.current}
+                  bookmark={product.bookmark}
+                  onBookmarkToggle={handleBookmarkToggle}
                 />
               </AnimatedCard>
             ))

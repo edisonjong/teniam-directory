@@ -46,13 +46,13 @@ export const ProductCard = React.memo(
     isAd = false,
     isHighlighted = false,
     slug,
-    bookmark,
+    bookmark = false,
     onBookmarkToggle = () => {},
   }: ProductCardProps) => {
     const cardRef = React.useRef<HTMLDivElement>(null);
     const iconProps = logo ? urlForIcon(logo) : null;
     const iconBlurDataURL = logo?.blurDataURL || null;
-    const [bookmarked, setBookmarked] = useState<boolean>();
+    const [bookmarked, setBookmarked] = useState<boolean>(bookmark);
     const [loading, setLoading] = useState<boolean>(false); // <-- New loading state
     const user = useCurrentUser();
     const router = useRouter();
@@ -64,7 +64,8 @@ export const ProductCard = React.memo(
       return updatedBookmark;
     };
     useEffect(() => {
-      setBookmarked(bookmark);
+      console.log("bookmarktest", bookmark);
+      setBookmarked(bookmark ?? false);
     }, [bookmark]);
     const handleBookmarkToggle = async (e: React.MouseEvent) => {
       e.preventDefault();
@@ -95,6 +96,7 @@ export const ProductCard = React.memo(
                 onClick={async () => {
                   setLoading(true);
                   const revertedBookmark = await toggleBookmark(id);
+                  debugger;
                   setBookmarked(revertedBookmark);
                   setLoading(false);
                   toast.dismiss(t);

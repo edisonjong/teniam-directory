@@ -282,6 +282,8 @@ function Content({ items, categoryList }) {
       setBookmarkProducts(filteredBookmark);
     }
   };
+  // Add the AvatarTest component to the Content component for testing
+  // Find the return statement in the Content component and add this after the isLoading check:
 
   if (isLoading) {
     return <DashboardSkeleton />;

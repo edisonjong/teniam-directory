@@ -1,7 +1,7 @@
-"use client";
-import { AppSidebar } from "@/components/app-sidebar";
-import { AnimatedCard } from "@/components/ui/animated-card";
-import { useBookmarks } from "@/components/ui/bookmark-context";
+'use client';
+import { AppSidebar } from '@/components/app-sidebar';
+import { AnimatedCard } from '@/components/ui/animated-card';
+import { useBookmarks } from '@/components/ui/bookmark-context';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,31 +9,31 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { CommandSearch } from "@/components/ui/command-search";
-import { DashboardSkeleton } from "@/components/ui/dashboard-skeleton";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { CommandSearch } from '@/components/ui/command-search';
+import { DashboardSkeleton } from '@/components/ui/dashboard-skeleton';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ProductCard } from "@/components/ui/product-card";
-import { products } from "@/components/ui/product-data";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/dropdown-menu';
+import { ProductCard } from '@/components/ui/product-card';
+import { products } from '@/components/ui/product-data';
+import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar';
 import {
   TechDirectoryContext,
   TechDirectoryProvider,
-} from "@/components/ui/tech-directory-context";
-import { useRouter, useSearchParams } from "next/navigation";
+} from '@/components/ui/tech-directory-context';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebounce } from '@/hooks/use-debounce';
 
 import {
   ArrowDown,
@@ -46,9 +46,9 @@ import {
   SortAsc,
   SortDesc,
   Star,
-} from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { fetchFilteredItems } from "@/actions/toggle-bookmark";
+} from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { fetchFilteredItems } from '@/actions/toggle-bookmark';
 
 export default function ClientComponent({ items, categoryList }) {
   return (
@@ -81,7 +81,7 @@ function Content({ items, categoryList }) {
   const debouncedFilterKey = useDebounce(filterKey, 300);
   const [bookmarkProducts, setBookmarkProducts] = useState([]);
   const [error, setError] = useState(null);
-  console.log("bookmarkProducts", bookmarkProducts);
+  console.log('bookmarkProducts', bookmarkProducts);
   // Simulate data loading
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -108,18 +108,18 @@ function Content({ items, categoryList }) {
 
   // Get the title for the current view
   const getTitle = React.useCallback(() => {
-    if (viewMode === "featured") {
-      return "Featured";
-    } else if (viewMode === "bookmarks") {
-      return "Bookmarks";
-    } else if (viewMode === "sponsor") {
-      return "Sponsored";
+    if (viewMode === 'featured') {
+      return 'Featured';
+    } else if (viewMode === 'bookmarks') {
+      return 'Bookmarks';
+    } else if (viewMode === 'sponsor') {
+      return 'Sponsored';
     }
 
     const parts = [];
 
     if (selectedFeatured) {
-      parts.push("Featured");
+      parts.push('Featured');
     }
 
     if (selectedCategory) {
@@ -142,15 +142,15 @@ function Content({ items, categoryList }) {
       parts.push(formatId(selectedTag));
     }
 
-    return parts.length > 0 ? parts.join(" - ") : "All Products";
+    return parts.length > 0 ? parts.join(' - ') : 'All Products';
   }, [selectedCategory, selectedTag, selectedFeatured, viewMode]);
 
   // Format ID to display name
   const formatId = React.useCallback((id: string) => {
     return id
-      .split("-")
+      .split('-')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+      .join(' ');
   }, []);
 
   // Handle filter selection
@@ -178,18 +178,18 @@ function Content({ items, categoryList }) {
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString());
 
-      setSortOrder(value as "default" | "newest" | "oldest" | "a-z" | "z-a");
+      setSortOrder(value as 'default' | 'newest' | 'oldest' | 'a-z' | 'z-a');
 
-      if (value === "default") {
-        params.delete("sort");
-      } else if (value === "newest") {
-        params.set("sort", "date-desc");
-      } else if (value === "oldest") {
-        params.set("sort", "date-asc");
-      } else if (value === "a-z") {
-        params.set("sort", "name-asc");
-      } else if (value === "z-a") {
-        params.set("sort", "name-desc");
+      if (value === 'default') {
+        params.delete('sort');
+      } else if (value === 'newest') {
+        params.set('sort', 'date-desc');
+      } else if (value === 'oldest') {
+        params.set('sort', 'date-asc');
+      } else if (value === 'a-z') {
+        params.set('sort', 'name-asc');
+      } else if (value === 'z-a') {
+        params.set('sort', 'name-desc');
       }
 
       const newParams = params.toString();
@@ -198,42 +198,42 @@ function Content({ items, categoryList }) {
     [router, searchParams, setSortOrder]
   );
   React.useEffect(() => {
-    const sortParam = searchParams.get("sort");
+    const sortParam = searchParams.get('sort');
 
     switch (sortParam) {
-      case "date-asc":
-        setSortOrder("oldest");
+      case 'date-asc':
+        setSortOrder('oldest');
         break;
-      case "date-desc":
-        setSortOrder("newest");
+      case 'date-desc':
+        setSortOrder('newest');
         break;
-      case "name-asc":
-        setSortOrder("a-z");
+      case 'name-asc':
+        setSortOrder('a-z');
         break;
-      case "name-desc":
-        setSortOrder("z-a");
+      case 'name-desc':
+        setSortOrder('z-a');
         break;
       default:
-        setSortOrder("default");
+        setSortOrder('default');
         break;
     }
   }, [searchParams, setSortOrder]);
   // Get sort icon based on current sort order
   const getSortIcon = React.useCallback(() => {
     switch (sortOrder) {
-      case "newest":
+      case 'newest':
         return <ArrowDown className="h-4 w-4" />;
-      case "oldest":
+      case 'oldest':
         return <ArrowUp className="h-4 w-4" />;
-      case "a-z":
+      case 'a-z':
         return <SortAsc className="h-4 w-4" />;
-      case "z-a":
+      case 'z-a':
         return <SortDesc className="h-4 w-4" />;
       default:
         return <ArrowUpDown className="h-4 w-4" />;
     }
   }, [sortOrder]);
-  const filterParam = searchParams.get("f");
+  const filterParam = searchParams.get('f');
   const newParams = new URLSearchParams(searchParams.toString());
 
   // Scroll to highlighted product when it changes
@@ -248,8 +248,8 @@ function Content({ items, categoryList }) {
         );
         if (element) {
           element.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
+            behavior: 'smooth',
+            block: 'center',
           });
         }
       }, 100);
@@ -259,14 +259,14 @@ function Content({ items, categoryList }) {
   }, [highlightedProductId]);
 
   useEffect(() => {
-    if (filterParam === "bookmark") {
+    if (filterParam === 'bookmark') {
       const fetchBookmarks = async () => {
         setIsLoading(true);
         try {
-          const filteredBookmark = await fetchFilteredItems("bookmark");
+          const filteredBookmark = await fetchFilteredItems('bookmark');
           setBookmarkProducts(filteredBookmark);
         } catch (err) {
-          setError(err.message || "Failed to fetch bookmarks");
+          setError(err.message || 'Failed to fetch bookmarks');
         } finally {
           setIsLoading(false);
         }
@@ -276,18 +276,18 @@ function Content({ items, categoryList }) {
     }
   }, [filterParam]); // Add dependencies as needed
   const handleBookmarkToggle = async (id: string) => {
-    if (filterParam === "bookmark") {
+    if (filterParam === 'bookmark') {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      const filteredBookmark = await fetchFilteredItems("bookmark");
+      const filteredBookmark = await fetchFilteredItems('bookmark');
       setBookmarkProducts(filteredBookmark);
     }
   };
   // Add the AvatarTest component to the Content component for testing
   // Find the return statement in the Content component and add this after the isLoading check:
 
-  if (isLoading) {
-    return <DashboardSkeleton />;
-  }
+  // if (isLoading) {
+  //   return <DashboardSkeleton />;
+  // }
   return (
     <SidebarInset className="mobile-safe-area">
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -298,7 +298,7 @@ function Content({ items, categoryList }) {
             <Breadcrumb className="flex-1 min-w-0">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href={"/"} className="hidden md:block">
+                  <BreadcrumbLink href={'/'} className="hidden md:block">
                     <div className="flex items-center gap-1">
                       <HomeIcon className="w-4 h-4" />
                       <span>Home</span>
@@ -367,23 +367,23 @@ function Content({ items, categoryList }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleSortChange("default")}>
+                <DropdownMenuItem onClick={() => handleSortChange('default')}>
                   <ArrowUpDown className="h-4 w-4 mr-2" />
                   <span>Default</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("newest")}>
+                <DropdownMenuItem onClick={() => handleSortChange('newest')}>
                   <ArrowDown className="h-4 w-4 mr-2" />
                   <span>Newest</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("oldest")}>
+                <DropdownMenuItem onClick={() => handleSortChange('oldest')}>
                   <ArrowUp className="h-4 w-4 mr-2" />
                   <span>Oldest</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("a-z")}>
+                <DropdownMenuItem onClick={() => handleSortChange('a-z')}>
                   <SortAsc className="h-4 w-4 mr-2" />
                   <span>A-Z</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("z-a")}>
+                <DropdownMenuItem onClick={() => handleSortChange('z-a')}>
                   <SortDesc className="h-4 w-4 mr-2" />
                   <span>Z-A</span>
                 </DropdownMenuItem>
@@ -395,7 +395,7 @@ function Content({ items, categoryList }) {
 
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {filterParam === "bookmark" ? (
+          {filterParam === 'bookmark' ? (
             bookmarkProducts.length > 0 ? (
               bookmarkProducts.map((product, index) => (
                 <AnimatedCard
@@ -408,7 +408,7 @@ function Content({ items, categoryList }) {
                     id={product._id ? product._id : null}
                     title={product.name}
                     description={product.description}
-                    color={product.color || "#0070f3"}
+                    color={product.color || '#0070f3'}
                     logo={product.icon || Code}
                     featured={product.featured}
                     isAd={product.sponsor}
@@ -439,7 +439,7 @@ function Content({ items, categoryList }) {
                   id={product._id ? product._id : null}
                   title={product.name}
                   description={product.description}
-                  color={product.color || "#0070f3"}
+                  color={product.color || '#0070f3'}
                   logo={product.icon || Code}
                   featured={product.featured}
                   isAd={product.sponsor}

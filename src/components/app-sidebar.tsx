@@ -28,9 +28,9 @@ import { NavProjects } from './ui/nav-projects';
 // This is sample data.
 const data = {
   user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
+    name: 'teniam',
+    email: 'support@teniam.com',
+    avatar: '/logo.png',
   },
   teams: [
     {

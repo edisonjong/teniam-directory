@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton';
 // import { ProductCardSkeleton } from "@/components/product-card-skeleton";
-import { useEffect, useState } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { ProductCardSkeleton } from "./product-card-skeleton";
+import { useEffect, useState } from 'react';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { ProductCardSkeleton } from './product-card-skeleton';
 
 export function DashboardSkeleton() {
   // Determine how many skeleton cards to show based on viewport
@@ -28,8 +28,8 @@ export function DashboardSkeleton() {
     };
 
     updateSkeletonCount();
-    window.addEventListener("resize", updateSkeletonCount);
-    return () => window.removeEventListener("resize", updateSkeletonCount);
+    window.addEventListener('resize', updateSkeletonCount);
+    return () => window.removeEventListener('resize', updateSkeletonCount);
   }, []);
 
   return (

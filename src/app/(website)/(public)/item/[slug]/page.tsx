@@ -441,9 +441,13 @@ import { ItemFullInfo } from '@/types';
 import ShareButton from '@/components/shared/share-button';
 import {
   itemFullInfoBySlugQuery,
+  itemInfoBySlugQuery,
   sponsorItemListQuery,
 } from '@/sanity/lib/queries';
-import { SponsorItemListQueryResult } from '@/sanity.types';
+import {
+  ItemInfoBySlugQueryResult,
+  SponsorItemListQueryResult,
+} from '@/sanity.types';
 import { notFound } from 'next/navigation';
 import {
   MotionHeading,
@@ -461,8 +465,32 @@ import { LogoImage, ProductCard } from '@/components/ui/product-card';
 import { AnimatedCard } from '@/components/ui/animated-card';
 import { Safari } from '@/components/magicui/safari';
 import SponsorItemCard from '@/components/item/item-card-sponsor';
+import { constructMetadata } from '@/lib/metadata';
+import { siteConfig } from '@/config/site';
+import { Metadata } from 'next';
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata | undefined> {
+  const item = await sanityFetch<ItemInfoBySlugQueryResult>({
+    query: itemInfoBySlugQuery,
+    params: { slug: params.slug },
+  });
+  if (!item) {
+    console.warn(`generateMetadata, item not found for slug: ${params.slug}`);
+    return;
+  }
 
+  const imageProps = item?.image ? urlForImage(item?.image) : null;
+  return constructMetadata({
+    title: `${item.name}`,
+    description: item.description,
+    canonicalUrl: `${siteConfig.url}/item/${params.slug}`,
+    image: imageProps?.src,
+  });
+}
 interface ItemPageProps {
   params: { slug: string };
 }
@@ -753,7 +781,6 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
         </div>
       </section>
 
-      <SubscribeSection />
       <div className="py-16 md:py-32">
         <div className="mx-auto  px-6">
           <div className="text-center">

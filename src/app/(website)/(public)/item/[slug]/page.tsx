@@ -455,11 +455,12 @@ import Image from 'next/image';
 import ItemCustomMdx from '@/components/item/item-custom-mdx';
 import SubscribeSection from '../../sections/subscribe-section';
 import IntegrationsSection from '../../sections/integrations-section';
-import { Avatar } from '@radix-ui/react-avatar';
-import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+// import { Avatar } from '@radix-ui/react-avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LogoImage, ProductCard } from '@/components/ui/product-card';
 import { AnimatedCard } from '@/components/ui/animated-card';
 import { Safari } from '@/components/magicui/safari';
+// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface ItemPageProps {
   params: { slug: string };
@@ -702,17 +703,23 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                       {item.coreTechnologies.map((tech, index) => (
                         <div key={index} className="flex items-start gap-3">
                           {tech?.icon && (
-                            <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
-                              <Image
+                            <Avatar>
+                              <AvatarImage
                                 src={urlForIcon(tech.icon)?.src || ''}
-                                alt={tech.icon.alt || `icon of ${tech.name}`}
-                                title={tech.icon.alt || `icon of ${tech.name}`}
-                                height={40}
-                                width={40}
-                                className="object-cover image-scale"
-                                loading="lazy"
                               />
-                            </div>
+                              <AvatarFallback>{tech.name}</AvatarFallback>
+                            </Avatar>
+                            // <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
+                            //   <Image
+                            //     src={urlForIcon(tech.icon)?.src || ''}
+                            //     alt={tech.icon.alt || `icon of ${tech.name}`}
+                            //     title={tech.icon.alt || `icon of ${tech.name}`}
+                            //     height={40}
+                            //     width={40}
+                            //     className="object-cover image-scale"
+                            //     loading="lazy"
+                            //   />
+                            // </div>
                           )}
                           <div>
                             <span className="block text-sm font-medium">

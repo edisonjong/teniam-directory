@@ -429,36 +429,37 @@
 //     </div>
 //   );
 // }
-import Link from "next/link";
-import { ArrowLeft, Code, Globe } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { UrlPreview } from "@/components/shared/url-preview";
-import { Logo, TailwindLogo } from "@/components/logo";
+import Link from 'next/link';
+import { ArrowLeft, Code, Globe } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { UrlPreview } from '@/components/shared/url-preview';
+import { Logo, TailwindLogo } from '@/components/logo';
 // import SubscribeSection from "../subscribe-section";
 // import IntegrationsSection from "../integrations-section";
-import { sanityFetch } from "@/sanity/lib/fetch";
-import { ItemFullInfo } from "@/types";
-import ShareButton from "@/components/shared/share-button";
+import { sanityFetch } from '@/sanity/lib/fetch';
+import { ItemFullInfo } from '@/types';
+import ShareButton from '@/components/shared/share-button';
 import {
   itemFullInfoBySlugQuery,
   sponsorItemListQuery,
-} from "@/sanity/lib/queries";
-import { SponsorItemListQueryResult } from "@/sanity.types";
-import { notFound } from "next/navigation";
+} from '@/sanity/lib/queries';
+import { SponsorItemListQueryResult } from '@/sanity.types';
+import { notFound } from 'next/navigation';
 import {
   MotionHeading,
   MotionWrapper,
-} from "@/components/shared/motion-animation";
-import { urlForIcon, urlForImage } from "@/lib/image";
-import { cn, getItemTargetLinkInWebsite, getLocaleDate } from "@/lib/utils";
-import Image from "next/image";
-import ItemCustomMdx from "@/components/item/item-custom-mdx";
-import SubscribeSection from "../../sections/subscribe-section";
-import IntegrationsSection from "../../sections/integrations-section";
-import { Avatar } from "@radix-ui/react-avatar";
-import { AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LogoImage, ProductCard } from "@/components/ui/product-card";
-import { AnimatedCard } from "@/components/ui/animated-card";
+} from '@/components/shared/motion-animation';
+import { urlForIcon, urlForImage } from '@/lib/image';
+import { cn, getItemTargetLinkInWebsite, getLocaleDate } from '@/lib/utils';
+import Image from 'next/image';
+import ItemCustomMdx from '@/components/item/item-custom-mdx';
+import SubscribeSection from '../../sections/subscribe-section';
+import IntegrationsSection from '../../sections/integrations-section';
+import { Avatar } from '@radix-ui/react-avatar';
+import { AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { LogoImage, ProductCard } from '@/components/ui/product-card';
+import { AnimatedCard } from '@/components/ui/animated-card';
+import { Safari } from '@/components/magicui/safari';
 
 interface ItemPageProps {
   params: { slug: string };
@@ -474,9 +475,9 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
       query: sponsorItemListQuery,
     }),
   ]);
-  console.log("item", item);
+  console.log('item', item);
   if (!item) {
-    console.error("ItemPage, item not found");
+    console.error('ItemPage, item not found');
     return notFound();
   }
 
@@ -529,7 +530,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                             height={28}
                             className="object-contain"
                             {...(iconBlurDataURL && {
-                              placeholder: "blur",
+                              placeholder: 'blur',
                               blurDataURL: iconBlurDataURL,
                             })}
                           />
@@ -540,9 +541,9 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                       <div>
                         <h1
                           className={cn(
-                            "text-4xl tracking-wider font-bold flex items-center gap-2",
+                            'text-4xl tracking-wider font-bold flex items-center gap-2',
                             item.featured &&
-                              "text-gradient_indigo-purple font-semibold"
+                              'text-gradient_indigo-purple font-semibold'
                           )}
                         >
                           {item.name}
@@ -553,8 +554,8 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 </MotionWrapper>
 
                 <MotionHeading
-                  initial={{ opacity: 0, y: 20, filter: "blur(12px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 20, filter: 'blur(12px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="relative z-10 max-w-xl text-3xl font-medium sm:text-4xl lg:text-5xl"
                 >
@@ -634,23 +635,23 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     <Avatar className="h-10 w-10 rounded-full border border-border">
                       <AvatarImage
                         src={item?.submitter?.avatar}
-                        alt={item?.submitter?.name || "Anonymous"}
+                        alt={item?.submitter?.name || 'Anonymous'}
                       />
                       <AvatarFallback>
-                        {(item?.submitter?.name || "Anonymous")
-                          .split(" ")
+                        {(item?.submitter?.name || 'Anonymous')
+                          .split(' ')
                           .map((word) => word[0])
-                          .join("")
+                          .join('')
                           .toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
 
                     <div>
                       <h3 className="text-sm font-medium md:text-base">
-                        {item?.submitter?.name || "Anonymous"}
+                        {item?.submitter?.name || 'Anonymous'}
                       </h3>
                       <p className="text-xs text-muted-foreground md:text-sm">
-                        {item?.submitter?.role || "Contributor"}
+                        {item?.submitter?.role || 'Contributor'}
                       </p>
                     </div>
                   </div>
@@ -668,14 +669,21 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.9 }}
                 >
-                  <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative w-full overflow-hidden rounded-2xl border  shadow-lg shadow-zinc-950/15 ring-1">
+                  <div className="relative">
+                    <Safari
+                      url={itemLink}
+                      className="size-full"
+                      imageSrc={imageProps?.src}
+                    />
+                  </div>
+                  {/* <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative w-full overflow-hidden rounded-2xl border  shadow-lg shadow-zinc-950/15 ring-1">
                     <UrlPreview
                       url={itemLink}
                       className="w-full"
                       imageProps={imageProps}
                       item={item}
                     />
-                  </div>
+                  </div> */}
                 </MotionWrapper>
 
                 <MotionWrapper
@@ -696,7 +704,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                           {tech?.icon && (
                             <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
                               <Image
-                                src={urlForIcon(tech.icon)?.src || ""}
+                                src={urlForIcon(tech.icon)?.src || ''}
                                 alt={tech.icon.alt || `icon of ${tech.name}`}
                                 title={tech.icon.alt || `icon of ${tech.name}`}
                                 height={40}
@@ -755,7 +763,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     id={product._id || null}
                     title={product.name}
                     description={product.description}
-                    color={product.color || "#0070f3"}
+                    color={product.color || '#0070f3'}
                     logo={product.icon as LogoImage}
                     featured={product.featured}
                     isAd={product.sponsor}

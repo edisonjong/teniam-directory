@@ -460,6 +460,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LogoImage, ProductCard } from '@/components/ui/product-card';
 import { AnimatedCard } from '@/components/ui/animated-card';
 import { Safari } from '@/components/magicui/safari';
+import SponsorItemCard from '@/components/item/item-card-sponsor';
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface ItemPageProps {
@@ -737,6 +738,14 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                       No core technologies added.
                     </p>
                   )}
+                </MotionWrapper>
+                <MotionWrapper
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1.0 }}
+                  className="mt-8"
+                >
+                  {sponsorItem && <SponsorItemCard item={sponsorItem} />}
                 </MotionWrapper>
               </div>
             </div>

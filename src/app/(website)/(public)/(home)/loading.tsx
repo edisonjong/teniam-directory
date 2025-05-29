@@ -1,5 +1,5 @@
-import { ItemGridSkeleton } from "@/components/item/item-grid";
+import { LandingPageSkeleton } from "@/components/ui/landing-page-skeleton";
 
 export default function Loading() {
-  return <ItemGridSkeleton />;
+  return <LandingPageSkeleton />;
 }

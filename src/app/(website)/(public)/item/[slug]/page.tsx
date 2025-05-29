@@ -429,45 +429,45 @@
 //     </div>
 //   );
 // }
-import Link from 'next/link';
-import { ArrowLeft, Code, Globe } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { UrlPreview } from '@/components/shared/url-preview';
-import { Logo, TailwindLogo } from '@/components/logo';
+import Link from "next/link";
+import { ArrowLeft, Code, Globe } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { UrlPreview } from "@/components/shared/url-preview";
+import { Logo, TailwindLogo } from "@/components/logo";
 // import SubscribeSection from "../subscribe-section";
 // import IntegrationsSection from "../integrations-section";
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { ItemFullInfo } from '@/types';
-import ShareButton from '@/components/shared/share-button';
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { ItemFullInfo } from "@/types";
+import ShareButton from "@/components/shared/share-button";
 import {
   itemFullInfoBySlugQuery,
   itemInfoBySlugQuery,
   sponsorItemListQuery,
-} from '@/sanity/lib/queries';
+} from "@/sanity/lib/queries";
 import {
   ItemInfoBySlugQueryResult,
   SponsorItemListQueryResult,
-} from '@/sanity.types';
-import { notFound } from 'next/navigation';
+} from "@/sanity.types";
+import { notFound } from "next/navigation";
 import {
   MotionHeading,
   MotionWrapper,
-} from '@/components/shared/motion-animation';
-import { urlForIcon, urlForImage } from '@/lib/image';
-import { cn, getItemTargetLinkInWebsite, getLocaleDate } from '@/lib/utils';
-import Image from 'next/image';
-import ItemCustomMdx from '@/components/item/item-custom-mdx';
-import SubscribeSection from '../../sections/subscribe-section';
-import IntegrationsSection from '../../sections/integrations-section';
+} from "@/components/shared/motion-animation";
+import { urlForIcon, urlForImage } from "@/lib/image";
+import { cn, getItemTargetLinkInWebsite, getLocaleDate } from "@/lib/utils";
+import Image from "next/image";
+import ItemCustomMdx from "@/components/item/item-custom-mdx";
+import SubscribeSection from "../../sections/subscribe-section";
+import IntegrationsSection from "../../sections/integrations-section";
 // import { Avatar } from '@radix-ui/react-avatar';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogoImage, ProductCard } from '@/components/ui/product-card';
-import { AnimatedCard } from '@/components/ui/animated-card';
-import { Safari } from '@/components/magicui/safari';
-import SponsorItemCard from '@/components/item/item-card-sponsor';
-import { constructMetadata } from '@/lib/metadata';
-import { siteConfig } from '@/config/site';
-import { Metadata } from 'next';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LogoImage, ProductCard } from "@/components/ui/product-card";
+import { AnimatedCard } from "@/components/ui/animated-card";
+import { Safari } from "@/components/magicui/safari";
+import SponsorItemCard from "@/components/item/item-card-sponsor";
+import { constructMetadata } from "@/lib/metadata";
+import { siteConfig } from "@/config/site";
+import { Metadata } from "next";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export async function generateMetadata({
   params,
@@ -505,9 +505,9 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
       query: sponsorItemListQuery,
     }),
   ]);
-  console.log('item', item);
+  console.log("item", item);
   if (!item) {
-    console.error('ItemPage, item not found');
+    console.error("ItemPage, item not found");
     return notFound();
   }
 
@@ -525,7 +525,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
   return (
     <main className="overflow-x-hidden">
       <section>
-        <div className="relative pt-12 md:pt-24">
+        <div className="relative pt-8 md:pt-16">
           <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
           <div className="mx-auto max-w-7xl px-6">
             <div className="flex justify-between mb-8">
@@ -560,7 +560,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                             height={28}
                             className="object-contain"
                             {...(iconBlurDataURL && {
-                              placeholder: 'blur',
+                              placeholder: "blur",
                               blurDataURL: iconBlurDataURL,
                             })}
                           />
@@ -571,9 +571,9 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                       <div>
                         <h1
                           className={cn(
-                            'text-4xl tracking-wider font-bold flex items-center gap-2',
+                            "text-4xl tracking-wider font-bold flex items-center gap-2",
                             item.featured &&
-                              'text-gradient_indigo-purple font-semibold'
+                              "text-gradient_indigo-purple font-semibold"
                           )}
                         >
                           {item.name}
@@ -584,8 +584,8 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 </MotionWrapper>
 
                 <MotionHeading
-                  initial={{ opacity: 0, y: 20, filter: 'blur(12px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  initial={{ opacity: 0, y: 20, filter: "blur(12px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="relative z-10 max-w-xl text-3xl font-medium sm:text-4xl lg:text-5xl"
                 >
@@ -665,23 +665,23 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     <Avatar className="h-10 w-10 rounded-full border border-border">
                       <AvatarImage
                         src={item?.submitter?.avatar}
-                        alt={item?.submitter?.name || 'Anonymous'}
+                        alt={item?.submitter?.name || "Anonymous"}
                       />
                       <AvatarFallback>
-                        {(item?.submitter?.name || 'Anonymous')
-                          .split(' ')
+                        {(item?.submitter?.name || "Anonymous")
+                          .split(" ")
                           .map((word) => word[0])
-                          .join('')
+                          .join("")
                           .toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
 
                     <div>
                       <h3 className="text-sm font-medium md:text-base">
-                        {item?.submitter?.name || 'Anonymous'}
+                        {item?.submitter?.name || "Anonymous"}
                       </h3>
                       <p className="text-xs text-muted-foreground md:text-sm">
-                        {item?.submitter?.role || 'Contributor'}
+                        {item?.submitter?.role || "Contributor"}
                       </p>
                     </div>
                   </div>
@@ -734,7 +734,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                           {tech?.icon && (
                             <Avatar>
                               <AvatarImage
-                                src={urlForIcon(tech.icon)?.src || ''}
+                                src={urlForIcon(tech.icon)?.src || ""}
                               />
                               <AvatarFallback>{tech.name}</AvatarFallback>
                             </Avatar>
@@ -806,7 +806,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     id={product._id || null}
                     title={product.name}
                     description={product.description}
-                    color={product.color || '#0070f3'}
+                    color={product.color || "#0070f3"}
                     logo={product.icon as LogoImage}
                     featured={product.featured}
                     isAd={product.sponsor}

@@ -1,13 +1,13 @@
-"use server";
+'use server';
 
-import { slugify } from "@/lib/utils";
-import type { Category, CoreTechnologies, Tag } from "@/sanity.types";
-import { sanityClient } from "@/sanity/lib/client";
-import { deepseek } from "@ai-sdk/deepseek";
-import { google } from "@ai-sdk/google";
-import { openai } from "@ai-sdk/openai";
-import { generateObject } from "ai";
-import { z } from "zod";
+import { slugify } from '@/lib/utils';
+import type { Category, CoreTechnologies, Tag } from '@/sanity.types';
+import { sanityClient } from '@/sanity/lib/client';
+import { deepseek } from '@ai-sdk/deepseek';
+import { google } from '@ai-sdk/google';
+import { openai } from '@ai-sdk/openai';
+import { generateObject } from 'ai';
+import { z } from 'zod';
 
 /**
  * Website info schema
@@ -17,32 +17,32 @@ import { z } from "zod";
  * 3. when this server action is called, it will return the image url and icon url, and the image reference Id and icon reference Id
  */
 const WebsiteInfoSchema = z.object({
-  name: z.string().describe("A short, concise name without description"),
+  name: z.string().describe('A short, concise name without description'),
   description: z
     .string()
     .max(160)
-    .describe("One sentence summary, max 160 characters"),
-  introduction: z.string().describe("Detailed introduction in markdown format"),
+    .describe('One sentence summary, max 160 characters'),
+  introduction: z.string().describe('Detailed introduction in markdown format'),
   categories: z
     .array(z.string())
-    .describe("Array of category names that best match the content"),
+    .describe('Array of category names that best match the content'),
   tags: z
     .array(z.string())
-    .describe("Array of tag names that best match the content"),
+    .describe('Array of tag names that best match the content'),
   coreTechnologies: z
     .array(z.string())
-    .describe("Array of core technologies names that best match the content"),
-  image: z.string().describe("Website screenshot image URL"),
-  icon: z.string().describe("Website logo image URL"),
+    .describe('Array of core technologies names that best match the content'),
+  image: z.string().describe('Website screenshot image URL'),
+  icon: z.string().describe('Website logo image URL'),
   imageId: z
     .string()
     .optional()
-    .describe("Website screenshot image reference Id"),
-  iconId: z.string().optional().describe("Website logo image reference Id"),
+    .describe('Website screenshot image reference Id'),
+  iconId: z.string().optional().describe('Website logo image reference Id'),
 });
 
 export type ServerActionResponse = {
-  status: "success" | "error";
+  status: 'success' | 'error';
   message?: string;
   data?: z.infer<typeof WebsiteInfoSchema>;
 };
@@ -54,28 +54,28 @@ export async function fetchWebsite(url: string): Promise<ServerActionResponse> {
   try {
     if (!process.env.DEFAULT_AI_PROVIDER) {
       return {
-        status: "error",
-        message: "AI submit is not supported",
+        status: 'error',
+        message: 'AI submit is not supported',
       };
     }
 
     const data = await fetchWebsiteInfo(url);
     if (data === null) {
       return {
-        status: "error",
-        message: "Failed to fetch website info",
+        status: 'error',
+        message: 'Failed to fetch website info',
       };
     }
     return {
-      status: "success",
-      message: "Successfully fetched website info",
+      status: 'success',
+      message: 'Successfully fetched website info',
       data,
     };
   } catch (error) {
-    console.error("fetchWebsite, fetch website:", url, "error:", error);
+    console.error('fetchWebsite, fetch website:', url, 'error:', error);
     return {
-      status: "error",
-      message: "Failed to fetch website info",
+      status: 'error',
+      message: 'Failed to fetch website info',
     };
   }
 }
@@ -86,10 +86,10 @@ export async function fetchWebsite(url: string): Promise<ServerActionResponse> {
 export const fetchWebsiteInfo = async (url: string) => {
   const fetchedData = await fetchWebsiteInfoWithAI(url);
   if (fetchedData === null) {
-    console.error("fetchWebsiteInfo, url:", url, "fetchedData is null");
+    console.error('fetchWebsiteInfo, url:', url, 'fetchedData is null');
     return null;
   }
-  console.log("fetchWebsiteInfo, url:", url, "fetchedData:", fetchedData);
+  console.log('fetchWebsiteInfo, url:', url, 'fetchedData:', fetchedData);
 
   const websiteInfo = WebsiteInfoSchema.parse({
     name: fetchedData.object.name,
@@ -105,7 +105,7 @@ export const fetchWebsiteInfo = async (url: string) => {
     // TODO: we don't use favicon URL, instead, we use Google API to get the logo
     icon: `https://s2.googleusercontent.com/s2/favicons?domain=${url}&sz=128`,
   });
-  console.log("fetchWebsiteInfo, url:", url, "websiteInfo:", websiteInfo);
+  console.log('fetchWebsiteInfo, url:', url, 'websiteInfo:', websiteInfo);
 
   if (websiteInfo.image && websiteInfo.icon) {
     // Fetch icon and image
@@ -114,7 +114,7 @@ export const fetchWebsiteInfo = async (url: string) => {
       fetch(websiteInfo.image),
     ]);
 
-    console.log("fetchWebsiteInfo, start fetching icon and image");
+    console.log('fetchWebsiteInfo, start fetching icon and image');
     const [iconArrayBuffer, imageArrayBuffer] = await Promise.all([
       iconResponse.arrayBuffer(),
       imageResponse.arrayBuffer(),
@@ -126,25 +126,25 @@ export const fetchWebsiteInfo = async (url: string) => {
       Buffer.from(imageArrayBuffer),
     ];
 
-    console.log("fetchWebsiteInfo, start uploading icon and image to sanity");
+    console.log('fetchWebsiteInfo, start uploading icon and image to sanity');
     // Upload icon and image to sanity
     const [iconAsset, imageAsset] = await Promise.all([
-      sanityClient.assets.upload("image", iconBuffer, {
+      sanityClient.assets.upload('image', iconBuffer, {
         filename: `${slugify(websiteInfo.name)}_logo.png`,
       }),
-      sanityClient.assets.upload("image", imageBuffer, {
+      sanityClient.assets.upload('image', imageBuffer, {
         filename: `${slugify(websiteInfo.name)}_image.png`,
       }),
     ]);
 
-    console.log("fetchWebsiteInfo, url:", url, "iconAsset:", iconAsset);
-    console.log("fetchWebsiteInfo, url:", url, "imageAsset:", imageAsset);
+    console.log('fetchWebsiteInfo, url:', url, 'iconAsset:', iconAsset);
+    console.log('fetchWebsiteInfo, url:', url, 'imageAsset:', imageAsset);
 
     websiteInfo.icon = iconAsset.url;
     websiteInfo.image = imageAsset.url;
     websiteInfo.iconId = iconAsset._id;
     websiteInfo.imageId = imageAsset._id;
-    console.log("fetchWebsiteInfo, url:", url, "websiteInfo:", websiteInfo);
+    console.log('fetchWebsiteInfo, url:', url, 'websiteInfo:', websiteInfo);
   }
 
   return websiteInfo;
@@ -174,30 +174,30 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
     // Google Gemini model support more tokens than DeepSeek model, so we prefer Google Gemini model
     // Thanks to Justin3go for the code: https://github.com/MkdirsHQ/mkdirs-template/discussions/50
     const htmlContent = (await response.text())
-      .replace(/class="[^"]*"/g, "")
-      .replace(/<svg[^>]*>.*?<\/svg>/g, "")
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "");
+      .replace(/class="[^"]*"/g, '')
+      .replace(/<svg[^>]*>.*?<\/svg>/g, '')
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
 
     let aiModel = null;
     if (
-      process.env.DEFAULT_AI_PROVIDER === "google" &&
+      process.env.DEFAULT_AI_PROVIDER === 'google' &&
       process.env.GOOGLE_GENERATIVE_AI_API_KEY !== undefined
     ) {
-      aiModel = google("gemini-2.0-flash-exp", {
+      aiModel = google('gemini-2.0-flash-exp', {
         structuredOutputs: true,
       });
     } else if (
-      process.env.DEFAULT_AI_PROVIDER === "deepseek" &&
+      process.env.DEFAULT_AI_PROVIDER === 'deepseek' &&
       process.env.DEEPSEEK_API_KEY !== undefined
     ) {
-      aiModel = deepseek("deepseek-chat", {
+      aiModel = deepseek('deepseek-chat', {
         // structuredOutputs: true,
       });
     } else if (
-      process.env.DEFAULT_AI_PROVIDER === "openai" &&
+      process.env.DEFAULT_AI_PROVIDER === 'openai' &&
       process.env.OPENAI_API_KEY !== undefined
     ) {
-      aiModel = openai("gpt-4o-mini", {
+      aiModel = openai('gpt-4o-mini', {
         structuredOutputs: true,
       });
     }
@@ -205,7 +205,7 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
     if (aiModel === null) {
       return null;
     }
-    console.log("fetchWebsiteInfoWithAI, aiModel:", aiModel);
+    console.log('fetchWebsiteInfoWithAI, aiModel:', aiModel);
 
     const result = await generateObject({
       model: aiModel,
@@ -216,18 +216,18 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       ${htmlContent}
       
       Available Categories:
-      ${availableCategories.join(", ")}
+      ${availableCategories.join(', ')}
       
       Available Tags:
-      ${availableTags.join(", ")}
+      ${availableTags.join(', ')}
 
        Available Core Technologies:
-      ${availableCoreTechnologies.join(", ")}
+      ${availableCoreTechnologies.join(', ')}
       
       Please analyze the content and provide:
       1. A concise title (just the name, no description)
       2. A brief description (one sentence, max 160 characters)
-      3. A detailed introduction in markdown format (include key features and use cases)
+      3. A detailed introduction in markdown format (include key features and use cases and summary)
       4. Select appropriate categories from the available categories list (return array of names)
       5. Select relevant tags from the available tags list (return array of names)
       6. Select relevant core technologies from the available core technologies list (return array of names)

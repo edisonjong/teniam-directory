@@ -1,22 +1,22 @@
-import { getItems } from '@/data/item';
-import { DEFAULT_SORT, SORT_FILTER_LIST } from '@/lib/constants';
-import React from 'react';
-import ClientComponent from './ClientComponent';
-import { sanityFetch } from '@/sanity/lib/fetch';
+import { getItems } from "@/data/item";
+import { DEFAULT_SORT, SORT_FILTER_LIST } from "@/lib/constants";
+import React from "react";
+import ClientComponent from "./ClientComponent";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import {
   CategoryListQueryResult,
   GroupListQueryResult,
   TagListQueryResult,
-} from '@/sanity.types';
+} from "@/sanity.types";
 import {
   categoryListQuery,
   groupListQuery,
   tagListQuery,
-} from '@/sanity/lib/queries';
-import { constructMetadata } from '@/lib/metadata';
-import { siteConfig } from '@/config/site';
+} from "@/sanity/lib/queries";
+import { constructMetadata } from "@/lib/metadata";
+import { siteConfig } from "@/config/site";
 export const metadata = constructMetadata({
-  title: 'Directories',
+  title: "Directories",
   canonicalUrl: `${siteConfig.url}/`,
 });
 const Page = async ({
@@ -53,9 +53,9 @@ const Page = async ({
     sanityFetch<CategoryListQueryResult>({
       query: categoryListQuery,
     }),
-    // sanityFetch<TagListQueryResult>({
-    //   query: tagListQuery,
-    // }),
+    sanityFetch<TagListQueryResult>({
+      query: tagListQuery,
+    }),
   ]);
   return (
     <div>

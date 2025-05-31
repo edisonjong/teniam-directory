@@ -25,12 +25,13 @@ function stringToColor(str: string) {
   const hue = hash % 360;
   return `hsl(${hue}, 70%, 60%)`;
 }
-
+type Category = string;
 export function NavProjects({
-  projects,
+  categories,
+  setSelectedCategory,
   selectedCategory,
 }: {
-  projects: {
+  categories: {
     name: string;
     url?: string;
     _id: string;
@@ -38,31 +39,25 @@ export function NavProjects({
     icon?: string;
     slug: { current: string };
   }[];
-  selectedCategory: string | null;
+  setSelectedCategory: (category: Category) => void;
+  selectedCategory: Category;
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
-  const { setSelectedCategory } = React.useContext(TechDirectoryContext);
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const handleCategoryClick = (item: {
     _id: string;
     slug: { current: string };
     name: string;
     icon?: string;
   }) => {
-    const newSelectedCategory =
-      item.slug.current === selectedCategory ? null : item.slug.current;
-    setSelectedCategory(newSelectedCategory);
-
+    setSelectedCategory(item.slug.current);
     const newParams = new URLSearchParams(searchParams.toString());
 
-    if (newSelectedCategory) {
-      newParams.set("category", item.slug.current);
-    } else {
-      newParams.delete("category");
-    }
+    // Set the 'category' query param
+    newParams.set("category", item.slug.current);
 
+    // Push the updated URL
     router.push(`?${newParams.toString()}`, { scroll: false });
 
     // Close mobile sidebar when a selection is made
@@ -75,7 +70,7 @@ export function NavProjects({
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Categories</SidebarGroupLabel>
       <SidebarMenu>
-        {projects.map((item) => {
+        {categories.map((item) => {
           const Icon =
             ((item.icon &&
               Icons[item.icon as keyof typeof Icons]) as Icons.LucideIcon) ||

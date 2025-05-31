@@ -18,10 +18,11 @@ import {
 import { Button } from "./button";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-
+type Platform = string;
 export function NavMain({
   items,
-  selectedCategory,
+  selectedPlatform,
+  setSelectedPlatform,
 }: {
   items: {
     title: string;
@@ -36,88 +37,53 @@ export function NavMain({
       slug: string;
     }[];
   }[];
-  selectedCategory: string | null;
+  setSelectedPlatform: (platform: Platform) => void;
+  selectedPlatform: Platform;
 }) {
-  const { setSelectedCategory, setViewMode } =
-    React.useContext(TechDirectoryContext);
   const { isMobile, setOpenMobile } = useSidebar();
-  const [openCategories, setOpenCategories] = React.useState<
-    Record<string, boolean>
-  >({});
+  // const [openCategories, setOpenCategories] = React.useState<
+  //   Record<string, boolean>
+  // >({});
   const router = useRouter();
   const searchParams = useSearchParams();
-  // Initialize open state for categories with items
-  // close existing tab if new one open
-  // React.useEffect(() => {
-  //   const initialState: Record<string, boolean> = {};
-  //   items.forEach((item) => {
-  //     if (item.items?.length) {
-  //       initialState[item.id] = false;
-  //     }
-  //   });
-  //   setOpenCategories(initialState);
-  // }, [items]);
-
-  const handleCategoryClick = (categoryId: string) => {
-    const item = items.find((item) => item.id === categoryId);
+  const handlePlatformClick = (platformId: string) => {
+    const item = items.find((item) => item.id === platformId);
     const newParams = new URLSearchParams(searchParams.toString());
-
     if (!item?.items?.length) {
-      if (categoryId === "featured") {
-        setViewMode("featured");
-        setSelectedCategory(null);
+      if (platformId === "featured") {
         newParams.delete("category");
+        newParams.delete("tag");
         newParams.set("f", "featured");
-      } else if (categoryId === "bookmarks") {
-        setViewMode("bookmarks");
-        setSelectedCategory(null);
+      } else if (platformId === "bookmarks") {
         newParams.delete("category");
+        newParams.delete("tag");
         newParams.set("f", "bookmark");
-      } else if (categoryId === "ads") {
-        setViewMode("sponsor");
-        setSelectedCategory(null);
+      } else if (platformId === "ads") {
         newParams.delete("category");
+        newParams.delete("tag");
         newParams.set("f", "sponsor");
-      } else {
-        setViewMode("all");
-        const newCategory = categoryId === selectedCategory ? null : categoryId;
-        setSelectedCategory(newCategory);
-
-        if (newCategory) {
-          newParams.set("category", newCategory);
-        } else {
-          newParams.delete("category");
-        }
+      } else if (platformId === "tags") {
+        newParams.delete("category");
+        newParams.delete("f");
+        newParams.set("tag", "all");
       }
-
+      setSelectedPlatform(platformId);
       router.push(`?${newParams.toString()}`);
       if (isMobile) setOpenMobile(false);
     }
   };
 
-  const handleSubCategoryClick = (slug: string) => {
-    setViewMode("all");
-    const newCategory = slug === selectedCategory ? null : slug;
-    setSelectedCategory(newCategory);
+  // const handleSubCategoryClick = (slug: string) => {
+  //   const newParams = new URLSearchParams(searchParams.toString());
 
-    const newParams = new URLSearchParams(searchParams.toString());
-    if (newCategory) {
-      newParams.set("category", newCategory);
-    } else {
-      newParams.delete("category");
-    }
+  //   router.push(`?${newParams.toString()}`);
+  //   if (isMobile) setOpenMobile(false);
+  // };
 
-    router.push(`?${newParams.toString()}`);
-    if (isMobile) setOpenMobile(false);
-  };
-
-  const toggleCategory = (categoryId: string, event: React.MouseEvent) => {
-    event.stopPropagation();
-    setOpenCategories((prev) => ({
-      ...prev,
-      [categoryId]: !prev[categoryId],
-    }));
-  };
+  // const togglePlatform = (platformId: string, event: React.MouseEvent) => {
+  //   event.stopPropagation();
+  //   setSelectedPlatform(platformId);
+  // };
 
   return (
     <SidebarGroup>
@@ -135,22 +101,26 @@ export function NavMain({
       <SidebarMenu>
         {items.map((item) => {
           const Icon = item.icon;
-          const hasSubItems = item.items && item.items.length > 0;
-
-          const isSpecialCategory =
-            item.id === "featured" ||
-            item.id === "bookmarks" ||
-            item.id === "ads";
+          // const hasSubItems = item.items && item.items.length > 0;
 
           return (
             <SidebarMenuItem key={item.title}>
-              {hasSubItems ? (
+              <SidebarMenuButton
+                tooltip={item.title}
+                isActive={selectedPlatform === item.id}
+                onClick={() => handlePlatformClick(item.id)}
+              >
+                {Icon && <Icon className="h-4 w-4" />}
+                <span>{item.title}</span>
+              </SidebarMenuButton>
+
+              {/* {hasSubItems ? (
                 <div className="w-full">
                   <SidebarMenuButton
                     tooltip={item.title}
-                    onClick={(e) => toggleCategory(item.id, e)}
+                    onClick={(e) => togglePlatform(item.id, e)}
                     className="w-full"
-                    isActive={selectedCategory === item.id}
+                    isActive={selectedPlatform === item.id}
                   >
                     {Icon && <Icon className="h-4 w-4" />}
                     <span>{item.title}</span>
@@ -170,7 +140,7 @@ export function NavMain({
                       {item.items.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.slug}>
                           <SidebarMenuSubButton
-                            isActive={selectedCategory === subItem.slug}
+                            // isActive={selectedCategory === subItem.slug}
                             onClick={() => handleSubCategoryClick(subItem.slug)}
                           >
                             {subItem.title}
@@ -183,15 +153,15 @@ export function NavMain({
               ) : (
                 <SidebarMenuButton
                   tooltip={item.title}
-                  isActive={
-                    isSpecialCategory ? false : selectedCategory === item.id
-                  }
+                  // isActive={
+                  //   isSpecialCategory ? false : selectedCategory === item.id
+                  // }
                   onClick={() => handleCategoryClick(item.id)}
                 >
                   {Icon && <Icon className="h-4 w-4" />}
                   <span>{item.title}</span>
                 </SidebarMenuButton>
-              )}
+              )} */}
             </SidebarMenuItem>
           );
         })}

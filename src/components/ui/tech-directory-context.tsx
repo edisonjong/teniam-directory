@@ -9,8 +9,10 @@ type TechDirectoryContextType = {
   setSelectedTag: (tag: string | null) => void;
   selectedFeatured: boolean;
   setSelectedFeatured: (featured: boolean) => void;
-  viewMode: "all" | "featured" | "bookmarks" | "sponsor";
-  setViewMode: (mode: "all" | "featured" | "bookmarks" | "sponsor") => void;
+  viewMode: "all" | "featured" | "bookmarks" | "sponsor" | "tags";
+  setViewMode: (
+    mode: "all" | "featured" | "bookmarks" | "sponsor" | "tags"
+  ) => void;
   sortOrder: "default" | "newest" | "oldest" | "a-z" | "z-a";
   setSortOrder: (
     order: "default" | "newest" | "oldest" | "a-z" | "z-a"
@@ -47,7 +49,7 @@ export function TechDirectoryProvider({
   const [selectedFeatured, setSelectedFeatured] =
     React.useState<boolean>(false);
   const [viewMode, setViewMode] = React.useState<
-    "all" | "featured" | "bookmarks" | "sponsor"
+    "all" | "featured" | "bookmarks" | "sponsor" | "tags"
   >("all");
   const [sortOrder, setSortOrder] = React.useState<
     "default" | "newest" | "oldest" | "a-z" | "z-a"

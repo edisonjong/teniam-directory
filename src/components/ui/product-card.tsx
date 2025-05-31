@@ -29,7 +29,6 @@ interface ProductCardProps {
   logo?: LogoImage;
   featured?: boolean;
   isAd?: boolean;
-  isHighlighted?: boolean;
   slug: string;
   bookmark?: boolean;
   onBookmarkToggle?: (id: string) => void;
@@ -44,29 +43,22 @@ export const ProductCard = React.memo(
     logo,
     featured = false,
     isAd = false,
-    isHighlighted = false,
     slug,
-    bookmark = false,
+    bookmark: initialBookmark,
     onBookmarkToggle = () => {},
   }: ProductCardProps) => {
     const cardRef = React.useRef<HTMLDivElement>(null);
     const iconProps = logo ? urlForIcon(logo) : null;
     const iconBlurDataURL = logo?.blurDataURL || null;
-    const [bookmarked, setBookmarked] = useState<boolean>(bookmark);
-    const [loading, setLoading] = useState<boolean>(false); // <-- New loading state
+    const [loading, setLoading] = useState<boolean>(false);
     const user = useCurrentUser();
     const router = useRouter();
-    console.log("bookmarked", bookmarked);
-    // Use next/navigation hook to read query params
     const itemUrlPrefix = "/item";
     const toggleBookmark = async (id: string) => {
       const updatedBookmark = await toggleBookmarkById(id);
       return updatedBookmark;
     };
-    useEffect(() => {
-      console.log("bookmarktest", bookmark);
-      setBookmarked(bookmark ?? false);
-    }, [bookmark]);
+
     const handleBookmarkToggle = async (e: React.MouseEvent) => {
       e.preventDefault();
       if (!user) {
@@ -74,12 +66,8 @@ export const ProductCard = React.memo(
         return;
       }
       if (loading) return;
-
-      setLoading(true); // Start loading
-
-      const wasBookmarked = bookmarked;
-      setBookmarked(!bookmarked);
-
+      setLoading(true);
+      const wasBookmarked = initialBookmark;
       try {
         if (wasBookmarked) {
           toast.custom((t) => (
@@ -96,8 +84,7 @@ export const ProductCard = React.memo(
                 onClick={async () => {
                   setLoading(true);
                   const revertedBookmark = await toggleBookmark(id);
-                  debugger;
-                  setBookmarked(revertedBookmark);
+                  onBookmarkToggle?.(id);
                   setLoading(false);
                   toast.dismiss(t);
                 }}
@@ -108,7 +95,7 @@ export const ProductCard = React.memo(
             </div>
           ));
           await toggleBookmark(id);
-          onBookmarkToggle(id);
+          onBookmarkToggle?.(id);
         } else {
           toast.custom(() => (
             <div className="flex items-start gap-4 p-4 bg-white dark:bg-zinc-900 rounded shadow-lg border border-border">
@@ -123,46 +110,22 @@ export const ProductCard = React.memo(
             </div>
           ));
           await toggleBookmark(id);
-
-          onBookmarkToggle(id);
+          onBookmarkToggle?.(id);
         }
       } catch (err) {
         console.error("Bookmark toggle failed", err);
-        setBookmarked(wasBookmarked); // Rollback on failure
+        // toast.error(err);
+        // setBookmarked(wasBookmarked); // Rollback on failure
       }
 
       setLoading(false); // End loading
     };
 
-    React.useEffect(() => {
-      if (isHighlighted && cardRef.current) {
-        cardRef.current.classList.add(
-          "ring-4",
-          "ring-primary",
-          "ring-opacity-70"
-        );
-
-        const timer = setTimeout(() => {
-          if (cardRef.current) {
-            cardRef.current.classList.remove(
-              "ring-4",
-              "ring-primary",
-              "ring-opacity-70"
-            );
-          }
-        }, 3000);
-
-        return () => clearTimeout(timer);
-      }
-    }, [isHighlighted]);
-
     return (
       <Card
         id={`product-${id}`}
         ref={cardRef}
-        className={`p-6 relative overflow-hidden transition-all duration-300 ${
-          isHighlighted ? "shadow-lg scale-[1.02]" : ""
-        } hover:bg-card/80 hover:border-primary/20 sm:hover:shadow-md mobile-touch-feedback`}
+        className={`p-6 relative overflow-hidden transition-all duration-300 hover:bg-card/80 hover:border-primary/20 sm:hover:shadow-md mobile-touch-feedback`}
       >
         {isAd && (
           <ShineBorder
@@ -228,17 +191,17 @@ export const ProductCard = React.memo(
               size="icon"
               onClick={handleBookmarkToggle}
               className="ml-auto bookmark-button mobile-touch-feedback"
-              aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
-              aria-pressed={bookmarked}
-              disabled={loading} // <-- Disable during loading
+              // aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
+              // aria-pressed={bookmarked}
+              disabled={loading}
             >
               <Bookmark
                 className={`h-5 w-5 bookmark-icon ${
-                  bookmarked ? "bookmark-icon-active" : ""
+                  initialBookmark ? "bookmark-icon-active" : ""
                 }`}
               />
               <span className="sr-only">
-                {bookmarked ? "Remove bookmark" : "Bookmark"}
+                {initialBookmark ? "Remove bookmark" : "Bookmark"}
               </span>
             </Button>
           </div>

@@ -637,14 +637,16 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 >
                   {item?.tags && item?.tags?.length > 0 ? (
                     item?.tags?.map((tag, index: number) => (
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        key={index}
-                        className="gap-1 pr-2 shadow-none transition-all duration-300 pointer-events-none cursor-default"
-                      >
-                        #{tag.name}
-                      </Button>
+                      <Link href={`/directories?tag=${tag.name}`}>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          key={index}
+                          className="gap-1 pr-2 shadow-none transition-all duration-300 pointer-events-none cursor-default"
+                        >
+                          #{tag.name}
+                        </Button>
+                      </Link>
                     ))
                   ) : (
                     <p className="text-sm text-muted-foreground italic">
@@ -810,7 +812,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     logo={product.icon as LogoImage}
                     featured={product.featured}
                     isAd={product.sponsor}
-                    isHighlighted={true}
+                    // isHighlighted={true}
                     slug={product.slug.current}
                   />
                 </AnimatedCard>

@@ -83,16 +83,32 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
 
             <div className="absolute inset-0 m-auto hidden size-fit lg:block">
               <ul className="flex gap-8 text-sm">
-                {links.map((item, index) => (
-                  <li key={index}>
-                    <Link
-                      href={item.href || "#"}
-                      className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                    >
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
+                {links.map((item, index) => {
+                  const isHashLink = item.href.startsWith("#");
+                  const href = isHashLink ? `/${item.href}` : item.href;
+
+                  return (
+                    <li key={index}>
+                      {item.href.startsWith("http") ? (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-accent-foreground block duration-150"
+                        >
+                          {item.title}
+                        </a>
+                      ) : (
+                        <Link
+                          href={href}
+                          className="text-muted-foreground hover:text-accent-foreground block duration-150"
+                        >
+                          {item.title}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
@@ -104,17 +120,32 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
             >
               <div className="lg:hidden">
                 <ul className="space-y-6 text-base">
-                  {links.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                        // onClick={() => setMenuState(false)}
-                      >
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
+                  {links.map((item, index) => {
+                    const isHashLink = item.href.startsWith("#");
+                    const href = isHashLink ? `/${item.href}` : item.href;
+
+                    return (
+                      <li key={index}>
+                        {item.href.startsWith("http") ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-muted-foreground hover:text-accent-foreground block duration-150"
+                          >
+                            {item.title}
+                          </a>
+                        ) : (
+                          <Link
+                            href={href}
+                            className="text-muted-foreground hover:text-accent-foreground block duration-150"
+                          >
+                            {item.title}
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 

@@ -189,13 +189,13 @@ export function AppSidebar({
       id: "bookmarks",
       items: [],
     },
-    {
-      title: "Tags",
-      url: "#tags",
-      icon: Tags,
-      id: "tags",
-      items: [],
-    },
+    // {
+    //   title: "Tags",
+    //   url: "#tags",
+    //   icon: Tags,
+    //   id: "tags",
+    //   items: [],
+    // },
   ];
   const navMainItems = [...staticItems];
 

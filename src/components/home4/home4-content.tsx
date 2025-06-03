@@ -7,6 +7,7 @@ import FAQs from './faqs';
 import { NewsletterCard } from '../newsletter/newsletter-card';
 import FAQsTwo from '../faqs-2';
 import SubscribeSection from '@/app/(website)/(public)/sections/subscribe-section';
+import IntegrationsSection from '../integrations-2';
 
 function HomeContent() {
   return (
@@ -14,10 +15,13 @@ function HomeContent() {
       <div id="features">
         <Features />
       </div>
-      <div id="solution">
+
+      <div id="products">
         <Products />
       </div>
-
+      <div id="solution">
+        <IntegrationsSection />
+      </div>
       <div id="pricing">
         <Pricing />
       </div>

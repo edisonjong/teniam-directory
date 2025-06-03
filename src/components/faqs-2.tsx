@@ -13,24 +13,56 @@ export default function FAQsTwo() {
     {
       id: 'item-1',
       question: 'How do I submit a tool?',
-      answer: 'Click “Submit a Tool” and complete the quick submission form.',
+      answer:
+        'Choose a plan (Free, Pro, or Sponsor) and submit via our quick form. Free listings take 3-5 business days for review; Pro and Sponsor get priority (1-2 days).',
     },
     {
       id: 'item-2',
-      question: 'What types of tools are accepted?',
+      question: 'What kinds of tools can I list?',
       answer:
-        'We welcome developer tools, frameworks, platforms, and services that empower tech projects.',
+        'We welcome innovative boilerplates, templates, AI tools, and software designed to help startups and solopreneurs build and scale.',
     },
     {
       id: 'item-3',
-      question: ' Is there a cost to list a tool?',
+      question: "What's included in the Free Plan?",
       answer:
-        'Listings are free, with optional paid featured placements. Check our pricing guide for details.',
+        'Get a basic listing with 1 dofollow SEO link at no cost, ideal for trying Teniam with standard visibility.',
     },
     {
       id: 'item-4',
-      question: 'Can I update my listing after submission?',
-      answer: 'Yes, you can edit your listing anytime via your dashboard.',
+      question: 'How do dofollow links boost my SEO?',
+      answer:
+        "Our dofollow links improve your site's search engine ranking, driving more traffic to your boilerplate, template, or software.",
+    },
+    {
+      id: 'item-5',
+      question: "What does the Pro Plan's spotlight shine border do?",
+      answer:
+        'The spotlight shine border highlights your listing with a visually striking design and includes side menu placement for greater visibility across Teniam.',
+    },
+    {
+      id: 'item-6',
+      question: 'How does the Sponsor Plan differ from Pro?',
+      answer:
+        'Sponsor includes all Pro benefits (spotlight shine border and side menu) plus exclusive sidebar promotion on nearly every page for maximum exposure.',
+    },
+    {
+      id: 'item-7',
+      question: 'Can I upgrade from the Free Plan?',
+      answer:
+        'Yes, upgrade to Pro or Sponsor anytime to unlock the spotlight shine border, side menu, or sidebar placement.',
+    },
+    {
+      id: 'item-8',
+      question: 'Can I edit my listing after submission?',
+      answer:
+        'Definitely, update your listing anytime via your account dashboard to keep your boilerplate, template, or AI tool current.',
+    },
+    {
+      id: 'item-9',
+      question: 'How long does my listing last?',
+      answer:
+        'Free and Pro listings are permanent with an active subscription; Sponsor listings run weekly with flexible scheduling.',
     },
   ];
 

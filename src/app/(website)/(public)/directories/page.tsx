@@ -49,7 +49,7 @@ const Page = async ({
     currentPage,
     hasSponsorItem,
   });
-  const [categoryList] = await Promise.all([
+  const [categoryList, tagList] = await Promise.all([
     sanityFetch<CategoryListQueryResult>({
       query: categoryListQuery,
     }),
@@ -59,7 +59,11 @@ const Page = async ({
   ]);
   return (
     <div>
-      <ClientComponent items={items} categoryList={categoryList} />
+      <ClientComponent
+        items={items}
+        categoryList={categoryList}
+        tagList={tagList}
+      />
     </div>
   );
 };

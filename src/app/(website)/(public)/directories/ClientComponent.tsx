@@ -48,10 +48,9 @@ import {
   Star,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { fetchFilteredItems } from "@/actions/toggle-bookmark";
-import Link from "next/link";
+// import { fetchFilteredItems } from "@/actions/toggle-bookmark";
 
-export default function ClientComponent({ items, categoryList }) {
+export default function ClientComponent({ items, categoryList, tagList }) {
   const [selectedPlatform, setSelectedPlatform] = React.useState<string>();
   const [selectedCategory, setSelectedCategory] = React.useState<string>();
 
@@ -65,15 +64,15 @@ export default function ClientComponent({ items, categoryList }) {
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
-        <Content items={items} />
+        <Content items={items} tagList={tagList} />
       </TechDirectoryProvider>
     </SidebarProvider>
   );
 }
 
-function Content({ items }) {
+function Content({ items, tagList }) {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [bookmarkProducts, setBookmarkProducts] = useState([]);
+  // const [bookmarkProducts, setBookmarkProducts] = useState([]);
 
   const [sortOrder, setSortOrder] = useState("default");
   const [error, setError] = useState(null);
@@ -85,7 +84,7 @@ function Content({ items }) {
   // const queryValue = searchParams.get(queryKey);
   const newParams = new URLSearchParams(searchParams.toString());
   const [filteredItems, setFilteredItems] = React.useState(items);
-  console.log("newParams", tagParam);
+
   React.useEffect(() => {
     // On initial mount or when items change, sync state
     setFilteredItems(items);
@@ -135,28 +134,35 @@ function Content({ items }) {
     } else if (filterParam === "sponsor") {
       return "Sponsored";
     } else if (queryKey === "tag") {
-      return tagParam;
+      return tagParam.charAt(0).toUpperCase() + tagParam.slice(1);
     } else {
       return "All Products";
     }
   }, [router, filterParam]);
-  useEffect(() => {
-    if (filterParam === "bookmark") {
-      const fetchBookmarks = async () => {
-        setIsLoading(true);
-        try {
-          const filteredBookmark = await fetchFilteredItems("bookmark");
-          setBookmarkProducts(filteredBookmark);
-        } catch (err) {
-          setError(err.message || "Failed to fetch bookmarks");
-        } finally {
-          setIsLoading(false);
-        }
-      };
+  const tagDetail = React.useMemo(() => {
+    if (!tagParam || !tagList?.length) return null;
+    return tagList.find(
+      (tag) => tag.name?.toLowerCase() === tagParam.toLowerCase()
+    );
+  }, [tagParam, tagList]);
 
-      fetchBookmarks();
-    }
-  }, [filterParam]);
+  // useEffect(() => {
+  //   if (filterParam === "bookmark") {
+  //     const fetchBookmarks = async () => {
+  //       setIsLoading(true);
+  //       try {
+  //         const filteredBookmark = await fetchFilteredItems("bookmark");
+  //         setBookmarkProducts(filteredBookmark);
+  //       } catch (err) {
+  //         setError(err.message || "Failed to fetch bookmarks");
+  //       } finally {
+  //         setIsLoading(false);
+  //       }
+  //     };
+
+  //     fetchBookmarks();
+  //   }
+  // }, [filterParam]);
 
   const handleBookmarkToggle = (id: string) => {
     setFilteredItems((prevItems) =>
@@ -252,10 +258,16 @@ function Content({ items }) {
         </div>
       </header>
       {tagParam && (
-        <div className="gap-2 flex p-4">
-          <Link href={`/directories?tag=all`}>
-            <div className="text-lg ">#{tagParam}</div>
-          </Link>
+        <div className="gap-2 flex flex-col p-4">
+          <div className="text-xl font-semibold">
+            #{tagDetail.name.charAt(0).toUpperCase() + tagParam.slice(1)}
+          </div>
+
+          {tagDetail?.description && (
+            <div className="text-sm text-muted-foreground mt-1">
+              {tagDetail.description}
+            </div>
+          )}
         </div>
       )}
 

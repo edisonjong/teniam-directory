@@ -120,8 +120,10 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
 
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 {user ? (
-                  <div className="flex items-center">
+                  <div className="flex items-center space-x-3">
                     <UserButton />
+
+                    <ModeToggle />
                   </div>
                 ) : (
                   <>

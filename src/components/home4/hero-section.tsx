@@ -1,26 +1,26 @@
-import React from 'react';
-import Link from 'next/link';
-import { ArrowRight, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import { HeroHeader } from './hero5-header';
-import { AnimatedGroup } from '../ui/animated-group';
-import { TextEffect } from '../ui/text-effect';
-import { marketingConfig } from '@/config/marketing';
+import React from "react";
+import Link from "next/link";
+import { ArrowRight, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { HeroHeader } from "./hero5-header";
+import { AnimatedGroup } from "../ui/animated-group";
+import { TextEffect } from "../ui/text-effect";
+import { marketingConfig } from "@/config/marketing";
 
 const transitionVariants = {
   item: {
     hidden: {
       opacity: 0,
-      filter: 'blur(12px)',
+      filter: "blur(12px)",
       y: 12,
     },
     visible: {
       opacity: 1,
-      filter: 'blur(0px)',
+      filter: "blur(0px)",
       y: 0,
       transition: {
-        type: 'spring',
+        type: "spring",
         bounce: 0.3,
         duration: 1.5,
       },
@@ -60,7 +60,7 @@ export default function HeroSection() {
                     opacity: 1,
                     y: 0,
                     transition: {
-                      type: 'spring',
+                      type: "spring",
                       bounce: 0.3,
                       duration: 2,
                     },
@@ -109,7 +109,7 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-8 text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
-                  Discover the Ultimate Tech Directory for Your Next Project
+                  Tech Hub for Startups & Soloprenuers
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -119,9 +119,9 @@ export default function HeroSection() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Explore a curated collection of cutting-edge tools,
-                  frameworks, and platforms designed for developers, startups,
-                  and innovators — all in one place.
+                  Explore a curated collection of cutting-edge AI tools,
+                  frameworks, and Boilerplates designed for developers,
+                  startups, and innovators — all in one place.
                 </TextEffect>
 
                 <AnimatedGroup

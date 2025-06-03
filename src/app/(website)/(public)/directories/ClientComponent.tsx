@@ -81,8 +81,11 @@ function Content({ items }) {
   const searchParams = useSearchParams();
   const filterParam = searchParams.get("f");
   const tagParam = searchParams.get("tag");
+  const queryKey = Array.from(searchParams.keys())[0]; // e.g., "tag"
+  // const queryValue = searchParams.get(queryKey);
   const newParams = new URLSearchParams(searchParams.toString());
   const [filteredItems, setFilteredItems] = React.useState(items);
+  console.log("newParams", tagParam);
   React.useEffect(() => {
     // On initial mount or when items change, sync state
     setFilteredItems(items);
@@ -127,12 +130,12 @@ function Content({ items }) {
   const getTitle = React.useCallback(() => {
     if (filterParam === "featured") {
       return "Featured";
-    } else if (filterParam === "bookmarks") {
+    } else if (filterParam === "bookmark") {
       return "Bookmarks";
     } else if (filterParam === "sponsor") {
       return "Sponsored";
-    } else if (tagParam === "all") {
-      return "Tags";
+    } else if (queryKey === "tag") {
+      return tagParam;
     } else {
       return "All Products";
     }
@@ -251,23 +254,8 @@ function Content({ items }) {
       {tagParam && (
         <div className="gap-2 flex p-4">
           <Link href={`/directories?tag=all`}>
-            <Button
-              variant="secondary"
-              size="sm"
-              // key={index}
-              className="gap-1 pr-2 shadow-none transition-all duration-300 pointer-events-none cursor-default"
-            >
-              {"All"}
-            </Button>
+            <div className="text-lg ">#{tagParam}</div>
           </Link>
-          {/* <Button
-            variant="secondary"
-            size="sm"
-            // key={index}
-            className="gap-1 pr-2 shadow-none transition-all duration-300 pointer-events-none cursor-default"
-          >
-            #{tagParam}
-          </Button> */}
         </div>
       )}
 

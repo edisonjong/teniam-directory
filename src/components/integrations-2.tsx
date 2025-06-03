@@ -5,20 +5,20 @@ import {
   VSCodium,
   MediaWiki,
   GooglePaLM,
-} from '@/components/logos';
+} from "@/components/logos";
 // import { LogoIcon } from '@/components/logo';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Logo } from './logo';
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Logo } from "./logo";
 
 export default function IntegrationsSection() {
   return (
     <section>
-      <div className=" py-16 md:py-32 dark:bg-transparent ">
-        <div className="  px-6 bg-zinc-50 py-24 md:py-32">
+      <div className=" py-16 md:py-32  ">
+        <div className="  px-6 bg-zinc-50 dark:bg-transparent py-24 md:py-32">
           <div className="max-w-5xl mx-auto">
-            <div className="dark:bg-zinc/50 relative mx-auto w-fit">
+            <div className=" relative mx-auto w-fit">
               <div
                 role="presentation"
                 className="bg-radial to-muted dark:to-background absolute inset-0 z-10 from-transparent to-75%"
@@ -88,14 +88,14 @@ const IntegrationCard = ({
   return (
     <div
       className={cn(
-        'bg-background relative flex size-20 rounded-xl dark:bg-transparent',
+        "bg-background relative flex size-20 rounded-xl dark:bg-transparent",
         className
       )}
     >
       <div
         role="presentation"
         className={cn(
-          'absolute inset-0 rounded-xl border border-black/20 dark:border-white/25',
+          "absolute inset-0 rounded-xl border border-black/20 dark:border-white/25",
           borderClassName
         )}
       />

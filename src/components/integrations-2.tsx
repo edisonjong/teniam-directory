@@ -15,58 +15,60 @@ import { Logo } from './logo';
 export default function IntegrationsSection() {
   return (
     <section>
-      <div className=" dark:bg-background py-24 md:py-32">
-        <div className="mx-auto max-w-5xl px-6 bg-muted py-24 md:py-32">
-          <div className="dark:bg-muted/50 relative mx-auto w-fit">
-            <div
-              role="presentation"
-              className="bg-radial to-muted dark:to-background absolute inset-0 z-10 from-transparent to-75%"
-            ></div>
-            <div className="mx-auto mb-2 flex w-fit justify-center gap-2">
-              <IntegrationCard>
-                <Gemini />
-              </IntegrationCard>
-              <IntegrationCard>
-                <Replit />
-              </IntegrationCard>
-            </div>
-            <div className="mx-auto my-2 flex w-fit justify-center gap-2">
-              <IntegrationCard>
-                <MagicUI />
-              </IntegrationCard>
-              <IntegrationCard
-                borderClassName="shadow-black-950/10 shadow-xl border-black/25 dark:border-white/25"
-                className="dark:bg-white/10"
-              >
-                <Logo />
-              </IntegrationCard>
-              <IntegrationCard>
-                <VSCodium />
-              </IntegrationCard>
-            </div>
+      <div className=" py-16 md:py-32 dark:bg-transparent ">
+        <div className="  px-6 bg-zinc-50 py-24 md:py-32">
+          <div className="max-w-5xl mx-auto">
+            <div className="dark:bg-zinc/50 relative mx-auto w-fit">
+              <div
+                role="presentation"
+                className="bg-radial to-muted dark:to-background absolute inset-0 z-10 from-transparent to-75%"
+              ></div>
+              <div className="mx-auto mb-2 flex w-fit justify-center gap-2">
+                <IntegrationCard>
+                  <Gemini />
+                </IntegrationCard>
+                <IntegrationCard>
+                  <Replit />
+                </IntegrationCard>
+              </div>
+              <div className="mx-auto my-2 flex w-fit justify-center gap-2">
+                <IntegrationCard>
+                  <MagicUI />
+                </IntegrationCard>
+                <IntegrationCard
+                  borderClassName="shadow-black-950/10 shadow-xl border-black/25 dark:border-white/25"
+                  className="dark:bg-white/10"
+                >
+                  <Logo />
+                </IntegrationCard>
+                <IntegrationCard>
+                  <VSCodium />
+                </IntegrationCard>
+              </div>
 
-            <div className="mx-auto flex w-fit justify-center gap-2">
-              <IntegrationCard>
-                <MediaWiki />
-              </IntegrationCard>
+              <div className="mx-auto flex w-fit justify-center gap-2">
+                <IntegrationCard>
+                  <MediaWiki />
+                </IntegrationCard>
 
-              <IntegrationCard>
-                <GooglePaLM />
-              </IntegrationCard>
+                <IntegrationCard>
+                  <GooglePaLM />
+                </IntegrationCard>
+              </div>
             </div>
-          </div>
-          <div className="mx-auto mt-6 max-w-lg space-y-6 text-center">
-            <h2 className="text-balance text-3xl font-semibold md:text-4xl">
-              Integrate with your favorite tools
-            </h2>
-            <p className="text-muted-foreground">
-              Connect seamlessly with popular platforms and services to enhance
-              your workflow.
-            </p>
+            <div className="mx-auto mt-6 max-w-lg space-y-6 text-center">
+              <h2 className="text-balance text-3xl font-semibold md:text-4xl">
+                Integrate with your favorite tools
+              </h2>
+              <p className="text-muted-foreground">
+                Connect seamlessly with popular platforms and services to
+                enhance your workflow.
+              </p>
 
-            <Button variant="outline" size="sm" asChild>
-              <Link href="#">Get Started</Link>
-            </Button>
+              <Button variant="outline" size="sm" asChild>
+                <Link href="#">Get Started</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

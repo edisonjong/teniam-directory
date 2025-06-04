@@ -122,7 +122,7 @@ export default function SponsorItemCard({ item }: SponsorItemCardProps) {
       href={itemLink}
       target="_blank"
       className={cn(
-        'relative p-6 overflow-hidden transition-all duration-300',
+        'relative p-6 overflow-hidden mb-3 transition-all duration-300',
         'hover:bg-card/80 hover:border-primary/20 sm:hover:shadow-md',
         'border rounded-lg flex flex-col justify-between',
         'border-sky-300  dark:bg-sky-950/10 '
@@ -133,7 +133,7 @@ export default function SponsorItemCard({ item }: SponsorItemCardProps) {
         shineColor={['#FF4785', '#4353FF', '#00A389']}
       />
 
-      <div className="relative flex flex-col h-full">
+      <div className="relative  flex flex-col h-full">
         {/* top */}
         <div className="flex flex-col gap-4">
           {/* icon + name */}

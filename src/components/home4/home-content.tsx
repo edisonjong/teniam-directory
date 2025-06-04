@@ -1,13 +1,12 @@
 import React from 'react';
-import Products from './home4-products';
-import Features from './home4-features';
-import CallToAction from './home4-call-to-action';
-import Pricing from './pricing';
-import FAQs from './faqs';
-import { NewsletterCard } from '../newsletter/newsletter-card';
-import FAQsTwo from '../faqs-2';
+import Products from './home-products';
+import Features from './home-features';
+import CallToAction from './home-call-to-action';
+import Pricing from './home-pricing';
+import FAQsTwo from './home-faqs';
 import SubscribeSection from '@/app/(website)/(public)/sections/subscribe-section';
-import IntegrationsSection from '../integrations-2';
+
+import SolutionSection from './home-solution';
 
 function HomeContent() {
   return (
@@ -20,7 +19,7 @@ function HomeContent() {
         <Products />
       </div>
       <div id="solution">
-        <IntegrationsSection />
+        <SolutionSection />
       </div>
       <div id="pricing">
         <Pricing />

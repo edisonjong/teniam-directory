@@ -32,13 +32,13 @@
 //     </Container>
 //   );
 // }
-import HeroSection from "@/components/home4/hero-section";
-import FooterSection from "@/components/ui/footer";
-import { siteConfig } from "@/config/site";
-import { constructMetadata } from "@/lib/metadata";
+import HeroSection from '@/components/home4/home-hero-section';
+import FooterSection from '@/components/ui/footer';
+import { siteConfig } from '@/config/site';
+import { constructMetadata } from '@/lib/metadata';
 
 export const metadata = constructMetadata({
-  title: "",
+  title: '',
   canonicalUrl: `${siteConfig.url}/`,
 });
 

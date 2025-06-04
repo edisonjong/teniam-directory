@@ -75,12 +75,13 @@
 //   );
 // }
 // import { HomeContent } from "@/components/home2/home2-content";
-import HomeContent from "@/components/home4/home4-content";
-import { siteConfig } from "@/config/site";
-import { constructMetadata } from "@/lib/metadata";
+// import HomeContent from '@/components/home4/home-content';
+import HomeContent from '@/components/home4/home-content';
+import { siteConfig } from '@/config/site';
+import { constructMetadata } from '@/lib/metadata';
 
 export const metadata = constructMetadata({
-  title: "",
+  title: '',
   canonicalUrl: `${siteConfig.url}/`,
 });
 

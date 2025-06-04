@@ -1,11 +1,11 @@
-"use client";
-import { HeroHeader } from "@/components/home4/hero5-header";
-import { BannerAd } from "@/components/layout/banner-ad";
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/layout/navbar";
-import FooterSection from "@/components/ui/footer";
-import { marketingConfig } from "@/config/marketing";
-import { usePathname } from "next/navigation";
+'use client';
+import { HeroHeader } from '@/components/home4/hero-header';
+import { BannerAd } from '@/components/layout/banner-ad';
+import { Footer } from '@/components/layout/footer';
+import { Navbar } from '@/components/layout/navbar';
+import FooterSection from '@/components/ui/footer';
+import { marketingConfig } from '@/config/marketing';
+import { usePathname } from 'next/navigation';
 
 interface MarketingLayoutProps {
   children: React.ReactNode;
@@ -16,7 +16,7 @@ export default async function MarketingLayout({
 }: MarketingLayoutProps) {
   const pathname = usePathname();
   // Hide navbar on /home4
-  const hideNavbar = pathname === "/directories";
+  const hideNavbar = pathname === '/directories';
   return (
     <div className="flex flex-col min-h-screen">
       {/* <div className="sticky top-0 z-50">

@@ -1,11 +1,11 @@
-import Container from "@/components/container";
-import { HeroHeader } from "@/components/home4/hero5-header";
-import { Footer } from "@/components/layout/footer";
-import { Navbar } from "@/components/layout/navbar";
-import FooterSection from "@/components/ui/footer";
-import { dashboardConfig } from "@/config/dashboard";
-import { currentUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import Container from '@/components/container';
+import { HeroHeader } from '@/components/home4/hero-header';
+import { Footer } from '@/components/layout/footer';
+import { Navbar } from '@/components/layout/navbar';
+import FooterSection from '@/components/ui/footer';
+import { dashboardConfig } from '@/config/dashboard';
+import { currentUser } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
 interface ProtectedLayoutProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export default async function ProtectedLayout({
   const user = await currentUser();
   // console.log(`ProtectedLayout, user:`, user);
   if (!user) {
-    return redirect("/auth/login");
+    return redirect('/auth/login');
   }
 
   return (

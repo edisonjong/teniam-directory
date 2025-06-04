@@ -16,7 +16,7 @@ export default function SolutionSection() {
   return (
     <section>
       <div className=" py-16 md:py-32 dark:bg-transparent ">
-        <div className="  px-6 bg-zinc-50 py-24 md:py-32">
+        <div className="  px-6 bg-zinc-50 dark:bg-transparent py-24 md:py-32">
           <div className="max-w-5xl mx-auto">
             <div className="dark:bg-zinc/50 relative mx-auto w-fit">
               <div

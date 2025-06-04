@@ -1,6 +1,13 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Settings2, Sparkles, Zap } from "lucide-react";
-import { ReactNode } from "react";
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import {
+  Search,
+  Settings2,
+  Sparkles,
+  UserPlus,
+  Wrench,
+  Zap,
+} from 'lucide-react';
+import { ReactNode } from 'react';
 
 export default function Features() {
   return (
@@ -11,15 +18,18 @@ export default function Features() {
             Built to cover your needs
           </h2>
           <p className="mt-4">
-            Libero sapiente aliquam quibusdam aspernatur, praesentium iusto
-            repellendus.
+            We've handpicked the best boilerplates, templates, AI tools, and
+            software to help you build and scale quickly.
+            <br />
+            Teniam is your go-to platform for discovering tech that saves time
+            and sparks innovation.
           </p>
         </div>
         <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
           <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Zap className="size-6" aria-hidden />
+                <Wrench className="size-6" aria-hidden />
               </CardDecorator>
 
               <h3 className="mt-6 font-medium">Handpicked Tools</h3>
@@ -27,7 +37,9 @@ export default function Features() {
 
             <CardContent>
               <p className="text-sm">
-                Discover top-tier technologies like Next.js, Astro, and Vercel.
+                Discover top-tier technologies like Next.js,
+                <br />
+                Astro, and Vercel.
               </p>
             </CardContent>
           </Card>
@@ -35,14 +47,14 @@ export default function Features() {
           <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Settings2 className="size-6" aria-hidden />
+                <Search className="size-6" aria-hidden />
               </CardDecorator>
 
               <h3 className="mt-6 font-medium">Seamless Navigation</h3>
             </CardHeader>
 
             <CardContent>
-              <p className="mt-3 text-sm">
+              <p className="text-sm">
                 Browse and filter with ease to find the perfect solution.
               </p>
             </CardContent>
@@ -51,14 +63,14 @@ export default function Features() {
           <Card className="group shadow-zinc-950/5">
             <CardHeader className="pb-3">
               <CardDecorator>
-                <Sparkles className="size-6" aria-hidden />
+                <UserPlus className="size-6" aria-hidden />
               </CardDecorator>
 
               <h3 className="mt-6 font-medium">Community Contributions</h3>
             </CardHeader>
 
             <CardContent>
-              <p className="mt-3 text-sm">
+              <p className="text-sm">
                 Submit your favorite tools to share with the world.
               </p>
             </CardContent>

@@ -23,7 +23,7 @@ const nextConfig = {
     // The requested resource "https://cdn.sanity.io/images/58a2mkbj/preview/xxx.svg?fit=max&auto=format" has type "image/svg+xml"
     // but dangerouslyAllowSVG is disabled
     dangerouslyAllowSVG: true,
-    domains: ["v0.blob.com"],
+    domains: ["v0.blob.com", "icons.lobehub.com"],
     remotePatterns: [
       {
         protocol: "https",

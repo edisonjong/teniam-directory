@@ -1,117 +1,218 @@
+// "use client";
+
+// import { FreePlanButton } from "@/components/payment/free-plan-button";
+// import { ProPlanButton } from "@/components/payment/pro-plan-button";
+// import { Skeleton } from "@/components/ui/skeleton";
+// import { priceConfig } from "@/config/price";
+// import { PricePlans } from "@/lib/submission";
+// import { cn } from "@/lib/utils";
+// import type { ItemInfo, PricePlan } from "@/types/index";
+// import { CheckIcon, XIcon } from "lucide-react";
+// import { SponsorPlanButton } from "../payment/sponsor-plan-button";
+
+// interface PricingPlansProps {
+//   item?: ItemInfo;
+// }
+
+// export function PricingPlans({ item }: PricingPlansProps) {
+//   // console.log('PricingPlans, item:', item);
+//   return (
+//     <section className="flex flex-col items-center text-center w-full mx-auto">
+//       <div className="grid gap-8 w-full sm:grid-cols-1 lg:grid-cols-3 items-center">
+//         {priceConfig.plans.map((pricePlan) => (
+//           <PricingPlanCard
+//             item={item}
+//             key={pricePlan.title}
+//             pricePlan={pricePlan}
+//           />
+//         ))}
+//       </div>
+//     </section>
+//   );
+// }
+
+// interface PricingPlanCardProps {
+//   item?: ItemInfo;
+//   pricePlan: PricePlan;
+// }
+
+// const PricingPlanCard = ({ item, pricePlan }: PricingPlanCardProps) => {
+//   return (
+//     <div className="relative pt-4">
+//       {isProPlan(pricePlan) && (
+//         <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 z-10">
+//           <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
+//             POPULAR
+//           </div>
+//         </div>
+//       )}
+//       <div
+//         className={cn(
+//           "relative overflow-hidden flex flex-col rounded-xl shadow-sm",
+//           isProPlan(pricePlan) ? "border-2 border-primary" : "border",
+//         )}
+//       >
+//         {/* price plan title and price */}
+//         <div className="bg-muted/50 p-6 pr-10 border-b flex flex-row items-center justify-between">
+//           <span className="text-2xl font-bold uppercase tracking-wider">
+//             {pricePlan.title}
+//           </span>
+//           <div className="flex items-baseline gap-2">
+//             <div className="text-4xl font-semibold font-workSans leading-relaxed text-primary">
+//               ${pricePlan.price}
+//             </div>
+//             <div className="text-sm font-semibold font-workSans leading-relaxed text-muted-foreground">
+//               {pricePlan.priceSuffix}
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* price plan features and limitations */}
+//         <div className="flex flex-col flex-grow px-6 py-8">
+//           <div className="flex-grow space-y-4">
+//             <div className="grid grid-cols-1 gap-4 text-left text-sm leading-normal">
+//               {pricePlan.benefits.map((feature) => (
+//                 <div key={feature} className="flex items-start gap-x-4">
+//                   <CheckIcon className="text-primary size-4 shrink-0 text-primary-500 mt-0.5" />
+//                   <p>{feature}</p>
+//                 </div>
+//               ))}
+
+//               {pricePlan.limitations.map((feature) => (
+//                 <div key={feature} className="flex items-start gap-x-4">
+//                   <XIcon className="size-4 shrink-0 mt-0.5" />
+//                   <p className="text-muted-foreground">{feature}</p>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+
+//           {/* action buttons */}
+//           <div className="mt-12 px-6">
+//             {pricePlan.title.toUpperCase() === PricePlans.FREE.toUpperCase() ? (
+//               <FreePlanButton item={item} className="w-full" />
+//             ) : pricePlan.title.toUpperCase() === PricePlans.SPONSOR.toUpperCase() ? (
+//               <SponsorPlanButton
+//                 item={item}
+//                 pricePlan={pricePlan}
+//                 className="w-full" />
+//             ) : (
+//               <ProPlanButton
+//                 item={item}
+//                 pricePlan={pricePlan}
+//                 className="w-full"
+//               />
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// function isProPlan(pricePlan: PricePlan) {
+//   return pricePlan.title.toLowerCase() === PricePlans.PRO.toLowerCase();
+// }
 "use client";
 
 import { FreePlanButton } from "@/components/payment/free-plan-button";
 import { ProPlanButton } from "@/components/payment/pro-plan-button";
-import { Skeleton } from "@/components/ui/skeleton";
+import { SponsorPlanButton } from "@/components/payment/sponsor-plan-button";
 import { priceConfig } from "@/config/price";
 import { PricePlans } from "@/lib/submission";
-import { cn } from "@/lib/utils";
-import type { ItemInfo, PricePlan } from "@/types/index";
-import { CheckIcon, XIcon } from "lucide-react";
-import { SponsorPlanButton } from "../payment/sponsor-plan-button";
+import type { ItemInfo, PricePlan } from "@/types";
+import { Check, X } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Skeleton } from "../ui/skeleton";
 
 interface PricingPlansProps {
   item?: ItemInfo;
 }
 
 export function PricingPlans({ item }: PricingPlansProps) {
-  // console.log('PricingPlans, item:', item);
   return (
-    <section className="flex flex-col items-center text-center w-full mx-auto">
-      <div className="grid gap-8 w-full sm:grid-cols-1 lg:grid-cols-3 items-center">
-        {priceConfig.plans.map((pricePlan) => (
-          <PricingPlanCard
-            item={item}
-            key={pricePlan.title}
-            pricePlan={pricePlan}
-          />
+    <section className="w-full">
+      <div className="mt-8 grid gap-6 md:mt-20 md:grid-cols-3">
+        {priceConfig.plans.map((plan) => (
+          <Card key={plan.title} className="relative flex flex-col">
+            {/* Popular badge */}
+            {plan.isPopular && (
+              <span
+                className={`absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full px-3 py-1 text-xs font-medium shadow ${
+                  plan.badgeStyle
+                    ? plan.badgeStyle
+                    : "bg-primary text-white shadow"
+                }`}
+              >
+                Popular
+              </span>
+            )}
+
+            <CardHeader>
+              <CardTitle className="font-medium">{plan.title}</CardTitle>
+              <span className="my-3 block text-2xl font-semibold">
+                ${plan.price} {plan.priceSuffix}
+              </span>
+              <CardDescription className="text-sm">Per Listing</CardDescription>
+            </CardHeader>
+
+            <CardContent className="space-y-4">
+              <hr className="border-dashed" />
+              <ul className="list-outside space-y-3 text-sm">
+                {plan.benefits.map((item, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    {item}
+                  </li>
+                ))}
+                {plan.limitations.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-2 text-muted-foreground"
+                  >
+                    <X className="size-4 text-destructive" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+
+            <CardFooter className="mt-auto">
+              {plan.title.toUpperCase() === PricePlans.FREE.toUpperCase() ? (
+                <FreePlanButton item={item} className="w-full" />
+              ) : plan.title.toUpperCase() ===
+                PricePlans.SPONSOR.toUpperCase() ? (
+                <SponsorPlanButton
+                  item={item}
+                  pricePlan={plan}
+                  className="w-full"
+                />
+              ) : (
+                <ProPlanButton
+                  item={item}
+                  pricePlan={plan}
+                  className="w-full"
+                />
+              )}
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </section>
   );
 }
 
-interface PricingPlanCardProps {
-  item?: ItemInfo;
-  pricePlan: PricePlan;
-}
-
-const PricingPlanCard = ({ item, pricePlan }: PricingPlanCardProps) => {
+function isProPlan(plan: PricePlan) {
   return (
-    <div className="relative pt-4">
-      {isProPlan(pricePlan) && (
-        <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 z-10">
-          <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
-            POPULAR
-          </div>
-        </div>
-      )}
-      <div
-        className={cn(
-          "relative overflow-hidden flex flex-col rounded-xl shadow-sm",
-          isProPlan(pricePlan) ? "border-2 border-primary" : "border",
-        )}
-      >
-        {/* price plan title and price */}
-        <div className="bg-muted/50 p-6 pr-10 border-b flex flex-row items-center justify-between">
-          <span className="text-2xl font-bold uppercase tracking-wider">
-            {pricePlan.title}
-          </span>
-          <div className="flex items-baseline gap-2">
-            <div className="text-4xl font-semibold font-workSans leading-relaxed text-primary">
-              ${pricePlan.price}
-            </div>
-            <div className="text-sm font-semibold font-workSans leading-relaxed text-muted-foreground">
-              {pricePlan.priceSuffix}
-            </div>
-          </div>
-        </div>
-
-        {/* price plan features and limitations */}
-        <div className="flex flex-col flex-grow px-6 py-8">
-          <div className="flex-grow space-y-4">
-            <div className="grid grid-cols-1 gap-4 text-left text-sm leading-normal">
-              {pricePlan.benefits.map((feature) => (
-                <div key={feature} className="flex items-start gap-x-4">
-                  <CheckIcon className="text-primary size-4 shrink-0 text-primary-500 mt-0.5" />
-                  <p>{feature}</p>
-                </div>
-              ))}
-
-              {pricePlan.limitations.map((feature) => (
-                <div key={feature} className="flex items-start gap-x-4">
-                  <XIcon className="size-4 shrink-0 mt-0.5" />
-                  <p className="text-muted-foreground">{feature}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* action buttons */}
-          <div className="mt-12 px-6">
-            {pricePlan.title.toUpperCase() === PricePlans.FREE.toUpperCase() ? (
-              <FreePlanButton item={item} className="w-full" />
-            ) : pricePlan.title.toUpperCase() === PricePlans.SPONSOR.toUpperCase() ? (
-              <SponsorPlanButton 
-                item={item}
-                pricePlan={pricePlan}
-                className="w-full" />
-            ) : (
-              <ProPlanButton
-                item={item}
-                pricePlan={pricePlan}
-                className="w-full"
-              />
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+    plan.title.toLowerCase() === PricePlans.PRO.toLowerCase() || "Featured"
   );
-};
-
-function isProPlan(pricePlan: PricePlan) {
-  return pricePlan.title.toLowerCase() === PricePlans.PRO.toLowerCase();
 }
 
 export function PricingPlansSkeleton() {

@@ -34,10 +34,7 @@ interface ApprovalEmailProps {
 /**
  * https://demo.react.email/preview/welcome/stripe-welcome
  */
-export const ApprovalEmail = ({
-  userName,
-  itemLink,
-}: ApprovalEmailProps) => {
+export const ApprovalEmail = ({ userName, itemLink }: ApprovalEmailProps) => {
   const baseUrl = getBaseUrl();
   return (
     <Html>
@@ -47,7 +44,7 @@ export const ApprovalEmail = ({
         <Container style={container}>
           <Section style={box}>
             <Img
-              src={`${baseUrl}/logo.png`}
+              src={`${baseUrl}/logo.jpeg`}
               width="32"
               height="32"
               alt="Logo"

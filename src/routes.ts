@@ -18,7 +18,7 @@ export const publicRoutes = [
 
   "/about(/.*)?",
   "/terms(/.*)?",
-  "/privacy(/.*)?",
+  "/privacy-policy(/.*)?",
   "/changelog(/.*)?",
 
   // user clicks verification link from email

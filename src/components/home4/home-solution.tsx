@@ -1,3 +1,4 @@
+"use client";
 import {
   Gemini,
   Replit,
@@ -5,14 +6,24 @@ import {
   VSCodium,
   MediaWiki,
   GooglePaLM,
-} from '@/components/logos';
+} from "@/components/logos";
 // import { LogoIcon } from '@/components/logo';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Logo } from '../logo';
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Logo } from "../logo";
+import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 export default function SolutionSection() {
+  const router = useRouter();
+  const user = useCurrentUser();
+  function gettingStarted() {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+  }
   return (
     <section>
       <div className=" py-16 md:py-32 dark:bg-transparent ">
@@ -65,8 +76,12 @@ export default function SolutionSection() {
                 enhance your workflow.
               </p>
 
-              <Button variant="outline" size="sm" asChild>
-                <Link href="#">Get Started</Link>
+              <Button
+                size="lg"
+                className="cursor-pointer"
+                onClick={() => gettingStarted()}
+              >
+                <span>Get Started</span>
               </Button>
             </div>
           </div>
@@ -88,14 +103,14 @@ const IntegrationCard = ({
   return (
     <div
       className={cn(
-        'bg-background relative flex size-20 rounded-xl dark:bg-transparent',
+        "bg-background relative flex size-20 rounded-xl dark:bg-transparent",
         className
       )}
     >
       <div
         role="presentation"
         className={cn(
-          'absolute inset-0 rounded-xl border border-black/20 dark:border-white/25',
+          "absolute inset-0 rounded-xl border border-black/20 dark:border-white/25",
           borderClassName
         )}
       />

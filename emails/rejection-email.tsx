@@ -47,7 +47,7 @@ export const RejectionEmail = ({
         <Container style={container}>
           <Section style={box}>
             <Img
-              src={`${baseUrl}/logo.png`}
+              src={`${baseUrl}/logo.jpeg`}
               width="32"
               height="32"
               alt="Logo"

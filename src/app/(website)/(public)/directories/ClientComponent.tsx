@@ -190,15 +190,15 @@ function Content({ items, tagList }) {
             <Breadcrumb className="flex-1 min-w-0">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href={"/"} className="hidden md:block">
+                  <BreadcrumbLink href={"/"} className=" ">
                     <div className="flex items-center gap-1">
                       <HomeIcon className="w-4 h-4" />
                       <span>Home</span>
                     </div>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem className="hidden md:block cursor-pointer">
+                <BreadcrumbSeparator className=" " />
+                <BreadcrumbItem className=" cursor-pointer">
                   <BreadcrumbLink
                     onClick={(e) => {
                       e.preventDefault(); // prevent default anchor behavior
@@ -208,7 +208,7 @@ function Content({ items, tagList }) {
                     Tech Directory
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbSeparator className="" />
                 <BreadcrumbItem className="min-w-0">
                   <BreadcrumbPage className="truncate">
                     {getTitle()}

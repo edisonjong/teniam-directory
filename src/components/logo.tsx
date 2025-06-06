@@ -8,7 +8,7 @@ interface LogoProps {
 
 export const Logo = ({
   className,
-  src = "/logo.png",
+  src = "/logo.jpeg",
   alt = "Logo",
 }: LogoProps) => {
   return <img src={src} alt={alt} className={cn("w-7 h-7", className)} />;

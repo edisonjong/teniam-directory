@@ -62,7 +62,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                 className="flex items-center space-x-2"
               >
                 <Avatar>
-                  <AvatarImage src="/logo.png" />
+                  <AvatarImage src="/logo.jpeg" />
                   <AvatarFallback>{"tm"}</AvatarFallback>
                 </Avatar>
                 {/* <Logo className="rounded-full" src="/logo.png" /> */}

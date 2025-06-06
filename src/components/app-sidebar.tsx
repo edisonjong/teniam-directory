@@ -30,7 +30,7 @@ const data = {
   user: {
     name: "teniam",
     email: "support@teniam.com",
-    avatar: "/logo.png",
+    avatar: "/logo.jpeg",
   },
   teams: [
     {

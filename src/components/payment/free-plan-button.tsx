@@ -51,7 +51,7 @@ export function FreePlanButton({ item, className }: FreePlanButtonProps) {
   const handleClick = () => {
     console.log(
       "FreePlanButton, handleClick, item.freePlanStatus:",
-      item?.freePlanStatus,
+      item?.freePlanStatus
     );
     if (!item) {
       // no specific item in pricing page
@@ -70,7 +70,7 @@ export function FreePlanButton({ item, className }: FreePlanButtonProps) {
     } else {
       console.error(
         "FreePlanButton, invalid free plan status:",
-        item.freePlanStatus,
+        item.freePlanStatus
       );
     }
   };
@@ -80,16 +80,16 @@ export function FreePlanButton({ item, className }: FreePlanButtonProps) {
       size="lg"
       variant="outline"
       className={cn(
-        "overflow-hidden rounded-full",
+        "overflow-hidden ",
         "group transition-transform duration-300 ease-in-out hover:scale-105",
-        className,
+        className
       )}
       disabled={isPending}
       onClick={handleClick}
     >
       {!item ? (
         <div className="flex items-center justify-center gap-2">
-          <span>Go Submit</span>
+          <span>Submit Now</span>
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
         </div>
       ) : item.publishDate ? (

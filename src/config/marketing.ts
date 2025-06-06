@@ -4,8 +4,8 @@ export const marketingConfig: MarketingConfig = {
   menus: [
     { title: "Features", href: "#features", key: "features" },
     { title: "Solution", href: "#solution", key: "solution" },
-    { title: "Pricing", href: "#pricing", key: "pricing" },
-    { title: "About", href: "#about", key: "about" },
+    { title: "Pricing", href: "/pricing", key: "pricing" },
+    { title: "About", href: "/about", key: "about" },
     { title: "Blog", href: "https://blogs.teniam.com/", key: "blog" },
     { title: "Contact", href: "/contact", key: "contact" },
   ],

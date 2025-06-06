@@ -1,12 +1,12 @@
-import React from 'react';
-import Products from './home-products';
-import Features from './home-features';
-import CallToAction from './home-call-to-action';
-import Pricing from './home-pricing';
-import FAQsTwo from './home-faqs';
-import SubscribeSection from '@/app/(website)/(public)/sections/subscribe-section';
+import React from "react";
+import Products from "./home-products";
+import Features from "./home-features";
+import CallToAction from "./home-call-to-action";
+import { PricingPlans } from "./home-pricing";
+import FAQsTwo from "./home-faqs";
+import SubscribeSection from "@/app/(website)/(public)/sections/subscribe-section";
 
-import SolutionSection from './home-solution';
+import SolutionSection from "./home-solution";
 
 function HomeContent() {
   return (
@@ -22,7 +22,7 @@ function HomeContent() {
         <SolutionSection />
       </div>
       <div id="pricing">
-        <Pricing />
+        <PricingPlans />
       </div>
       <div id="faq">
         <FAQsTwo />

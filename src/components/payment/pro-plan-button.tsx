@@ -48,7 +48,7 @@ export function ProPlanButton({
   const handleClick = () => {
     console.log(
       "ProPlanButton, handleClick, item.proPlanStatus:",
-      item?.proPlanStatus,
+      item?.proPlanStatus
     );
     if (!item) {
       // no specific item in pricing page
@@ -69,7 +69,7 @@ export function ProPlanButton({
       } else {
         // pay success but not published yet
         console.log(
-          "ProPlanButton, handleClick, pay success but not published yet",
+          "ProPlanButton, handleClick, pay success but not published yet"
         );
         router.push(`/publish/${item._id}`);
       }
@@ -78,7 +78,7 @@ export function ProPlanButton({
     } else {
       console.error(
         "ProPlanButton, invalid pro plan status:",
-        item.proPlanStatus,
+        item.proPlanStatus
       );
     }
   };
@@ -88,19 +88,19 @@ export function ProPlanButton({
       size="lg"
       variant="default"
       className={cn(
-        "overflow-hidden rounded-full",
+        "overflow-hidden ",
         "group transition-transform duration-300 ease-in-out hover:scale-105",
         "bg-primary text-primary-foreground dark:bg-primary/90",
         "hover:bg-primary/90 dark:hover:bg-primary/80",
         "shadow-lg hover:shadow-xl",
-        className,
+        className
       )}
       disabled={isPending}
       onClick={handleClick}
     >
       {!item ? (
         <div className="flex items-center justify-center gap-2">
-          <span>Go Submit</span>
+          <span>Submit Now</span>
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
         </div>
       ) : isPending ? (

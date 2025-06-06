@@ -6,7 +6,12 @@ import { siteConfig } from "@/config/site";
 import { PricePlans, ProPlanStatus, SponsorPlanStatus } from "@/lib/submission";
 import { cn } from "@/lib/utils";
 import type { ItemInfo, PricePlan } from "@/types";
-import { ArrowRightIcon, ArrowUpLeftIcon, CheckCircleIcon, RocketIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  ArrowUpLeftIcon,
+  CheckCircleIcon,
+  RocketIcon,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
@@ -30,7 +35,11 @@ export function SponsorPlanButton({
 
   const handleCreateCheckoutSession = () => {
     startTransition(async () => {
-      createCheckoutSession(item._id, pricePlan.stripePriceId, PricePlans.SPONSOR)
+      createCheckoutSession(
+        item._id,
+        pricePlan.stripePriceId,
+        PricePlans.SPONSOR
+      )
         .then((data) => {
           console.log("createCheckoutSession, data:", data);
           // already redirected to stripe checkout page in server action
@@ -45,7 +54,7 @@ export function SponsorPlanButton({
   const handleClick = () => {
     console.log(
       "SponsorPlanButton, handleClick, item.sponsorPlanStatus:",
-      item?.sponsorPlanStatus,
+      item?.sponsorPlanStatus
     );
     if (!item) {
       // no specific item in pricing page
@@ -66,7 +75,7 @@ export function SponsorPlanButton({
       } else {
         // pay success but not published yet
         console.log(
-          "SponsorPlanButton, handleClick, pay success but not published yet",
+          "SponsorPlanButton, handleClick, pay success but not published yet"
         );
         router.push(`/publish/${item._id}`);
       }
@@ -75,7 +84,7 @@ export function SponsorPlanButton({
     } else {
       console.error(
         "SponsorPlanButton, invalid sponsor plan status:",
-        item.sponsorPlanStatus,
+        item.sponsorPlanStatus
       );
     }
   };
@@ -85,19 +94,19 @@ export function SponsorPlanButton({
       size="lg"
       variant="default"
       className={cn(
-        "overflow-hidden rounded-full",
+        "overflow-hidden ",
         "group transition-transform duration-300 ease-in-out hover:scale-105",
         "bg-primary text-primary-foreground dark:bg-primary/90",
         "hover:bg-primary/90 dark:hover:bg-primary/80",
         "shadow-lg hover:shadow-xl",
-        className,
+        className
       )}
       disabled={isPending}
       onClick={handleClick}
     >
       {!item ? (
         <div className="flex items-center justify-center gap-2">
-          <span>Go Submit</span>
+          <span>Submit Now</span>
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
         </div>
       ) : isPending ? (

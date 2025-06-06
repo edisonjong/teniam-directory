@@ -217,77 +217,77 @@ export default function HeroSection() {
                 <ChevronRight className="ml-1 inline-block size-3" />
               </Link>
             </div>
-            <div className="group-hover:blur-xs mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 sm:gap-x-16 sm:gap-y-14">
+            <div className="group-hover:blur-xs mx-auto mt-12  grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 sm:gap-x-16 sm:gap-y-14">
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-auto  w-fit dark:invert"
                   src="/groq.svg"
                   alt="Grok Logo"
-                  width={40}
-                  height={40}
+                  width={70}
+                  height={70}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-auto  w-fit dark:invert"
                   src="/claude.svg"
                   alt="Claude Logo"
-                  width={40}
-                  height={40}
+                  width={70}
+                  height={70}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-auto  w-fit dark:invert"
                   src="/openai.svg"
                   alt="OpenAI Logo"
-                  width={40}
-                  height={40}
+                  width={70}
+                  height={70}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-aut h-10 w-fit dark:invert"
                   src="/gemini.svg"
                   alt="Gemini Logo"
-                  width={40}
-                  height={40}
+                  width={70}
+                  height={70}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-auto  w-fit dark:invert"
                   src="/deepseek.svg"
                   alt="Deepseek Logo"
-                  width={40}
-                  height={40}
+                  width={100}
+                  height={100}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-auto  w-fit dark:invert"
                   src="/inflection.svg"
                   alt="Inflection AI Logo"
-                  width={40}
-                  height={40}
+                  width={70}
+                  height={70}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-auto  w-fit dark:invert"
                   src="/copilot.svg"
                   alt="Copilot Logo"
-                  width={40}
-                  height={40}
+                  width={70}
+                  height={70}
                 />
               </div>
               <div className="flex">
                 <Image
-                  className="mx-auto h-10 w-fit dark:invert"
+                  className="mx-auto  w-fit dark:invert"
                   src="/perplexity.svg"
                   alt="Perplexity Logo"
-                  width={40}
-                  height={40}
+                  width={70}
+                  height={70}
                 />
               </div>
             </div>

@@ -53,7 +53,7 @@ export function NavProjects({
   }) => {
     setSelectedCategory(item.slug.current);
     const newParams = new URLSearchParams(searchParams.toString());
-
+    newParams.delete("tag");
     // Set the 'category' query param
     newParams.set("category", item.slug.current);
 

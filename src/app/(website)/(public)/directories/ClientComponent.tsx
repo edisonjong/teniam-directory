@@ -80,6 +80,8 @@ function Content({ items, tagList }) {
   const searchParams = useSearchParams();
   const filterParam = searchParams.get("f");
   const tagParam = searchParams.get("tag");
+  const categoryParam = searchParams.get("category");
+
   const queryKey = Array.from(searchParams.keys())[0]; // e.g., "tag"
   // const queryValue = searchParams.get(queryKey);
   const newParams = new URLSearchParams(searchParams.toString());
@@ -135,6 +137,11 @@ function Content({ items, tagList }) {
       return "Sponsored";
     } else if (queryKey === "tag") {
       return tagParam.charAt(0).toUpperCase() + tagParam.slice(1);
+    } else if (queryKey === "category") {
+      return categoryParam
+        ?.split("-")
+        ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        ?.join(" ");
     } else {
       return "All Products";
     }

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronsUpDown, Plus } from "lucide-react"
+import * as React from "react";
+import { ChevronsUpDown, Plus } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -11,34 +11,51 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import Link from "next/link";
+// import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function TeamSwitcher({
   teams,
 }: {
   teams: {
-    name: string
-    logo: React.ElementType
-    plan: string
-  }[]
+    name: string;
+    logo: React.ElementType;
+    plan: string;
+  }[];
 }) {
-  const { isMobile } = useSidebar()
-  const [activeTeam, setActiveTeam] = React.useState(teams[0])
+  const { isMobile } = useSidebar();
+  // const [activeTeam, setActiveTeam] = React.useState(teams[0]);
 
-  if (!activeTeam) {
-    return null
-  }
+  // if (!activeTeam) {
+  //   return null;
+  // }
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
+        <div className=" ">
+          <Link
+            href="/"
+            aria-label="home"
+            className="flex items-center space-x-2"
+          >
+            <Avatar>
+              <AvatarImage src="/logo.jpeg" />
+              <AvatarFallback>{"T"}</AvatarFallback>
+            </Avatar>
+            {/* <Logo className="rounded-full" src="/logo.png" /> */}
+            {/* <h4 className="font-bold ml-1">Teniam</h4> */}
+          </Link>
+        </div>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -84,8 +101,8 @@ export function TeamSwitcher({
               <div className="text-muted-foreground font-medium">Add team</div>
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

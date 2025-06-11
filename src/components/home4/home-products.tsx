@@ -1,19 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Code } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
-import {
-  Gemini,
-  GooglePaLM,
-  MagicUI,
-  MediaWiki,
-  Replit,
-  VSCodium,
-} from "../ui";
+
+import { getItems } from "@/data/item";
+import { AnimatedCard } from "../ui/animated-card";
+import { LogoImage, ProductCard } from "../ui/product-card";
+import { DEFAULT_SORT, SORT_FILTER_LIST } from "@/lib/constants";
 // import { Gemini, Replit, MagicUI, VSCodium, MediaWiki, GooglePaLM } from '@/components/logos'
 
-export default function Products() {
+export default async function Products() {
+  const { items } = await getItems({
+    currentPage: 1,
+    filter: "featured == true",
+  });
+
+  console.log("items", items);
   return (
     <section>
       <div className="py-32">
@@ -28,8 +31,41 @@ export default function Products() {
               you need, all in one place.
             </p>
           </div>
-
-          <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mt-12">
+            {items.length > 0 ? (
+              items?.slice(0, 6)?.map((product, index) => (
+                <AnimatedCard
+                  key={product._id}
+                  delay={index * 50}
+                  threshold={0.1}
+                  rootMargin="20px"
+                >
+                  <ProductCard
+                    id={product._id ? product._id : null}
+                    title={product.name}
+                    description={product.description}
+                    color={product.color || "#0070f3"}
+                    logo={product.icon as LogoImage}
+                    featured={product.featured}
+                    isAd={product.sponsor}
+                    //  isHighlighted={product.id === highlightedProductId}
+                    slug={product.slug.current}
+                    bookmark={product.bookmark}
+                    homeBookmark={true}
+                    //  onBookmarkToggle={handleBookmarkToggle}
+                  />
+                </AnimatedCard>
+              ))
+            ) : (
+              <div className="col-span-3 text-center py-12">
+                <h3 className="text-xl font-medium">No products found</h3>
+                <p className="text-muted-foreground mt-2">
+                  Try selecting a different category
+                </p>
+              </div>
+            )}
+          </div>
+          {/* <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <IntegrationCard
               title="Google Gemini"
               description="Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente."
@@ -71,16 +107,18 @@ export default function Products() {
             >
               <GooglePaLM />
             </IntegrationCard>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className=" flex justify-center">
-        <Button asChild size="lg">
-          <Link href="/directories" className="cursor-pointer">
-            <span>View More</span>
-          </Link>
-        </Button>
-      </div>
+      {items.length > 0 && (
+        <div className=" flex justify-center">
+          <Button asChild size="lg">
+            <Link href="/directories" className="cursor-pointer">
+              <span>View More</span>
+            </Link>
+          </Button>
+        </div>
+      )}
     </section>
   );
 }

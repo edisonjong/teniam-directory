@@ -25,13 +25,14 @@ interface ProductCardProps {
   id: string;
   title: string;
   description: string;
-  color: string;
+  color?: string;
   logo?: LogoImage;
   featured?: boolean;
   isAd?: boolean;
   slug: string;
   bookmark?: boolean;
   onBookmarkToggle?: (id: string) => void;
+  homeBookmark: boolean;
 }
 
 export const ProductCard = React.memo(
@@ -45,6 +46,7 @@ export const ProductCard = React.memo(
     isAd = false,
     slug,
     bookmark: initialBookmark,
+    homeBookmark = false,
     onBookmarkToggle = () => {},
   }: ProductCardProps) => {
     const cardRef = React.useRef<HTMLDivElement>(null);
@@ -186,24 +188,26 @@ export const ProductCard = React.memo(
                 <ChevronRight className="ml-0 !size-3.5 opacity-50" />
               </Link>
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleBookmarkToggle}
-              className="ml-auto bookmark-button mobile-touch-feedback"
-              // aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
-              // aria-pressed={bookmarked}
-              disabled={loading}
-            >
-              <Bookmark
-                className={`h-5 w-5 bookmark-icon ${
-                  initialBookmark ? "bookmark-icon-active" : ""
-                }`}
-              />
-              <span className="sr-only">
-                {initialBookmark ? "Remove bookmark" : "Bookmark"}
-              </span>
-            </Button>
+            {!homeBookmark && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleBookmarkToggle}
+                className="ml-auto bookmark-button mobile-touch-feedback"
+                // aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
+                // aria-pressed={bookmarked}
+                disabled={loading}
+              >
+                <Bookmark
+                  className={`h-5 w-5 bookmark-icon ${
+                    initialBookmark ? "bookmark-icon-active" : ""
+                  }`}
+                />
+                <span className="sr-only">
+                  {initialBookmark ? "Remove bookmark" : "Bookmark"}
+                </span>
+              </Button>
+            )}
           </div>
         </div>
       </Card>

@@ -307,7 +307,7 @@ function Content({ items, tagList }) {
             <div className="col-span-3 text-center py-12">
               <h3 className="text-xl font-medium">No products found</h3>
               <p className="text-muted-foreground mt-2">
-                Try selecting a different category or tag
+                Try selecting a different category
               </p>
             </div>
           )}

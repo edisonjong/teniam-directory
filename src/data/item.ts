@@ -80,7 +80,9 @@ export async function getItems({
     "tag",
     tag,
     "hasSponsorItem",
-    hasSponsorItem
+    hasSponsorItem,
+    "filter",
+    filter
   );
 
   const itemsPerPage = hasSponsorItem ? ITEMS_PER_PAGE - 1 : ITEMS_PER_PAGE;

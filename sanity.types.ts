@@ -1408,7 +1408,21 @@ export type ItemListQueryResult = Array<{
   note: string | null;
   featured: boolean | null;
   bookmark: boolean | null;
-
+  color: string | null;
+  logo: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    blurDataURL: string | null;
+    imageColor: string | null;
+  } | null;
   icon: {
     asset?: {
       _ref: string;

@@ -42,11 +42,11 @@ export default async function PricingPage() {
       </section>
 
       <section className="w-full flex flex-col gap-8 justify-center">
-        <HeaderSection
+        {/* <HeaderSection
           label="FAQ"
           titleAs="h2"
           title="Frequently Asked Questions"
-        />
+        /> */}
 
         <div className="w-full max-w-4xl mx-auto">
           <FAQsTwo />

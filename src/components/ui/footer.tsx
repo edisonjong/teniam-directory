@@ -20,7 +20,7 @@ const links = [
   },
   {
     title: "Directory",
-    href: "https://www.teniam.com/directory",
+    href: "https://www.teniam.com/directories",
   },
   {
     title: "Privacy Policy",

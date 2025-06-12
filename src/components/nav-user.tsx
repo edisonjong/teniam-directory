@@ -41,13 +41,7 @@ export function NavUser() {
 
   return (
     <SidebarMenu>
-      <div className="p-4 flex space-x-2">
-        <LogIn />{" "}
-        <Link href="/auth/login">
-          <span>Login</span>
-        </Link>
-      </div>
-      {user && (
+      {user ? (
         <SidebarMenuItem>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -109,6 +103,13 @@ export function NavUser() {
             </DropdownMenuContent>
           </DropdownMenu>
         </SidebarMenuItem>
+      ) : (
+        <div className="p-4 flex space-x-2">
+          <LogIn />{" "}
+          <Link href="/auth/login">
+            <span>Login</span>
+          </Link>
+        </div>
       )}
     </SidebarMenu>
   );

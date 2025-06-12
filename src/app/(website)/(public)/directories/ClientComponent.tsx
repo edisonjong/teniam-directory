@@ -300,6 +300,7 @@ function Content({ items, tagList }) {
                   slug={product.slug.current}
                   bookmark={product.bookmark}
                   onBookmarkToggle={handleBookmarkToggle}
+                  homeBookmark={false}
                 />
               </AnimatedCard>
             ))

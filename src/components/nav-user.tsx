@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   BadgeCheck,
@@ -12,9 +12,9 @@ import {
   Send,
   Settings,
   Sparkles,
-} from "lucide-react";
+} from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,17 +23,17 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import Link from "next/link";
-import { ModeToggle } from "./layout/mode-toggle";
-import { signOut } from "next-auth/react";
+} from '@/components/ui/sidebar';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import Link from 'next/link';
+import { ModeToggle } from './layout/mode-toggle';
+import { signOut } from 'next-auth/react';
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -64,7 +64,7 @@ export function NavUser() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-              side={isMobile ? "bottom" : "right"}
+              side={isMobile ? 'bottom' : 'right'}
               align="end"
               sideOffset={4}
             >
@@ -82,22 +82,26 @@ export function NavUser() {
                     <Send />
                     <Link href="/submit">Submit</Link>
                   </DropdownMenuItem>
+
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="cursor-pointer"
-                    onSelect={(event) => {
-                      event.preventDefault();
-                      signOut({
-                        callbackUrl: `${window.location.origin}/`,
-                        redirect: true,
-                      });
-                    }}
-                  >
-                    <div className="flex items-center space-x-2.5">
-                      <LogOutIcon className="size-4" />
-                      <p className="text-sm">Log out</p>
-                    </div>
-                  </DropdownMenuItem>
+                  <div className="flex justify-between">
+                    <DropdownMenuItem
+                      className="cursor-pointer"
+                      onSelect={(event) => {
+                        event.preventDefault();
+                        signOut({
+                          callbackUrl: `${window.location.origin}/`,
+                          redirect: true,
+                        });
+                      }}
+                    >
+                      <div className="flex items-center space-x-2.5">
+                        <LogOutIcon className="size-4" />
+                        <p className="text-sm">Log out</p>
+                      </div>
+                    </DropdownMenuItem>
+                    <ModeToggle />
+                  </div>
                 </DropdownMenuGroup>
               )}
             </DropdownMenuContent>
@@ -105,7 +109,7 @@ export function NavUser() {
         </SidebarMenuItem>
       ) : (
         <div className="p-4 flex space-x-2">
-          <LogIn />{" "}
+          <LogIn />{' '}
           <Link href="/auth/login">
             <span>Login</span>
           </Link>

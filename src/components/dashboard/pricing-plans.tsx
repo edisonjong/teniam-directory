@@ -187,7 +187,7 @@ export function PricingPlans({ item }: PricingPlansProps) {
             <CardFooter className="mt-auto">
               {plan.title.toUpperCase() === PricePlans.FREE.toUpperCase() ? (
                 <FreePlanButton item={item} className="w-full" />
-              ) : plan.title.toUpperCase() ===
+              ) : plan.sponsorTitle.toUpperCase() ===
                 PricePlans.SPONSOR.toUpperCase() ? (
                 <SponsorPlanButton
                   item={item}

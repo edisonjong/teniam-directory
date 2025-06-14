@@ -26,6 +26,7 @@ export const priceConfig: PriceConfig = {
     },
     {
       title: "Featured",
+      proTitle: "pro",
       description: "For Pro Users",
       isPopular: true,
       badgeStyle:
@@ -51,6 +52,7 @@ export const priceConfig: PriceConfig = {
     },
     {
       title: "Sponsored",
+      sponsorTitle: "sponsor",
       description: "For Sponsors",
       benefits: [
         // "Everything in Pro plan",

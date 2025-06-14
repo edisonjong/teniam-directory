@@ -97,6 +97,8 @@ export type PricePlan = {
   stripePriceId: string | null;
   badgeStyle?: string;
   isPopular?: boolean;
+  sponsorTitle?: string;
+  proTitle?: string;
 };
 
 export type FAQConfig = {

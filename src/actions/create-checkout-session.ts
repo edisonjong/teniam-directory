@@ -22,7 +22,7 @@ export type ServerActionResponse = {
 export async function createCheckoutSession(
   itemId: string,
   priceId: string,
-  pricePlan: string,
+  pricePlan: string
 ): Promise<ServerActionResponse> {
   let redirectUrl = "";
 
@@ -89,21 +89,20 @@ export async function createCheckoutSession(
       }
 
       // 4. create stripe checkout session
-      console.log(
-        "Creating Stripe checkout session:",
-        {
-          customerId: stripeCustomerId,
-          priceId,
-          userId: user.id,
-          itemId,
-        }
-      );
+      console.log("Creating Stripe checkout session:", {
+        customerId: stripeCustomerId,
+        priceId,
+        userId: user.id,
+        itemId,
+      });
       // TODO: optimize the success and cancel urls with sessionId!!!
       const successUrl = absoluteUrl(`/publish/${itemId}?pay=success`);
       const cancelUrl = absoluteUrl(`/payment/${itemId}?pay=failed`);
       const stripeSession = await stripe.checkout.sessions.create({
         customer: stripeCustomerId,
-        mode: "payment",
+        // mode: "payment",
+        mode: "subscription",
+
         line_items: [
           {
             price: priceId,
@@ -129,6 +128,7 @@ export async function createCheckoutSession(
       console.log("stripe checkout session created, url:", redirectUrl);
     }
   } catch (error) {
+    console.error("proerror", error);
     return {
       status: "error",
       message: "Failed to generate stripe checkout session",

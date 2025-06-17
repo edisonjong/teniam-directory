@@ -73,7 +73,7 @@ const client = createClient({
  * Note: This script requires proper environment variables in .env
  */
 const links = [
-  "https://mkdirs.com",
+  "https://www.teniam.com/",
   "https://achromatic.dev",
   // Add more links here...
 ];
@@ -234,7 +234,7 @@ export const importItemsMicrolink = async () => {
 
 const findCategory = (categories: Category[], names: string[]) => {
   return categories.filter((category: Category) =>
-    names.includes(category.name),
+    names.includes(category.name)
   );
 };
 

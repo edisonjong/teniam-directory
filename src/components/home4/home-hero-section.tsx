@@ -107,7 +107,7 @@ export default function HeroSection() {
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="h1"
-                  className="mt-8 text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem]"
+                  className="mt-6 text-balance text-6xl md:text-7xl lg:mt-12 xl:text-[5.25rem]"
                 >
                   Tech Hub for Startups & Soloprenuers
                 </TextEffect>

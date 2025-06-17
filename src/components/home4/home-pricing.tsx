@@ -197,7 +197,13 @@ export function PricingPlans({ item }: PricingPlansProps) {
               )}
 
               <CardHeader>
-                <CardTitle className="font-medium">{plan.title}</CardTitle>
+                <CardTitle className="font-medium">
+                  {plan.title == "pro"
+                    ? "Featured"
+                    : plan.title == "sponsor"
+                      ? "Sponsored"
+                      : plan.title}
+                </CardTitle>
                 <span className="my-3 block text-2xl font-semibold">
                   ${plan.price} {plan.priceSuffix}
                 </span>

@@ -25,7 +25,8 @@ export const priceConfig: PriceConfig = {
       stripePriceId: null,
     },
     {
-      title: "Featured",
+      // title: "Featured",
+      title: "pro",
       proTitle: "pro",
       description: "For Pro Users",
       isPopular: true,
@@ -51,7 +52,9 @@ export const priceConfig: PriceConfig = {
       stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID,
     },
     {
-      title: "Sponsored",
+      // title: "Sponsored",
+      title: "sponsor",
+
       sponsorTitle: "sponsor",
       description: "For Sponsors",
       benefits: [
@@ -61,7 +64,7 @@ export const priceConfig: PriceConfig = {
         // "Only one advertisement per period",
         // "Schedule your advertising period",
         // "Premium customer support",
-        "Everything in Pro plan",
+        "Everything in Featured plan",
         "Promote your product on almost every page",
         "Exclusive one advertisement per period for maximum exposure",
         "Only one advertisement per period",

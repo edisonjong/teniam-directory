@@ -156,7 +156,13 @@ export function PricingPlans({ item }: PricingPlansProps) {
             )}
 
             <CardHeader>
-              <CardTitle className="font-medium">{plan.title}</CardTitle>
+              <CardTitle className="font-medium">
+                {plan.title == "pro"
+                  ? "Featured"
+                  : plan.title == "sponsor"
+                    ? "Sponsored"
+                    : plan.title}
+              </CardTitle>
               <span className="my-3 block text-2xl font-semibold">
                 ${plan.price} {plan.priceSuffix}
               </span>
@@ -187,7 +193,7 @@ export function PricingPlans({ item }: PricingPlansProps) {
             <CardFooter className="mt-auto">
               {plan?.title?.toUpperCase() === PricePlans.FREE.toUpperCase() ? (
                 <FreePlanButton item={item} className="w-full" />
-              ) : plan?.sponsorTitle?.toUpperCase() ===
+              ) : plan?.title?.toUpperCase() ===
                 PricePlans.SPONSOR.toUpperCase() ? (
                 <SponsorPlanButton
                   item={item}

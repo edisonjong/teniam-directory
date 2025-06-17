@@ -245,7 +245,7 @@ export default function SimplifiedHero() {
                         <div key={index} className="flex items-start gap-3">
                           <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
                             <img
-                              className="aspect-square rounded-full object-contain p-1"
+                              className="aspect-square rounded-full object-contain p-1 dark:invert"
                               src={tech.logo || "/placeholder.svg"}
                               alt={`${tech.name} logo`}
                               height="40"
@@ -272,7 +272,7 @@ export default function SimplifiedHero() {
         </section>
 
         <SubscribeSection />
-        <IntegrationsSection />
+        <IntegrationsSection relatedItems={undefined} />
       </main>
     </>
   );

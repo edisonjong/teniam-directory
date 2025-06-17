@@ -32,7 +32,13 @@ export default function SubmissionCardInPlanPage({
           <div className="grid grid-cols-2 gap-4 text-sm pt-2">
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Plan:</span>
-              <span className="capitalize">{item.pricePlan}</span>
+              <span className="capitalize">
+                {item.pricePlan == "pro"
+                  ? "Featured"
+                  : item.pricePlan == "sponsor"
+                    ? "Sponsored"
+                    : item.pricePlan}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-muted-foreground">Status:</span>

@@ -14,7 +14,7 @@ export default function FAQsTwo() {
       id: "item-1",
       question: "How do I submit a tool?",
       answer:
-        "Choose a plan (Free, Pro, or Sponsor) and submit via our quick form. Free listings take 3-5 business days for review; Pro and Sponsor get priority (1-2 days).",
+        "Choose a plan (Free, Featured, or Sponsored) and submit via our quick form. Free listings take 3-5 business days for review; Featured and Sponsored get priority (1-2 days).",
     },
     {
       id: "item-2",
@@ -36,21 +36,21 @@ export default function FAQsTwo() {
     },
     {
       id: "item-5",
-      question: "What does the Pro Plan's spotlight shine border do?",
+      question: "What does the Featured Plan's spotlight shine border do?",
       answer:
         "The spotlight shine border highlights your listing with a visually striking design and includes side menu placement for greater visibility across Teniam.",
     },
     {
       id: "item-6",
-      question: "How does the Sponsor Plan differ from Pro?",
+      question: "How does the Sponsor Plan differ from Featured?",
       answer:
-        "Sponsor includes all Pro benefits (spotlight shine border and side menu) plus exclusive sidebar promotion on nearly every page for maximum exposure.",
+        "Sponsor includes all Featured benefits (spotlight shine border and side menu) plus exclusive sidebar promotion on nearly every page for maximum exposure.",
     },
     {
       id: "item-7",
       question: "Can I upgrade from the Free Plan?",
       answer:
-        "Yes, upgrade to Pro or Sponsor anytime to unlock the spotlight shine border, side menu, or sidebar placement.",
+        "Yes, upgrade to Featured or Sponsor anytime to unlock the spotlight shine border, side menu, or sidebar placement.",
     },
     {
       id: "item-8",
@@ -62,7 +62,7 @@ export default function FAQsTwo() {
       id: "item-9",
       question: "How long does my listing last?",
       answer:
-        "Free and Pro listings are permanent with an active subscription; Sponsor listings run weekly with flexible scheduling.",
+        "Free and Featured listings are permanent with an active subscription; Sponsor listings run weekly with flexible scheduling.",
     },
   ];
 

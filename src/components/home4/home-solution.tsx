@@ -14,6 +14,7 @@ import Link from "next/link";
 import { Logo } from "../logo";
 import { useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function SolutionSection() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function SolutionSection() {
     }
   }
   return (
-    <section>
+    <section className="relative z-0">
       <div className=" py-16 md:py-32 dark:bg-transparent ">
         <div className="  px-6 bg-zinc-50 dark:bg-transparent py-24 md:py-32">
           <div className="max-w-5xl mx-auto">
@@ -50,7 +51,11 @@ export default function SolutionSection() {
                   borderClassName="shadow-black-950/10 shadow-xl border-black/25 dark:border-white/25"
                   className="dark:bg-white/10"
                 >
-                  <Logo />
+                  {/* <Logo /> */}
+                  <Avatar>
+                    <AvatarImage src="/logo.jpeg" />
+                    <AvatarFallback>{"T"}</AvatarFallback>
+                  </Avatar>
                 </IntegrationCard>
                 <IntegrationCard>
                   <VSCodium />

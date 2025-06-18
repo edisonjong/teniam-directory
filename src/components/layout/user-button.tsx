@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { Icons } from "@/components/icons/icons";
-import { UserAvatar } from "@/components/shared/user-avatar";
+import { Icons } from '@/components/icons/icons';
+import { UserAvatar } from '@/components/shared/user-avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Drawer,
   DrawerContent,
@@ -17,27 +17,28 @@ import {
   DrawerPortal,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { userButtonConfig } from "@/config/user-button";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { LogOutIcon } from "lucide-react";
-import { signOut } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+} from '@/components/ui/drawer';
+import { userButtonConfig } from '@/config/user-button';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import { LogOutIcon } from 'lucide-react';
+import { signOut } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+import { usePathname } from 'next/navigation';
 
 export function UserButton() {
   const router = useRouter();
   const user = useCurrentUser();
-  // console.log('UserButton, user:', user);
-
-  const [open, setOpen] = useState(false);
-  const closeDrawer = () => {
-    setOpen(false);
-  };
-
+  const pathname = usePathname();
   const { isMobile } = useMediaQuery();
+  const [open, setOpen] = useState(false);
+  const closeDrawer = () => setOpen(false);
+
+  const excludedRoutes = ['/dashboard', '/settings', '/submit'];
+  const shouldShowMenus = !excludedRoutes.includes(pathname);
 
   if (!user) {
     return (
@@ -45,7 +46,6 @@ export function UserButton() {
     );
   }
 
-  // Mobile View, use Drawer
   if (isMobile) {
     return (
       <Drawer open={open} onClose={closeDrawer}>
@@ -62,49 +62,51 @@ export function UserButton() {
             <DrawerHeader>
               <DrawerTitle />
             </DrawerHeader>
+
             <div className="flex items-center justify-start gap-4 p-2">
               <UserAvatar
-                name={user?.name || undefined}
-                image={user?.image || undefined}
+                name={user.name || undefined}
+                image={user.image || undefined}
                 className="size-8 border"
               />
               <div className="flex flex-col">
-                {user?.name && <p className="font-medium">{user.name}</p>}
-                {user?.email && (
+                {user.name && <p className="font-medium">{user.name}</p>}
+                {user.email && (
                   <p className="w-[200px] truncate text-muted-foreground">
-                    {user?.email}
+                    {user.email}
                   </p>
                 )}
               </div>
             </div>
 
             <ul className="mb-14 mt-1 w-full text-muted-foreground">
-              {userButtonConfig.menus.map((item) => {
-                const Icon = Icons[item.icon || "arrowRight"];
-                return (
-                  <li
-                    key={item.href}
-                    className="rounded-lg text-foreground hover:bg-muted"
-                  >
-                    <Link
-                      href={item.href}
-                      onClick={closeDrawer}
-                      className="flex w-full items-center gap-3 px-2.5 py-2"
+              {shouldShowMenus &&
+                userButtonConfig.menus.map((item) => {
+                  const Icon = Icons[item.icon || 'arrowRight'];
+                  return (
+                    <li
+                      key={item.href}
+                      className="rounded-lg text-foreground hover:bg-muted"
                     >
-                      <Icon className="size-4" />
-                      <p className="text-sm">{item.title}</p>
-                    </Link>
-                  </li>
-                );
-              })}
+                      <Link
+                        href={item.href}
+                        onClick={closeDrawer}
+                        className="flex w-full items-center gap-3 px-2.5 py-2"
+                      >
+                        <Icon className="size-4" />
+                        <p className="text-sm">{item.title}</p>
+                      </Link>
+                    </li>
+                  );
+                })}
               <li
                 key="logout"
                 className="rounded-lg text-foreground hover:bg-muted"
               >
                 <Link
                   href="#"
-                  onClick={(event) => {
-                    event.preventDefault();
+                  onClick={(e) => {
+                    e.preventDefault();
                     closeDrawer();
                     signOut({
                       callbackUrl: `${window.location.origin}/`,
@@ -124,7 +126,7 @@ export function UserButton() {
     );
   }
 
-  // Desktop View, use DropdownMenu
+  // Desktop View
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger>
@@ -140,38 +142,34 @@ export function UserButton() {
             {user.name && <p className="font-medium">{user.name}</p>}
             {user.email && (
               <p className="w-[200px] truncate text-sm text-muted-foreground">
-                {user?.email}
+                {user.email}
               </p>
             )}
           </div>
         </div>
         <DropdownMenuSeparator />
-
-        {userButtonConfig.menus.map((item) => {
-          const Icon = Icons[item.icon || "arrowRight"];
-          return (
-            <DropdownMenuItem
-              key={item.href}
-              asChild
-              className="cursor-pointer"
-              onClick={() => {
-                router.push(item.href);
-              }}
-            >
-              <div className="flex items-center space-x-2.5">
-                <Icon className="size-4" />
-                <p className="text-sm">{item.title}</p>
-              </div>
-            </DropdownMenuItem>
-          );
-        })}
-
+        {shouldShowMenus &&
+          userButtonConfig.menus.map((item) => {
+            const Icon = Icons[item.icon || 'arrowRight'];
+            return (
+              <DropdownMenuItem
+                key={item.href}
+                asChild
+                className="cursor-pointer"
+                onClick={() => router.push(item.href)}
+              >
+                <div className="flex items-center space-x-2.5">
+                  <Icon className="size-4" />
+                  <p className="text-sm">{item.title}</p>
+                </div>
+              </DropdownMenuItem>
+            );
+          })}
         <DropdownMenuSeparator />
-
         <DropdownMenuItem
           className="cursor-pointer"
-          onSelect={(event) => {
-            event.preventDefault();
+          onSelect={(e) => {
+            e.preventDefault();
             signOut({
               callbackUrl: `${window.location.origin}/`,
               redirect: true,

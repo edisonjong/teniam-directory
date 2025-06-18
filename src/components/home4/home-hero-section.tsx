@@ -1,26 +1,26 @@
-import React from "react";
-import Link from "next/link";
-import { ArrowRight, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { HeroHeader } from "./hero-header";
-import { AnimatedGroup } from "../ui/animated-group";
-import { TextEffect } from "../ui/text-effect";
-import { marketingConfig } from "@/config/marketing";
+import React from 'react';
+import Link from 'next/link';
+import { ArrowRight, ChevronRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { HeroHeader } from './hero-header';
+import { AnimatedGroup } from '../ui/animated-group';
+import { TextEffect } from '../ui/text-effect';
+import { marketingConfig } from '@/config/marketing';
 
 const transitionVariants = {
   item: {
     hidden: {
       opacity: 0,
-      filter: "blur(12px)",
+      filter: 'blur(12px)',
       y: 12,
     },
     visible: {
       opacity: 1,
-      filter: "blur(0px)",
+      filter: 'blur(0px)',
       y: 0,
       transition: {
-        type: "spring",
+        type: 'spring',
         bounce: 0.3,
         duration: 1.5,
       },
@@ -41,7 +41,7 @@ export default function HeroSection() {
           <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
         </div>
         <section>
-          <div className="relative pt-24 md:pt-36">
+          <div className="relative pt-16 md:pt-32">
             {/* <AnimatedGroup
               variants={{
                 container: {
@@ -107,7 +107,7 @@ export default function HeroSection() {
                   preset="fade-in-blur"
                   speedSegment={0.3}
                   as="h1"
-                  className="mt-6 text-balance text-6xl md:text-7xl lg:mt-12 xl:text-[5.25rem]"
+                  className="mt-3 text-balance text-6xl md:text-7xl lg:mt-6 xl:text-[5.25rem]"
                 >
                   Tech Hub for Startups & Soloprenuers
                 </TextEffect>

@@ -45,6 +45,11 @@ export function NavProjects({
   const { isMobile, setOpenMobile } = useSidebar();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const keys = Array.from(searchParams.keys());
+  const selectedKey = keys[0] === "f" ? keys[1] : keys[0];
+  const queryKey = selectedKey; // Now safe to assign
+  const queryValue = searchParams.get(queryKey);
+
   const handleCategoryClick = (item: {
     _id: string;
     slug: { current: string };
@@ -80,7 +85,7 @@ export function NavProjects({
           return (
             <SidebarMenuItem key={item.name}>
               <SidebarMenuButton
-                isActive={selectedCategory === item.slug.current}
+                isActive={queryValue === item.slug.current}
                 onClick={() => handleCategoryClick(item)}
               >
                 {Icon && <Icon className="h-4 w-4" />}

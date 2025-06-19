@@ -179,14 +179,14 @@ export function AppSidebar({
       title: "Ads",
       url: "#ads",
       icon: Megaphone,
-      id: "ads",
+      id: "sponsor",
       items: [],
     },
     {
       title: "Bookmarks",
       url: "#bookmarks",
       icon: Bookmark,
-      id: "bookmarks",
+      id: "bookmark",
       items: [],
     },
     // {

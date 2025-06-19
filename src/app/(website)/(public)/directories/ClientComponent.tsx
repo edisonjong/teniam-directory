@@ -83,8 +83,7 @@ function Content({ items, tagList }) {
   const categoryParam = searchParams.get("category");
 
   const queryKey = Array.from(searchParams.keys())[0]; // e.g., "tag"
-  // const queryValue = searchParams.get(queryKey);
-  const newParams = new URLSearchParams(searchParams.toString());
+  const queryValue = searchParams.get(queryKey);
   const [filteredItems, setFilteredItems] = React.useState(items);
 
   React.useEffect(() => {
@@ -187,6 +186,24 @@ function Content({ items, tagList }) {
   if (isLoading) {
     return <DashboardSkeleton />;
   }
+  const getBreadcrumbLabel = () => {
+    if (filterParam === "featured") {
+      return "Featured";
+    } else if (filterParam === "bookmark") {
+      return "Bookmarks";
+    } else if (filterParam === "sponsor") {
+      return "Sponsored";
+    } else if (queryKey === "tag") {
+      return queryValue.charAt(0).toUpperCase() + queryValue.slice(1);
+    } else if (queryKey === "category") {
+      return queryValue
+        ?.split("-")
+        ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        ?.join(" ");
+    } else {
+      return "All Products";
+    }
+  };
   return (
     <SidebarInset className="mobile-safe-area">
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -218,7 +235,7 @@ function Content({ items, tagList }) {
                 <BreadcrumbSeparator className="" />
                 <BreadcrumbItem className="min-w-0">
                   <BreadcrumbPage className="truncate">
-                    {getTitle()}
+                    {getBreadcrumbLabel()}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>

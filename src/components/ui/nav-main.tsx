@@ -46,6 +46,7 @@ export function NavMain({
   // >({});
   const router = useRouter();
   const searchParams = useSearchParams();
+  const filterParam = searchParams.get("f");
   const handlePlatformClick = (platformId: string) => {
     const item = items.find((item) => item.id === platformId);
     const newParams = new URLSearchParams(searchParams.toString());
@@ -107,7 +108,7 @@ export function NavMain({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 tooltip={item.title}
-                isActive={selectedPlatform === item.id}
+                isActive={filterParam === item.id}
                 onClick={() => handlePlatformClick(item.id)}
               >
                 {Icon && <Icon className="h-4 w-4" />}

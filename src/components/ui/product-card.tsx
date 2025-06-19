@@ -122,6 +122,16 @@ export const ProductCard = React.memo(
 
       setLoading(false); // End loading
     };
+    useEffect(() => {
+      const productId = sessionStorage.getItem("scrollToProductId");
+      if (productId) {
+        const el = document.getElementById(productId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        sessionStorage.removeItem("scrollToProductId"); // Cleanup
+      }
+    }, []);
 
     return (
       <Card
@@ -183,10 +193,26 @@ export const ProductCard = React.memo(
               size="sm"
               className="gap-1 pr-2 shadow-none transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
             >
-              <Link href={`${itemUrlPrefix}/${slug}`} prefetch={false}>
+              <Link
+                href={`${itemUrlPrefix}/${slug}`}
+                prefetch={false}
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    sessionStorage.setItem(
+                      "scrollToProductId",
+                      `product-${id}`
+                    );
+                  }
+                }}
+              >
                 Learn More
                 <ChevronRight className="ml-0 !size-3.5 opacity-50" />
               </Link>
+
+              {/* <Link href={`${itemUrlPrefix}/${slug}`} prefetch={false}>
+                Learn More
+                <ChevronRight className="ml-0 !size-3.5 opacity-50" />
+              </Link> */}
             </Button>
             {!homeBookmark && (
               <Button

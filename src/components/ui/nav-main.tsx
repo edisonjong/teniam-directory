@@ -55,11 +55,11 @@ export function NavMain({
         newParams.delete("category");
         newParams.delete("tag");
         newParams.set("f", "featured");
-      } else if (platformId === "bookmarks") {
+      } else if (platformId === "bookmark") {
         newParams.delete("category");
         newParams.delete("tag");
         newParams.set("f", "bookmark");
-      } else if (platformId === "ads") {
+      } else if (platformId === "sponsor") {
         newParams.delete("category");
         newParams.delete("tag");
         newParams.set("f", "sponsor");

@@ -429,6 +429,7 @@
 //     </div>
 //   );
 // }
+
 import Link from 'next/link';
 import { ArrowLeft, Code, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -448,7 +449,7 @@ import {
   ItemInfoBySlugQueryResult,
   SponsorItemListQueryResult,
 } from '@/sanity.types';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import {
   MotionHeading,
   MotionWrapper,
@@ -468,6 +469,8 @@ import SponsorItemCard from '@/components/item/item-card-sponsor';
 import { constructMetadata } from '@/lib/metadata';
 import { siteConfig } from '@/config/site';
 import { Metadata } from 'next';
+import BackToDirectoryButton from '@/components/ui/back-to-directory-button';
+import { useEffect } from 'react';
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export async function generateMetadata({
   params,
@@ -530,12 +533,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
           <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
           <div className="mx-auto max-w-7xl px-6">
             <div className="flex justify-between mb-8">
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/directories">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Directory
-                </Link>
-              </Button>
+              <BackToDirectoryButton />
 
               <ShareButton />
             </div>

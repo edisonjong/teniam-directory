@@ -124,16 +124,18 @@ export const ProductCard = React.memo(
       setLoading(false); // End loading
     };
     useEffect(() => {
-      const productId = sessionStorage.getItem('scrollToProductId');
-      if (productId) {
-        const el = document.getElementById(productId);
+      if (typeof window === 'undefined') return;
+
+      const scrollId = localStorage.getItem('scrollToProductId');
+      if (scrollId) {
+        const el = document.getElementById(scrollId);
         if (el) {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          localStorage.removeItem('scrollToProductId');
         }
-        sessionStorage.removeItem('scrollToProductId'); // Cleanup
+        // localStorage.removeItem('scrollToProductId');
       }
     }, []);
-
     return (
       <Card
         id={`product-${id}`}
@@ -190,32 +192,21 @@ export const ProductCard = React.memo(
 
           <div className="flex justify-between items-center gap-3 border-t border-dashed pt-6 border-border mt-auto">
             <Button
-              asChild
               variant="secondary"
               size="sm"
               className="gap-1 pr-2 shadow-none transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+              onClick={() => {
+                debugger;
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('scrollToProductId', `product-${id}`);
+                }
+                router.push(`${itemUrlPrefix}/${slug}`);
+              }}
             >
-              <Link
-                href={`${itemUrlPrefix}/${slug}`}
-                prefetch={false}
-                onClick={() => {
-                  if (typeof window !== 'undefined') {
-                    sessionStorage.setItem(
-                      'scrollToProductId',
-                      `product-${id}`
-                    );
-                  }
-                }}
-              >
-                Learn More
-                <ChevronRight className="ml-0 !size-3.5 opacity-50" />
-              </Link>
-
-              {/* <Link href={`${itemUrlPrefix}/${slug}`} prefetch={false}>
-                Learn More
-                <ChevronRight className="ml-0 !size-3.5 opacity-50" />
-              </Link> */}
+              Learn More
+              <ChevronRight className="ml-0 !size-3.5 opacity-50" />
             </Button>
+
             {!homeBookmark && (
               <Button
                 variant="ghost"

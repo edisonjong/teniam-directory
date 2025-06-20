@@ -53,12 +53,8 @@ export default function SolutionSection() {
                 >
                   {/* <Logo /> */}
                   <Avatar className="w-10 h-10 bg-transparent">
-                    <div className="bg-white dark:bg-white p-1 rounded">
-                      <AvatarImage
-                        src="/logo.jpeg"
-                        className="object-contain"
-                      />
-                    </div>
+                    <AvatarImage src="/logo.jpeg" className="object-contain" />
+
                     <AvatarFallback>{'T'}</AvatarFallback>
                   </Avatar>
                 </IntegrationCard>

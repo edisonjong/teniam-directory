@@ -247,7 +247,7 @@ export default function HeroSection() {
               </div>
               <div className="flex">
                 <Image
-                  className="mx-aut  w-fit dark:invert"
+                  className="mx-aut mb-[6px] w-fit dark:invert"
                   src="/gemini.svg"
                   alt="Gemini Logo"
                   width={60}

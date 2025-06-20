@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Bookmark, ChevronRight, Star } from "lucide-react";
-import Link from "next/link";
-import { ShineBorder } from "@/components/ui/shine-border";
-import Image from "next/image";
-import { urlForIcon } from "@/lib/image";
-import { toast } from "sonner";
-import { useRouter, useSearchParams } from "next/navigation"; // <-- For reading query params on client side
-import { toggleBookmarkById } from "@/actions/toggle-bookmark";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import React, { useState, useEffect } from 'react';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Bookmark, ChevronRight, Star } from 'lucide-react';
+import Link from 'next/link';
+import { ShineBorder } from '@/components/ui/shine-border';
+import Image from 'next/image';
+import { urlForIcon } from '@/lib/image';
+import { toast } from 'sonner';
+import { useRouter, useSearchParams } from 'next/navigation'; // <-- For reading query params on client side
+import { toggleBookmarkById } from '@/actions/toggle-bookmark';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 
 export interface LogoImage {
   alt?: string;
@@ -55,7 +56,7 @@ export const ProductCard = React.memo(
     const [loading, setLoading] = useState<boolean>(false);
     const user = useCurrentUser();
     const router = useRouter();
-    const itemUrlPrefix = "/item";
+    const itemUrlPrefix = '/item';
     const toggleBookmark = async (id: string) => {
       const updatedBookmark = await toggleBookmarkById(id);
       return updatedBookmark;
@@ -64,7 +65,7 @@ export const ProductCard = React.memo(
     const handleBookmarkToggle = async (e: React.MouseEvent) => {
       e.preventDefault();
       if (!user) {
-        router.push("/login");
+        router.push('/login');
         return;
       }
       if (loading) return;
@@ -115,7 +116,7 @@ export const ProductCard = React.memo(
           onBookmarkToggle?.(id);
         }
       } catch (err) {
-        console.error("Bookmark toggle failed", err);
+        console.error('Bookmark toggle failed', err);
         // toast.error(err);
         // setBookmarked(wasBookmarked); // Rollback on failure
       }
@@ -123,13 +124,13 @@ export const ProductCard = React.memo(
       setLoading(false); // End loading
     };
     useEffect(() => {
-      const productId = sessionStorage.getItem("scrollToProductId");
+      const productId = sessionStorage.getItem('scrollToProductId');
       if (productId) {
         const el = document.getElementById(productId);
         if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        sessionStorage.removeItem("scrollToProductId"); // Cleanup
+        sessionStorage.removeItem('scrollToProductId'); // Cleanup
       }
     }, []);
 
@@ -142,7 +143,7 @@ export const ProductCard = React.memo(
         {isAd && (
           <ShineBorder
             borderWidth={2}
-            shineColor={["#FF4785", "#4353FF", "#00A389"]}
+            shineColor={['#FF4785', '#4353FF', '#00A389']}
           />
         )}
         <div className="relative flex flex-col h-full">
@@ -163,18 +164,19 @@ export const ProductCard = React.memo(
               style={{ color }}
             >
               {iconProps && (
-                <Image
-                  src={iconProps?.src}
-                  alt={logo?.alt || `icon of ${title}`}
-                  title={logo?.alt || `icon of ${title}`}
-                  width={32}
-                  height={32}
-                  className="object-cover image-scale dark:invert"
-                  {...(iconBlurDataURL && {
-                    placeholder: "blur",
-                    blurDataURL: iconBlurDataURL,
-                  })}
-                />
+                <Avatar className="bg-transparent rounded">
+                  <div className="bg-white dark:bg-white p-[2px]  ">
+                    <AvatarImage
+                      src={iconProps?.src || 'https://github.com/shadcn.png'}
+                      alt={logo?.alt || `icon of ${title}`}
+                      title={logo?.alt || `icon of ${title}`}
+                      className="object-contain "
+                    />
+                  </div>
+                  <AvatarFallback>
+                    {logo?.alt?.[0]?.toUpperCase() || 'CN'}
+                  </AvatarFallback>
+                </Avatar>
               )}
             </div>
           </div>
@@ -197,9 +199,9 @@ export const ProductCard = React.memo(
                 href={`${itemUrlPrefix}/${slug}`}
                 prefetch={false}
                 onClick={() => {
-                  if (typeof window !== "undefined") {
+                  if (typeof window !== 'undefined') {
                     sessionStorage.setItem(
-                      "scrollToProductId",
+                      'scrollToProductId',
                       `product-${id}`
                     );
                   }
@@ -226,11 +228,11 @@ export const ProductCard = React.memo(
               >
                 <Bookmark
                   className={`h-5 w-5 bookmark-icon ${
-                    initialBookmark ? "bookmark-icon-active" : ""
+                    initialBookmark ? 'bookmark-icon-active' : ''
                   }`}
                 />
                 <span className="sr-only">
-                  {initialBookmark ? "Remove bookmark" : "Bookmark"}
+                  {initialBookmark ? 'Remove bookmark' : 'Bookmark'}
                 </span>
               </Button>
             )}
@@ -241,4 +243,4 @@ export const ProductCard = React.memo(
   }
 );
 
-ProductCard.displayName = "ProductCard";
+ProductCard.displayName = 'ProductCard';

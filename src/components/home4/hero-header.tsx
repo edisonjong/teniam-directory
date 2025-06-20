@@ -1,15 +1,15 @@
-"use client";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import React from "react";
-import { cn } from "@/lib/utils";
-import { Logo } from "../logo";
-import { DashboardConfig, MarketingConfig } from "@/types";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { UserButton } from "../layout/user-button";
-import { ModeToggle } from "../layout/mode-toggle";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+'use client';
+import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { Logo } from '../logo';
+import { DashboardConfig, MarketingConfig } from '@/types';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { UserButton } from '../layout/user-button';
+import { ModeToggle } from '../layout/mode-toggle';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 interface NavBarProps {
   scroll?: boolean;
@@ -26,32 +26,32 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   React.useEffect(() => {
     if (menuState) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     }
     return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     };
   }, [menuState]);
 
   return (
     <header className=" mb-16">
       <nav
-        data-state={menuState ? "active" : undefined}
+        data-state={menuState ? 'active' : undefined}
         className="fixed z-20 w-full px-2"
       >
         <div
           className={cn(
-            "mx-auto mt-2 max-w-7xl px-6 transition-all duration-300 lg:px-12",
+            'mx-auto mt-2 max-w-7xl px-6 transition-all duration-300 lg:px-12',
             isScrolled &&
-              "bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5"
+              'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5'
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
@@ -61,16 +61,17 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                 aria-label="home"
                 className="flex items-center space-x-2"
               >
-                <Avatar>
+                <Avatar className="w-10 h-10">
                   <AvatarImage src="/logo.jpeg" />
-                  <AvatarFallback>{"T"}</AvatarFallback>
+                  <AvatarFallback>{'T'}</AvatarFallback>
                 </Avatar>
-                {/* <Logo className="rounded-full" src="/logo.png" /> */}
-                <h4 className="font-bold ml-1">Teniam</h4>
+
+                <h4 className="font-bold">Teniam</h4>
               </Link>
+              {/* <Logo className="rounded-full" src="/logo.jpeg" /> */}
               <button
                 onClick={() => setMenuState(!menuState)}
-                aria-label={menuState ? "Close Menu" : "Open Menu"}
+                aria-label={menuState ? 'Close Menu' : 'Open Menu'}
                 className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
               >
                 {menuState ? (
@@ -84,12 +85,12 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
             <div className="absolute inset-0 m-auto hidden size-fit lg:block">
               <ul className="flex gap-8 text-sm">
                 {links.map((item, index) => {
-                  const isHashLink = item.href.startsWith("#");
+                  const isHashLink = item.href.startsWith('#');
                   const href = isHashLink ? `/${item.href}` : item.href;
 
                   return (
                     <li key={index}>
-                      {item.href.startsWith("http") ? (
+                      {item.href.startsWith('http') ? (
                         <a
                           href={item.href}
                           target="_blank"
@@ -114,19 +115,19 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
 
             <div
               className={cn(
-                "bg-background data-[state=active]:block lg:data-[state=active]:flex mb-6 hidden w-full max-h-[90vh] overflow-y-auto flex-wrap items-center justify-end space-y-8  border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent",
-                menuState && "block"
+                'bg-background data-[state=active]:block lg:data-[state=active]:flex mb-6 hidden w-full max-h-[90vh] overflow-y-auto flex-wrap items-center justify-end space-y-8  border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent',
+                menuState && 'block'
               )}
             >
               <div className="lg:hidden">
                 <ul className="space-y-6 text-base">
                   {links.map((item, index) => {
-                    const isHashLink = item.href.startsWith("#");
+                    const isHashLink = item.href.startsWith('#');
                     const href = isHashLink ? `/${item.href}` : item.href;
 
                     return (
                       <li key={index}>
-                        {item.href.startsWith("http") ? (
+                        {item.href.startsWith('http') ? (
                           <a
                             href={item.href}
                             target="_blank"
@@ -162,7 +163,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                       asChild
                       variant="outline"
                       size="sm"
-                      className={cn(isScrolled && "lg:hidden")}
+                      className={cn(isScrolled && 'lg:hidden')}
                     >
                       <Link href="/auth/login">
                         <span>Login</span>
@@ -171,7 +172,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                     <Button
                       asChild
                       size="sm"
-                      className={cn(isScrolled && "lg:hidden")}
+                      className={cn(isScrolled && 'lg:hidden')}
                     >
                       <Link href="/auth/register">
                         <span>Sign Up</span>
@@ -180,7 +181,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                     <Button
                       asChild
                       size="sm"
-                      className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
+                      className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}
                     >
                       <Link href="/auth/register">
                         <span>Get Started</span>

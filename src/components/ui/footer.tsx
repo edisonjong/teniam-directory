@@ -1,34 +1,35 @@
-import { Logo } from "@/components/logo";
-import Link from "next/link";
+import { Logo } from '@/components/logo';
+import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from './avatar';
 
 const links = [
   {
-    title: "Features",
-    href: "https://www.teniam.com/#features",
+    title: 'Features',
+    href: 'https://www.teniam.com/#features',
   },
   {
-    title: "Solutions",
-    href: "https://www.teniam.com/#solution",
+    title: 'Solutions',
+    href: 'https://www.teniam.com/#solution',
   },
   {
-    title: "Pricing",
-    href: "https://www.teniam.com/pricing",
+    title: 'Pricing',
+    href: 'https://www.teniam.com/pricing',
   },
   {
-    title: "Blogs",
-    href: "https://blogs.teniam.com/",
+    title: 'Blogs',
+    href: 'https://blogs.teniam.com/',
   },
   {
-    title: "Directory",
-    href: "https://www.teniam.com/directories",
+    title: 'Directory',
+    href: 'https://www.teniam.com/directories',
   },
   {
-    title: "Privacy Policy",
-    href: "https://www.teniam.com/privacy-policy",
+    title: 'Privacy Policy',
+    href: 'https://www.teniam.com/privacy-policy',
   },
   {
-    title: "Contact",
-    href: "https://www.teniam.com/contact",
+    title: 'Contact',
+    href: 'https://www.teniam.com/contact',
   },
 ];
 
@@ -37,7 +38,16 @@ export default function FooterSection() {
     <footer className="py-16 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
         <Link href="/" aria-label="go home" className="mx-auto block size-fit">
-          <Logo />
+          <Link
+            href="/"
+            aria-label="home"
+            className="flex items-center space-x-2"
+          >
+            <Avatar className="w-10 h-10">
+              <AvatarImage src="/logo.jpeg" />
+              <AvatarFallback>{'T'}</AvatarFallback>
+            </Avatar>
+          </Link>
         </Link>
 
         <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
@@ -173,7 +183,7 @@ export default function FooterSection() {
           </Link>
         </div>
         <span className="text-muted-foreground block text-center text-sm">
-          {" "}
+          {' '}
           © 2025 Teniam. All rights reserved.
         </span>
       </div>

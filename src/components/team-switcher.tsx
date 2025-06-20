@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { ChevronsUpDown, Plus } from "lucide-react";
+import * as React from 'react';
+import { ChevronsUpDown, Plus } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -11,16 +11,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar";
-import Link from "next/link";
+} from '@/components/ui/sidebar';
+import Link from 'next/link';
 // import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 export function TeamSwitcher({
   teams,
@@ -47,9 +47,9 @@ export function TeamSwitcher({
             aria-label="home"
             className="flex items-center space-x-2"
           >
-            <Avatar>
+            <Avatar className="w-10 h-10">
               <AvatarImage src="/logo.jpeg" />
-              <AvatarFallback>{"T"}</AvatarFallback>
+              <AvatarFallback>{'T'}</AvatarFallback>
             </Avatar>
             {/* <Logo className="rounded-full" src="/logo.png" /> */}
             {/* <h4 className="font-bold ml-1">Teniam</h4> */}

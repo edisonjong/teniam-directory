@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {
   Gemini,
   Replit,
@@ -6,22 +6,22 @@ import {
   VSCodium,
   MediaWiki,
   GooglePaLM,
-} from "@/components/logos";
+} from '@/components/logos';
 // import { LogoIcon } from '@/components/logo';
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Logo } from "../logo";
-import { useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { Logo } from '../logo';
+import { useRouter } from 'next/navigation';
+import { useCurrentUser } from '@/hooks/use-current-user';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export default function SolutionSection() {
   const router = useRouter();
   const user = useCurrentUser();
   function gettingStarted() {
     if (!user) {
-      router.push("/login");
+      router.push('/login');
       return;
     }
   }
@@ -52,9 +52,14 @@ export default function SolutionSection() {
                   className="dark:bg-white/10"
                 >
                   {/* <Logo /> */}
-                  <Avatar>
-                    <AvatarImage src="/logo.jpeg" />
-                    <AvatarFallback>{"T"}</AvatarFallback>
+                  <Avatar className="w-10 h-10 bg-transparent">
+                    <div className="bg-white dark:bg-white p-1 rounded">
+                      <AvatarImage
+                        src="/logo.jpeg"
+                        className="object-contain"
+                      />
+                    </div>
+                    <AvatarFallback>{'T'}</AvatarFallback>
                   </Avatar>
                 </IntegrationCard>
                 <IntegrationCard>
@@ -108,14 +113,14 @@ const IntegrationCard = ({
   return (
     <div
       className={cn(
-        "bg-background relative flex size-20 rounded-xl dark:bg-transparent",
+        'bg-background relative flex size-20 rounded-xl dark:bg-transparent',
         className
       )}
     >
       <div
         role="presentation"
         className={cn(
-          "absolute inset-0 rounded-xl border border-black/20 dark:border-white/25",
+          'absolute inset-0 rounded-xl border border-black/20 dark:border-white/25',
           borderClassName
         )}
       />

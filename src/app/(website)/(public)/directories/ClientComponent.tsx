@@ -1,7 +1,7 @@
-"use client";
-import { AppSidebar } from "@/components/app-sidebar";
-import { AnimatedCard } from "@/components/ui/animated-card";
-import { useBookmarks } from "@/components/ui/bookmark-context";
+'use client';
+import { AppSidebar } from '@/components/app-sidebar';
+import { AnimatedCard } from '@/components/ui/animated-card';
+import { useBookmarks } from '@/components/ui/bookmark-context';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,36 +9,40 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { CommandSearch } from "@/components/ui/command-search";
-import { DashboardSkeleton } from "@/components/ui/dashboard-skeleton";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { CommandSearch } from '@/components/ui/command-search';
+import { DashboardSkeleton } from '@/components/ui/dashboard-skeleton';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ProductCard } from "@/components/ui/product-card";
-import { products } from "@/components/ui/product-data";
-import { Separator } from "@/components/ui/separator";
+} from '@/components/ui/dropdown-menu';
+import { ProductCard } from '@/components/ui/product-card';
+import { products } from '@/components/ui/product-data';
+import { Separator } from '@/components/ui/separator';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar';
 import {
   TechDirectoryContext,
   TechDirectoryProvider,
-} from "@/components/ui/tech-directory-context";
-import { useRouter, useSearchParams } from "next/navigation";
+} from '@/components/ui/tech-directory-context';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useDebounce } from "@/hooks/use-debounce";
+import { useDebounce } from '@/hooks/use-debounce';
 
 import {
   ArrowDown,
   ArrowUp,
   ArrowUpDown,
+  ArrowUpToLine,
+  ChevronUpCircle,
+  CircleArrowUp,
+  CircleChevronUp,
   Code,
   Filter,
   HomeIcon,
@@ -46,8 +50,9 @@ import {
   SortAsc,
   SortDesc,
   Star,
-} from "lucide-react";
-import React, { useEffect, useState } from "react";
+} from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ScrollToTop } from '@/components/ui/scroll-to-top';
 // import { fetchFilteredItems } from "@/actions/toggle-bookmark";
 
 export default function ClientComponent({ items, categoryList, tagList }) {
@@ -74,13 +79,13 @@ function Content({ items, tagList }) {
   const [isLoading, setIsLoading] = React.useState(false);
   // const [bookmarkProducts, setBookmarkProducts] = useState([]);
 
-  const [sortOrder, setSortOrder] = useState("default");
+  const [sortOrder, setSortOrder] = useState('default');
   const [error, setError] = useState(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const filterParam = searchParams.get("f");
-  const tagParam = searchParams.get("tag");
-  const categoryParam = searchParams.get("category");
+  const filterParam = searchParams.get('f');
+  const tagParam = searchParams.get('tag');
+  const categoryParam = searchParams.get('category');
 
   const queryKey = Array.from(searchParams.keys())[0]; // e.g., "tag"
   const queryValue = searchParams.get(queryKey);
@@ -92,13 +97,13 @@ function Content({ items, tagList }) {
   }, [items]);
   const getSortIcon = React.useCallback(() => {
     switch (sortOrder) {
-      case "newest":
+      case 'newest':
         return <ArrowDown className="h-4 w-4" />;
-      case "oldest":
+      case 'oldest':
         return <ArrowUp className="h-4 w-4" />;
-      case "a-z":
+      case 'a-z':
         return <SortAsc className="h-4 w-4" />;
-      case "z-a":
+      case 'z-a':
         return <SortDesc className="h-4 w-4" />;
       default:
         return <ArrowUpDown className="h-4 w-4" />;
@@ -108,18 +113,18 @@ function Content({ items, tagList }) {
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString());
 
-      setSortOrder(value as "default" | "newest" | "oldest" | "a-z" | "z-a");
+      setSortOrder(value as 'default' | 'newest' | 'oldest' | 'a-z' | 'z-a');
 
-      if (value === "default") {
-        params.delete("sort");
-      } else if (value === "newest") {
-        params.set("sort", "date-desc");
-      } else if (value === "oldest") {
-        params.set("sort", "date-asc");
-      } else if (value === "a-z") {
-        params.set("sort", "name-asc");
-      } else if (value === "z-a") {
-        params.set("sort", "name-desc");
+      if (value === 'default') {
+        params.delete('sort');
+      } else if (value === 'newest') {
+        params.set('sort', 'date-desc');
+      } else if (value === 'oldest') {
+        params.set('sort', 'date-asc');
+      } else if (value === 'a-z') {
+        params.set('sort', 'name-asc');
+      } else if (value === 'z-a') {
+        params.set('sort', 'name-desc');
       }
 
       const newParams = params.toString();
@@ -128,21 +133,21 @@ function Content({ items, tagList }) {
     [router, searchParams, setSortOrder]
   );
   const getTitle = React.useCallback(() => {
-    if (filterParam === "featured") {
-      return "Featured";
-    } else if (filterParam === "bookmark") {
-      return "Bookmarks";
-    } else if (filterParam === "sponsor") {
-      return "Sponsored";
-    } else if (queryKey === "tag") {
+    if (filterParam === 'featured') {
+      return 'Featured';
+    } else if (filterParam === 'bookmark') {
+      return 'Bookmarks';
+    } else if (filterParam === 'sponsor') {
+      return 'Sponsored';
+    } else if (queryKey === 'tag') {
       return tagParam.charAt(0).toUpperCase() + tagParam.slice(1);
-    } else if (queryKey === "category") {
+    } else if (queryKey === 'category') {
       return categoryParam
-        ?.split("-")
+        ?.split('-')
         ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        ?.join(" ");
+        ?.join(' ');
     } else {
-      return "All Products";
+      return 'All Products';
     }
   }, [router, filterParam]);
   const tagDetail = React.useMemo(() => {
@@ -177,7 +182,7 @@ function Content({ items, tagList }) {
       )
     );
 
-    if (searchParams.get("f") === "bookmark") {
+    if (searchParams.get('f') === 'bookmark') {
       setFilteredItems((prevItems) =>
         prevItems.filter((item) => item._id !== id)
       );
@@ -187,25 +192,25 @@ function Content({ items, tagList }) {
     return <DashboardSkeleton />;
   }
   const getBreadcrumbLabel = () => {
-    if (filterParam === "featured") {
-      return "Featured";
-    } else if (filterParam === "bookmark") {
-      return "Bookmarks";
-    } else if (filterParam === "sponsor") {
-      return "Sponsored";
-    } else if (queryKey === "tag") {
+    if (filterParam === 'featured') {
+      return 'Featured';
+    } else if (filterParam === 'bookmark') {
+      return 'Bookmarks';
+    } else if (filterParam === 'sponsor') {
+      return 'Sponsored';
+    } else if (queryKey === 'tag') {
       return queryValue.charAt(0).toUpperCase() + queryValue.slice(1);
-    } else if (queryKey === "category") {
+    } else if (queryKey === 'category') {
       return queryValue
-        ?.split("-")
+        ?.split('-')
         ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        ?.join(" ");
+        ?.join(' ');
     } else {
-      return "All Products";
+      return 'All Products';
     }
   };
   return (
-    <SidebarInset className="mobile-safe-area">
+    <SidebarInset className="mobile-safe-area relative">
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
         <div className="flex items-center justify-between w-full px-4">
           <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -214,7 +219,7 @@ function Content({ items, tagList }) {
             <Breadcrumb className="flex-1 min-w-0">
               <BreadcrumbList>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href={"/"} className=" ">
+                  <BreadcrumbLink href={'/'} className=" ">
                     <div className="flex items-center gap-1">
                       <HomeIcon className="w-4 h-4" />
                       <span>Home</span>
@@ -226,7 +231,7 @@ function Content({ items, tagList }) {
                   <BreadcrumbLink
                     onClick={(e) => {
                       e.preventDefault(); // prevent default anchor behavior
-                      router.push("/directories"); // push path without query
+                      router.push('/directories'); // push path without query
                     }}
                   >
                     Tech Directory
@@ -256,23 +261,23 @@ function Content({ items, tagList }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleSortChange("default")}>
+                <DropdownMenuItem onClick={() => handleSortChange('default')}>
                   <ArrowUpDown className="h-4 w-4 mr-2" />
                   <span>Default</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("newest")}>
+                <DropdownMenuItem onClick={() => handleSortChange('newest')}>
                   <ArrowDown className="h-4 w-4 mr-2" />
                   <span>Newest</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("oldest")}>
+                <DropdownMenuItem onClick={() => handleSortChange('oldest')}>
                   <ArrowUp className="h-4 w-4 mr-2" />
                   <span>Oldest</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("a-z")}>
+                <DropdownMenuItem onClick={() => handleSortChange('a-z')}>
                   <SortAsc className="h-4 w-4 mr-2" />
                   <span>A-Z</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("z-a")}>
+                <DropdownMenuItem onClick={() => handleSortChange('z-a')}>
                   <SortDesc className="h-4 w-4 mr-2" />
                   <span>Z-A</span>
                 </DropdownMenuItem>
@@ -295,7 +300,7 @@ function Content({ items, tagList }) {
         </div>
       )}
 
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="flex flex-1 flex-col gap-4 p-4 pt-0 relative">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {filteredItems.length > 0 ? (
             filteredItems.map((product, index) => (
@@ -309,7 +314,7 @@ function Content({ items, tagList }) {
                   id={product._id ? product._id : null}
                   title={product.name}
                   description={product.description}
-                  color={product.color || "#0070f3"}
+                  color={product.color || '#0070f3'}
                   logo={product.icon || Code}
                   featured={product.featured}
                   isAd={product.sponsor}
@@ -330,6 +335,13 @@ function Content({ items, tagList }) {
             </div>
           )}
         </div>
+        <ScrollToTop
+          minHeight={100}
+          scrollTo={0}
+          className="fixed cursor-pointer   rounded-full right-4  bottom-4 z-50  shadow-lg  transition"
+        >
+          <CircleChevronUp className="size-8  text-black dark:invert" />
+        </ScrollToTop>
       </div>
     </SidebarInset>
   );

@@ -1,3 +1,4 @@
+import IntegrationsSection from '@/components/integrations-7';
 import BackButtonSmall from '@/components/shared/back-button-small';
 import Image from 'next/image';
 
@@ -23,13 +24,14 @@ export default function AuthLayout({
 
         {/* brand image */}
         <div className="hidden bg-muted lg:block">
-          <Image
-            src="/auth-image.jpeg"
+          <IntegrationsSection />
+          {/* <Image
+            src="/auth-image.png"
             alt="Image"
             width="1920"
             height="1080"
-            className="h-full w-full object-cover "
-          />
+            className="h-full w-full object-cover dark:brightness-[0.8] dark:grayscale"
+          /> */}
         </div>
       </div>
     </div>

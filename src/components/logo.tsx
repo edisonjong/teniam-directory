@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 interface LogoProps {
   className?: string;
@@ -8,16 +8,22 @@ interface LogoProps {
 
 export const Logo = ({
   className,
-  src = "/logo.jpeg",
-  alt = "Logo",
+  src = '/logo.jpeg',
+  alt = 'Logo',
 }: LogoProps) => {
-  return <img src={src} alt={alt} className={cn("w-7 h-7", className)} />;
+  return <img src={src} alt={alt} className={cn('w-7 h-7', className)} />;
 };
-
+export const SolutionLogo = ({
+  className,
+  src = '/solution-icon.jpeg',
+  alt = 'Logo',
+}: LogoProps) => {
+  return <img src={src} alt={alt} className={cn('w-7 h-7', className)} />;
+};
 export const LogoStroke = ({ className }: { className?: string }) => {
   return (
     <svg
-      className={cn("size-7 w-7", className)}
+      className={cn('size-7 w-7', className)}
       viewBox="0 0 71 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +40,7 @@ export const LogoStroke = ({ className }: { className?: string }) => {
 export function TailwindLogo({ className }: { className?: string }) {
   return (
     <svg
-      className={cn("h-6 w-auto sm:h-8", className)}
+      className={cn('h-6 w-auto sm:h-8', className)}
       viewBox="0 0 248 31"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

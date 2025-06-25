@@ -91,7 +91,7 @@ export default function IntegrationsSection() {
             </div>
             <div className="absolute inset-0 m-auto flex size-fit justify-center gap-2">
               <IntegrationCard
-                className="shadow-black-950/10 size-16 bg-white/25 shadow-xl backdrop-blur-md backdrop-grayscale dark:border-white/10 dark:shadow-white/15"
+                className="shadow-black-950/10 size-16  shadow-xl backdrop-blur-md backdrop-grayscale dark:border-white/10 dark:shadow-white/15"
                 isCenter={true}
               >
                 <SolutionLogo />
@@ -140,7 +140,7 @@ const IntegrationCard = ({
         className
       )}
     >
-      <div className={cn('m-auto size-fit *:size-5', isCenter && '*:size-8')}>
+      <div className={cn('m-auto size-fit *:size-5', isCenter && '*:size-12')}>
         {children}
       </div>
     </div>

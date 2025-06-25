@@ -8,17 +8,17 @@ interface LogoProps {
 
 export const Logo = ({
   className,
-  src = '/logo.jpeg',
+  src = '/solution-icon.png',
   alt = 'Logo',
 }: LogoProps) => {
-  return <img src={src} alt={alt} className={cn('w-7 h-7', className)} />;
+  return <img src={src} alt={alt} className={cn('w-10 h-10', className)} />;
 };
 export const SolutionLogo = ({
   className,
-  src = '/solution-icon.jpeg',
+  src = '/solution-icon.png',
   alt = 'Logo',
 }: LogoProps) => {
-  return <img src={src} alt={alt} className={cn('w-7 h-7', className)} />;
+  return <img src={src} alt={alt} className={cn('w-10 h-10', className)} />;
 };
 export const LogoStroke = ({ className }: { className?: string }) => {
   return (

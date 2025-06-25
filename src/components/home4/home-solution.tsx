@@ -11,7 +11,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Logo } from '../logo';
+import { Logo, SolutionLogo } from '../logo';
 import { useRouter } from 'next/navigation';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -49,14 +49,14 @@ export default function SolutionSection() {
                 </IntegrationCard>
                 <IntegrationCard
                   borderClassName="shadow-black-950/10 shadow-xl border-black/25 dark:border-white/25"
-                  className="dark:bg-white/10"
+                  className=""
                 >
-                  {/* <Logo /> */}
-                  <Avatar className="w-10 h-10 bg-transparent">
+                  <SolutionLogo />
+                  {/* <Avatar className="w-10 h-10 bg-transparent">
                     <AvatarImage src="/logo.jpeg" className="object-contain" />
 
                     <AvatarFallback>{'T'}</AvatarFallback>
-                  </Avatar>
+                  </Avatar> */}
                 </IntegrationCard>
                 <IntegrationCard>
                   <VSCodium />
@@ -120,7 +120,7 @@ const IntegrationCard = ({
           borderClassName
         )}
       />
-      <div className="relative z-20 m-auto size-fit *:size-8">{children}</div>
+      <div className="relative z-20 m-auto size-fit *:size-16">{children}</div>
     </div>
   );
 };

@@ -15,7 +15,7 @@ import { InfiniteSlider } from '@/components/infinite-slider';
 export default function IntegrationsSection() {
   return (
     <section className="flex min-h-screen items-center justify-center">
-      <div className="bg-muted dark:bg-background ">
+      <div className=" ">
         <div className="mx-auto max-w-5xl px-6">
           <div className="bg-muted/25 group relative mx-auto max-w-[22rem] items-center justify-between space-y-6 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] sm:max-w-md">
             <div

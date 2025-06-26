@@ -1,11 +1,14 @@
-// pages/privacy-policy.js (or .tsx if using TypeScript)
 export default function PrivacyPolicy() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold mb-6 text-gray-900">Privacy Policy</h1>
-      <p className="text-sm text-gray-500 mb-10">Last Updated: June 3, 2025</p>
+    <div className="max-w-4xl mx-auto px-4 py-12 text-gray-800 dark:text-gray-200">
+      <h1 className="text-4xl font-bold mb-6 text-gray-900 dark:text-white">
+        Privacy Policy
+      </h1>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-10">
+        Last Updated: June 3, 2025
+      </p>
 
-      <div className="space-y-10 text-gray-800">
+      <div className="space-y-10">
         <section>
           <p className="mb-4">
             Welcome to Teniam (“we,” “us,” or “our”). At Teniam, we are
@@ -15,14 +18,14 @@ export default function PrivacyPolicy() {
             our website at
             <a
               href="https://teniam.com"
-              className="text-blue-600 underline ml-1"
+              className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
               teniam.com
             </a>
             or use our services, including our directory at
             <a
               href="https://teniam.com/directories"
-              className="text-blue-600 underline ml-1"
+              className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
               teniam.com/directories
             </a>
@@ -75,7 +78,7 @@ export default function PrivacyPolicy() {
               To respond to inquiries sent to{" "}
               <a
                 href="mailto:support@teniam.com"
-                className="text-blue-600 underline"
+                className="text-blue-600 dark:text-blue-400 underline"
               >
                 support@teniam.com
               </a>
@@ -134,7 +137,7 @@ export default function PrivacyPolicy() {
             To exercise these rights, contact us at
             <a
               href="mailto:support@teniam.com"
-              className="text-blue-600 underline ml-1"
+              className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
               support@teniam.com
             </a>
@@ -167,7 +170,7 @@ export default function PrivacyPolicy() {
             been used without permission, contact
             <a
               href="mailto:support@teniam.com"
-              className="text-blue-600 underline ml-1"
+              className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
               support@teniam.com
             </a>
@@ -213,14 +216,17 @@ export default function PrivacyPolicy() {
             Email:{" "}
             <a
               href="mailto:support@teniam.com"
-              className="text-blue-600 underline"
+              className="text-blue-600 dark:text-blue-400 underline"
             >
               support@teniam.com
             </a>
           </p>
           <p>
             Website:{" "}
-            <a href="https://teniam.com" className="text-blue-600 underline">
+            <a
+              href="https://teniam.com"
+              className="text-blue-600 dark:text-blue-400 underline"
+            >
               teniam.com
             </a>
           </p>

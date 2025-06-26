@@ -1,35 +1,35 @@
-import { Logo } from '@/components/logo';
-import Link from 'next/link';
-import { Avatar, AvatarFallback, AvatarImage } from './avatar';
+import { Logo } from "@/components/logo";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 const links = [
   {
-    title: 'Features',
-    href: 'https://www.teniam.com/#features',
+    title: "Features",
+    href: "https://www.teniam.com/#features",
   },
   {
-    title: 'Solutions',
-    href: 'https://www.teniam.com/#solution',
+    title: "Solutions",
+    href: "https://www.teniam.com/#solution",
   },
   {
-    title: 'Pricing',
-    href: 'https://www.teniam.com/pricing',
+    title: "Pricing",
+    href: "https://www.teniam.com/pricing",
   },
   {
-    title: 'Blogs',
-    href: 'https://blogs.teniam.com/',
+    title: "Blogs",
+    href: "https://blogs.teniam.com/",
   },
   {
-    title: 'Directory',
-    href: 'https://www.teniam.com/directories',
+    title: "Directory",
+    href: "https://www.teniam.com/directories",
   },
   {
-    title: 'Privacy Policy',
-    href: 'https://www.teniam.com/privacy-policy',
+    title: "Privacy Policy",
+    href: "https://www.teniam.com/privacy-policy",
   },
   {
-    title: 'Contact',
-    href: 'https://www.teniam.com/contact',
+    title: "Contact",
+    href: "https://www.teniam.com/contact",
   },
 ];
 
@@ -44,8 +44,8 @@ export default function FooterSection() {
             className="flex items-center space-x-2"
           >
             <Avatar className="w-10 h-10">
-              <AvatarImage src="/logo.jpeg" />
-              <AvatarFallback>{'T'}</AvatarFallback>
+              <AvatarImage src="/solution-icon.png" />
+              <AvatarFallback>{"T"}</AvatarFallback>
             </Avatar>
           </Link>
         </Link>
@@ -183,7 +183,7 @@ export default function FooterSection() {
           </Link>
         </div>
         <span className="text-muted-foreground block text-center text-sm">
-          {' '}
+          {" "}
           © 2025 Teniam. All rights reserved.
         </span>
       </div>

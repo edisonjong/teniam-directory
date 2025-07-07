@@ -1,31 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/blogs/:path*",
-        destination: "https://teniam.mymagic.page/:path*",
-      },
-      {
-        source: "/:path*",
-        destination: "/",
-      },
-    ];
-  },
-  async headers() {
-    return [
-      {
-        source: "/blogs/:path*",
-        headers: [
-          { key: "X-Forwarded-Proto", value: "https" },
-          { key: "X-Forwarded-Host", value: "teniam.com" },
-          { key: "X-Real-IP", value: "$remote_addr" }, // Not typically usable this way in Next.js
-          { key: "X-Forwarded-For", value: "$proxy_add_x_forwarded_for" }, // Same here
-          { key: "Host", value: "teniam.mymagic.page" },
-        ],
-      },
-    ];
-  },
   // Configure `pageExtensions` to include markdown and MDX files
   // https://nextjs.org/docs/pages/building-your-application/configuring/mdx
   // pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],

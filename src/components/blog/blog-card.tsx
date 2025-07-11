@@ -104,7 +104,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             <UserAvatar
               name={post.author?.name || null}
               image={post.author?.image || null}
-              className="border h-6 w-6 flex-shrink-0"
+              className="border  h-8 w-8 flex-shrink-0"
             />
             <span className="truncate text-sm">{post?.author?.name}</span>
           </div>

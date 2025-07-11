@@ -101,7 +101,7 @@ export default async function PostPage({ params }: PostPageProps) {
             {/* blog post title */}
             <h1 className="text-3xl font-bold">{post.title}</h1>
             {/* dotted line separator */}
-            <div className="border-t border-dotted border-gray-300 my-4" />
+            <div className="border-t border-dashed my-4" />
             {/* author info */}
             <div className=" rounded-lg py-6">
               {/* <h2 className="text-lg font-semibold mb-4">Publisher</h2> */}

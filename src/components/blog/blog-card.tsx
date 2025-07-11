@@ -1,3 +1,4 @@
+"use client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { urlForImage } from "@/lib/image";
 import { getLocaleDate } from "@/lib/utils";
@@ -5,12 +6,16 @@ import type { BlogPostInfo } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { UserAvatar } from "../shared/user-avatar";
+import { usePathname } from "next/navigation";
 
 type BlogCardProps = {
   post: BlogPostInfo;
 };
 
 export default function BlogCard({ post }: BlogCardProps) {
+  const pathname = usePathname();
+  const isBlogDetailPage =
+    pathname.startsWith("/blog/") && pathname !== "/blog";
   const imageProps = post?.image ? urlForImage(post.image) : null;
   const imageBlurDataURL = post?.image?.blurDataURL || null;
   const publishDate = post.publishDate || post._createdAt;
@@ -97,9 +102,13 @@ export default function BlogCard({ post }: BlogCardProps) {
           </div> */}
         </div>
         {/* dotted line separator */}
-        <div className="border-t border-dotted border-gray-300 my-4" />
+        {isBlogDetailPage && (
+          <div className="border-t border-dashed border-border my-6" />
+        )}
         {/* Author and date */}
-        <div className="mt-auto pt-4 flex items-center justify-between space-x-4 text-muted-foreground">
+        <div
+          className={`flex items-center justify-between space-x-4 text-muted-foreground ${isBlogDetailPage ? "" : "pt-4"}`}
+        >
           <div className="flex items-center gap-2">
             <UserAvatar
               name={post.author?.name || null}

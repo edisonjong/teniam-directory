@@ -61,14 +61,23 @@ export default function BlogCard({ post }: BlogCardProps) {
           {/* Post title */}
           <h3 className="text-lg line-clamp-2 font-medium">
             <Link href={`${postUrlPrefix}/${post.slug.current}`}>
+              {/* <span
+                className="bg-gradient-to-r from-green-200 to-green-100 
+                  bg-[length:0px_10px] bg-left-bottom bg-no-repeat
+                  transition-[background-size]
+                  duration-500
+                   hover:bg-[length:100%_3px]
+                   group-hover:bg-[length:100%_10px]
+                   dark:from-purple-800 dark:to-purple-900"
+              >
+                {post.title}
+              </span> */}
               <span
                 className="bg-gradient-to-r from-green-200 to-green-100 
                   bg-[length:0px_10px] bg-left-bottom bg-no-repeat
                   transition-[background-size]
                   duration-500
-                  hover:bg-[length:100%_3px]
-                  group-hover:bg-[length:100%_10px]
-                  dark:from-purple-800 dark:to-purple-900"
+                   "
               >
                 {post.title}
               </span>
@@ -87,7 +96,8 @@ export default function BlogCard({ post }: BlogCardProps) {
             )}
           </div> */}
         </div>
-
+        {/* dotted line separator */}
+        <div className="border-t border-dotted border-gray-300 my-4" />
         {/* Author and date */}
         <div className="mt-auto pt-4 flex items-center justify-between space-x-4 text-muted-foreground">
           <div className="flex items-center gap-2">

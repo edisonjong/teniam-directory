@@ -2,6 +2,7 @@ import AllPostsButton from "@/components/blog/all-posts-button";
 import BlogCustomMdx from "@/components/blog/blog-custom-mdx";
 import BlogGrid from "@/components/blog/blog-grid";
 import { BlogToc } from "@/components/blog/blog-toc";
+import ShareButton from "@/components/shared/share-button";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { siteConfig } from "@/config/site";
 import { urlForImage } from "@/lib/image";
@@ -99,7 +100,40 @@ export default async function PostPage({ params }: PostPageProps) {
 
             {/* blog post title */}
             <h1 className="text-3xl font-bold">{post.title}</h1>
+            {/* dotted line separator */}
+            <div className="border-t border-dotted border-gray-300 my-4" />
+            {/* author info */}
+            <div className=" rounded-lg py-6">
+              {/* <h2 className="text-lg font-semibold mb-4">Publisher</h2> */}
+              <div className="flex justify-between items-center">
+                {/* Left side: Avatar + Name */}
+                <div className="flex items-center gap-3">
+                  <div className="relative h-10 w-10 flex-shrink-0">
+                    <UserAvatar
+                      name={post.author?.name || null}
+                      image={post.author?.image || null}
+                      className="border size-10"
+                    />
+                  </div>
 
+                  {post.author?.link ? (
+                    <Link
+                      href={post.author.link}
+                      target="_blank"
+                      prefetch={false}
+                      className="font-medium link-underline"
+                    >
+                      {post.author.name}
+                    </Link>
+                  ) : (
+                    <span className="font-medium">{post.author.name}</span>
+                  )}
+                </div>
+
+                {/* Right side: Date */}
+                <p className="text-sm text-muted-foreground">{date}</p>
+              </div>
+            </div>
             {/* blog post description */}
             <p className="text-lg text-muted-foreground">{post.excerpt}</p>
           </div>
@@ -118,7 +152,7 @@ export default async function PostPage({ params }: PostPageProps) {
         <div>
           <div className="space-y-4 lg:sticky lg:top-24">
             {/* author info */}
-            <div className="bg-muted/50 rounded-lg p-6">
+            {/* <div className="bg-muted/50 rounded-lg p-6">
               <h2 className="text-lg font-semibold mb-4">Publisher</h2>
               <div className="flex items-center gap-4">
                 <div className="relative h-12 w-12 flex-shrink-0">
@@ -145,7 +179,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   <p className="text-sm text-muted-foreground">{date}</p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* categories */}
             <div className="bg-muted/50 rounded-lg p-6">
@@ -171,6 +205,11 @@ export default async function PostPage({ params }: PostPageProps) {
                 <BlogToc toc={toc} />
               </div>
             </div>
+            {/* share button */}
+            <div className="p-2">
+              <h6 className="text-md my-2">Share this post</h6>
+              <ShareButton />
+            </div>
           </div>
         </div>
       </div>
@@ -179,9 +218,9 @@ export default async function PostPage({ params }: PostPageProps) {
       {post.relatedPosts && post.relatedPosts.length > 0 && (
         <div className="flex flex-col gap-8 mt-8">
           <div className="flex items-center gap-2">
-            <FileTextIcon className="w-4 h-4 text-indigo-500" />
+            {/* <FileTextIcon className="w-4 h-4 text-indigo-500" /> */}
             <h2 className="text-lg tracking-wider font-semibold text-gradient_indigo-purple">
-              More Posts
+              Related Posts
             </h2>
           </div>
 

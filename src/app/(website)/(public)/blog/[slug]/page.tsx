@@ -223,7 +223,7 @@ export default async function PostPage({ params }: PostPageProps) {
               Related Posts
             </h2>
           </div>
-
+          <div className="border-t border-dashed border-border " />
           <BlogGrid posts={post.relatedPosts} />
         </div>
       )}

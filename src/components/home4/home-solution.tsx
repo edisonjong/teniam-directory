@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   Gemini,
   Replit,
@@ -6,22 +6,22 @@ import {
   VSCodium,
   MediaWiki,
   GooglePaLM,
-} from '@/components/logos';
+} from "@/components/logos";
 // import { LogoIcon } from '@/components/logo';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { Logo, SolutionLogo } from '../logo';
-import { useRouter } from 'next/navigation';
-import { useCurrentUser } from '@/hooks/use-current-user';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Logo, SolutionLogo } from "../logo";
+import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function SolutionSection() {
   const router = useRouter();
   const user = useCurrentUser();
   function gettingStarted() {
     if (!user) {
-      router.push('/login');
+      router.push("/login");
       return;
     }
   }
@@ -37,39 +37,34 @@ export default function SolutionSection() {
               ></div>
               <div className="mx-auto mb-2 flex w-fit justify-center gap-2">
                 <IntegrationCard>
-                  <Gemini />
+                  <Gemini className="w-8 h-8" />
                 </IntegrationCard>
                 <IntegrationCard>
-                  <Replit />
+                  <Replit className="w-8 h-8" />
                 </IntegrationCard>
               </div>
               <div className="mx-auto my-2 flex w-fit justify-center gap-2">
                 <IntegrationCard>
-                  <MagicUI />
+                  <MagicUI className="w-8 h-8" />
                 </IntegrationCard>
                 <IntegrationCard
                   borderClassName="shadow-black-950/10 shadow-xl border-black/25 dark:border-white/25"
                   className=""
                 >
-                  <SolutionLogo />
-                  {/* <Avatar className="w-10 h-10 bg-transparent">
-                    <AvatarImage src="/logo.jpeg" className="object-contain" />
-
-                    <AvatarFallback>{'T'}</AvatarFallback>
-                  </Avatar> */}
+                  <SolutionLogo className="w-16 h-16" />
                 </IntegrationCard>
                 <IntegrationCard>
-                  <VSCodium />
+                  <VSCodium className="w-8 h-8" />
                 </IntegrationCard>
               </div>
 
               <div className="mx-auto flex w-fit justify-center gap-2">
                 <IntegrationCard>
-                  <MediaWiki />
+                  <MediaWiki className="w-8 h-8" />
                 </IntegrationCard>
 
                 <IntegrationCard>
-                  <GooglePaLM />
+                  <GooglePaLM className="w-8 h-8" />
                 </IntegrationCard>
               </div>
             </div>
@@ -109,18 +104,18 @@ const IntegrationCard = ({
   return (
     <div
       className={cn(
-        'bg-background relative flex size-20 rounded-xl dark:bg-transparent',
+        "bg-background relative flex size-20 rounded-xl dark:bg-transparent",
         className
       )}
     >
       <div
         role="presentation"
         className={cn(
-          'absolute inset-0 rounded-xl border border-black/20 dark:border-white/25',
+          "absolute inset-0 rounded-xl border border-black/20 dark:border-white/25",
           borderClassName
         )}
       />
-      <div className="relative z-20 m-auto size-fit *:size-16">{children}</div>
+      <div className="relative z-20 m-auto size-fit ">{children}</div>
     </div>
   );
 };

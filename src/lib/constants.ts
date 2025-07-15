@@ -17,7 +17,7 @@ export const ITEMS_PER_PAGE = 1000;
 // number of collections per page
 export const COLLECTIONS_PER_PAGE = 12;
 // number of posts per page
-export const POSTS_PER_PAGE = 6;
+export const POSTS_PER_PAGE = 9;
 // number of submissions per page
 export const SUBMISSIONS_PER_PAGE = 3;
 

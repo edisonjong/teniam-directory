@@ -17,7 +17,7 @@ const links = [
   },
   {
     title: "Blogs",
-    href: "https://blogs.teniam.com/",
+    href: "https://www.teniam.com/blog",
   },
   {
     title: "Directory",

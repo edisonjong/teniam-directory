@@ -6,7 +6,7 @@ export const marketingConfig: MarketingConfig = {
     { title: "Solution", href: "#solution", key: "solution" },
     { title: "Pricing", href: "/pricing", key: "pricing" },
     { title: "About", href: "/about", key: "about" },
-    { title: "Blog", href: "/blogs", key: "blog" },
+    { title: "Blogs", href: "/blog", key: "blog" },
     { title: "Contact", href: "/contact", key: "contact" },
   ],
 };

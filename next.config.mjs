@@ -12,7 +12,7 @@ const nextConfig = {
   // https://nextjs.org/docs/architecture/nextjs-compiler#remove-console
   // Remove all console.* calls in production only
   compiler: {
-    removeConsole: process.env.NODE_ENV === "production",
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 
   images: {
@@ -23,31 +23,31 @@ const nextConfig = {
     // The requested resource "https://cdn.sanity.io/images/58a2mkbj/preview/xxx.svg?fit=max&auto=format" has type "image/svg+xml"
     // but dangerouslyAllowSVG is disabled
     dangerouslyAllowSVG: true,
-    domains: ["v0.blob.com", "icons.lobehub.com"],
+    domains: ['v0.blob.com', 'icons.lobehub.com'],
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "avatars.githubusercontent.com",
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
       },
       {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
       },
       {
-        protocol: "https",
-        hostname: "randomuser.me",
+        protocol: 'https',
+        hostname: 'randomuser.me',
       },
       {
-        protocol: "https",
-        hostname: "cdn.sanity.io", // https://www.sanity.io/learn/course/day-one-with-sanity-studio/bringing-content-to-a-next-js-front-end
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
       },
       {
-        protocol: "https",
-        hostname: "via.placeholder.com", // https://www.sanity.io/learn/course/day-one-with-sanity-studio/bringing-content-to-a-next-js-front-end
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
       },
       {
-        protocol: "https",
-        hostname: "**",
+        protocol: 'https',
+        hostname: '**',
       },
     ],
   },
@@ -56,7 +56,7 @@ const nextConfig = {
 
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ["lucide-react"],
+    optimizePackageImports: ['lucide-react'],
   },
   eslint: {
     ignoreDuringBuilds: true,

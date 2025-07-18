@@ -1,10 +1,10 @@
-import Container from "@/components/container";
-import { ItemGridSkeleton } from "@/components/item/item-grid";
-import { Skeleton } from "@/components/ui/skeleton";
+import Container from '@/components/container';
+import { ItemGridSkeleton } from '@/components/item/item-grid';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Loading() {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 max-w-7xl mx-auto">
       {/* Header section */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
         {/* Left column */}

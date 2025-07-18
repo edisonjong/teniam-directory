@@ -543,7 +543,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
   return (
     <main className="overflow-x-hidden">
       <section>
-        <div className="relative pt-8 md:pt-16">
+        <div className="relative pt-4 md:pt-4">
           <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
           <div className="mx-auto max-w-7xl px-6">
             {/* <div className="flex justify-between mb-8">

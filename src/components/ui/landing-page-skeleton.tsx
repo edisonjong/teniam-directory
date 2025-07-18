@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function LandingPageSkeleton() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen max-w-7xl mx-auto">
       {/* Navbar */}
       <header className="w-full px-6 py-4 flex justify-between items-center border-b border-border bg-muted/10">
         <Skeleton className="h-6 w-24" /> {/* Logo */}

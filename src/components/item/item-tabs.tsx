@@ -53,7 +53,7 @@ export default function ClientTabs({ item, sponsorItem }) {
                     key={item.id}
                     onClick={() => setActiveSection(item.id as ActiveSection)}
                     className={cn(
-                      'flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all whitespace-nowrap',
+                      'flex items-center gap-2 cursor-pointer rounded-md px-3 py-2 text-sm font-medium transition-all whitespace-nowrap',
                       activeSection === item.id
                         ? 'bg-background text-foreground shadow-sm'
                         : 'text-muted-foreground hover:text-foreground'

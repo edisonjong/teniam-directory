@@ -431,7 +431,15 @@
 // }
 
 import Link from 'next/link';
-import { ArrowLeft, Code, Globe } from 'lucide-react';
+import {
+  ArrowLeft,
+  BarChart3,
+  Code,
+  Globe,
+  Info,
+  Layers,
+  Star,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { UrlPreview } from '@/components/shared/url-preview';
 import { Logo, TailwindLogo } from '@/components/logo';
@@ -470,7 +478,12 @@ import { constructMetadata } from '@/lib/metadata';
 import { siteConfig } from '@/config/site';
 import { Metadata } from 'next';
 import BackToDirectoryButton from '@/components/ui/back-to-directory-button';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import OverviewSection from '@/components/item/overview-section';
+import CoreTechnologiesSection from '@/components/item/core-technologies-section';
+import StarRatingsSection from '@/components/item/start-rating-section';
+import AnalyticsSection from '@/components/item/analytics-section';
+import ClientTabs from '@/components/item/item-tabs';
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export async function generateMetadata({
   params,
@@ -497,6 +510,7 @@ export async function generateMetadata({
 interface ItemPageProps {
   params: { slug: string };
 }
+// type ActiveSection = 'overview' | 'technologies' | 'ratings' | 'analytics';
 
 export default async function SimplifiedHero({ params }: ItemPageProps) {
   const [item, sponsorItems] = await Promise.all([
@@ -514,13 +528,13 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
     return notFound();
   }
 
-  const imageProps = item?.image ? urlForImage(item.image) : null;
-  const imageBlurDataURL = item?.image?.blurDataURL || null;
-  const iconProps = item?.icon ? urlForIcon(item.icon) : null;
-  const iconBlurDataURL = item?.icon?.blurDataURL || null;
-  const publishDate = item.publishDate || item._createdAt;
-  const date = getLocaleDate(publishDate);
-  const itemLink = getItemTargetLinkInWebsite(item as any);
+  // const imageProps = item?.image ? urlForImage(item.image) : null;
+  // const imageBlurDataURL = item?.image?.blurDataURL || null;
+  // const iconProps = item?.icon ? urlForIcon(item.icon) : null;
+  // const iconBlurDataURL = item?.icon?.blurDataURL || null;
+  // const publishDate = item.publishDate || item._createdAt;
+  // const date = getLocaleDate(publishDate);
+  // const itemLink = getItemTargetLinkInWebsite(item as any);
   // const sponsorItem = sponsorItems?.length
   //   ? sponsorItems[Math.floor(Math.random() * sponsorItems.length)]
   //   : null;
@@ -532,14 +546,13 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
         <div className="relative pt-8 md:pt-16">
           <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
           <div className="mx-auto max-w-7xl px-6">
-            <div className="flex justify-between mb-8">
+            {/* <div className="flex justify-between mb-8">
               <BackToDirectoryButton />
 
               <ShareButton />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Left Column */}
+            </div> */}
+            <ClientTabs item={item} sponsorItem={sponsorItem} />
+            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col">
                 <MotionWrapper
                   initial={{ opacity: 0, y: 20 }}
@@ -693,8 +706,6 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                   </div>
                 </MotionWrapper>
               </div>
-
-              {/* Right Column */}
               <div className="flex flex-col">
                 <MotionWrapper
                   initial={{ opacity: 0, x: 30 }}
@@ -708,14 +719,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                       imageSrc={imageProps?.src}
                     />
                   </div>
-                  {/* <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative w-full overflow-hidden rounded-2xl border  shadow-lg shadow-zinc-950/15 ring-1">
-                    <UrlPreview
-                      url={itemLink}
-                      className="w-full"
-                      imageProps={imageProps}
-                      item={item}
-                    />
-                  </div> */}
+                
                 </MotionWrapper>
 
                 <MotionWrapper
@@ -749,23 +753,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                                 {tech.name.toUpperCase() || 'CN'}
                               </AvatarFallback>
                             </Avatar>
-                            // <Avatar>
-                            //   <AvatarImage
-                            //     src={urlForIcon(tech.icon)?.src || ''}
-                            //   />
-                            //   <AvatarFallback>{tech.name}</AvatarFallback>
-                            // </Avatar>
-                            // <div className="bg-background size-10 rounded-full border p-0.5 shadow shadow-zinc-950/5 flex-shrink-0">
-                            //   <Image
-                            //     src={urlForIcon(tech.icon)?.src || ''}
-                            //     alt={tech.icon.alt || `icon of ${tech.name}`}
-                            //     title={tech.icon.alt || `icon of ${tech.name}`}
-                            //     height={40}
-                            //     width={40}
-                            //     className="object-cover image-scale"
-                            //     loading="lazy"
-                            //   />
-                            // </div>
+                          
                           )}
                           <div>
                             <span className="block text-sm font-medium">
@@ -794,9 +782,12 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                     sponsorItem.map((item, idx) => (
                       <SponsorItemCard key={idx} item={item as any} />
                     ))}
-                  {/* {sponsorItem && <SponsorItemCard item={sponsorItem} />} */}
+                
                 </MotionWrapper>
               </div>
+            </div> */}
+            <div className="pt-8 md:pt-16 px-6">
+              <BackToDirectoryButton />
             </div>
           </div>
         </div>

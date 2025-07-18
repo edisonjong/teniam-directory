@@ -786,9 +786,6 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 </MotionWrapper>
               </div>
             </div> */}
-            <div className="pt-8 md:pt-16 px-6">
-              <BackToDirectoryButton />
-            </div>
           </div>
         </div>
       </section>

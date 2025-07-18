@@ -9,6 +9,7 @@ import ItemCustomMdx from './item-custom-mdx';
 import { Safari } from '../magicui/safari';
 import SponsorItemCard from './item-card-sponsor';
 import { urlForIcon, urlForImage } from '@/lib/image';
+import BackToDirectoryButton from '../ui/back-to-directory-button';
 
 export default function OverviewSection({ item, sponsorItem }) {
   const imageProps = item?.image ? urlForImage(item.image) : null;
@@ -205,6 +206,9 @@ export default function OverviewSection({ item, sponsorItem }) {
               </MotionWrapper>
             </div>
           </div>
+        </div>
+        <div className="pt-8 md:pt-16 px-6">
+          <BackToDirectoryButton />
         </div>
       </div>
     </section>

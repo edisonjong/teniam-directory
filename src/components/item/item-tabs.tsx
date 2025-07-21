@@ -32,7 +32,12 @@ export default function ClientTabs({ item, sponsorItem }) {
           />
         );
       case 'ratings':
-        return <StarRatingsSection />;
+        return (
+          <StarRatingsSection
+            starRatings={item?.ratings && item?.ratings}
+            itemName={item?.name}
+          />
+        );
       case 'analytics':
         return <AnalyticsSection />;
       default:

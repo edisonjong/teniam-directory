@@ -15,6 +15,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { currentUser } from '@/lib/auth';
 
 interface Rating {
   id: string;
@@ -161,6 +162,24 @@ const initialRatings: Rating[] = [
     isHelpful: false,
   },
 ];
+const transformSanityRating = (r: any): Rating => ({
+  id: r._id,
+  author: {
+    name: r.submitter?.name || 'Anonymous',
+    avatar:
+      'https://ui-avatars.com/api/?name=' +
+      encodeURIComponent(r.submitter?.name || 'User'),
+    username:
+      '@' +
+      (r.submitter?.name?.toLowerCase().replace(/\s+/g, '') || 'anonymous'),
+  },
+  rating: r.rating,
+  title: r.title,
+  content: r.content,
+  timestamp: new Date(r.createdAt || r._createdAt).toLocaleDateString(), // format as needed
+  helpful: r.helpfulCount || 0,
+  isHelpful: false,
+});
 
 const additionalRatings: Rating[] = [
   {
@@ -229,8 +248,10 @@ const additionalRatings: Rating[] = [
   },
 ];
 
-export default function StarRatingsSection() {
-  const [ratings, setRatings] = useState(initialRatings);
+export default function StarRatingsSection({ starRatings, itemName }) {
+  console.log('starRatings', starRatings[0].submitter);
+  // const [ratings, setRatings] = useState(initialRatings);
+  const [ratings, setRatings] = useState<Rating[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
   const [submittedRating, setSubmittedRating] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -243,8 +264,12 @@ export default function StarRatingsSection() {
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewContent, setReviewContent] = useState('');
 
-  const productTitle = 'Tailwind CSS';
-
+  useEffect(() => {
+    if (starRatings?.length) {
+      const mapped = starRatings.map(transformSanityRating);
+      setRatings(mapped);
+    }
+  }, [starRatings]);
   // Calculate dynamic statistics
   const totalRatings = ratings.length;
   const ratingCounts = {
@@ -408,7 +433,7 @@ export default function StarRatingsSection() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Submit a Review</h1>
           <p className="text-muted-foreground text-lg">
-            Let others know about your experience with {productTitle}
+            Let others know about your experience with {itemName}
           </p>
         </div>
 
@@ -420,7 +445,7 @@ export default function StarRatingsSection() {
               <div className="flex items-center gap-2 mb-6">
                 <TrendingUp className="w-5 h-5" />
                 <span className="font-semibold">Reviews</span>
-                <span className="text-muted-foreground">| {productTitle}</span>
+                <span className="text-muted-foreground">| {itemName}</span>
               </div>
 
               <div className="flex items-end gap-4 mb-6">
@@ -468,7 +493,7 @@ export default function StarRatingsSection() {
                   <div className="flex items-center gap-2 mb-6">
                     <MessageSquare className="w-5 h-5" />
                     <span className="font-semibold">
-                      Write a detailed review for "{productTitle}"
+                      Write a detailed review for "{itemName}"
                     </span>
                   </div>
 
@@ -544,8 +569,8 @@ export default function StarRatingsSection() {
                   </h3>
 
                   <p className="text-muted-foreground mb-8">
-                    Your {submittedRating}-star rating for "{productTitle}" has
-                    been submitted
+                    Your {submittedRating}-star rating for "{itemName}" has been
+                    submitted
                   </p>
 
                   <Button

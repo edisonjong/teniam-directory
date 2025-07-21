@@ -14,7 +14,7 @@
 
 // Source: schema.json
 export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
+  _type: 'sanity.imagePaletteSwatch';
   background?: string;
   foreground?: string;
   population?: number;
@@ -22,7 +22,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
+  _type: 'sanity.imagePalette';
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -33,7 +33,7 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
+  _type: 'sanity.imageDimensions';
   height?: number;
   width?: number;
   aspectRatio?: number;
@@ -41,7 +41,7 @@ export type SanityImageDimensions = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: "sanity.fileAsset";
+  _type: 'sanity.fileAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -62,7 +62,7 @@ export type SanityFileAsset = {
 };
 
 export type Geopoint = {
-  _type: "geopoint";
+  _type: 'geopoint';
   lat?: number;
   lng?: number;
   alt?: number;
@@ -73,38 +73,38 @@ export type BlockContent = Array<
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: "span";
+        _type: 'span';
         _key: string;
       }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-      listItem?: "bullet" | "number";
+      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
+      listItem?: 'bullet' | 'number';
       markDefs?: Array<
         | {
             reference?: never;
-            _type: "internalLink";
+            _type: 'internalLink';
             _key: string;
           }
         | {
             href?: string;
-            _type: "link";
+            _type: 'link';
             _key: string;
           }
       >;
       level?: number;
-      _type: "block";
+      _type: 'block';
       _key: string;
     }
   | {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
       _key: string;
     }
   | ({
@@ -114,7 +114,7 @@ export type BlockContent = Array<
 
 export type Settings = {
   _id: string;
-  _type: "settings";
+  _type: 'settings';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -123,7 +123,7 @@ export type Settings = {
 
 export type PasswordResetToken = {
   _id: string;
-  _type: "passwordResetToken";
+  _type: 'passwordResetToken';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -134,7 +134,7 @@ export type PasswordResetToken = {
 
 export type VerificationToken = {
   _id: string;
-  _type: "verificationToken";
+  _type: 'verificationToken';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -145,7 +145,7 @@ export type VerificationToken = {
 
 export type Page = {
   _id: string;
-  _type: "page";
+  _type: 'page';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -158,7 +158,7 @@ export type Page = {
 
 export type BlogCategory = {
   _id: string;
-  _type: "blogCategory";
+  _type: 'blogCategory';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -170,7 +170,7 @@ export type BlogCategory = {
 
 export type BlogPost = {
   _id: string;
-  _type: "blogPost";
+  _type: 'blogPost';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -180,43 +180,43 @@ export type BlogPost = {
   featured?: boolean;
   categories?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "blogCategory";
+    [internalGroqTypeReferenceTo]?: 'blogCategory';
   }>;
   author?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "user";
+    [internalGroqTypeReferenceTo]?: 'user';
   };
   body?: BlockContent;
   image?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
   };
   relatedPosts?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "blogPost";
+    [internalGroqTypeReferenceTo]?: 'blogPost';
   }>;
   publishDate?: string;
 };
 
 export type Collection = {
   _id: string;
-  _type: "collection";
+  _type: 'collection';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -226,20 +226,20 @@ export type Collection = {
   icon?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
   };
   priority?: number;
 };
 export type CoreTechnologies = {
   _id: string;
-  _type: "coreTechnologies";
+  _type: 'coreTechnologies';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -249,20 +249,20 @@ export type CoreTechnologies = {
   icon?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
   };
   priority?: number;
 };
 export type Category = {
   _id: string;
-  _type: "category";
+  _type: 'category';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -272,16 +272,16 @@ export type Category = {
   icon?: string;
   group?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "group";
+    [internalGroqTypeReferenceTo]?: 'group';
   };
   priority?: number;
 };
 
 export type Group = {
   _id: string;
-  _type: "group";
+  _type: 'group';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -293,7 +293,7 @@ export type Group = {
 
 export type Tag = {
   _id: string;
-  _type: "tag";
+  _type: 'tag';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -304,7 +304,7 @@ export type Tag = {
 
 export type Item = {
   _id: string;
-  _type: "item";
+  _type: 'item';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -318,81 +318,81 @@ export type Item = {
   description?: string;
   collections?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "collection";
+    [internalGroqTypeReferenceTo]?: 'collection';
   }>;
   categories?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "category";
+    [internalGroqTypeReferenceTo]?: 'category';
   }>;
   tags?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "tag";
+    [internalGroqTypeReferenceTo]?: 'tag';
   }>;
   coreTechnologies?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "coreTechnologies";
+    [internalGroqTypeReferenceTo]?: 'coreTechnologies';
   }>;
   submitter?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "user";
+    [internalGroqTypeReferenceTo]?: 'user';
   };
   introduction?: string;
   icon?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
   };
   image?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
   };
   publishDate?: string;
-  pricePlan?: "free" | "pro" | "sponsor";
-  freePlanStatus?: "submitting" | "pending" | "approved" | "rejected";
-  proPlanStatus?: "submitting" | "pending" | "success" | "failed";
+  pricePlan?: 'free' | 'pro' | 'sponsor';
+  freePlanStatus?: 'submitting' | 'pending' | 'approved' | 'rejected';
+  proPlanStatus?: 'submitting' | 'pending' | 'success' | 'failed';
   rejectionReason?:
-    | "The item is not good fit for our directory"
-    | "The image of the item is not in good quality"
-    | "The icon of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The backlink to our site is not provided"
-    | "Other reasons";
-  sponsorPlanStatus?: "submitting" | "pending" | "success" | "failed";
+    | 'The item is not good fit for our directory'
+    | 'The image of the item is not in good quality'
+    | 'The icon of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The backlink to our site is not provided'
+    | 'Other reasons';
+  sponsorPlanStatus?: 'submitting' | 'pending' | 'success' | 'failed';
   paid?: boolean;
   order?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   };
   forceHidden?: boolean;
   sponsor?: boolean;
@@ -403,28 +403,28 @@ export type Item = {
 
 export type Order = {
   _id: string;
-  _type: "order";
+  _type: 'order';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   user?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "user";
+    [internalGroqTypeReferenceTo]?: 'user';
   };
   item?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "item";
+    [internalGroqTypeReferenceTo]?: 'item';
   };
-  status?: "success" | "failed";
+  status?: 'success' | 'failed';
   date?: string;
 };
 
 export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
+  _type: 'sanity.imageCrop';
   top?: number;
   bottom?: number;
   left?: number;
@@ -432,7 +432,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
+  _type: 'sanity.imageHotspot';
   x?: number;
   y?: number;
   height?: number;
@@ -441,7 +441,7 @@ export type SanityImageHotspot = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: "sanity.imageAsset";
+  _type: 'sanity.imageAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -463,14 +463,14 @@ export type SanityImageAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
+  _type: 'sanity.assetSourceData';
   name?: string;
   id?: string;
   url?: string;
 };
 
 export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
+  _type: 'sanity.imageMetadata';
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -482,7 +482,7 @@ export type SanityImageMetadata = {
 
 export type User = {
   _id: string;
-  _type: "user";
+  _type: 'user';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -492,19 +492,19 @@ export type User = {
   image?: string;
   link?: string;
   password?: string;
-  role?: "ADMIN" | "USER";
+  role?: 'ADMIN' | 'USER';
   accounts?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "account";
+    [internalGroqTypeReferenceTo]?: 'account';
   };
   stripeCustomerId?: string;
 };
 
 export type Account = {
   _id: string;
-  _type: "account";
+  _type: 'account';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -521,14 +521,14 @@ export type Account = {
   sessionState?: string;
   user?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "user";
+    [internalGroqTypeReferenceTo]?: 'user';
   };
 };
 
 export type Code = {
-  _type: "code";
+  _type: 'code';
   language?: string;
   filename?: string;
   code?: string;
@@ -539,7 +539,7 @@ export type Markdown = string;
 
 export type MediaTag = {
   _id: string;
-  _type: "media.tag";
+  _type: 'media.tag';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -547,7 +547,7 @@ export type MediaTag = {
 };
 
 export type Slug = {
-  _type: "slug";
+  _type: 'slug';
   current?: string;
   source?: string;
 };
@@ -605,28 +605,28 @@ export type ItemByIdQueryResult = {
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -634,25 +634,25 @@ export type ItemByIdQueryResult = {
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -662,18 +662,18 @@ export type ItemByIdQueryResult = {
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -683,20 +683,20 @@ export type ItemByIdQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -706,15 +706,15 @@ export type ItemByIdQueryResult = {
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -724,7 +724,7 @@ export type ItemByIdQueryResult = {
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -734,14 +734,14 @@ export type ItemByIdQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -766,28 +766,28 @@ export type ItemInfoBySlugQueryResult = {
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -795,25 +795,25 @@ export type ItemInfoBySlugQueryResult = {
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -823,18 +823,18 @@ export type ItemInfoBySlugQueryResult = {
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -844,20 +844,20 @@ export type ItemInfoBySlugQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -867,15 +867,15 @@ export type ItemInfoBySlugQueryResult = {
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -885,7 +885,7 @@ export type ItemInfoBySlugQueryResult = {
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -895,14 +895,14 @@ export type ItemInfoBySlugQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -927,28 +927,28 @@ export type ItemFullInfoByIdQueryResult = {
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -956,25 +956,25 @@ export type ItemFullInfoByIdQueryResult = {
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -984,18 +984,18 @@ export type ItemFullInfoByIdQueryResult = {
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1005,20 +1005,20 @@ export type ItemFullInfoByIdQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1028,15 +1028,15 @@ export type ItemFullInfoByIdQueryResult = {
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1046,7 +1046,7 @@ export type ItemFullInfoByIdQueryResult = {
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1056,14 +1056,14 @@ export type ItemFullInfoByIdQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -1092,28 +1092,28 @@ export type ItemFullInfoBySlugQueryResult = {
     icon: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
       blurDataURL: string | null;
       imageColor: string | null;
     } | null;
     image: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
       blurDataURL: string | null;
       imageColor: string | null;
     } | null;
@@ -1121,25 +1121,25 @@ export type ItemFullInfoBySlugQueryResult = {
     paid: boolean | null;
     order: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "order";
+      [internalGroqTypeReferenceTo]?: 'order';
     } | null;
-    pricePlan: "free" | "pro" | "sponsor" | null;
-    freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-    proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-    sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+    pricePlan: 'free' | 'pro' | 'sponsor' | null;
+    freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+    proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+    sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
     rejectionReason:
-      | "Other reasons"
-      | "The backlink to our site is not provided"
-      | "The icon of the item is not in good quality"
-      | "The image of the item is not in good quality"
-      | "The information of the item is not clear"
-      | "The item is not good fit for our directory"
+      | 'Other reasons'
+      | 'The backlink to our site is not provided'
+      | 'The icon of the item is not in good quality'
+      | 'The image of the item is not in good quality'
+      | 'The information of the item is not clear'
+      | 'The item is not good fit for our directory'
       | null;
     submitter: {
       _id: string;
-      _type: "user";
+      _type: 'user';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -1149,18 +1149,18 @@ export type ItemFullInfoBySlugQueryResult = {
       image?: string;
       link?: string;
       password?: string;
-      role?: "ADMIN" | "USER";
+      role?: 'ADMIN' | 'USER';
       accounts?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "account";
+        [internalGroqTypeReferenceTo]?: 'account';
       };
       stripeCustomerId?: string;
     } | null;
     collections: Array<{
       _id: string;
-      _type: "collection";
+      _type: 'collection';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -1170,20 +1170,20 @@ export type ItemFullInfoBySlugQueryResult = {
       icon?: {
         asset?: {
           _ref: string;
-          _type: "reference";
+          _type: 'reference';
           _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
         };
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         alt?: string;
-        _type: "image";
+        _type: 'image';
       };
       priority?: number;
     }> | null;
     categories: Array<{
       _id: string;
-      _type: "category";
+      _type: 'category';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -1193,15 +1193,15 @@ export type ItemFullInfoBySlugQueryResult = {
       icon?: string;
       group?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "group";
+        [internalGroqTypeReferenceTo]?: 'group';
       };
       priority?: number;
     }> | null;
     tags: Array<{
       _id: string;
-      _type: "tag";
+      _type: 'tag';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -1211,7 +1211,7 @@ export type ItemFullInfoBySlugQueryResult = {
     }> | null;
     coreTechnologies: Array<{
       _id: string;
-      _type: "coreTechnologies";
+      _type: 'coreTechnologies';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -1221,14 +1221,14 @@ export type ItemFullInfoBySlugQueryResult = {
       icon?: {
         asset?: {
           _ref: string;
-          _type: "reference";
+          _type: 'reference';
           _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
         };
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         alt?: string;
-        _type: "image";
+        _type: 'image';
       };
       priority?: number;
     }> | null;
@@ -1250,28 +1250,28 @@ export type ItemFullInfoBySlugQueryResult = {
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -1279,26 +1279,26 @@ export type ItemFullInfoBySlugQueryResult = {
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     avatar: string;
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1308,18 +1308,18 @@ export type ItemFullInfoBySlugQueryResult = {
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1329,20 +1329,20 @@ export type ItemFullInfoBySlugQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1352,15 +1352,15 @@ export type ItemFullInfoBySlugQueryResult = {
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1370,7 +1370,7 @@ export type ItemFullInfoBySlugQueryResult = {
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1380,16 +1380,33 @@ export type ItemFullInfoBySlugQueryResult = {
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
+  }> | null;
+  ratings: Array<{
+    _id: string;
+    _type: 'rating';
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title: string;
+    rating: number;
+    content?: string;
+    helpfulCount?: number;
+    createdAt?: string;
+    submitter?: {
+      _id: string;
+      _type: 'user';
+      name?: string;
+    };
   }> | null;
 } | null;
 // Variable: itemListQuery
@@ -1412,42 +1429,42 @@ export type ItemListQueryResult = Array<{
   logo: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -1455,25 +1472,25 @@ export type ItemListQueryResult = Array<{
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1483,18 +1500,18 @@ export type ItemListQueryResult = Array<{
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1504,20 +1521,20 @@ export type ItemListQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1527,15 +1544,15 @@ export type ItemListQueryResult = Array<{
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1545,7 +1562,7 @@ export type ItemListQueryResult = Array<{
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1555,14 +1572,14 @@ export type ItemListQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -1587,28 +1604,28 @@ export type SponsorItemListQueryResult = Array<{
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -1616,25 +1633,25 @@ export type SponsorItemListQueryResult = Array<{
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1644,18 +1661,18 @@ export type SponsorItemListQueryResult = Array<{
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1665,20 +1682,20 @@ export type SponsorItemListQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1688,15 +1705,15 @@ export type SponsorItemListQueryResult = Array<{
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1706,7 +1723,7 @@ export type SponsorItemListQueryResult = Array<{
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1716,14 +1733,14 @@ export type SponsorItemListQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -1748,28 +1765,28 @@ export type ItemListOfFeaturedQueryResult = Array<{
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -1777,25 +1794,25 @@ export type ItemListOfFeaturedQueryResult = Array<{
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1805,18 +1822,18 @@ export type ItemListOfFeaturedQueryResult = Array<{
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1826,20 +1843,20 @@ export type ItemListOfFeaturedQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1849,15 +1866,15 @@ export type ItemListOfFeaturedQueryResult = Array<{
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1867,7 +1884,7 @@ export type ItemListOfFeaturedQueryResult = Array<{
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1877,14 +1894,14 @@ export type ItemListOfFeaturedQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -1909,28 +1926,28 @@ export type ItemListOfLatestQueryResult = Array<{
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -1938,25 +1955,25 @@ export type ItemListOfLatestQueryResult = Array<{
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1966,18 +1983,18 @@ export type ItemListOfLatestQueryResult = Array<{
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -1987,20 +2004,20 @@ export type ItemListOfLatestQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2010,15 +2027,15 @@ export type ItemListOfLatestQueryResult = Array<{
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2028,7 +2045,7 @@ export type ItemListOfLatestQueryResult = Array<{
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2038,14 +2055,14 @@ export type ItemListOfLatestQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -2054,7 +2071,7 @@ export type ItemListOfLatestQueryResult = Array<{
 // Query: *[_type == "collection" && defined(slug.current)]   | order(priority desc) {      ...,  icon {    ...,    "blurDataURL": asset->metadata.lqip,    "imageColor": asset->metadata.palette.dominant.background,  },}
 export type CollectionListQueryResult = Array<{
   _id: string;
-  _type: "collection";
+  _type: 'collection';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2064,14 +2081,14 @@ export type CollectionListQueryResult = Array<{
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -2081,7 +2098,7 @@ export type CollectionListQueryResult = Array<{
 // Query: *[_type == "collection" && slug.current == $slug][0] {    ...,  icon {    ...,    "blurDataURL": asset->metadata.lqip,    "imageColor": asset->metadata.palette.dominant.background,  },}
 export type CollectionQueryResult = {
   _id: string;
-  _type: "collection";
+  _type: 'collection';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2091,14 +2108,14 @@ export type CollectionQueryResult = {
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -2108,7 +2125,7 @@ export type CollectionQueryResult = {
 // Query: *[_type == "coreTechnologies" && defined(slug.current)]   | order(priority desc) {      ...,  icon {    ...,    "blurDataURL": asset->metadata.lqip,    "imageColor": asset->metadata.palette.dominant.background,  },}
 export type CoreTechnologyListQueryResult = Array<{
   _id: string;
-  _type: "coreTechnologies";
+  _type: 'coreTechnologies';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2118,14 +2135,14 @@ export type CoreTechnologyListQueryResult = Array<{
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -2135,7 +2152,7 @@ export type CoreTechnologyListQueryResult = Array<{
 // Query: *[_type == "coreTechnologies" && slug.current == $slug][0] {    ...,  icon {    ...,    "blurDataURL": asset->metadata.lqip,    "imageColor": asset->metadata.palette.dominant.background,  },}
 export type CoreTechnologyQueryResult = {
   _id: string;
-  _type: "coreTechnologies";
+  _type: 'coreTechnologies';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2145,14 +2162,14 @@ export type CoreTechnologyQueryResult = {
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -2162,7 +2179,7 @@ export type CoreTechnologyQueryResult = {
 // Query: *[_type=="group"] | order(priority desc, _createdAt asc) {    ...,  "categories": *[_type=='category' && references(^._id)] | order(priority desc, _createdAt asc)  {     ...,   }}
 export type GroupListQueryResult = Array<{
   _id: string;
-  _type: "group";
+  _type: 'group';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2172,7 +2189,7 @@ export type GroupListQueryResult = Array<{
   priority?: number;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2182,9 +2199,9 @@ export type GroupListQueryResult = Array<{
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }>;
@@ -2193,7 +2210,7 @@ export type GroupListQueryResult = Array<{
 // Query: *[_type == "category" && defined(slug.current)]   | order(priority desc) {      ...,}
 export type CategoryListQueryResult = Array<{
   _id: string;
-  _type: "category";
+  _type: 'category';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2203,9 +2220,9 @@ export type CategoryListQueryResult = Array<{
   icon?: string;
   group?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "group";
+    [internalGroqTypeReferenceTo]?: 'group';
   };
   priority?: number;
 }>;
@@ -2213,7 +2230,7 @@ export type CategoryListQueryResult = Array<{
 // Query: *[_type == "category" && slug.current == $slug][0] {    ...,}
 export type CategoryQueryResult = {
   _id: string;
-  _type: "category";
+  _type: 'category';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2223,9 +2240,9 @@ export type CategoryQueryResult = {
   icon?: string;
   group?: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "group";
+    [internalGroqTypeReferenceTo]?: 'group';
   };
   priority?: number;
 } | null;
@@ -2233,7 +2250,7 @@ export type CategoryQueryResult = {
 // Query: *[_type == "tag" && defined(slug.current)]   | order(slug.current asc) {      ...,}
 export type TagListQueryResult = Array<{
   _id: string;
-  _type: "tag";
+  _type: 'tag';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2245,7 +2262,7 @@ export type TagListQueryResult = Array<{
 // Query: *[_type == "tag" && slug.current == $slug][0] {    ...,}
 export type TagQueryResult = {
   _id: string;
-  _type: "tag";
+  _type: 'tag';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2273,28 +2290,28 @@ export type SubmissionListQueryResult = Array<{
   icon: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
@@ -2302,25 +2319,25 @@ export type SubmissionListQueryResult = Array<{
   paid: boolean | null;
   order: {
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "order";
+    [internalGroqTypeReferenceTo]?: 'order';
   } | null;
-  pricePlan: "free" | "pro" | "sponsor" | null;
-  freePlanStatus: "approved" | "pending" | "rejected" | "submitting" | null;
-  proPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
-  sponsorPlanStatus: "failed" | "pending" | "submitting" | "success" | null;
+  pricePlan: 'free' | 'pro' | 'sponsor' | null;
+  freePlanStatus: 'approved' | 'pending' | 'rejected' | 'submitting' | null;
+  proPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
+  sponsorPlanStatus: 'failed' | 'pending' | 'submitting' | 'success' | null;
   rejectionReason:
-    | "Other reasons"
-    | "The backlink to our site is not provided"
-    | "The icon of the item is not in good quality"
-    | "The image of the item is not in good quality"
-    | "The information of the item is not clear"
-    | "The item is not good fit for our directory"
+    | 'Other reasons'
+    | 'The backlink to our site is not provided'
+    | 'The icon of the item is not in good quality'
+    | 'The image of the item is not in good quality'
+    | 'The information of the item is not clear'
+    | 'The item is not good fit for our directory'
     | null;
   submitter: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2330,18 +2347,18 @@ export type SubmissionListQueryResult = Array<{
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   collections: Array<{
     _id: string;
-    _type: "collection";
+    _type: 'collection';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2351,20 +2368,20 @@ export type SubmissionListQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
   categories: Array<{
     _id: string;
-    _type: "category";
+    _type: 'category';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2374,15 +2391,15 @@ export type SubmissionListQueryResult = Array<{
     icon?: string;
     group?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "group";
+      [internalGroqTypeReferenceTo]?: 'group';
     };
     priority?: number;
   }> | null;
   tags: Array<{
     _id: string;
-    _type: "tag";
+    _type: 'tag';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2392,7 +2409,7 @@ export type SubmissionListQueryResult = Array<{
   }> | null;
   coreTechnologies: Array<{
     _id: string;
-    _type: "coreTechnologies";
+    _type: 'coreTechnologies';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2402,14 +2419,14 @@ export type SubmissionListQueryResult = Array<{
     icon?: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
     };
     priority?: number;
   }> | null;
@@ -2418,7 +2435,7 @@ export type SubmissionListQueryResult = Array<{
 // Query: *[_type == "page" && slug.current == $slug][0] {    ...,    body[]{      ...,      markDefs[]{        ...,        _type == "internalLink" => {          "slug": @.reference->slug        }      }    },  }
 export type PageQueryResult = {
   _id: string;
-  _type: "page";
+  _type: 'page';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2430,39 +2447,39 @@ export type PageQueryResult = {
         children?: Array<{
           marks?: Array<string>;
           text?: string;
-          _type: "span";
+          _type: 'span';
           _key: string;
         }>;
         style?:
-          | "blockquote"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "normal";
-        listItem?: "bullet" | "number";
+          | 'blockquote'
+          | 'h1'
+          | 'h2'
+          | 'h3'
+          | 'h4'
+          | 'h5'
+          | 'h6'
+          | 'normal';
+        listItem?: 'bullet' | 'number';
         markDefs: Array<
           | {
               reference?: never;
-              _type: "internalLink";
+              _type: 'internalLink';
               _key: string;
               slug: null;
             }
           | {
               href?: string;
-              _type: "link";
+              _type: 'link';
               _key: string;
             }
         > | null;
         level?: number;
-        _type: "block";
+        _type: 'block';
         _key: string;
       }
     | {
         _key: string;
-        _type: "code";
+        _type: 'code';
         language?: string;
         filename?: string;
         code?: string;
@@ -2472,14 +2489,14 @@ export type PageQueryResult = {
     | {
         asset?: {
           _ref: string;
-          _type: "reference";
+          _type: 'reference';
           _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
         };
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         alt?: string;
-        _type: "image";
+        _type: 'image';
         _key: string;
         markDefs: null;
       }
@@ -2515,21 +2532,21 @@ export type BlogPostQueryResult = {
     image: {
       asset?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
       };
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: "image";
+      _type: 'image';
       blurDataURL: string | null;
       imageColor: string | null;
     } | null;
     publishDate: string | null;
     author: {
       _id: string;
-      _type: "user";
+      _type: 'user';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -2539,18 +2556,18 @@ export type BlogPostQueryResult = {
       image?: string;
       link?: string;
       password?: string;
-      role?: "ADMIN" | "USER";
+      role?: 'ADMIN' | 'USER';
       accounts?: {
         _ref: string;
-        _type: "reference";
+        _type: 'reference';
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "account";
+        [internalGroqTypeReferenceTo]?: 'account';
       };
       stripeCustomerId?: string;
     } | null;
     categories: Array<{
       _id: string;
-      _type: "blogCategory";
+      _type: 'blogCategory';
       _createdAt: string;
       _updatedAt: string;
       _rev: string;
@@ -2565,39 +2582,39 @@ export type BlogPostQueryResult = {
         children?: Array<{
           marks?: Array<string>;
           text?: string;
-          _type: "span";
+          _type: 'span';
           _key: string;
         }>;
         style?:
-          | "blockquote"
-          | "h1"
-          | "h2"
-          | "h3"
-          | "h4"
-          | "h5"
-          | "h6"
-          | "normal";
-        listItem?: "bullet" | "number";
+          | 'blockquote'
+          | 'h1'
+          | 'h2'
+          | 'h3'
+          | 'h4'
+          | 'h5'
+          | 'h6'
+          | 'normal';
+        listItem?: 'bullet' | 'number';
         markDefs: Array<
           | {
               reference?: never;
-              _type: "internalLink";
+              _type: 'internalLink';
               _key: string;
               slug: null;
             }
           | {
               href?: string;
-              _type: "link";
+              _type: 'link';
               _key: string;
             }
         > | null;
         level?: number;
-        _type: "block";
+        _type: 'block';
         _key: string;
       }
     | {
         _key: string;
-        _type: "code";
+        _type: 'code';
         language?: string;
         filename?: string;
         code?: string;
@@ -2607,14 +2624,14 @@ export type BlogPostQueryResult = {
     | {
         asset?: {
           _ref: string;
-          _type: "reference";
+          _type: 'reference';
           _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
         };
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         alt?: string;
-        _type: "image";
+        _type: 'image';
         _key: string;
         markDefs: null;
       }
@@ -2628,21 +2645,21 @@ export type BlogPostQueryResult = {
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   publishDate: string | null;
   author: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2652,18 +2669,18 @@ export type BlogPostQueryResult = {
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   categories: Array<{
     _id: string;
-    _type: "blogCategory";
+    _type: 'blogCategory';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2685,21 +2702,21 @@ export type BlogPostMetadataQueryResult = {
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   publishDate: string | null;
   author: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2709,18 +2726,18 @@ export type BlogPostMetadataQueryResult = {
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   categories: Array<{
     _id: string;
-    _type: "blogCategory";
+    _type: 'blogCategory';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2742,21 +2759,21 @@ export type BlogPostListQueryResult = Array<{
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   publishDate: string | null;
   author: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2766,18 +2783,18 @@ export type BlogPostListQueryResult = Array<{
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   categories: Array<{
     _id: string;
-    _type: "blogCategory";
+    _type: 'blogCategory';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2799,21 +2816,21 @@ export type BlogPostListOfLatestQueryResult = Array<{
   image: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     blurDataURL: string | null;
     imageColor: string | null;
   } | null;
   publishDate: string | null;
   author: {
     _id: string;
-    _type: "user";
+    _type: 'user';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2823,18 +2840,18 @@ export type BlogPostListOfLatestQueryResult = Array<{
     image?: string;
     link?: string;
     password?: string;
-    role?: "ADMIN" | "USER";
+    role?: 'ADMIN' | 'USER';
     accounts?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "account";
+      [internalGroqTypeReferenceTo]?: 'account';
     };
     stripeCustomerId?: string;
   } | null;
   categories: Array<{
     _id: string;
-    _type: "blogCategory";
+    _type: 'blogCategory';
     _createdAt: string;
     _updatedAt: string;
     _rev: string;
@@ -2860,7 +2877,7 @@ export type BlogCategoryWithCountQueryResult = Array<{
 // Query: *[_type == "user" && _id == $id][0] {    ...,    accounts[]->,  }
 export type UserWithAccountsQueryResult = {
   _id: string;
-  _type: "user";
+  _type: 'user';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -2870,7 +2887,7 @@ export type UserWithAccountsQueryResult = {
   image?: string;
   link?: string;
   password?: string;
-  role?: "ADMIN" | "USER";
+  role?: 'ADMIN' | 'USER';
   accounts: null;
   stripeCustomerId?: string;
 } | null;
@@ -2929,8 +2946,8 @@ export type PageListQueryForSitemapResult = Array<{
 }>;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+import '@sanity/client';
+declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type == "item" && _id == $id][0] {\n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemByIdQueryResult;
     '*[_type == "item" && slug.current == $slug][0] {\n  \n  _id,\n  _createdAt,\n  name,\n  slug,\n  description,\n  link,\n  affiliateLink,\n  sponsor,\n  sponsorStartDate,\n  sponsorEndDate,\n  note,\n  featured,\n  bookmark,\n icon {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  image {\n    ...,\n    "blurDataURL": asset->metadata.lqip,\n    "imageColor": asset->metadata.palette.dominant.background,\n  },\n  publishDate,\n  paid,\n  order,\n  pricePlan,\n  freePlanStatus,\n  proPlanStatus,\n  sponsorPlanStatus,\n  rejectionReason,\n  submitter->,\n  collections[]->,\n  coreTechnologies[]->,\n categories[]->,\n  tags[]->,\n\n}': ItemInfoBySlugQueryResult;

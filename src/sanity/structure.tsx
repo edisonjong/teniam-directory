@@ -14,31 +14,33 @@ import {
   MasterDetailIcon,
   ProjectsIcon,
   StarFilledIcon,
+  StarIcon,
   TagsIcon,
   TaskIcon,
   TiersIcon,
   TokenIcon,
   UserIcon,
   UsersIcon,
-} from "@sanity/icons";
-import type { DocumentDefinition } from "sanity";
-import type { StructureResolver } from "sanity/structure";
-import { schemaTypes } from "./schemas";
-import account from "./schemas/documents/auth/account";
-import passwordResetToken from "./schemas/documents/auth/password-reset-token";
-import user from "./schemas/documents/auth/user";
-import verificationToken from "./schemas/documents/auth/verification-token";
-import blogCategory from "./schemas/documents/blog/blog-category";
-import blogPost from "./schemas/documents/blog/blog-post";
-import category from "./schemas/documents/directory/category";
-import collection from "./schemas/documents/directory/collection";
-import group from "./schemas/documents/directory/group";
-import item from "./schemas/documents/directory/item";
-import tag from "./schemas/documents/directory/tag";
-import order from "./schemas/documents/order/order";
-import page from "./schemas/documents/page/page";
-import settings from "./schemas/documents/settings";
-import coreTechnologies from "./schemas/documents/directory/coreTechnologies";
+} from '@sanity/icons';
+import type { DocumentDefinition } from 'sanity';
+import type { StructureResolver } from 'sanity/structure';
+import { schemaTypes } from './schemas';
+import account from './schemas/documents/auth/account';
+import passwordResetToken from './schemas/documents/auth/password-reset-token';
+import user from './schemas/documents/auth/user';
+import verificationToken from './schemas/documents/auth/verification-token';
+import blogCategory from './schemas/documents/blog/blog-category';
+import blogPost from './schemas/documents/blog/blog-post';
+import category from './schemas/documents/directory/category';
+import collection from './schemas/documents/directory/collection';
+import group from './schemas/documents/directory/group';
+import item from './schemas/documents/directory/item';
+import tag from './schemas/documents/directory/tag';
+import order from './schemas/documents/order/order';
+import page from './schemas/documents/page/page';
+import settings from './schemas/documents/settings';
+import coreTechnologies from './schemas/documents/directory/coreTechnologies';
+import rating from './schemas/documents/directory/rating';
 
 const singletonTypes: DocumentDefinition[] = [settings];
 
@@ -50,7 +52,7 @@ StructureResolver => {
     // Goes through all of the singletons and translates them into something the Structure tool can understand
     const singletonItems = singletonTypes.map((singletonType) => {
       return S.listItem()
-        .title(singletonType.title ?? "")
+        .title(singletonType.title ?? '')
         .icon(CogIcon)
         .child(
           S.editor()
@@ -83,39 +85,39 @@ StructureResolver => {
 
     // submissions in free plan
     const pendingSubmissionsInFreePlan = createFilteredListItem(
-      "Pending Submissions In Free Plan",
+      'Pending Submissions In Free Plan',
       item.name,
       ClockIcon,
       '_type == "item" && pricePlan == "free" && freePlanStatus == "pending"'
     );
 
     const rejectedSubmissionsInFreePlan = createFilteredListItem(
-      "Rejected Submissions In Free Plan",
+      'Rejected Submissions In Free Plan',
       item.name,
       CloseCircleIcon,
       '_type == "item" && pricePlan == "free" && freePlanStatus == "rejected"'
     );
 
     const approvedSubmissionsInFreePlan = createFilteredListItem(
-      "Approved Submissions In Free Plan",
+      'Approved Submissions In Free Plan',
       item.name,
       CheckmarkCircleIcon,
       '_type == "item" && pricePlan == "free" && freePlanStatus == "approved"'
     );
 
     const itemsInFreePlan = createFilteredListItem(
-      "All Items In Free Plan",
+      'All Items In Free Plan',
       item.name,
       ProjectsIcon,
       '_type == "item" && pricePlan == "free"'
     );
 
     const freePlanItemManagement = S.listItem()
-      .title("Free Plan Item management")
+      .title('Free Plan Item management')
       .icon(ProjectsIcon)
       .child(
         S.list()
-          .title("Item management")
+          .title('Item management')
           .items([
             pendingSubmissionsInFreePlan,
             rejectedSubmissionsInFreePlan,
@@ -126,39 +128,39 @@ StructureResolver => {
 
     // submissions in pro plan
     const pendingSubmissionsInProPlan = createFilteredListItem(
-      "Pending Submissions In Pro Plan",
+      'Pending Submissions In Pro Plan',
       item.name,
       ClockIcon,
       '_type == "item" && pricePlan == "pro" && proPlanStatus == "pending"'
     );
 
     const failedSubmissionsInProPlan = createFilteredListItem(
-      "Failed Submissions In Pro Plan",
+      'Failed Submissions In Pro Plan',
       item.name,
       CloseCircleIcon,
       '_type == "item" && pricePlan == "pro" && proPlanStatus == "failed"'
     );
 
     const successSubmissionsInProPlan = createFilteredListItem(
-      "Success Submissions In Pro Plan",
+      'Success Submissions In Pro Plan',
       item.name,
       CheckmarkCircleIcon,
       '_type == "item" && pricePlan == "pro" && proPlanStatus == "success"'
     );
 
     const itemsInProPlan = createFilteredListItem(
-      "All Items In Pro Plan",
+      'All Items In Pro Plan',
       item.name,
       DiamondIcon,
       '_type == "item" && pricePlan == "pro"'
     );
 
     const proPlanItemManagement = S.listItem()
-      .title("Pro Plan Item management")
+      .title('Pro Plan Item management')
       .icon(DiamondIcon)
       .child(
         S.list()
-          .title("Item management")
+          .title('Item management')
           .items([
             pendingSubmissionsInProPlan,
             failedSubmissionsInProPlan,
@@ -169,7 +171,7 @@ StructureResolver => {
 
     // featured items
     const featuredItems = createFilteredListItem(
-      "Featured Items",
+      'Featured Items',
       item.name,
       StarFilledIcon,
       '_type == "item" && featured == true'
@@ -177,7 +179,7 @@ StructureResolver => {
 
     // sponsor items
     const sponsorItems = createFilteredListItem(
-      "Sponsor Items",
+      'Sponsor Items',
       item.name,
       ConfettiIcon,
       '_type == "item" && sponsor == true'
@@ -185,32 +187,32 @@ StructureResolver => {
 
     // published items
     const publishedItems = createFilteredListItem(
-      "Published Items",
+      'Published Items',
       item.name,
       TaskIcon,
       '_type == "item" && publishDate != null'
     );
 
     const unpublishedItems = createFilteredListItem(
-      "Unpublished Items",
+      'Unpublished Items',
       item.name,
       ClockIcon,
       '_type == "item" && publishDate == null'
     );
 
     const allItems = S.documentTypeListItem(item.name)
-      .title("All Items")
+      .title('All Items')
       .icon(DashboardIcon);
 
     const itemsBySubmitter = S.listItem()
-      .title("Items By Submitter")
+      .title('Items By Submitter')
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(user.name)
-          .title("Items by Submitter")
+          .title('Items by Submitter')
           .child((userId) =>
             S.documentList()
-              .title("Items")
+              .title('Items')
               .filter('_type == "item" && submitter._ref == $userId')
               .params({ userId })
           )
@@ -218,7 +220,7 @@ StructureResolver => {
 
     // failed orders
     const failedOrders = createFilteredListItem(
-      "Failed Orders",
+      'Failed Orders',
       order.name,
       CloseCircleIcon,
       '_type == "order" && status == "failed"'
@@ -226,7 +228,7 @@ StructureResolver => {
 
     // success orders
     const successOrders = createFilteredListItem(
-      "Success Orders",
+      'Success Orders',
       order.name,
       CheckmarkCircleIcon,
       '_type == "order" && status == "success"'
@@ -234,23 +236,23 @@ StructureResolver => {
 
     // all orders
     const allOrders = S.documentTypeListItem(order.name)
-      .title("All Orders")
+      .title('All Orders')
       .icon(BillIcon);
 
     // collections
     const allCollections = S.documentTypeListItem(collection.name)
-      .title("All Collections")
+      .title('All Collections')
       .icon(TiersIcon);
 
     const itemsByCollection = S.listItem()
-      .title("Items By Collection")
+      .title('Items By Collection')
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(collection.name)
-          .title("Items by Collection")
+          .title('Items by Collection')
           .child((collectionId) =>
             S.documentList()
-              .title("Items")
+              .title('Items')
               .filter('_type == "item" && $collectionId in collections[]._ref')
               .params({ collectionId })
           )
@@ -258,18 +260,18 @@ StructureResolver => {
 
     // groups
     const allGroups = S.documentTypeListItem(group.name)
-      .title("All Groups")
+      .title('All Groups')
       .icon(TiersIcon);
 
     const categoriesByGroup = S.listItem()
-      .title("Categories By Group")
+      .title('Categories By Group')
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(group.name)
-          .title("Categories by Group")
+          .title('Categories by Group')
           .child((groupId) =>
             S.documentList()
-              .title("Categories")
+              .title('Categories')
               .filter('_type == "category" && $groupId == group._ref')
               .params({ groupId })
           )
@@ -277,18 +279,18 @@ StructureResolver => {
 
     // categories
     const allCategories = S.documentTypeListItem(category.name)
-      .title("All Categories")
+      .title('All Categories')
       .icon(TiersIcon);
 
     const itemsByCategory = S.listItem()
-      .title("Items By Category")
+      .title('Items By Category')
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(category.name)
-          .title("Items by Category")
+          .title('Items by Category')
           .child((categoryId) =>
             S.documentList()
-              .title("Posts")
+              .title('Posts')
               .filter('_type == "item" && $categoryId in categories[]._ref')
               .params({ categoryId })
           )
@@ -296,63 +298,81 @@ StructureResolver => {
 
     // tags
     const allTags = S.documentTypeListItem(tag.name)
-      .title("All Tags")
+      .title('All Tags')
       .icon(TagsIcon);
 
     const itemsByTag = S.listItem()
-      .title("Items By Tag")
+      .title('Items By Tag')
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(tag.name)
-          .title("Items by Tag")
+          .title('Items by Tag')
           .child((tagId) =>
             S.documentList()
-              .title("Posts")
+              .title('Posts')
               .filter('_type == "item" && $tagId in tags[]._ref')
               .params({ tagId })
           )
       );
     // core technologies
     const allTechnologies = S.documentTypeListItem(coreTechnologies.name)
-      .title("All Technologies")
+      .title('All Technologies')
       .icon(TiersIcon);
 
     const itemsByTechnologies = S.listItem()
-      .title("Items By Technologies")
+      .title('Items By Technologies')
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(coreTechnologies.name)
-          .title("Items by Core Technology")
+          .title('Items by Core Technology')
           .child((technologyId) =>
             S.documentList()
-              .title("Items")
+              .title('Items')
               .filter(
                 '_type == "item" && $technologyId in coreTechnologies[]._ref'
               )
               .params({ technologyId })
           )
       );
+    // star rating
+    const allRatings = S.documentTypeListItem(rating.name)
+      .title('All Ratings')
+      .icon(StarIcon);
+
+    const itemsByRating = S.listItem()
+      .title('Items By Ratings')
+      .icon(MasterDetailIcon)
+      .child(
+        S.documentTypeList(rating.name)
+          .title('Items by Rating')
+          .child((ratingId) =>
+            S.documentList()
+              .title('Ratings')
+              .filter('_type == "item" && $ratingId in rating[]._ref')
+              .params({ ratingId })
+          )
+      );
     // blog categories
     const allBlogCategories = S.documentTypeListItem(blogCategory.name)
-      .title("All Blog Categories")
+      .title('All Blog Categories')
       .icon(ComponentIcon);
 
     const postsByCategory = S.listItem()
-      .title("Posts By Category")
+      .title('Posts By Category')
       .icon(MasterDetailIcon)
       .child(
         S.documentTypeList(blogCategory.name)
-          .title("Posts by Category")
+          .title('Posts by Category')
           .child((categoryId) =>
             S.documentList()
-              .title("Posts")
+              .title('Posts')
               .filter('_type == "blogPost" && $categoryId in categories[]._ref')
               .params({ categoryId })
           )
       );
 
     return S.list()
-      .title("Content")
+      .title('Content')
       .items([
         // pendingSubmissionsInFreePlan,
         // S.divider(),
@@ -362,11 +382,11 @@ StructureResolver => {
         // group the item management
 
         S.listItem()
-          .title("Item management")
+          .title('Item management')
           .icon(DashboardIcon)
           .child(
             S.list()
-              .title("Item management")
+              .title('Item management')
               .items([
                 allItems,
                 freePlanItemManagement,
@@ -388,48 +408,56 @@ StructureResolver => {
         S.divider(),
 
         S.listItem()
-          .title("Collection management")
+          .title('Collection management')
           .icon(ColorWheelIcon)
           .child(
             S.list()
-              .title("Collection management")
+              .title('Collection management')
               .items([allCollections, itemsByCollection])
           ),
 
         S.listItem()
-          .title("Group management")
+          .title('Group management')
           .icon(TiersIcon)
           .child(
             S.list()
-              .title("Group management")
+              .title('Group management')
               .items([allGroups, categoriesByGroup])
           ),
 
         // S.documentTypeListItem(category.name)
         //   .icon(TiersIcon),
         S.listItem()
-          .title("Category management")
+          .title('Category management')
           .icon(TiersIcon)
           .child(
             S.list()
-              .title("Category management")
+              .title('Category management')
               .items([allCategories, itemsByCategory])
           ),
 
         // S.documentTypeListItem(tag.name)
         //   .icon(TagsIcon),
         S.listItem()
-          .title("Tag management")
+          .title('Tag management')
           .icon(TagsIcon)
-          .child(S.list().title("Tag management").items([allTags, itemsByTag])),
+          .child(S.list().title('Tag management').items([allTags, itemsByTag])),
 
         S.listItem()
-          .title("Core Technologies management")
+          .title('Core Technologies management')
           .icon(ColorWheelIcon)
           .child(
             S.list()
-              .title("Core Technologies management")
+              .title('Core Technologies management')
               .items([allTechnologies, itemsByTechnologies])
+          ),
+        S.listItem()
+          .title('Rating management')
+          .icon(StarIcon)
+          .child(
+            S.list()
+              .title('Rating management')
+              .items([allRatings, itemsByRating])
           ),
 
         S.divider(),
@@ -439,11 +467,11 @@ StructureResolver => {
         //   .icon(TiersIcon),
 
         S.listItem()
-          .title("Blog Category management")
+          .title('Blog Category management')
           .icon(ComponentIcon)
           .child(
             S.list()
-              .title("Blog Category management")
+              .title('Blog Category management')
               .items([allBlogCategories, postsByCategory])
           ),
 
@@ -453,11 +481,11 @@ StructureResolver => {
         // S.documentTypeListItem(order.name)
         //   .icon(BillIcon),
         S.listItem()
-          .title("Order management")
+          .title('Order management')
           .icon(BillIcon)
           .child(
             S.list()
-              .title("Order management")
+              .title('Order management')
               .items([successOrders, failedOrders, S.divider(), allOrders])
           ),
 
@@ -465,11 +493,11 @@ StructureResolver => {
 
         // group the user management
         S.listItem()
-          .title("User management")
+          .title('User management')
           .icon(UsersIcon)
           .child(
             S.list()
-              .title("User management")
+              .title('User management')
               .items([
                 S.documentTypeListItem(user.name).icon(UserIcon),
                 S.documentTypeListItem(account.name).icon(UsersIcon),

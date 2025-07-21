@@ -1,19 +1,20 @@
-import account from "./documents/auth/account";
-import passwordResetToken from "./documents/auth/password-reset-token";
-import user from "./documents/auth/user";
-import verificationToken from "./documents/auth/verification-token";
-import blockContent from "./documents/block-content";
-import blogCategory from "./documents/blog/blog-category";
-import blogPost from "./documents/blog/blog-post";
-import category from "./documents/directory/category";
-import collection from "./documents/directory/collection";
-import coreTechnologies from "./documents/directory/coreTechnologies";
-import group from "./documents/directory/group";
-import item from "./documents/directory/item";
-import tag from "./documents/directory/tag";
-import order from "./documents/order/order";
-import page from "./documents/page/page";
-import settings from "./documents/settings";
+import account from './documents/auth/account';
+import passwordResetToken from './documents/auth/password-reset-token';
+import user from './documents/auth/user';
+import verificationToken from './documents/auth/verification-token';
+import blockContent from './documents/block-content';
+import blogCategory from './documents/blog/blog-category';
+import blogPost from './documents/blog/blog-post';
+import category from './documents/directory/category';
+import collection from './documents/directory/collection';
+import coreTechnologies from './documents/directory/coreTechnologies';
+import group from './documents/directory/group';
+import item from './documents/directory/item';
+import rating from './documents/directory/rating';
+import tag from './documents/directory/tag';
+import order from './documents/order/order';
+import page from './documents/page/page';
+import settings from './documents/settings';
 
 export const schemaTypes = [
   // directory
@@ -23,7 +24,7 @@ export const schemaTypes = [
   group,
   collection,
   coreTechnologies,
-
+  rating,
   // blog
   blogPost,
   blogCategory,

@@ -1,4 +1,4 @@
-import groq, { defineQuery } from "groq";
+import groq, { defineQuery } from 'groq';
 
 /**
  * https://www.sanity.io/plugins/next-sanity#using-query-result-types
@@ -35,6 +35,14 @@ export const collectionFields = /* groq */ `
   },
 `;
 export const coreTechnologyFields = /* groq */ `
+  ...,
+  icon {
+    ...,
+    "blurDataURL": asset->metadata.lqip,
+    "imageColor": asset->metadata.palette.dominant.background,
+  },
+`;
+export const ratingFields = /* groq */ `
   ...,
   icon {
     ...,
@@ -80,6 +88,15 @@ export const itemSimpleFields = /* groq */ `
   categories[]->,
   tags[]->,
   coreTechnologies[]->,
+  ratings[]->{
+  ...,
+   submitter->{
+    _id,
+    name,
+    email,
+    image
+  }
+  }
 `;
 
 const itemFields = /* groq */ `
@@ -186,7 +203,16 @@ export const coreTechnologyQuery =
   defineQuery(`*[_type == "coreTechnologies" && slug.current == $slug][0] {
   ${coreTechnologyFields}
 }`);
+export const ratingListQuery =
+  defineQuery(`*[_type == "rating" && defined(slug.current)] 
+  | order(priority desc) {
+    ${ratingFields}
+}`);
 
+export const ratingQuery =
+  defineQuery(`*[_type == "rating" && slug.current == $slug][0] {
+  ${ratingFields}
+}`);
 export const groupListQuery = groq`*[_type=="group"] | order(priority asc, _createdAt asc) {
   ${groupFields}
 }`;

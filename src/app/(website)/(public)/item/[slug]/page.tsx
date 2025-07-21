@@ -791,7 +791,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
       </section>
 
       <div className="py-16 md:py-32">
-        <div className="mx-auto  px-6">
+        <div className="mx-auto max-w-7xl  px-6">
           <div className="text-center">
             <h2 className="text-balance text-3xl font-semibold md:text-4xl">
               Related Products

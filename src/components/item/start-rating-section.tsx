@@ -33,135 +33,9 @@ interface Rating {
 }
 
 const initialRatings: Rating[] = [
-  {
-    id: '1',
-    author: {
-      name: 'Sarah Chen',
-      avatar:
-        'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-      username: '@sarahchen',
-    },
-    rating: 5,
-    title: 'Game-changing CSS framework',
-    content:
-      'Tailwind CSS has revolutionized my development workflow. The utility-first approach eliminates the need to write custom CSS for most use cases. The documentation is excellent and the community support is outstanding.',
-    timestamp: '1 week ago',
-    helpful: 23,
-    isHelpful: true,
-  },
-  {
-    id: '2',
-    author: {
-      name: 'Alex Rodriguez',
-      avatar:
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-      username: '@alexrod',
-    },
-    rating: 4,
-    title: 'Perfect for rapid prototyping',
-    content:
-      'The speed at which I can build responsive layouts is incredible. No more context switching between HTML and CSS files. However, the learning curve can be steep for beginners.',
-    timestamp: '2 weeks ago',
-    helpful: 18,
-    isHelpful: false,
-  },
-  {
-    id: '3',
-    author: {
-      name: 'Maya Patel',
-      avatar:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-      username: '@mayapatel',
-    },
-    rating: 3,
-    title: 'Good framework with learning curve',
-    content:
-      "Took some time to get used to the utility classes, but once you do, it's incredibly productive. The file size can get large without proper purging.",
-    timestamp: '3 weeks ago',
-    helpful: 15,
-    isHelpful: true,
-  },
-  {
-    id: '4',
-    author: {
-      name: 'David Kim',
-      avatar:
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-      username: '@davidkim',
-    },
-    rating: 5,
-    title: "Best CSS framework I've used",
-    content:
-      'The flexibility and customization options are unmatched. Love how it integrates with modern build tools and the JIT compiler is a game changer.',
-    timestamp: '1 month ago',
-    helpful: 31,
-    isHelpful: false,
-  },
-  {
-    id: '5',
-    author: {
-      name: 'Emma Wilson',
-      avatar:
-        'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
-      username: '@emmawilson',
-    },
-    rating: 4,
-    title: 'Great for component libraries',
-    content:
-      'Building design systems with Tailwind is fantastic. The consistency it provides across teams is invaluable. Wish there were more built-in components.',
-    timestamp: '1 month ago',
-    helpful: 27,
-    isHelpful: true,
-  },
-  {
-    id: '6',
-    author: {
-      name: 'James Thompson',
-      avatar:
-        'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face',
-      username: '@jamesthompson',
-    },
-    rating: 5,
-    title: 'Productivity boost is real',
-    content:
-      'My development speed has increased significantly since adopting Tailwind. The responsive design utilities are particularly well thought out.',
-    timestamp: '2 months ago',
-    helpful: 19,
-    isHelpful: false,
-  },
-  {
-    id: '7',
-    author: {
-      name: 'Lisa Garcia',
-      avatar:
-        'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face',
-      username: '@lisagarcia',
-    },
-    rating: 4,
-    title: 'Excellent documentation',
-    content:
-      'The docs are comprehensive and well-organized. Examples are clear and the search functionality is top-notch. Makes learning new utilities easy.',
-    timestamp: '2 months ago',
-    helpful: 22,
-    isHelpful: true,
-  },
-  {
-    id: '8',
-    author: {
-      name: 'Michael Brown',
-      avatar:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=150&h=150&fit=crop&crop=face',
-      username: '@michaelbrown',
-    },
-    rating: 3,
-    title: 'Good but takes getting used to',
-    content:
-      "The utility-first approach is different from traditional CSS. Once you adapt, it's quite powerful. The class names can get verbose though.",
-    timestamp: '3 months ago',
-    helpful: 14,
-    isHelpful: false,
-  },
+  // ... (keep all your existing initialRatings data)
 ];
+
 const transformSanityRating = (r: any): Rating => ({
   id: r._id,
   author: {
@@ -182,81 +56,18 @@ const transformSanityRating = (r: any): Rating => ({
 });
 
 const additionalRatings: Rating[] = [
-  {
-    id: '9',
-    author: {
-      name: 'Sophie Anderson',
-      avatar:
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face',
-      username: '@sophieanderson',
-    },
-    rating: 5,
-    title: 'Perfect for modern web development',
-    content:
-      'Tailwind fits perfectly into modern development workflows. The integration with React, Vue, and other frameworks is seamless. Highly recommended!',
-    timestamp: '3 months ago',
-    helpful: 28,
-    isHelpful: false,
-  },
-  {
-    id: '10',
-    author: {
-      name: 'Ryan Martinez',
-      avatar:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
-      username: '@ryanmartinez',
-    },
-    rating: 4,
-    title: 'Great for team consistency',
-    content:
-      "Having a shared design language through utility classes has improved our team's consistency. Code reviews are easier when everyone uses the same system.",
-    timestamp: '4 months ago',
-    helpful: 16,
-    isHelpful: true,
-  },
-  {
-    id: '11',
-    author: {
-      name: 'Jennifer Lee',
-      avatar:
-        'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face',
-      username: '@jenniferlee',
-    },
-    rating: 5,
-    title: 'Mobile-first approach is excellent',
-    content:
-      'The responsive design utilities make mobile-first development intuitive. Breakpoint management is so much cleaner than traditional media queries.',
-    timestamp: '4 months ago',
-    helpful: 33,
-    isHelpful: true,
-  },
-  {
-    id: '12',
-    author: {
-      name: 'Chris Johnson',
-      avatar:
-        'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
-      username: '@chrisjohnson',
-    },
-    rating: 4,
-    title: 'Customization options are powerful',
-    content:
-      'The configuration system allows for extensive customization while maintaining the utility-first philosophy. Plugin ecosystem is growing nicely.',
-    timestamp: '5 months ago',
-    helpful: 21,
-    isHelpful: false,
-  },
+  // ... (keep all your existing additionalRatings data)
 ];
 
 export default function StarRatingsSection({ starRatings, itemName }) {
-  console.log('starRatings', starRatings[0].submitter);
-  // const [ratings, setRatings] = useState(initialRatings);
-  const [ratings, setRatings] = useState<Rating[]>([]);
+  const [allRatings, setAllRatings] = useState<Rating[]>([]);
+  const [displayedRatings, setDisplayedRatings] = useState<Rating[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
   const [submittedRating, setSubmittedRating] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
+  const ratingsPerPage = 5;
 
   // Review form state
   const [reviewRating, setReviewRating] = useState(0);
@@ -267,55 +78,48 @@ export default function StarRatingsSection({ starRatings, itemName }) {
   useEffect(() => {
     if (starRatings?.length) {
       const mapped = starRatings.map(transformSanityRating);
-      setRatings(mapped);
+      setAllRatings(mapped);
+      setDisplayedRatings(mapped.slice(0, ratingsPerPage));
+      setHasMore(mapped.length > ratingsPerPage);
     }
   }, [starRatings]);
-  // Calculate dynamic statistics
-  const totalRatings = ratings.length;
+
+  // Calculate dynamic statistics based on all ratings
+  const totalRatings = allRatings.length;
   const ratingCounts = {
-    5: ratings.filter((r) => r.rating === 5).length,
-    4: ratings.filter((r) => r.rating === 4).length,
-    3: ratings.filter((r) => r.rating === 3).length,
-    2: ratings.filter((r) => r.rating === 2).length,
-    1: ratings.filter((r) => r.rating === 1).length,
+    5: allRatings.filter((r) => r.rating === 5).length,
+    4: allRatings.filter((r) => r.rating === 4).length,
+    3: allRatings.filter((r) => r.rating === 3).length,
+    2: allRatings.filter((r) => r.rating === 2).length,
+    1: allRatings.filter((r) => r.rating === 1).length,
   };
 
   const averageRating =
-    ratings.reduce((sum, rating) => sum + rating.rating, 0) / totalRatings;
+    allRatings.reduce((sum, rating) => sum + rating.rating, 0) / totalRatings ||
+    0;
 
-  // Simulate loading more reviews
   const loadMoreReviews = useCallback(async () => {
     if (loading || !hasMore) return;
 
     setLoading(true);
-
-    // Reduced API delay for better UX
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const startIndex = (page - 1) * 4;
-    const endIndex = startIndex + 4;
-    const newReviews = additionalRatings.slice(startIndex, endIndex);
+    const nextPage = page + 1;
+    const nextRatings = allRatings.slice(0, nextPage * ratingsPerPage);
 
-    if (newReviews.length > 0) {
-      setRatings((prev) => [...prev, ...newReviews]);
-      setPage((prev) => prev + 1);
-    }
-
-    if (endIndex >= additionalRatings.length) {
-      setHasMore(false);
-    }
+    setDisplayedRatings(nextRatings);
+    setPage(nextPage);
+    setHasMore(nextRatings.length < allRatings.length);
 
     setLoading(false);
-  }, [loading, hasMore, page]);
+  }, [loading, hasMore, page, allRatings]);
 
-  // Infinite scroll handler with improved trigger distance
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = document.documentElement.scrollTop;
       const scrollHeight = document.documentElement.scrollHeight;
       const clientHeight = document.documentElement.clientHeight;
 
-      // Trigger when user is 500px from bottom instead of 1000px
       if (scrollTop + clientHeight >= scrollHeight - 500) {
         loadMoreReviews();
       }
@@ -345,7 +149,9 @@ export default function StarRatingsSection({ starRatings, itemName }) {
       isHelpful: false,
     };
 
-    setRatings([newReview, ...ratings]);
+    const updatedAllRatings = [newReview, ...allRatings];
+    setAllRatings(updatedAllRatings);
+    setDisplayedRatings(updatedAllRatings.slice(0, page * ratingsPerPage));
     setSubmittedRating(reviewRating);
     setShowThankYou(true);
 
@@ -357,19 +163,18 @@ export default function StarRatingsSection({ starRatings, itemName }) {
   };
 
   const handleHelpful = (ratingId: string) => {
-    setRatings(
-      ratings.map((rating) =>
-        rating.id === ratingId
-          ? {
-              ...rating,
-              isHelpful: !rating.isHelpful,
-              helpful: rating.isHelpful
-                ? rating.helpful - 1
-                : rating.helpful + 1,
-            }
-          : rating
-      )
+    const updatedRatings = allRatings.map((rating) =>
+      rating.id === ratingId
+        ? {
+            ...rating,
+            isHelpful: !rating.isHelpful,
+            helpful: rating.isHelpful ? rating.helpful - 1 : rating.helpful + 1,
+          }
+        : rating
     );
+
+    setAllRatings(updatedRatings);
+    setDisplayedRatings(updatedRatings.slice(0, page * ratingsPerPage));
   };
 
   const handleSubmitAnother = () => {
@@ -438,7 +243,7 @@ export default function StarRatingsSection({ starRatings, itemName }) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Rating Overview & Forms (Sticky on Desktop) */}
+          {/* Left Column - Rating Overview & Forms */}
           <div className="lg:sticky lg:top-8 lg:self-start space-y-6">
             {/* Rating Overview */}
             <Card className="p-8">
@@ -585,17 +390,17 @@ export default function StarRatingsSection({ starRatings, itemName }) {
             </Card>
           </div>
 
-          {/* Right Column - Reviews List (Scrollable) */}
+          {/* Right Column - Reviews List */}
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-semibold">Recent Reviews</h3>
               <span className="text-sm text-muted-foreground">
-                {ratings.length} total
+                {allRatings.length} total (showing {displayedRatings.length})
               </span>
             </div>
 
             <div className="space-y-6">
-              {ratings.map((rating) => (
+              {displayedRatings.map((rating) => (
                 <Card key={rating.id} className="p-6">
                   <div className="flex gap-4">
                     <Avatar className="h-10 w-10 flex-shrink-0">
@@ -657,7 +462,6 @@ export default function StarRatingsSection({ starRatings, itemName }) {
                 </Card>
               ))}
 
-              {/* Loading indicator */}
               {loading && (
                 <div className="flex items-center justify-center py-8">
                   <Loader2 className="h-6 w-6 animate-spin mr-2" />
@@ -667,7 +471,6 @@ export default function StarRatingsSection({ starRatings, itemName }) {
                 </div>
               )}
 
-              {/* End of reviews message */}
               {!hasMore && !loading && (
                 <div className="text-center py-8">
                   <p className="text-muted-foreground">
@@ -676,7 +479,6 @@ export default function StarRatingsSection({ starRatings, itemName }) {
                 </div>
               )}
 
-              {/* Manual Load More Button - fallback for infinite scroll */}
               {hasMore && !loading && (
                 <div className="text-center py-6">
                   <Button

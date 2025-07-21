@@ -395,102 +395,143 @@ export default function StarRatingsSection({ starRatings, itemName }) {
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-semibold">Recent Reviews</h3>
               <span className="text-sm text-muted-foreground">
-                {allRatings.length} total (showing {displayedRatings.length})
+                {allRatings.length} total{' '}
+                {allRatings.length > 0 &&
+                  `(showing ${displayedRatings.length})`}
               </span>
             </div>
 
-            <div className="space-y-6">
-              {displayedRatings.map((rating) => (
-                <Card key={rating.id} className="p-6">
-                  <div className="flex gap-4">
-                    <Avatar className="h-10 w-10 flex-shrink-0">
-                      <AvatarImage
-                        src={rating.author.avatar || '/placeholder.svg'}
-                      />
-                      <AvatarFallback>
-                        {rating.author.name.charAt(0)}
-                      </AvatarFallback>
-                    </Avatar>
+            {allRatings.length > 0 ? (
+              <div className="space-y-6">
+                {displayedRatings.map((rating) => (
+                  <Card key={rating.id} className="p-6">
+                    <div className="flex gap-4">
+                      <Avatar className="h-10 w-10 flex-shrink-0">
+                        <AvatarImage
+                          src={rating.author.avatar || '/placeholder.svg'}
+                        />
+                        <AvatarFallback>
+                          {rating.author.name.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
 
-                    <div className="flex-1 space-y-3 min-w-0">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="min-w-0 flex-1">
-                          <h4 className="font-medium truncate">
-                            {rating.author.name}
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            {rating.timestamp}
-                          </p>
-                        </div>
-                        <div className="text-right flex-shrink-0">
-                          {renderStars(rating.rating, false, 'w-4 h-4')}
-                          <div className="text-xs text-muted-foreground mt-1">
-                            {rating.rating}/5 stars
+                      <div className="flex-1 space-y-3 min-w-0">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="min-w-0 flex-1">
+                            <h4 className="font-medium truncate">
+                              {rating.author.name}
+                            </h4>
+                            <p className="text-sm text-muted-foreground">
+                              {rating.timestamp}
+                            </p>
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            {renderStars(rating.rating, false, 'w-4 h-4')}
+                            <div className="text-xs text-muted-foreground mt-1">
+                              {rating.rating}/5 stars
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div>
-                        <h5 className="font-medium mb-1">{rating.title}</h5>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          {rating.content}
-                        </p>
-                      </div>
+                        <div>
+                          <h5 className="font-medium mb-1">{rating.title}</h5>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {rating.content}
+                          </p>
+                        </div>
 
-                      <div className="flex items-center justify-between pt-3 border-t">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleHelpful(rating.id)}
-                          className={cn(
-                            'gap-2 text-muted-foreground hover:text-foreground',
-                            rating.isHelpful &&
-                              'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
-                          )}
-                        >
-                          <ThumbsUp
+                        <div className="flex items-center justify-between pt-3 border-t">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleHelpful(rating.id)}
                             className={cn(
-                              'h-4 w-4',
-                              rating.isHelpful && 'fill-current'
+                              'gap-2 text-muted-foreground hover:text-foreground',
+                              rating.isHelpful &&
+                                'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
                             )}
-                          />
-                          Helpful ({rating.helpful})
-                        </Button>
+                          >
+                            <ThumbsUp
+                              className={cn(
+                                'h-4 w-4',
+                                rating.isHelpful && 'fill-current'
+                              )}
+                            />
+                            Helpful ({rating.helpful})
+                          </Button>
+                        </div>
                       </div>
                     </div>
+                  </Card>
+                ))}
+
+                {loading && (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                    <span className="text-muted-foreground">
+                      Loading more reviews...
+                    </span>
                   </div>
-                </Card>
-              ))}
+                )}
 
-              {loading && (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                  <span className="text-muted-foreground">
-                    Loading more reviews...
-                  </span>
-                </div>
-              )}
+                {!hasMore && !loading && displayedRatings.length > 0 && (
+                  <div className="text-center py-8">
+                    <p className="text-muted-foreground">
+                      You've reached the end of all reviews
+                    </p>
+                  </div>
+                )}
 
-              {!hasMore && !loading && (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground">
-                    You've reached the end of all reviews
-                  </p>
-                </div>
-              )}
-
-              {hasMore && !loading && allRatings.length > ratingsPerPage && (
-                <div className="text-center py-6">
-                  <Button
-                    onClick={loadMoreReviews}
-                    variant="outline"
-                    className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 bg-transparent"
+                {hasMore && !loading && allRatings.length > ratingsPerPage && (
+                  <div className="text-center py-6">
+                    <Button
+                      onClick={loadMoreReviews}
+                      variant="outline"
+                      className="border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 bg-transparent"
+                    >
+                      Load More Reviews
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Card className="p-8 text-center">
+                <div className="mx-auto max-w-md">
+                  <svg
+                    className="mx-auto h-24 w-24 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    Load More Reviews
-                  </Button>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+                    />
+                  </svg>
+                  <h3 className="mt-4 text-lg font-medium text-gray-900 dark:text-gray-100">
+                    No reviews yet
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Be the first to share your experience with {itemName}!
+                  </p>
+                  <div className="mt-6">
+                    <Button
+                      onClick={() => {
+                        document
+                          .querySelector('#review-form')
+                          ?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      variant="default"
+                    >
+                      Write a Review
+                    </Button>
+                  </div>
                 </div>
-              )}
-            </div>
+              </Card>
+            )}
           </div>
         </div>
       </div>

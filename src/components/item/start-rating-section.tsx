@@ -292,7 +292,7 @@ export default function StarRatingsSection({ starRatings, itemName }) {
             </Card>
 
             {/* Detailed Review Form */}
-            <Card className="p-8">
+            <Card className="p-8 " id="review-form">
               {!showThankYou ? (
                 <>
                   <div className="flex items-center gap-2 mb-6">
@@ -520,11 +520,23 @@ export default function StarRatingsSection({ starRatings, itemName }) {
                   <div className="mt-6">
                     <Button
                       onClick={() => {
-                        document
-                          .querySelector('#review-form')
-                          ?.scrollIntoView({ behavior: 'smooth' });
+                        const formElement =
+                          document.getElementById('review-form');
+                        if (formElement) {
+                          formElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start',
+                          });
+                          // Focus the first input for better UX
+                          const firstInput =
+                            formElement.querySelector('input, textarea');
+                          if (firstInput) {
+                            (firstInput as HTMLElement).focus();
+                          }
+                        }
                       }}
                       variant="default"
+                      className="cursor-pointer"
                     >
                       Write a Review
                     </Button>

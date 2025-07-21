@@ -479,7 +479,7 @@ export default function StarRatingsSection({ starRatings, itemName }) {
                 </div>
               )}
 
-              {hasMore && !loading && (
+              {hasMore && !loading && allRatings.length > ratingsPerPage && (
                 <div className="text-center py-6">
                   <Button
                     onClick={loadMoreReviews}

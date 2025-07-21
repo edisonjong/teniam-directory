@@ -10,6 +10,7 @@ import { Safari } from '../magicui/safari';
 import SponsorItemCard from './item-card-sponsor';
 import { urlForIcon, urlForImage } from '@/lib/image';
 import BackToDirectoryButton from '../ui/back-to-directory-button';
+import BackButton from '../shared/back-button';
 
 export default function OverviewSection({ item, sponsorItem }) {
   const imageProps = item?.image ? urlForImage(item.image) : null;
@@ -208,7 +209,7 @@ export default function OverviewSection({ item, sponsorItem }) {
           </div>
         </div>
         <div className="pt-8 md:pt-16 px-6">
-          <BackToDirectoryButton />
+          <BackButton />
         </div>
       </div>
     </section>

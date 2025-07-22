@@ -3,7 +3,7 @@
 import { currentUser } from '@/lib/auth';
 import { sanityClient } from '@/sanity/lib/client';
 import { revalidatePath } from 'next/cache';
-
+import { uuid } from '@sanity/uuid';
 export type RatingFormData = {
   rating: number;
   title: string;
@@ -58,6 +58,7 @@ export async function submitRating(
         {
           _type: 'reference',
           _ref: res._id,
+          _key: `user.${uuid()}`,
         },
       ])
       .commit();

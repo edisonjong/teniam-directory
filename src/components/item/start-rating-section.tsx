@@ -1,10 +1,10 @@
-"use client";
-import { useState, useEffect, useCallback, useTransition } from "react";
-import type React from "react";
+'use client';
+import { useState, useEffect, useCallback, useTransition } from 'react';
+import type React from 'react';
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Star,
   Users,
@@ -13,12 +13,12 @@ import {
   MessageSquare,
   ThumbsUp,
   Loader2,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { currentUser } from "@/lib/auth";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { submitRating } from "@/actions/rating";
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { currentUser } from '@/lib/auth';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { submitRating } from '@/actions/rating';
 
 interface Rating {
   id: string;
@@ -35,20 +35,16 @@ interface Rating {
   isHelpful: boolean;
 }
 
-const initialRatings: Rating[] = [
-  // ... (keep all your existing initialRatings data)
-];
-
 const transformSanityRating = (r: any): Rating => ({
   id: r._id,
   author: {
-    name: r.submitter?.name || "Anonymous",
+    name: r.submitter?.name || 'Anonymous',
     avatar:
-      "https://ui-avatars.com/api/?name=" +
-      encodeURIComponent(r.submitter?.name || "User"),
+      'https://ui-avatars.com/api/?name=' +
+      encodeURIComponent(r.submitter?.name || 'User'),
     username:
-      "@" +
-      (r.submitter?.name?.toLowerCase().replace(/\s+/g, "") || "anonymous"),
+      '@' +
+      (r.submitter?.name?.toLowerCase().replace(/\s+/g, '') || 'anonymous'),
   },
   rating: r.rating,
   title: r.title,
@@ -57,10 +53,6 @@ const transformSanityRating = (r: any): Rating => ({
   helpful: r.helpfulCount || 0,
   isHelpful: false,
 });
-
-const additionalRatings: Rating[] = [
-  // ... (keep all your existing additionalRatings data)
-];
 
 export default function StarRatingsSection({ starRatings, itemName, itemId }) {
   const [allRatings, setAllRatings] = useState<Rating[]>([]);
@@ -75,8 +67,8 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
   // Review form state
   const [reviewRating, setReviewRating] = useState(0);
   const [reviewHoverRating, setReviewHoverRating] = useState(0);
-  const [reviewTitle, setReviewTitle] = useState("");
-  const [reviewContent, setReviewContent] = useState("");
+  const [reviewTitle, setReviewTitle] = useState('');
+  const [reviewContent, setReviewContent] = useState('');
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -130,8 +122,8 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [loadMoreReviews]);
 
   // const handleSubmitReview = (e: React.FormEvent) => {
@@ -179,19 +171,21 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
         itemId: itemId,
       });
 
-      if (result.status === "success") {
+      if (result.status === 'success') {
         const newReview: Rating = {
-          id: result.id || Date.now().toString() + "_review",
+          id: result.id || Date.now().toString() + '_review',
+
           author: {
-            name: "You",
+            name: result.author?.name || 'You',
             avatar:
-              "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face",
-            username: "@you",
+              result.author?.avatar ||
+              'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face',
+            username: result.author?.username || '@you',
           },
           rating: reviewRating,
           title: reviewTitle,
           content: reviewContent,
-          timestamp: "Just now",
+          timestamp: 'Just now',
           helpful: 0,
           isHelpful: false,
         };
@@ -207,8 +201,8 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
         // Reset form
         setReviewRating(0);
         setReviewHoverRating(0);
-        setReviewTitle("");
-        setReviewContent("");
+        setReviewTitle('');
+        setReviewContent('');
 
         toast.success(result.message);
       } else {
@@ -239,7 +233,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
   const renderStars = (
     rating: number,
     interactive = false,
-    size = "w-4 h-4",
+    size = 'w-4 h-4',
     onRate?: (rating: number) => void,
     onHover?: (rating: number) => void,
     onLeave?: () => void,
@@ -257,9 +251,9 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
               disabled={!interactive}
               className={cn(
                 size,
-                "transition-all duration-200",
-                interactive && "cursor-pointer hover:scale-105",
-                !interactive && "cursor-default"
+                'transition-all duration-200',
+                interactive && 'cursor-pointer hover:scale-105',
+                !interactive && 'cursor-default'
               )}
               onClick={interactive && onRate ? () => onRate(star) : undefined}
               onMouseEnter={
@@ -269,10 +263,10 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
             >
               <Star
                 className={cn(
-                  "w-full h-full transition-colors stroke-2",
+                  'w-full h-full transition-colors stroke-2',
                   isActive
-                    ? "fill-yellow-400 text-yellow-400 stroke-yellow-500"
-                    : "fill-gray-200 text-gray-200 stroke-gray-300 hover:fill-gray-300 dark:fill-gray-700 dark:text-gray-700 dark:stroke-gray-600 dark:hover:fill-gray-600"
+                    ? 'fill-yellow-400 text-yellow-400 stroke-yellow-500'
+                    : 'fill-gray-200 text-gray-200 stroke-gray-300 hover:fill-gray-300 dark:fill-gray-700 dark:text-gray-700 dark:stroke-gray-600 dark:hover:fill-gray-600'
                 )}
               />
             </button>
@@ -312,7 +306,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                   {averageRating.toFixed(1)}
                 </div>
                 <div className="pb-2">
-                  {renderStars(Math.round(averageRating), false, "w-5 h-5")}
+                  {renderStars(Math.round(averageRating), false, 'w-5 h-5')}
                   <div className="flex items-center gap-1 mt-1 text-muted-foreground">
                     <Users className="w-4 h-4" />
                     <span className="text-sm">{totalRatings} reviews</span>
@@ -365,7 +359,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                         {renderStars(
                           reviewRating,
                           true,
-                          "w-6 h-6",
+                          'w-6 h-6',
                           setReviewRating,
                           setReviewHoverRating,
                           () => setReviewHoverRating(0),
@@ -373,7 +367,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                         )}
                         {reviewRating > 0 && (
                           <span className="text-sm text-muted-foreground ml-2">
-                            {reviewRating} star{reviewRating !== 1 ? "s" : ""}
+                            {reviewRating} star{reviewRating !== 1 ? 's' : ''}
                           </span>
                         )}
                       </div>
@@ -420,7 +414,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                           Submitting...
                         </>
                       ) : (
-                        "Submit Review"
+                        'Submit Review'
                       )}
                     </Button>
                   </form>
@@ -457,7 +451,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-semibold">Recent Reviews</h3>
               <span className="text-sm text-muted-foreground">
-                {allRatings.length} total{" "}
+                {allRatings.length} total{' '}
                 {allRatings.length > 0 &&
                   `(showing ${displayedRatings.length})`}
               </span>
@@ -470,7 +464,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                     <div className="flex gap-4">
                       <Avatar className="h-10 w-10 flex-shrink-0">
                         <AvatarImage
-                          src={rating.author.avatar || "/placeholder.svg"}
+                          src={rating.author.avatar || '/placeholder.svg'}
                         />
                         <AvatarFallback>
                           {rating.author.name.charAt(0)}
@@ -488,7 +482,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                             </p>
                           </div>
                           <div className="text-right flex-shrink-0">
-                            {renderStars(rating.rating, false, "w-4 h-4")}
+                            {renderStars(rating.rating, false, 'w-4 h-4')}
                             <div className="text-xs text-muted-foreground mt-1">
                               {rating.rating}/5 stars
                             </div>
@@ -508,15 +502,15 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                             size="sm"
                             onClick={() => handleHelpful(rating.id)}
                             className={cn(
-                              "gap-2 text-muted-foreground hover:text-foreground",
+                              'gap-2 text-muted-foreground hover:text-foreground',
                               rating.isHelpful &&
-                                "text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                                'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
                             )}
                           >
                             <ThumbsUp
                               className={cn(
-                                "h-4 w-4",
-                                rating.isHelpful && "fill-current"
+                                'h-4 w-4',
+                                rating.isHelpful && 'fill-current'
                               )}
                             />
                             Helpful ({rating.helpful})
@@ -583,15 +577,15 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                     <Button
                       onClick={() => {
                         const formElement =
-                          document.getElementById("review-form");
+                          document.getElementById('review-form');
                         if (formElement) {
                           formElement.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start",
+                            behavior: 'smooth',
+                            block: 'start',
                           });
                           // Focus the first input for better UX
                           const firstInput =
-                            formElement.querySelector("input, textarea");
+                            formElement.querySelector('input, textarea');
                           if (firstInput) {
                             (firstInput as HTMLElement).focus();
                           }

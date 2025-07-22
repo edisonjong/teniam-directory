@@ -8,13 +8,18 @@ export type RatingFormData = {
   rating: number;
   title: string;
   content: string;
-  itemId: string; // Reference to the item being rated
+  itemId: string;
 };
 
 export type RatingActionResponse = {
   status: 'success' | 'error';
   message?: string;
   id?: string;
+  author?: {
+    name: string;
+    username: string;
+    avatar: string;
+  };
 };
 
 export async function submitRating(
@@ -70,6 +75,11 @@ export async function submitRating(
       status: 'success',
       message: 'Rating submitted successfully',
       id: res._id,
+      author: {
+        name: user.name,
+        username: user.name,
+        avatar: user.image,
+      },
     };
   } catch (error) {
     console.error('Error submitting rating:', error);

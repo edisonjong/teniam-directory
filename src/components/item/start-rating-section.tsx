@@ -208,6 +208,12 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
         toast.success(result.message);
       } else {
         toast.error(result.message);
+        if (
+          result.message?.toLowerCase().includes('unauthorized') ||
+          result.message?.toLowerCase().includes('logged in')
+        ) {
+          router.push('/auth/login');
+        }
       }
     });
   };
@@ -464,9 +470,9 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
                   <Card key={rating.id} className="p-6">
                     <div className="flex gap-4">
                       <Avatar className="h-10 w-10 flex-shrink-0">
-                        <AvatarImage
+                        {/* <AvatarImage
                           src={rating.author.avatar || '/placeholder.svg'}
-                        />
+                        /> */}
                         <AvatarFallback>
                           {rating.author.name.charAt(0)}
                         </AvatarFallback>

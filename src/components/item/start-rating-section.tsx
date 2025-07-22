@@ -289,7 +289,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
 
   return (
     <section className="">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl md:px-6 px-0">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Submit a Review</h1>
           <p className="text-muted-foreground text-lg">

@@ -13,6 +13,13 @@ export default defineType({
       to: [{ type: 'user' }],
     }),
     defineField({
+      name: 'item',
+      title: 'Item',
+      type: 'reference',
+      to: [{ type: 'item' }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'rating',
       title: 'Rating (1 to 5)',
       type: 'number',

@@ -51,6 +51,16 @@ export async function submitRating(
       console.log('res', res);
       return { status: 'error', message: 'Failed to submit rating' };
     }
+    await sanityClient
+      .patch(itemId)
+      .setIfMissing({ ratings: [] })
+      .append('ratings', [
+        {
+          _type: 'reference',
+          _ref: res._id,
+        },
+      ])
+      .commit();
 
     // Revalidate the page to show the new rating
     // revalidatePath(`/items/${itemId}`);

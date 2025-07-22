@@ -63,7 +63,7 @@ export async function submitRating(
         {
           _type: 'reference',
           _ref: res._id,
-          _key: `user.${uuid()}`,
+          _key: uuid(),
         },
       ])
       .commit();

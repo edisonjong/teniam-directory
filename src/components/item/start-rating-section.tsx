@@ -177,7 +177,10 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
 
           author: {
             name: result.author?.name || 'You',
-            avatar: result.author?.avatar,
+            avatar:
+              result.author?.avatar ||
+              'https://ui-avatars.com/api/?name=' +
+                encodeURIComponent(result.author?.name),
             username: result.author?.username || '@you',
           },
           rating: reviewRating,

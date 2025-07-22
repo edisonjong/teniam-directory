@@ -177,9 +177,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
 
           author: {
             name: result.author?.name || 'You',
-            avatar:
-              result.author?.avatar ||
-              'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face',
+            avatar: result.author?.avatar,
             username: result.author?.username || '@you',
           },
           rating: reviewRating,

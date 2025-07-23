@@ -18,7 +18,7 @@ const navigationItems = [
 
 type ActiveSection = 'overview' | 'technologies' | 'ratings' | 'analytics';
 
-export default function ClientTabs({ item, sponsorItem }) {
+export default function ClientTabs({ item, sponsorItem, user }) {
   const [activeSection, setActiveSection] = useState<ActiveSection>('overview');
 
   const renderActiveSection = () => {
@@ -37,6 +37,7 @@ export default function ClientTabs({ item, sponsorItem }) {
             starRatings={item?.ratings && item?.ratings}
             itemName={item?.name}
             itemId={item._id}
+            user={user}
           />
         );
       case 'analytics':

@@ -44,6 +44,13 @@ export default defineType({
       initialValue: 0,
     }),
     defineField({
+      name: 'helpfulUsers',
+      title: 'Users Who Found This Helpful',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'user' }] }],
+      initialValue: [],
+    }),
+    defineField({
       name: 'createdAt',
       title: 'Created At',
       type: 'datetime',

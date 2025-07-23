@@ -1,29 +1,51 @@
 'use server';
 
-import { currentUser } from '@/lib/auth';
-import { RatingActionResponse } from './rating';
 import { sanityClient } from '@/sanity/lib/client';
+import { RatingActionResponse } from './rating';
 
 export async function updateHelpfulCount(
   ratingId: string,
-  increment: boolean
+  userId: any
 ): Promise<RatingActionResponse> {
   try {
-    const user = await currentUser();
-    if (!user) {
-      return { status: 'error', message: 'Unauthorized' };
+    // First get the current rating document
+    const rating = await sanityClient.getDocument(ratingId);
+    if (!rating) {
+      return { status: 'error', message: 'Rating not found' };
     }
 
-    // Update the helpful count in Sanity
-    const patch = sanityClient
+    const helpfulUsers = rating.helpfulUsers || [];
+    const alreadyHelpful = helpfulUsers.some(
+      (userRef: any) => userRef._ref === userId
+    );
+
+    let updatedHelpfulCount = rating.helpfulCount || 0;
+    let updatedHelpfulUsers = [...helpfulUsers];
+
+    if (alreadyHelpful) {
+      // User already liked - remove their like
+      updatedHelpfulCount--;
+      updatedHelpfulUsers = updatedHelpfulUsers.filter(
+        (userRef: any) => userRef._ref !== userId
+      );
+    } else {
+      // User hasn't liked yet - add their like
+      updatedHelpfulCount++;
+      updatedHelpfulUsers.push({
+        _type: 'reference',
+        _ref: userId,
+        _key: `user-${userId}`,
+      });
+    }
+
+    // Update the document
+    const res = await sanityClient
       .patch(ratingId)
-      .setIfMissing({ helpfulCount: 0 });
-
-    const updatedPatch = increment
-      ? patch.inc({ helpfulCount: 1 })
-      : patch.dec({ helpfulCount: 1 });
-
-    const res = await updatedPatch.commit();
+      .set({
+        helpfulCount: updatedHelpfulCount,
+        helpfulUsers: updatedHelpfulUsers,
+      })
+      .commit();
 
     if (!res) {
       return { status: 'error', message: 'Failed to update helpful count' };
@@ -32,6 +54,7 @@ export async function updateHelpfulCount(
     return {
       status: 'success',
       message: 'Helpful count updated successfully',
+      isHelpful: !alreadyHelpful, // Return the new state
     };
   } catch (error) {
     console.error('Error updating helpful count:', error);

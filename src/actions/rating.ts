@@ -20,6 +20,7 @@ export type RatingActionResponse = {
     username: string;
     avatar: string;
   };
+  isHelpful?: boolean;
 };
 
 export async function submitRating(

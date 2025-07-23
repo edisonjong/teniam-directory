@@ -36,7 +36,7 @@ interface Rating {
   isHelpful: boolean;
 }
 
-const transformSanityRating = (r: any): Rating => ({
+const transformSanityRating = (r: any, currentUserId?: string): Rating => ({
   id: r._id,
   author: {
     name: r.submitter?.name || 'Anonymous',
@@ -52,10 +52,17 @@ const transformSanityRating = (r: any): Rating => ({
   content: r.content,
   timestamp: new Date(r.createdAt || r._createdAt).toLocaleDateString(), // format as needed
   helpful: r.helpfulCount || 0,
-  isHelpful: false, // This will be managed client-side
+  isHelpful: currentUserId
+    ? r.helpfulUsers?.some((user: any) => user._ref === currentUserId) || false
+    : false,
 });
 
-export default function StarRatingsSection({ starRatings, itemName, itemId }) {
+export default function StarRatingsSection({
+  starRatings,
+  itemName,
+  itemId,
+  user,
+}) {
   const [allRatings, setAllRatings] = useState<Rating[]>([]);
   const [displayedRatings, setDisplayedRatings] = useState<Rating[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
@@ -75,7 +82,7 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
 
   useEffect(() => {
     if (starRatings?.length) {
-      const mapped = starRatings.map(transformSanityRating);
+      const mapped = starRatings.map((r) => transformSanityRating(r, user?.id));
       setAllRatings(mapped);
       setDisplayedRatings(mapped.slice(0, ratingsPerPage));
       setHasMore(mapped.length > ratingsPerPage);
@@ -233,45 +240,30 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
   //   setDisplayedRatings(updatedRatings.slice(0, page * ratingsPerPage));
   // };
   const handleHelpful = async (ratingId: string) => {
-    const ratingToUpdate = allRatings.find((r) => r.id === ratingId);
-    if (!ratingToUpdate) return;
-
-    const currentHelpfulStatus = ratingToUpdate.isHelpful;
-
-    // Optimistic update
-    const updatedRatingsOptimistic = allRatings.map((rating) =>
-      rating.id === ratingId
-        ? {
-            ...rating,
-            isHelpful: !rating.isHelpful,
-            helpful: rating.isHelpful ? rating.helpful - 1 : rating.helpful + 1,
-          }
-        : rating
-    );
-
-    setAllRatings(updatedRatingsOptimistic);
-    setDisplayedRatings(
-      updatedRatingsOptimistic.slice(0, page * ratingsPerPage)
-    );
+    if (!user) {
+      toast.error('Please login to mark reviews as helpful');
+      return;
+    }
 
     startTransition(async () => {
-      const result = await updateHelpfulCount(ratingId, !currentHelpfulStatus);
+      const result = await updateHelpfulCount(ratingId, user.id);
 
-      if (result.status !== 'success') {
-        // Revert if the update failed
-        const revertedRatings = allRatings.map((rating) =>
+      if (result.status === 'success') {
+        const updatedRatings = allRatings.map((rating) =>
           rating.id === ratingId
             ? {
                 ...rating,
-                isHelpful: currentHelpfulStatus,
-                helpful: ratingToUpdate.helpful,
+                isHelpful: result.isHelpful,
+                helpful: result.isHelpful
+                  ? rating.helpful + 1
+                  : rating.helpful - 1,
               }
             : rating
         );
 
-        setAllRatings(revertedRatings);
-        setDisplayedRatings(revertedRatings.slice(0, page * ratingsPerPage));
-
+        setAllRatings(updatedRatings);
+        setDisplayedRatings(updatedRatings.slice(0, page * ratingsPerPage));
+      } else {
         toast.error(result.message);
       }
     });

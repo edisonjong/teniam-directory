@@ -19,6 +19,7 @@ import { currentUser } from '@/lib/auth';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { submitRating } from '@/actions/rating';
+import { updateHelpfulCount } from '@/actions/helpful-count';
 
 interface Rating {
   id: string;
@@ -51,7 +52,7 @@ const transformSanityRating = (r: any): Rating => ({
   content: r.content,
   timestamp: new Date(r.createdAt || r._createdAt).toLocaleDateString(), // format as needed
   helpful: r.helpfulCount || 0,
-  isHelpful: false,
+  isHelpful: false, // This will be managed client-side
 });
 
 export default function StarRatingsSection({ starRatings, itemName, itemId }) {
@@ -217,8 +218,28 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
       }
     });
   };
-  const handleHelpful = (ratingId: string) => {
-    const updatedRatings = allRatings.map((rating) =>
+  // const handleHelpful = (ratingId: string) => {
+  //   const updatedRatings = allRatings.map((rating) =>
+  //     rating.id === ratingId
+  //       ? {
+  //           ...rating,
+  //           isHelpful: !rating.isHelpful,
+  //           helpful: rating.isHelpful ? rating.helpful - 1 : rating.helpful + 1,
+  //         }
+  //       : rating
+  //   );
+
+  //   setAllRatings(updatedRatings);
+  //   setDisplayedRatings(updatedRatings.slice(0, page * ratingsPerPage));
+  // };
+  const handleHelpful = async (ratingId: string) => {
+    const ratingToUpdate = allRatings.find((r) => r.id === ratingId);
+    if (!ratingToUpdate) return;
+
+    const currentHelpfulStatus = ratingToUpdate.isHelpful;
+
+    // Optimistic update
+    const updatedRatingsOptimistic = allRatings.map((rating) =>
       rating.id === ratingId
         ? {
             ...rating,
@@ -228,10 +249,33 @@ export default function StarRatingsSection({ starRatings, itemName, itemId }) {
         : rating
     );
 
-    setAllRatings(updatedRatings);
-    setDisplayedRatings(updatedRatings.slice(0, page * ratingsPerPage));
-  };
+    setAllRatings(updatedRatingsOptimistic);
+    setDisplayedRatings(
+      updatedRatingsOptimistic.slice(0, page * ratingsPerPage)
+    );
 
+    startTransition(async () => {
+      const result = await updateHelpfulCount(ratingId, !currentHelpfulStatus);
+
+      if (result.status !== 'success') {
+        // Revert if the update failed
+        const revertedRatings = allRatings.map((rating) =>
+          rating.id === ratingId
+            ? {
+                ...rating,
+                isHelpful: currentHelpfulStatus,
+                helpful: ratingToUpdate.helpful,
+              }
+            : rating
+        );
+
+        setAllRatings(revertedRatings);
+        setDisplayedRatings(revertedRatings.slice(0, page * ratingsPerPage));
+
+        toast.error(result.message);
+      }
+    });
+  };
   const handleSubmitAnother = () => {
     setShowThankYou(false);
     setSubmittedRating(0);

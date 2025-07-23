@@ -57,6 +57,7 @@ export async function submitRating(
       console.log('res', res);
       return { status: 'error', message: 'Failed to submit rating' };
     }
+
     await sanityClient
       .patch(itemId)
       .setIfMissing({ ratings: [] })
@@ -70,7 +71,13 @@ export async function submitRating(
       .commit();
 
     // Revalidate the page to show the new rating
-    // revalidatePath(`/items/${itemId}`);
+    const item = await sanityClient.getDocument(itemId);
+
+    if (item?.slug?.current) {
+      revalidatePath(`/item/${item.slug.current}`);
+    } else {
+      console.warn('Slug not found for item, skipping revalidation.');
+    }
 
     return {
       status: 'success',

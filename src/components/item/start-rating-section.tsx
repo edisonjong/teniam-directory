@@ -206,7 +206,7 @@ export default function StarRatingsSection({
 
       if (result.status === 'success') {
         const updatedRatings = allRatings.map((rating) =>
-          rating._id === ratingId
+          rating.id === ratingId
             ? {
                 ...rating,
                 isHelpful: result.isHelpful,

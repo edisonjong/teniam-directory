@@ -518,6 +518,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
     sanityFetch<ItemFullInfo>({
       query: itemFullInfoBySlugQuery,
       params: { slug: params.slug },
+      disableCache: true,
     }),
     sanityFetch<SponsorItemListQueryResult>({
       query: sponsorItemListQuery,

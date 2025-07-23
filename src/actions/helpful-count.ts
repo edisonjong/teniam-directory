@@ -5,12 +5,13 @@ import { RatingActionResponse } from './rating';
 
 export async function updateHelpfulCount(
   ratingId: string,
-  userId: any
+  userId: string
 ): Promise<RatingActionResponse> {
   try {
-    // First get the current rating document
+    // Step 1: Fetch the existing rating document
     const rating = await sanityClient.getDocument(ratingId);
     console.log('Fetched rating:', rating);
+
     if (!rating) {
       return { status: 'error', message: 'Rating not found' };
     }
@@ -24,13 +25,11 @@ export async function updateHelpfulCount(
     let updatedHelpfulUsers = [...helpfulUsers];
 
     if (alreadyHelpful) {
-      // User already liked - remove their like
-      updatedHelpfulCount--;
+      updatedHelpfulCount = Math.max(0, updatedHelpfulCount - 1);
       updatedHelpfulUsers = updatedHelpfulUsers.filter(
         (userRef: any) => userRef._ref !== userId
       );
     } else {
-      // User hasn't liked yet - add their like
       updatedHelpfulCount++;
       updatedHelpfulUsers.push({
         _type: 'reference',
@@ -39,22 +38,17 @@ export async function updateHelpfulCount(
       });
     }
 
-    // Update the document
-    // const res = await sanityClient
-    //   .patch(ratingId)
-    //   .set({
-    //     helpfulCount: updatedHelpfulCount,
-    //     helpfulUsers: updatedHelpfulUsers,
-    //   })
-    //   .commit();
+    // Step 2: Patch using transaction for atomicity
     const res = await sanityClient
-      .patch(ratingId)
-      .setIfMissing({ helpfulUsers: [] })
-      .set({
-        helpfulCount: updatedHelpfulCount,
-        helpfulUsers: updatedHelpfulUsers,
-      })
+      .transaction()
+      .patch(ratingId, (patch) =>
+        patch.setIfMissing({ helpfulUsers: [] }).set({
+          helpfulCount: updatedHelpfulCount,
+          helpfulUsers: updatedHelpfulUsers,
+        })
+      )
       .commit();
+
     if (!res) {
       return { status: 'error', message: 'Failed to update helpful count' };
     }
@@ -62,10 +56,13 @@ export async function updateHelpfulCount(
     return {
       status: 'success',
       message: 'Helpful count updated successfully',
-      isHelpful: !alreadyHelpful, // Return the new state
+      isHelpful: !alreadyHelpful,
     };
-  } catch (error) {
-    console.error('Error updating helpful count:', error);
-    return { status: 'error', message: 'Failed to update helpful count' };
+  } catch (error: any) {
+    console.error('Error updating helpful count:', error.message, error.stack);
+    return {
+      status: 'error',
+      message: error.message || 'Failed to update helpful count',
+    };
   }
 }

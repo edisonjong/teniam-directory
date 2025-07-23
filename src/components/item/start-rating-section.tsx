@@ -84,6 +84,7 @@ export default function StarRatingsSection({
   useEffect(() => {
     if (starRatings?.length) {
       const mapped = starRatings.map((r) => transformSanityRating(r, user?.id));
+      console.log('mapped', mapped);
       setAllRatings(mapped);
       setDisplayedRatings(mapped.slice(0, ratingsPerPage));
       setHasMore(mapped.length > ratingsPerPage);
@@ -134,39 +135,6 @@ export default function StarRatingsSection({
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [loadMoreReviews]);
-
-  // const handleSubmitReview = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   if (!reviewRating || !reviewTitle.trim() || !reviewContent.trim()) return;
-
-  //   const newReview: Rating = {
-  //     id: Date.now().toString() + '_review',
-  //     author: {
-  //       name: 'You',
-  //       avatar:
-  //         'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop&crop=face',
-  //       username: '@you',
-  //     },
-  //     rating: reviewRating,
-  //     title: reviewTitle,
-  //     content: reviewContent,
-  //     timestamp: 'Just now',
-  //     helpful: 0,
-  //     isHelpful: false,
-  //   };
-
-  //   const updatedAllRatings = [newReview, ...allRatings];
-  //   setAllRatings(updatedAllRatings);
-  //   setDisplayedRatings(updatedAllRatings.slice(0, page * ratingsPerPage));
-  //   setSubmittedRating(reviewRating);
-  //   setShowThankYou(true);
-
-  //   // Reset form
-  //   setReviewRating(0);
-  //   setReviewHoverRating(0);
-  //   setReviewTitle('');
-  //   setReviewContent('');
-  // };
 
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault();
@@ -226,20 +194,7 @@ export default function StarRatingsSection({
       }
     });
   };
-  // const handleHelpful = (ratingId: string) => {
-  //   const updatedRatings = allRatings.map((rating) =>
-  //     rating.id === ratingId
-  //       ? {
-  //           ...rating,
-  //           isHelpful: !rating.isHelpful,
-  //           helpful: rating.isHelpful ? rating.helpful - 1 : rating.helpful + 1,
-  //         }
-  //       : rating
-  //   );
 
-  //   setAllRatings(updatedRatings);
-  //   setDisplayedRatings(updatedRatings.slice(0, page * ratingsPerPage));
-  // };
   const handleHelpful = async (ratingId: string) => {
     if (!user) {
       toast.error('Please login to mark reviews as helpful');
@@ -544,7 +499,7 @@ export default function StarRatingsSection({
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleHelpful(rating._id)}
+                            onClick={() => handleHelpful(rating.id)}
                             className={cn(
                               'gap-2 text-muted-foreground hover:text-foreground',
                               rating.isHelpful &&

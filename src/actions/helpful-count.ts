@@ -2,10 +2,12 @@
 
 import { sanityClient } from '@/sanity/lib/client';
 import { RatingActionResponse } from './rating';
+import { revalidatePath } from 'next/cache';
 
 export async function updateHelpfulCount(
   ratingId: string,
-  userId: string
+  userId: string,
+  itemId: string
 ): Promise<RatingActionResponse> {
   try {
     // Step 1: Fetch the existing rating document
@@ -52,7 +54,14 @@ export async function updateHelpfulCount(
     if (!res) {
       return { status: 'error', message: 'Failed to update helpful count' };
     }
+    // Revalidate the page to show the new rating
+    const item = await sanityClient.getDocument(itemId);
 
+    if (item?.slug?.current) {
+      revalidatePath(`/item/${item.slug.current}`);
+    } else {
+      console.warn('Slug not found for item, skipping revalidation.');
+    }
     return {
       status: 'success',
       message: 'Helpful count updated successfully',

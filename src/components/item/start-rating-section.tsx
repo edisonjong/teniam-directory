@@ -195,14 +195,14 @@ export default function StarRatingsSection({
     });
   };
 
-  const handleHelpful = async (ratingId: string) => {
+  const handleHelpful = async (ratingId: string, itemId: string) => {
     if (!user) {
       toast.error('Please login to mark reviews as helpful');
       return;
     }
 
     startTransition(async () => {
-      const result = await updateHelpfulCount(ratingId, user.id);
+      const result = await updateHelpfulCount(ratingId, user.id, itemId);
 
       if (result.status === 'success') {
         const updatedRatings = allRatings.map((rating) =>
@@ -499,7 +499,7 @@ export default function StarRatingsSection({
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleHelpful(rating.id)}
+                            onClick={() => handleHelpful(rating.id, itemId)}
                             className={cn(
                               'gap-2 text-muted-foreground hover:text-foreground',
                               rating.isHelpful &&

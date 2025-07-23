@@ -60,7 +60,7 @@ export default defineType({
     prepare(selection) {
       const { title, rating, authorName } = selection;
       return {
-        title: `${title} (${rating}★)`,
+        title: `${rating} Star`,
         subtitle: `By ${authorName ?? 'Unknown user'}`,
       };
     },

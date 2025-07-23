@@ -22,6 +22,7 @@ import { submitRating } from '@/actions/rating';
 import { updateHelpfulCount } from '@/actions/helpful-count';
 
 interface Rating {
+  _id?: string;
   id: string;
   author: {
     name: string;
@@ -503,7 +504,7 @@ export default function StarRatingsSection({
             {allRatings.length > 0 ? (
               <div className="space-y-6">
                 {displayedRatings.map((rating) => (
-                  <Card key={rating.id} className="p-6">
+                  <Card key={rating._id} className="p-6">
                     <div className="flex gap-4">
                       <Avatar className="h-10 w-10 flex-shrink-0">
                         {/* <AvatarImage
@@ -543,7 +544,7 @@ export default function StarRatingsSection({
                           <Button
                             variant="ghost"
                             size="sm"
-                            onClick={() => handleHelpful(rating.id)}
+                            onClick={() => handleHelpful(rating._id)}
                             className={cn(
                               'gap-2 text-muted-foreground hover:text-foreground',
                               rating.isHelpful &&

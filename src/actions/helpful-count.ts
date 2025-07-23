@@ -10,6 +10,7 @@ export async function updateHelpfulCount(
   try {
     // First get the current rating document
     const rating = await sanityClient.getDocument(ratingId);
+    console.log('Fetched rating:', rating);
     if (!rating) {
       return { status: 'error', message: 'Rating not found' };
     }
@@ -39,14 +40,21 @@ export async function updateHelpfulCount(
     }
 
     // Update the document
+    // const res = await sanityClient
+    //   .patch(ratingId)
+    //   .set({
+    //     helpfulCount: updatedHelpfulCount,
+    //     helpfulUsers: updatedHelpfulUsers,
+    //   })
+    //   .commit();
     const res = await sanityClient
       .patch(ratingId)
+      .setIfMissing({ helpfulUsers: [] })
       .set({
         helpfulCount: updatedHelpfulCount,
         helpfulUsers: updatedHelpfulUsers,
       })
       .commit();
-
     if (!res) {
       return { status: 'error', message: 'Failed to update helpful count' };
     }

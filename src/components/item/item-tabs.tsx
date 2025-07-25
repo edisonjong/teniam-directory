@@ -16,7 +16,7 @@ const navigationItems = [
   { id: "analytics", label: "Analytics", icon: BarChart3 },
 ];
 
-type ActiveSection = "overview" | "technologies" | "ratings" | "analytics";
+type ActiveSection = "overview" | "technologies" | "ratings";
 
 export default function ClientTabs({ item, sponsorItem }) {
   const [activeSection, setActiveSection] = useState<ActiveSection>("overview");
@@ -39,8 +39,8 @@ export default function ClientTabs({ item, sponsorItem }) {
             itemId={item._id}
           />
         );
-      case "analytics":
-        return <AnalyticsSection />;
+      // case "analytics":
+      //   return <AnalyticsSection />;
       default:
         return <OverviewSection item={item} sponsorItem={sponsorItem} />;
     }

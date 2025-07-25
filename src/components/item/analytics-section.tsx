@@ -159,7 +159,7 @@ export default function AnalyticsSection() {
 
   return (
     <section className="">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl md:px-6 px-0">
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="h-5 w-5" />

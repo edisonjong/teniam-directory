@@ -3,18 +3,24 @@
 import { currentUser } from '@/lib/auth';
 import { sanityClient } from '@/sanity/lib/client';
 import { revalidatePath } from 'next/cache';
-
+import { uuid } from '@sanity/uuid';
 export type RatingFormData = {
   rating: number;
   title: string;
   content: string;
-  itemId: string; // Reference to the item being rated
+  itemId: string;
 };
 
 export type RatingActionResponse = {
   status: 'success' | 'error';
   message?: string;
   id?: string;
+  author?: {
+    name: string;
+    username: string;
+    avatar: string;
+  };
+  isHelpful?: boolean;
 };
 
 export async function submitRating(
@@ -52,13 +58,36 @@ export async function submitRating(
       return { status: 'error', message: 'Failed to submit rating' };
     }
 
+    await sanityClient
+      .patch(itemId)
+      .setIfMissing({ ratings: [] })
+      .append('ratings', [
+        {
+          _type: 'reference',
+          _ref: res._id,
+          _key: uuid(),
+        },
+      ])
+      .commit();
+
     // Revalidate the page to show the new rating
-    // revalidatePath(`/items/${itemId}`);
+    const item = await sanityClient.getDocument(itemId);
+
+    if (item?.slug?.current) {
+      revalidatePath(`/item/${item.slug.current}`);
+    } else {
+      console.warn('Slug not found for item, skipping revalidation.');
+    }
 
     return {
       status: 'success',
       message: 'Rating submitted successfully',
       id: res._id,
+      author: {
+        name: user.name,
+        username: user.name,
+        avatar: user.image,
+      },
     };
   } catch (error) {
     console.error('Error submitting rating:', error);

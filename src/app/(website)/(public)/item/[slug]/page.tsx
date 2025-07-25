@@ -484,6 +484,7 @@ import CoreTechnologiesSection from '@/components/item/core-technologies-section
 import StarRatingsSection from '@/components/item/start-rating-section';
 import AnalyticsSection from '@/components/item/analytics-section';
 import ClientTabs from '@/components/item/item-tabs';
+import { currentUser } from '@/lib/auth';
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export async function generateMetadata({
   params,
@@ -517,6 +518,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
     sanityFetch<ItemFullInfo>({
       query: itemFullInfoBySlugQuery,
       params: { slug: params.slug },
+      disableCache: true,
     }),
     sanityFetch<SponsorItemListQueryResult>({
       query: sponsorItemListQuery,
@@ -539,7 +541,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
   //   ? sponsorItems[Math.floor(Math.random() * sponsorItems.length)]
   //   : null;
   const sponsorItem = sponsorItems?.length ? sponsorItems.slice(0, 2) : null;
-
+  const user = await currentUser();
   return (
     <main className="overflow-x-hidden">
       <section>
@@ -551,7 +553,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
 
               <ShareButton />
             </div> */}
-            <ClientTabs item={item} sponsorItem={sponsorItem} />
+            <ClientTabs item={item} sponsorItem={sponsorItem} user={user} />
             {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col">
                 <MotionWrapper

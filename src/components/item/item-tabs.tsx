@@ -16,9 +16,9 @@ const navigationItems = [
   { id: "analytics", label: "Analytics", icon: BarChart3 },
 ];
 
-type ActiveSection = "overview" | "technologies" | "ratings";
+type ActiveSection = "overview" | "technologies" | "ratings" | "analytics";
 
-export default function ClientTabs({ item, sponsorItem }) {
+export default function ClientTabs({ item, sponsorItem, user }) {
   const [activeSection, setActiveSection] = useState<ActiveSection>("overview");
 
   const renderActiveSection = () => {
@@ -37,10 +37,11 @@ export default function ClientTabs({ item, sponsorItem }) {
             starRatings={item?.ratings && item?.ratings}
             itemName={item?.name}
             itemId={item._id}
+            user={user}
           />
         );
-      // case "analytics":
-      //   return <AnalyticsSection />;
+      case "analytics":
+        return <AnalyticsSection />;
       default:
         return <OverviewSection item={item} sponsorItem={sponsorItem} />;
     }
@@ -49,7 +50,7 @@ export default function ClientTabs({ item, sponsorItem }) {
   return (
     <>
       <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto max-w-7xl px-6 ">
+        <div className="mx-auto max-w-7xl md:px-6 px-0 ">
           <div className="flex h-16 items-center justify-between mb-8">
             <nav className="flex items-center space-x-1 rounded-lg bg-muted p-1 overflow-x-auto">
               {navigationItems.map((item) => {

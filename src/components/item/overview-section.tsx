@@ -23,7 +23,7 @@ export default function OverviewSection({ item, sponsorItem }) {
     <section>
       <div className="relative ">
         <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"></div>
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-7xl md:px-6 px-0 ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="flex flex-col">
               <MotionWrapper

@@ -1,7 +1,7 @@
-import { sanityClient } from "@/sanity/lib/client";
-import { token } from "@/sanity/lib/token";
-import type { ClientPerspective, QueryParams } from "next-sanity";
-import { draftMode } from "next/headers";
+import { sanityClient } from '@/sanity/lib/client';
+import { token } from '@/sanity/lib/token';
+import type { ClientPerspective, QueryParams } from 'next-sanity';
+import { draftMode } from 'next/headers';
 
 /**
  * https://www.sanity.io/plugins/next-sanity
@@ -16,20 +16,20 @@ import { draftMode } from "next/headers";
 export async function sanityFetch<QueryResponse>({
   query,
   params = {},
-  perspective = process.env.NODE_ENV === "development" || draftMode().isEnabled
-    ? "previewDrafts"
-    : "published",
+  perspective = process.env.NODE_ENV === 'development' || draftMode().isEnabled
+    ? 'previewDrafts'
+    : 'published',
   disableCache,
 }: {
   query: string;
   params?: QueryParams;
-  perspective?: Omit<ClientPerspective, "raw">;
+  perspective?: Omit<ClientPerspective, 'raw'>;
   disableCache?: boolean;
 }) {
   // console.log('sanityFetch, perspective', perspective, 'query', query);
-  if (perspective === "previewDrafts") {
+  if (perspective === 'previewDrafts') {
     return sanityClient.fetch<QueryResponse>(query, params, {
-      perspective: "previewDrafts",
+      perspective: 'previewDrafts',
       // The token is required to fetch draft content
       token,
       // The `previewDrafts` perspective isn't available on the API CDN
@@ -39,7 +39,7 @@ export async function sanityFetch<QueryResponse>({
     });
   }
   return sanityClient.fetch<QueryResponse>(query, params, {
-    perspective: "published",
+    perspective: 'published',
     // The `published` perspective is available on the API CDN
     useCdn: !disableCache,
     // When using the `published` perspective we use time-based revalidation

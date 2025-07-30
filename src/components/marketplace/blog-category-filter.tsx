@@ -11,9 +11,9 @@ export async function BlogCategoryFilter() {
   });
 
   return (
-    <section className="w-full">
+    <section className="w-full mx-auto mb-16">
       {/* Desktop View, has Container */}
-      <Container className="hidden md:block">
+      <Container className="hidden md:block ">
         <BlogCategoryListDesktop categoryList={categoryList} />
       </Container>
 

@@ -4,50 +4,51 @@
  * @type {string[]}
  */
 export const publicRoutes = [
-  "/",
-  "/studio(/.*)?",
+  '/',
+  '/studio(/.*)?',
 
-  "/search(/.*)?",
-  "/collection(/.*)?",
-  "/category(/.*)?",
-  "/tag(/.*)?",
-  "/item(/.*)?",
-  "/contact(/.*)?",
-  "/blog(/.*)?",
-  "/pricing(/.*)?",
+  '/search(/.*)?',
+  '/collection(/.*)?',
+  '/category(/.*)?',
+  '/tag(/.*)?',
+  '/item(/.*)?',
+  '/contact(/.*)?',
+  '/blog(/.*)?',
+  '/pricing(/.*)?',
 
-  "/about(/.*)?",
-  "/terms(/.*)?",
-  "/privacy-policy(/.*)?",
-  "/changelog(/.*)?",
+  '/about(/.*)?',
+  '/terms(/.*)?',
+  '/privacy-policy(/.*)?',
+  '/changelog(/.*)?',
 
   // user clicks verification link from email
-  "/auth/new-verification",
+  '/auth/new-verification',
 
   // unsubscribe
-  "/unsubscribe(/.*)?",
+  '/unsubscribe(/.*)?',
 
   // stripe webhook must be public, otherwise can not receive stripe events
-  "/api/webhook",
+  '/api/webhook',
 
   // send emails, like submission approval or rejection emails
-  "/api/send-email",
+  '/api/send-email',
 
   // og images
-  "/api/og",
+  '/api/og',
 
   // draft mode
-  "/api/draft",
+  '/api/draft',
 
   // test pages
-  "/shadcn(/.*)?",
-  "/loading(/.*)?",
-  "/home2(/.*)?",
-  "/home3(/.*)?",
-  "/home4(/.*)?",
-  "/directories(/.*)?",
-  "/product(/.*)?",
-  "/sections(/.*)?",
+  '/shadcn(/.*)?',
+  '/loading(/.*)?',
+  '/home2(/.*)?',
+  '/home3(/.*)?',
+  '/home4(/.*)?',
+  '/directories(/.*)?',
+  '/product(/.*)?',
+  '/sections(/.*)?',
+  '/marketplace(/.*)?',
 ];
 
 /**
@@ -56,11 +57,11 @@ export const publicRoutes = [
  * @type {string[]}
  */
 export const authRoutes = [
-  "/auth/login",
-  "/auth/register",
-  "/auth/error",
-  "/auth/reset",
-  "/auth/new-password",
+  '/auth/login',
+  '/auth/register',
+  '/auth/error',
+  '/auth/reset',
+  '/auth/new-password',
 ];
 
 /**
@@ -68,10 +69,10 @@ export const authRoutes = [
  * Routes that start with this prefix are used for API authentication purposes
  * @type {string}
  */
-export const apiAuthPrefix = "/api/auth";
+export const apiAuthPrefix = '/api/auth';
 
 /**
  * The default redirect path after logging in
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+export const DEFAULT_LOGIN_REDIRECT = '/dashboard';

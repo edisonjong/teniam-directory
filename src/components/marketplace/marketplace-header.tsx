@@ -31,15 +31,17 @@ import { MarketplaceSearch } from './marketplace-search';
 type BlogHeaderProps = {
   posts: any[];
   searchParams: { [key: string]: string | string[] | undefined };
+  params?: { slug: string };
 };
 
 export default function MarketplaceHeader({
   posts,
   searchParams,
+  params,
 }: BlogHeaderProps) {
   const router = useRouter();
   const [sortOrder, setSortOrder] = useState('default');
-
+  console.log('searchParams', params);
   const getSortIcon = useCallback(() => {
     switch (sortOrder) {
       case 'newest':
@@ -100,14 +102,17 @@ export default function MarketplaceHeader({
                       e.preventDefault();
                       router.push('/marketplace');
                     }}
+                    className="cursor-pointer"
                   >
                     Marketplace
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="truncate">
-                    All Products
+                  <BreadcrumbPage className="truncate capitalize">
+                    {params?.slug
+                      ? String(params.slug).replace(/-/g, ' ')
+                      : 'All Products'}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>

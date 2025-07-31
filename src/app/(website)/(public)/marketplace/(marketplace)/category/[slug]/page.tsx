@@ -66,7 +66,11 @@ export default async function BlogCategoryPage({
   return (
     <div className=" w-full flex flex-col items-center justify-center gap-8">
       {/* when no posts are found */}
-      <MarketplaceHeader posts={posts} searchParams={searchParams || {}} />
+      <MarketplaceHeader
+        posts={posts}
+        searchParams={searchParams || {}}
+        params={params}
+      />
       <BlogCategoryFilter />
       {posts?.length === 0 && <EmptyGrid />}
 

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Breadcrumb,
@@ -7,15 +7,15 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
-import { CommandSearch } from "@/components/ui/command-search";
+} from '@/components/ui/breadcrumb';
+import { Button } from '@/components/ui/button';
+import { CommandSearch } from '@/components/ui/command-search';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   ArrowDown,
   ArrowUp,
@@ -23,9 +23,10 @@ import {
   HomeIcon,
   SortAsc,
   SortDesc,
-} from "lucide-react";
-import React, { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
+} from 'lucide-react';
+import React, { useCallback, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { MarketplaceSearch } from './marketplace-search';
 
 type BlogHeaderProps = {
   posts: any[];
@@ -37,17 +38,17 @@ export default function MarketplaceHeader({
   searchParams,
 }: BlogHeaderProps) {
   const router = useRouter();
-  const [sortOrder, setSortOrder] = useState("default");
+  const [sortOrder, setSortOrder] = useState('default');
 
   const getSortIcon = useCallback(() => {
     switch (sortOrder) {
-      case "newest":
+      case 'newest':
         return <ArrowDown className="h-4 w-4" />;
-      case "oldest":
+      case 'oldest':
         return <ArrowUp className="h-4 w-4" />;
-      case "a-z":
+      case 'a-z':
         return <SortAsc className="h-4 w-4" />;
-      case "z-a":
+      case 'z-a':
         return <SortDesc className="h-4 w-4" />;
       default:
         return <ArrowUpDown className="h-4 w-4" />;
@@ -60,16 +61,16 @@ export default function MarketplaceHeader({
 
       setSortOrder(value);
 
-      if (value === "default") {
-        params.delete("sort");
-      } else if (value === "newest") {
-        params.set("sort", "date-desc");
-      } else if (value === "oldest") {
-        params.set("sort", "date-asc");
-      } else if (value === "a-z") {
-        params.set("sort", "name-asc");
-      } else if (value === "z-a") {
-        params.set("sort", "name-desc");
+      if (value === 'default') {
+        params.delete('sort');
+      } else if (value === 'newest') {
+        params.set('sort', 'date-desc');
+      } else if (value === 'oldest') {
+        params.set('sort', 'date-asc');
+      } else if (value === 'a-z') {
+        params.set('sort', 'name-asc');
+      } else if (value === 'z-a') {
+        params.set('sort', 'name-desc');
       }
 
       router.push(`?${params.toString()}`);
@@ -97,7 +98,7 @@ export default function MarketplaceHeader({
                   <BreadcrumbLink
                     onClick={(e) => {
                       e.preventDefault();
-                      router.push("/marketplace");
+                      router.push('/marketplace');
                     }}
                   >
                     Marketplace
@@ -114,7 +115,7 @@ export default function MarketplaceHeader({
           </div>
 
           <div className="flex items-center gap-2 ml-2">
-            <CommandSearch items={posts} />
+            <MarketplaceSearch items={posts} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -127,23 +128,23 @@ export default function MarketplaceHeader({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleSortChange("default")}>
+                <DropdownMenuItem onClick={() => handleSortChange('default')}>
                   <ArrowUpDown className="h-4 w-4 mr-2" />
                   Default
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("newest")}>
+                <DropdownMenuItem onClick={() => handleSortChange('newest')}>
                   <ArrowDown className="h-4 w-4 mr-2" />
-                  Newest
+                  Highest Price
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("oldest")}>
+                <DropdownMenuItem onClick={() => handleSortChange('oldest')}>
                   <ArrowUp className="h-4 w-4 mr-2" />
-                  Oldest
+                  Lowest Price
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("a-z")}>
+                <DropdownMenuItem onClick={() => handleSortChange('a-z')}>
                   <SortAsc className="h-4 w-4 mr-2" />
                   A-Z
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleSortChange("z-a")}>
+                <DropdownMenuItem onClick={() => handleSortChange('z-a')}>
                   <SortDesc className="h-4 w-4 mr-2" />
                   Z-A
                 </DropdownMenuItem>

@@ -1,14 +1,14 @@
-import BlogGrid from "@/components/blog/blog-grid";
-import EmptyGrid from "@/components/shared/empty-grid";
-import CustomPagination from "@/components/shared/pagination";
-import { siteConfig } from "@/config/site";
-import { getBlogs } from "@/data/blog";
-import { POSTS_PER_PAGE } from "@/lib/constants";
-import { constructMetadata } from "@/lib/metadata";
+import BlogGrid from '@/components/blog/blog-grid';
+import EmptyGrid from '@/components/shared/empty-grid';
+import CustomPagination from '@/components/shared/pagination';
+import { siteConfig } from '@/config/site';
+import { getBlogs } from '@/data/blog';
+import { POSTS_PER_PAGE } from '@/lib/constants';
+import { constructMetadata } from '@/lib/metadata';
 
 export const metadata = constructMetadata({
-  title: "Blog",
-  description: "Read our latest blog posts",
+  title: 'Blog',
+  description: 'Read our latest blog posts',
   canonicalUrl: `${siteConfig.url}/blog`,
 });
 
@@ -17,16 +17,16 @@ export default async function BlogIndexPage({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  console.log("BlogIndexPage, searchParams", searchParams);
+  console.log('BlogIndexPage, searchParams', searchParams);
   const { page } = searchParams as { [key: string]: string };
   const currentPage = page ? Number(page) : 1;
   const { posts, totalCount } = await getBlogs({ currentPage });
   const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
   console.log(
-    "BlogIndexPage, totalCount",
+    'BlogIndexPage, totalCount',
     totalCount,
-    ", totalPages",
-    totalPages,
+    ', totalPages',
+    totalPages
   );
 
   return (

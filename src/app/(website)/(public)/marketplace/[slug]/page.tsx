@@ -1,26 +1,27 @@
-import AllPostsButton from '@/components/blog/all-posts-button';
-import BlogCustomMdx from '@/components/blog/blog-custom-mdx';
-import BlogGrid from '@/components/blog/blog-grid';
-import { BlogToc } from '@/components/blog/blog-toc';
-import ShareButton from '@/components/shared/share-button';
-import { UserAvatar } from '@/components/shared/user-avatar';
-import { siteConfig } from '@/config/site';
-import { urlForImage } from '@/lib/image';
-import { portableTextToMarkdown } from '@/lib/mdx';
-import { constructMetadata } from '@/lib/metadata';
-import { getTableOfContents } from '@/lib/toc';
-import { getLocaleDate } from '@/lib/utils';
+import AllPostsButton from "@/components/blog/all-posts-button";
+import BlogCustomMdx from "@/components/blog/blog-custom-mdx";
+import BlogGrid from "@/components/blog/blog-grid";
+import { BlogToc } from "@/components/blog/blog-toc";
+import PricingPlanSelector from "@/components/marketplace/pricing-plan-selector";
+import ShareButton from "@/components/shared/share-button";
+import { UserAvatar } from "@/components/shared/user-avatar";
+import { siteConfig } from "@/config/site";
+import { urlForImage } from "@/lib/image";
+import { portableTextToMarkdown } from "@/lib/mdx";
+import { constructMetadata } from "@/lib/metadata";
+import { getTableOfContents } from "@/lib/toc";
+import { getLocaleDate } from "@/lib/utils";
 import type {
   BlogPostMetadataQueryResult,
   BlogPostQueryResult,
-} from '@/sanity.types';
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { blogPostMetadataQuery, blogPostQuery } from '@/sanity/lib/queries';
-import { FileTextIcon } from 'lucide-react';
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+} from "@/sanity.types";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { blogPostMetadataQuery, blogPostQuery } from "@/sanity/lib/queries";
+import { FileTextIcon } from "lucide-react";
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -58,7 +59,7 @@ export default async function PostPage({ params }: PostPageProps) {
     params: queryParams,
   });
   if (!post) {
-    console.error('PostPage, post not found');
+    console.error("PostPage, post not found");
     return notFound();
   }
 
@@ -85,13 +86,13 @@ export default async function PostPage({ params }: PostPageProps) {
               {imageProps && (
                 <Image
                   src={imageProps.src}
-                  alt={post.image?.alt || 'image for blog post'}
-                  title={post.image?.alt || 'image for blog post'}
+                  alt={post.image?.alt || "image for blog post"}
+                  title={post.image?.alt || "image for blog post"}
                   loading="eager"
                   fill
                   className="object-cover"
                   {...(imageBlurDataURL && {
-                    placeholder: 'blur',
+                    placeholder: "blur",
                     blurDataURL: imageBlurDataURL,
                   })}
                 />
@@ -150,7 +151,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
         {/* Right column (sidebar) */}
         <div>
-          <div className="space-y-4 lg:sticky lg:top-24">
+          <div className=" lg:sticky lg:top-24">
             {/* author info */}
             {/* <div className="bg-muted/50 rounded-lg p-6">
               <h2 className="text-lg font-semibold mb-4">Publisher</h2>
@@ -182,7 +183,7 @@ export default async function PostPage({ params }: PostPageProps) {
             </div> */}
 
             {/* categories */}
-            <div className="bg-muted/50 rounded-lg p-6">
+            <div className="bg-muted/50  p-6">
               <h2 className="text-lg font-semibold mb-4">Categories</h2>
               <ul className="flex flex-wrap gap-4">
                 {post.categories?.map((category) => (
@@ -199,12 +200,14 @@ export default async function PostPage({ params }: PostPageProps) {
             </div>
 
             {/* table of contents */}
-            <div className="bg-muted/50 rounded-lg p-6 hidden lg:block">
+
+            <PricingPlanSelector />
+            {/* <div className="bg-muted/50 rounded-lg p-6 hidden lg:block">
               <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
               <div className="max-h-[calc(100vh-18rem)] overflow-y-auto">
                 <BlogToc toc={toc} />
               </div>
-            </div>
+            </div> */}
             {/* share button */}
             <div className="p-2">
               <h6 className="text-md my-2">Share this post</h6>

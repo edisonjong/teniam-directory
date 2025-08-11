@@ -1,4 +1,6 @@
-import BlogGrid from '@/components/blog/blog-grid';
+import { BlogCategoryFilter } from '@/components/marketplace/blog-category-filter';
+import MarketPlaceGrid from '@/components/marketplace/marketplace-grid';
+import MarketplaceHeader from '@/components/marketplace/marketplace-header';
 import EmptyGrid from '@/components/shared/empty-grid';
 import CustomPagination from '@/components/shared/pagination';
 import { siteConfig } from '@/config/site';
@@ -34,7 +36,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: `${category.name}`,
     description: category.description,
-    canonicalUrl: `${siteConfig.url}/blog/category/${params.slug}`,
+    canonicalUrl: `${siteConfig.url}/marketplace/category/${params.slug}`,
     // image: ogImageUrl.toString(),
   });
 }
@@ -62,14 +64,20 @@ export default async function BlogCategoryPage({
   );
 
   return (
-    <div>
+    <div className=" w-full flex flex-col items-center justify-center gap-8">
       {/* when no posts are found */}
+      <MarketplaceHeader
+        posts={posts}
+        searchParams={searchParams || {}}
+        params={params}
+      />
+      <BlogCategoryFilter />
       {posts?.length === 0 && <EmptyGrid />}
 
       {/* when posts are found */}
       {posts && posts?.length > 0 && (
         <div>
-          <BlogGrid posts={posts} />
+          <MarketPlaceGrid posts={posts} />
 
           <div className="mt-8 flex items-center justify-center">
             <CustomPagination

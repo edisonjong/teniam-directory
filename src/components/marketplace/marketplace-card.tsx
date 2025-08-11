@@ -1,26 +1,26 @@
-"use client";
-import { Skeleton } from "@/components/ui/skeleton";
-import { urlForImage } from "@/lib/image";
-import { getLocaleDate } from "@/lib/utils";
-import type { BlogPostInfo } from "@/types";
-import Image from "next/image";
-import Link from "next/link";
-import { UserAvatar } from "../shared/user-avatar";
-import { usePathname } from "next/navigation";
+'use client';
+import { Skeleton } from '@/components/ui/skeleton';
+import { urlForImage } from '@/lib/image';
+import { getLocaleDate } from '@/lib/utils';
+import type { BlogPostInfo } from '@/types';
+import Image from 'next/image';
+import Link from 'next/link';
+import { UserAvatar } from '../shared/user-avatar';
+import { usePathname } from 'next/navigation';
 
-type BlogCardProps = {
+type MarketplaceCardProps = {
   post: BlogPostInfo;
 };
 
-export default function BlogCard({ post }: BlogCardProps) {
+export default function MarketplaceCard({ post }: MarketplaceCardProps) {
   const pathname = usePathname();
   const isBlogDetailPage =
-    pathname.startsWith("/blog/") && pathname !== "/blog";
+    pathname.startsWith('/marketplace/') && pathname !== '/marketplace';
   const imageProps = post?.image ? urlForImage(post.image) : null;
   const imageBlurDataURL = post?.image?.blurDataURL || null;
   const publishDate = post.publishDate || post._createdAt;
   const date = getLocaleDate(publishDate);
-  const postUrlPrefix = "/blog";
+  const postUrlPrefix = '/marketplace';
 
   return (
     <div className="group cursor-pointer flex flex-col gap-4">
@@ -31,12 +31,12 @@ export default function BlogCard({ post }: BlogCardProps) {
             <div className="relative w-full h-full">
               <Image
                 src={imageProps.src}
-                alt={post.image.alt || "image for blog post"}
-                title={post.image.alt || "image for blog post"}
+                alt={post.image.alt || 'image for blog post'}
+                title={post.image.alt || 'image for blog post'}
                 className="object-cover image-scale"
                 fill
                 {...(imageBlurDataURL && {
-                  placeholder: "blur",
+                  placeholder: 'blur',
                   blurDataURL: imageBlurDataURL,
                 })}
               />
@@ -107,7 +107,9 @@ export default function BlogCard({ post }: BlogCardProps) {
         )}
         {/* Author and date */}
         <div
-          className={`flex items-center justify-between space-x-4 text-muted-foreground ${isBlogDetailPage ? "" : "pt-4"}`}
+          className={`flex items-center justify-between space-x-4 text-muted-foreground ${
+            isBlogDetailPage ? '' : 'pt-4'
+          }`}
         >
           <div className="flex items-center gap-2">
             <UserAvatar
@@ -117,10 +119,10 @@ export default function BlogCard({ post }: BlogCardProps) {
             />
             <span className="truncate text-sm">{post?.author?.name}</span>
           </div>
-
-          <time className="truncate text-sm" dateTime={date}>
+          <div className="truncate text-sm">$29-$60</div>
+          {/* <time className="truncate text-sm" dateTime={date}>
             {date}
-          </time>
+          </time> */}
         </div>
       </div>
     </div>

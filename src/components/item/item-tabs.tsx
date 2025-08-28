@@ -13,7 +13,7 @@ const navigationItems = [
   { id: 'overview', label: 'Overview', icon: Info },
   { id: 'technologies', label: 'Core Technologies', icon: Layers },
   { id: 'ratings', label: 'Star Ratings', icon: Star },
-  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  // { id: 'analytics', label: 'Analytics', icon: BarChart3 },
 ];
 
 type ActiveSection = 'overview' | 'technologies' | 'ratings';

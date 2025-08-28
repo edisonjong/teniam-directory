@@ -22,12 +22,7 @@ export default async function BlogIndexPage({
   const currentPage = page ? Number(page) : 1;
   const { posts, totalCount } = await getBlogs({ currentPage });
   const totalPages = Math.ceil(totalCount / POSTS_PER_PAGE);
-  console.log(
-    'BlogIndexPage, totalCount',
-    totalCount,
-    ', totalPages',
-    totalPages
-  );
+
 
   return (
     <div>

@@ -76,13 +76,15 @@
 // }
 // import { HomeContent } from "@/components/home2/home2-content";
 // import HomeContent from '@/components/home4/home-content';
-import HomeContent from '@/components/home4/home-content';
-import { siteConfig } from '@/config/site';
-import { constructMetadata } from '@/lib/metadata';
+import HomeContent from "@/components/home4/home-content";
+import { siteConfig } from "@/config/site";
+import { constructMetadata } from "@/lib/metadata";
 
 export const metadata = constructMetadata({
-  title: '',
-  canonicalUrl: `${siteConfig.url}/`,
+  title: "SolopreneursTech Hub",
+  description:
+    "Solopreneurs & startup hub for AI tools, frameworks, and boilerplates. Discover curated resources for developers, founders, and innovators in one place.",
+  canonicalUrl: `${siteConfig.url}`,
 });
 
 export default async function LandingPage() {

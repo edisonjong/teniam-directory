@@ -16,6 +16,7 @@ import type {
 } from "@/sanity.types";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { blogPostMetadataQuery, blogPostQuery } from "@/sanity/lib/queries";
+import { ArticleSchema } from "@/components/seo/article-schema";
 import { FileTextIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -72,87 +73,108 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const toc = await getTableOfContents(markdownContent);
 
-  return (
-    <div className="flex flex-col gap-8">
-      {/* Content section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left column */}
-        <div className="lg:col-span-2 flex flex-col">
-          {/* Basic information */}
-          <div className="space-y-8">
-            {/* blog post image */}
-            <div className="group overflow-hidden relative aspect-[16/9] rounded-lg transition-all border">
-              {imageProps && (
-                <Image
-                  src={imageProps.src}
-                  alt={post.image?.alt || "image for blog post"}
-                  title={post.image?.alt || "image for blog post"}
-                  loading="eager"
-                  fill
-                  className="object-cover"
-                  {...(imageBlurDataURL && {
-                    placeholder: "blur",
-                    blurDataURL: imageBlurDataURL,
-                  })}
-                />
-              )}
-            </div>
+  // Prepare article schema data
+  const articleData = {
+    title: post.title,
+    excerpt: post.excerpt || undefined,
+    image: imageProps
+      ? {
+          src: imageProps.src,
+          alt: post.image?.alt || post.title,
+        }
+      : undefined,
+    publishedAt: publishDate,
+    // updatedAt: post._updatedAt || undefined,
+    author: {
+      name: post.author?.name || siteConfig.author,
+      image: post.author?.image || undefined,
+    },
+    slug: post.slug?.current || params.slug,
+  };
 
-            {/* blog post title */}
-            <h1 className="text-3xl font-bold">{post.title}</h1>
-            {/* dotted line separator */}
-            <div className="border-t border-dashed my-4" />
-            {/* author info */}
-            <div className=" rounded-lg py-6">
-              {/* <h2 className="text-lg font-semibold mb-4">Publisher</h2> */}
-              <div className="flex justify-between items-center">
-                {/* Left side: Avatar + Name */}
-                <div className="flex items-center gap-3">
-                  <div className="relative h-10 w-10 flex-shrink-0">
-                    <UserAvatar
-                      name={post.author?.name || null}
-                      image={post.author?.image || null}
-                      className="border size-10"
-                    />
+  return (
+    <>
+      <ArticleSchema post={articleData} />
+      <div className="flex flex-col gap-8">
+        {/* Content section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left column */}
+          <div className="lg:col-span-2 flex flex-col">
+            {/* Basic information */}
+            <div className="space-y-8">
+              {/* blog post image */}
+              <div className="group overflow-hidden relative aspect-[16/9] rounded-lg transition-all border">
+                {imageProps && (
+                  <Image
+                    src={imageProps.src}
+                    alt={post.image?.alt || "image for blog post"}
+                    title={post.image?.alt || "image for blog post"}
+                    loading="eager"
+                    fill
+                    className="object-cover"
+                    {...(imageBlurDataURL && {
+                      placeholder: "blur",
+                      blurDataURL: imageBlurDataURL,
+                    })}
+                  />
+                )}
+              </div>
+
+              {/* blog post title */}
+              <h1 className="text-3xl font-bold">{post.title}</h1>
+              {/* dotted line separator */}
+              <div className="border-t border-dashed my-4" />
+              {/* author info */}
+              <div className=" rounded-lg py-6">
+                {/* <h2 className="text-lg font-semibold mb-4">Publisher</h2> */}
+                <div className="flex justify-between items-center">
+                  {/* Left side: Avatar + Name */}
+                  <div className="flex items-center gap-3">
+                    <div className="relative h-10 w-10 flex-shrink-0">
+                      <UserAvatar
+                        name={post.author?.name || null}
+                        image={post.author?.image || null}
+                        className="border size-10"
+                      />
+                    </div>
+
+                    {post.author?.link ? (
+                      <Link
+                        href={post.author.link}
+                        target="_blank"
+                        prefetch={false}
+                        className="font-medium link-underline"
+                      >
+                        {post.author.name}
+                      </Link>
+                    ) : (
+                      <span className="font-medium">{post.author.name}</span>
+                    )}
                   </div>
 
-                  {post.author?.link ? (
-                    <Link
-                      href={post.author.link}
-                      target="_blank"
-                      prefetch={false}
-                      className="font-medium link-underline"
-                    >
-                      {post.author.name}
-                    </Link>
-                  ) : (
-                    <span className="font-medium">{post.author.name}</span>
-                  )}
+                  {/* Right side: Date */}
+                  <p className="text-sm text-muted-foreground">{date}</p>
                 </div>
-
-                {/* Right side: Date */}
-                <p className="text-sm text-muted-foreground">{date}</p>
               </div>
+              {/* blog post description */}
+              <p className="text-lg text-muted-foreground">{post.excerpt}</p>
             </div>
-            {/* blog post description */}
-            <p className="text-lg text-muted-foreground">{post.excerpt}</p>
+
+            {/* blog post content */}
+            <div className="mt-4">
+              {markdownContent && <BlogCustomMdx source={markdownContent} />}
+            </div>
+
+            <div className="flex items-center justify-start mt-16">
+              <AllPostsButton />
+            </div>
           </div>
 
-          {/* blog post content */}
-          <div className="mt-4">
-            {markdownContent && <BlogCustomMdx source={markdownContent} />}
-          </div>
-
-          <div className="flex items-center justify-start mt-16">
-            <AllPostsButton />
-          </div>
-        </div>
-
-        {/* Right column (sidebar) */}
-        <div>
-          <div className="space-y-4 lg:sticky lg:top-24">
-            {/* author info */}
-            {/* <div className="bg-muted/50 rounded-lg p-6">
+          {/* Right column (sidebar) */}
+          <div>
+            <div className="space-y-4 lg:sticky lg:top-24">
+              {/* author info */}
+              {/* <div className="bg-muted/50 rounded-lg p-6">
               <h2 className="text-lg font-semibold mb-4">Publisher</h2>
               <div className="flex items-center gap-4">
                 <div className="relative h-12 w-12 flex-shrink-0">
@@ -181,52 +203,55 @@ export default async function PostPage({ params }: PostPageProps) {
               </div>
             </div> */}
 
-            {/* categories */}
-            <div className="bg-muted/50 rounded-lg p-6">
-              <h2 className="text-lg font-semibold mb-4">Categories</h2>
-              <ul className="flex flex-wrap gap-4">
-                {post.categories?.map((category) => (
-                  <li key={category._id}>
-                    <Link
-                      href={`/blog/category/${category.slug.current}`}
-                      className="text-sm link-underline"
-                    >
-                      {category.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              {/* categories */}
+              <div className="bg-muted/50 rounded-lg p-6">
+                <h2 className="text-lg font-semibold mb-4">Categories</h2>
+                <ul className="flex flex-wrap gap-4">
+                  {post.categories?.map((category) => (
+                    <li key={category._id}>
+                      <Link
+                        href={`/blog/category/${category.slug.current}`}
+                        className="text-sm link-underline"
+                      >
+                        {category.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            {/* table of contents */}
-            <div className="bg-muted/50 rounded-lg p-6 hidden lg:block">
-              <h2 className="text-lg font-semibold mb-4">Table of Contents</h2>
-              <div className="max-h-[calc(100vh-18rem)] overflow-y-auto">
-                <BlogToc toc={toc} />
+              {/* table of contents */}
+              <div className="bg-muted/50 rounded-lg p-6 hidden lg:block">
+                <h2 className="text-lg font-semibold mb-4">
+                  Table of Contents
+                </h2>
+                <div className="max-h-[calc(100vh-18rem)] overflow-y-auto">
+                  <BlogToc toc={toc} />
+                </div>
+              </div>
+              {/* share button */}
+              <div className="p-2">
+                <h6 className="text-md my-2">Share this post</h6>
+                <ShareButton />
               </div>
             </div>
-            {/* share button */}
-            <div className="p-2">
-              <h6 className="text-md my-2">Share this post</h6>
-              <ShareButton />
-            </div>
           </div>
         </div>
-      </div>
 
-      {/* Footer section shows related posts */}
-      {post.relatedPosts && post.relatedPosts.length > 0 && (
-        <div className="flex flex-col gap-8 mt-8">
-          <div className="flex items-center gap-2">
-            {/* <FileTextIcon className="w-4 h-4 text-indigo-500" /> */}
-            <h2 className="text-lg tracking-wider font-semibold text-gradient_indigo-purple">
-              Related Posts
-            </h2>
+        {/* Footer section shows related posts */}
+        {post.relatedPosts && post.relatedPosts.length > 0 && (
+          <div className="flex flex-col gap-8 mt-8">
+            <div className="flex items-center gap-2">
+              {/* <FileTextIcon className="w-4 h-4 text-indigo-500" /> */}
+              <h2 className="text-lg tracking-wider font-semibold text-gradient_indigo-purple">
+                Related Posts
+              </h2>
+            </div>
+            <div className="border-t border-dashed border-border " />
+            <BlogGrid posts={post.relatedPosts} />
           </div>
-          <div className="border-t border-dashed border-border " />
-          <BlogGrid posts={post.relatedPosts} />
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }

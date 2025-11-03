@@ -47,6 +47,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         {/* Organization Schema */}
         <OrganizationSchema />
       </head>
+      {/* <head /> */}
       <body
         className={cn(
           "min-h-screen bg-background antialiased"

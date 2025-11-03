@@ -430,7 +430,7 @@
 //   );
 // }
 
-import Link from 'next/link';
+import Link from "next/link";
 import {
   ArrowLeft,
   BarChart3,
@@ -439,52 +439,56 @@ import {
   Info,
   Layers,
   Star,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { UrlPreview } from '@/components/shared/url-preview';
-import { Logo, TailwindLogo } from '@/components/logo';
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { UrlPreview } from "@/components/shared/url-preview";
+import { Logo, TailwindLogo } from "@/components/logo";
 // import SubscribeSection from "../subscribe-section";
 // import IntegrationsSection from "../integrations-section";
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { ItemFullInfo } from '@/types';
-import ShareButton from '@/components/shared/share-button';
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { ItemFullInfo } from "@/types";
+import ShareButton from "@/components/shared/share-button";
 import {
   itemFullInfoBySlugQuery,
   itemInfoBySlugQuery,
   sponsorItemListQuery,
-} from '@/sanity/lib/queries';
+} from "@/sanity/lib/queries";
 import {
   ItemInfoBySlugQueryResult,
   SponsorItemListQueryResult,
-} from '@/sanity.types';
-import { notFound, useRouter } from 'next/navigation';
+} from "@/sanity.types";
+import { notFound, useRouter } from "next/navigation";
 import {
   MotionHeading,
   MotionWrapper,
-} from '@/components/shared/motion-animation';
-import { urlForIcon, urlForImage } from '@/lib/image';
-import { cn, getItemTargetLinkInWebsite, getLocaleDate } from '@/lib/utils';
-import Image from 'next/image';
-import ItemCustomMdx from '@/components/item/item-custom-mdx';
-import SubscribeSection from '../../sections/subscribe-section';
-import IntegrationsSection from '../../sections/integrations-section';
+} from "@/components/shared/motion-animation";
+import { urlForIcon, urlForImage } from "@/lib/image";
+import { cn, getItemTargetLinkInWebsite, getLocaleDate } from "@/lib/utils";
+import Image from "next/image";
+import ItemCustomMdx from "@/components/item/item-custom-mdx";
+import SubscribeSection from "../../sections/subscribe-section";
+import IntegrationsSection from "../../sections/integrations-section";
 // import { Avatar } from '@radix-ui/react-avatar';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { LogoImage, ProductCard } from '@/components/ui/product-card';
-import { AnimatedCard } from '@/components/ui/animated-card';
-import { Safari } from '@/components/magicui/safari';
-import SponsorItemCard from '@/components/item/item-card-sponsor';
-import { constructMetadata } from '@/lib/metadata';
-import { siteConfig } from '@/config/site';
-import { Metadata } from 'next';
-import BackToDirectoryButton from '@/components/ui/back-to-directory-button';
-import { useEffect, useState } from 'react';
-import OverviewSection from '@/components/item/overview-section';
-import CoreTechnologiesSection from '@/components/item/core-technologies-section';
-import StarRatingsSection from '@/components/item/start-rating-section';
-import AnalyticsSection from '@/components/item/analytics-section';
-import ClientTabs from '@/components/item/item-tabs';
-import { currentUser } from '@/lib/auth';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LogoImage, ProductCard } from "@/components/ui/product-card";
+import { AnimatedCard } from "@/components/ui/animated-card";
+import { Safari } from "@/components/magicui/safari";
+import SponsorItemCard from "@/components/item/item-card-sponsor";
+import { constructMetadata } from "@/lib/metadata";
+import { siteConfig } from "@/config/site";
+import { Metadata } from "next";
+import BackToDirectoryButton from "@/components/ui/back-to-directory-button";
+import { useEffect, useState } from "react";
+import OverviewSection from "@/components/item/overview-section";
+import CoreTechnologiesSection from "@/components/item/core-technologies-section";
+import StarRatingsSection from "@/components/item/start-rating-section";
+import AnalyticsSection from "@/components/item/analytics-section";
+import ClientTabs from "@/components/item/item-tabs";
+import { currentUser } from "@/lib/auth";
+import { ProductSchema } from "@/components/seo/product-schema";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
+// import { RelatedItems } from '@/components/seo/related-items';
+import ItemBreadCrumb from "@/components/item/item-bread-crumb";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 export async function generateMetadata({
   params,
@@ -524,9 +528,9 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
       query: sponsorItemListQuery,
     }),
   ]);
-  console.log('item', item);
+  console.log("item", item);
   if (!item) {
-    console.error('ItemPage, item not found');
+    console.error("ItemPage, item not found");
     return notFound();
   }
 
@@ -542,19 +546,43 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
   //   : null;
   const sponsorItem = sponsorItems?.length ? sponsorItems.slice(0, 2) : null;
   const user = await currentUser();
+
+  // Build breadcrumb items for schema
+  // const breadcrumbItems = [
+  //   { name: "Home", url: "/" },
+  //   { name: "Directory", url: "/directories" },
+  //   ...(item.categories && item.categories.length > 0
+  //     ? [
+  //         {
+  //           name: item.categories[0].name || "Category",
+  //           url: `/category/${item.categories[0].slug?.current || ""}`,
+  //         },
+  //       ]
+  //     : []),
+  //   { name: item.name || "Item", url: `/item/${item.slug?.current || ""}` },
+  // ];
+
   return (
-    <main className="overflow-x-hidden">
-      <section>
-        <div className="relative pt-4 md:pt-4">
-          <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
-          <div className="mx-auto max-w-7xl px-6">
-            {/* <div className="flex justify-between mb-8">
+    <>
+      {/* SEO Schemas */}
+      <ProductSchema item={item} />
+      {/* <BreadcrumbSchema items={breadcrumbItems} /> */}
+      <main className="overflow-x-hidden">
+        <section>
+          <div className="relative pt-4 md:pt-4">
+            <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
+            <div className="mx-auto max-w-7xl px-6">
+              {/* <div className="flex justify-between mb-8">
               <BackToDirectoryButton />
 
               <ShareButton />
             </div> */}
-            <ClientTabs item={item} sponsorItem={sponsorItem} user={user} />
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Breadcrumb for better navigation and SEO */}
+              {/* <div className="mb-4">
+              <ItemBreadCrumb item={item as any} />
+            </div> */}
+              <ClientTabs item={item} sponsorItem={sponsorItem} user={user} />
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col">
                 <MotionWrapper
                   initial={{ opacity: 0, y: 20 }}
@@ -788,57 +816,58 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 </MotionWrapper>
               </div>
             </div> */}
+            </div>
+          </div>
+        </section>
+
+        <div className="py-16 md:py-32">
+          <div className="mx-auto max-w-7xl  px-6">
+            <div className="text-center">
+              <h2 className="text-balance text-3xl font-semibold md:text-4xl">
+                Related Products
+              </h2>
+              <p className="text-muted-foreground mt-6">
+                Discover curated tech tools, resources, and insights to enhance
+                your digital experience.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {item.related.length > 0 ? (
+                item.related.map((product, index) => (
+                  <AnimatedCard
+                    key={product._id}
+                    delay={index * 50}
+                    threshold={0.1}
+                    rootMargin="20px"
+                  >
+                    <ProductCard
+                      id={product._id || null}
+                      title={product.name}
+                      description={product.description}
+                      color={product.color || "#0070f3"}
+                      logo={product.icon as LogoImage}
+                      featured={product.featured}
+                      isAd={product.sponsor}
+                      // isHighlighted={true}
+                      slug={product.slug.current}
+                      homeBookmark={false}
+                    />
+                  </AnimatedCard>
+                ))
+              ) : (
+                <div className="col-span-3 text-center py-12">
+                  <h3 className="text-xl font-medium">
+                    No related products found
+                  </h3>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </section>
 
-      <div className="py-16 md:py-32">
-        <div className="mx-auto max-w-7xl  px-6">
-          <div className="text-center">
-            <h2 className="text-balance text-3xl font-semibold md:text-4xl">
-              Related Products
-            </h2>
-            <p className="text-muted-foreground mt-6">
-              Discover curated tech tools, resources, and insights to enhance
-              your digital experience.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {item.related.length > 0 ? (
-              item.related.map((product, index) => (
-                <AnimatedCard
-                  key={product._id}
-                  delay={index * 50}
-                  threshold={0.1}
-                  rootMargin="20px"
-                >
-                  <ProductCard
-                    id={product._id || null}
-                    title={product.name}
-                    description={product.description}
-                    color={product.color || '#0070f3'}
-                    logo={product.icon as LogoImage}
-                    featured={product.featured}
-                    isAd={product.sponsor}
-                    // isHighlighted={true}
-                    slug={product.slug.current}
-                    homeBookmark={false}
-                  />
-                </AnimatedCard>
-              ))
-            ) : (
-              <div className="col-span-3 text-center py-12">
-                <h3 className="text-xl font-medium">
-                  No related products found
-                </h3>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* <IntegrationsSection relatedItems={item.related} /> */}
-    </main>
+        {/* <IntegrationsSection relatedItems={item.related} /> */}
+      </main>
+    </>
   );
 }

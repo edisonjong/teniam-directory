@@ -2,7 +2,9 @@ import Container from "@/components/container";
 import { PricingPlans } from "@/components/dashboard/pricing-plans";
 import FAQsTwo from "@/components/home4/home-faqs";
 import { PricingFaq } from "@/components/pricing/pricing-faq";
+import { FAQSchema } from "@/components/seo/faq-schema";
 import { HeaderSection } from "@/components/shared/header-section";
+import { faqConfig } from "@/config/faq";
 import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
@@ -13,9 +15,17 @@ export const metadata = constructMetadata({
 });
 
 export default async function PricingPage() {
+  // Convert FAQ config to schema format
+  const faqs = faqConfig.items.map((item) => ({
+    question: item.question,
+    answer: item.answer.replace(/<[^>]*>/g, ""), // Strip HTML tags for schema
+  }));
+
   return (
-    // <Container className="mt-8 pb-16 max-w-6xl">
-    <div className="w-full mx-auto flex flex-col gap-16 mt-8 pb-16 max-w-6xl px-6">
+    <>
+      <FAQSchema faqs={faqs} />
+      {/* <Container className="mt-8 pb-16 max-w-6xl"> */}
+      <div className="w-full mx-auto flex flex-col gap-16 mt-8 pb-16 max-w-6xl px-6">
       <section className="w-full flex flex-col gap-8 justify-center">
         <HeaderSection
           labelAs="h1"
@@ -54,6 +64,7 @@ export default async function PricingPage() {
         </div>
       </section>
     </div>
-    // </Container>
+    {/* </Container> */}
+    </>
   );
 }

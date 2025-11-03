@@ -18,7 +18,8 @@ const nextConfig = {
   images: {
     // https://vercel.com/docs/image-optimization/managing-image-optimization-costs#minimizing-image-optimization-costs
     // vercel has limits on image optimization, 1000 images per month
-    unoptimized: true,
+    // Enable image optimization for better SEO and performance
+    unoptimized: false,
     // https://medium.com/@niniroula/nextjs-upgrade-next-image-and-dangerouslyallowsvg-c934060d79f8
     // The requested resource "https://cdn.sanity.io/images/58a2mkbj/preview/xxx.svg?fit=max&auto=format" has type "image/svg+xml"
     // but dangerouslyAllowSVG is disabled

@@ -8,6 +8,8 @@ import {
 } from "@/assets/fonts";
 import { auth } from "@/auth";
 import { Analytics } from "@/components/analytics/analytics";
+import { WebVitals } from "@/components/analytics/web-vitals";
+import { OrganizationSchema } from "@/components/seo/organization-schema";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 // import { Toaster } from "@/components/ui/toaster";
 import { constructMetadata } from "@/lib/metadata";
@@ -16,6 +18,7 @@ import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { BookmarkProvider } from "@/components/ui/bookmark-context";
 import { Toaster } from "@/components/ui/sonner";
+import { siteConfig } from "@/config/site";
 
 export const metadata = constructMetadata();
 
@@ -29,7 +32,22 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        {/* Preload critical resources */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        {/* DNS prefetch for external domains */}
+        <link rel="dns-prefetch" href="//cdn.sanity.io" />
+        <link rel="dns-prefetch" href="//v0.blob.com" />
+        <link rel="dns-prefetch" href="//icons.lobehub.com" />
+        {/* Organization Schema */}
+        <OrganizationSchema />
+      </head>
+      {/* <head /> */}
       <body
         className={cn(
           "min-h-screen bg-background antialiased"
@@ -60,6 +78,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               <TailwindIndicator />
 
               <Analytics />
+              <WebVitals />
             </BookmarkProvider>
           </ThemeProvider>
         </SessionProvider>

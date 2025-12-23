@@ -81,7 +81,7 @@ import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
 export const metadata = constructMetadata({
-  title: "SolopreneursTech Hub",
+  title: "Solopreneurs Tech Hub",
   description:
     "Solopreneurs & startup hub for AI tools, frameworks, and boilerplates. Discover curated resources for developers, founders, and innovators in one place.",
   canonicalUrl: `${siteConfig.url}`,

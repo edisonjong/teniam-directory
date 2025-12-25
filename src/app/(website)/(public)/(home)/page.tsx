@@ -13,11 +13,6 @@
 // import { sanityFetch } from "@/sanity/lib/fetch";
 // import { sponsorItemListQuery } from "@/sanity/lib/queries";
 
-// export const metadata = constructMetadata({
-//   title: "",
-//   canonicalUrl: `${siteConfig.url}/`,
-// });
-
 // export default async function HomePage({
 //   searchParams,
 // }: {

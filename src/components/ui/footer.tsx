@@ -184,7 +184,7 @@ export default function FooterSection() {
         </div>
         <span className="text-muted-foreground block text-center text-sm">
           {" "}
-          © 2025 New Tools. All rights reserved.
+          © 2025 Newtools. All rights reserved.
         </span>
       </div>
     </footer>

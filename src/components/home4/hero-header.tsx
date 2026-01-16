@@ -66,9 +66,9 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                   <AvatarFallback>{'N'}</AvatarFallback>
                 </Avatar>
 
-                <h4 className="font-bold">New Tools</h4>
+                <h4 className="font-bold">Newtools</h4>
               </Link>
-              {/* <Logo className="rounded-full" src="/logo.jpeg" /> */}
+              {/* <Logo className="rounded-full" src="/newtools logo.png" /> */}
               <button
                 onClick={() => setMenuState(!menuState)}
                 aria-label={menuState ? 'Close Menu' : 'Open Menu'}

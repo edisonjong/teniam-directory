@@ -48,11 +48,11 @@ export function TeamSwitcher({
             className="flex items-center space-x-2"
           >
             <Avatar className="w-10 h-10">
-              <AvatarImage src="/logo.jpeg" />
+              <AvatarImage src="/newtools logo.png" />
               <AvatarFallback>{'T'}</AvatarFallback>
             </Avatar>
             {/* <Logo className="rounded-full" src="/logo.png" /> */}
-            {/* <h4 className="font-bold ml-1">New Tools</h4> */}
+            {/* <h4 className="font-bold ml-1">Newtools</h4> */}
           </Link>
         </div>
         {/* <DropdownMenu>

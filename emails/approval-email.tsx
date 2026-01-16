@@ -44,7 +44,7 @@ export const ApprovalEmail = ({ userName, itemLink }: ApprovalEmailProps) => {
         <Container style={container}>
           <Section style={box}>
             <Img
-              src={`${baseUrl}/logo.jpeg`}
+              src={`${baseUrl}/newtools logo.png`}
               width="32"
               height="32"
               alt="Logo"

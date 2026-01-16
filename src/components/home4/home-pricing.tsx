@@ -19,7 +19,7 @@
 //             Pricing that Scales with You
 //           </h1>
 //           <p>
-//             Get your AI tools, frameworks, or boilerplates featured on New Tools'
+//             Get your AI tools, frameworks, or boilerplates featured on Newtools'
 //             tech directory to reach developers, startups, and innovators.
 //             Affordable pricing to boost your visibility.
 //           </p>
@@ -175,7 +175,7 @@ export function PricingPlans({ item }: PricingPlansProps) {
             Pricing that Scales with You
           </h1>
           <p>
-            Get your AI tools, frameworks, or boilerplates featured on New Tools'
+            Get your AI tools, frameworks, or boilerplates featured on Newtools'
             tech directory to reach developers, startups, and innovators.
             Affordable pricing to boost your visibility.
           </p>

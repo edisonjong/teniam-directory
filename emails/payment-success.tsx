@@ -47,7 +47,7 @@ export const PaymentSuccessEmail = ({
         <Container style={container}>
           <Section style={box}>
             <Img
-              src={`${baseUrl}/logo.jpeg`}
+              src={`${baseUrl}/newtools logo.png`}
               width="32"
               height="32"
               alt="Logo"

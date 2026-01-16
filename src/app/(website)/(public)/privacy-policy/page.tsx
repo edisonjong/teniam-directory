@@ -11,7 +11,7 @@ export default function PrivacyPolicy() {
       <div className="space-y-10">
         <section>
           <p className="mb-4">
-            Welcome to New Tools (“we,” “us,” or “our”). At New Tools, we are
+            Welcome to Newtools ("we," "us," or "our"). At Newtools, we are
             committed to protecting your privacy and ensuring the security of
             your personal information. This Privacy Policy explains how we
             collect, use, disclose, and protect your information when you visit

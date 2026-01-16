@@ -3,11 +3,11 @@
 // const SITE_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 // export const siteConfig: SiteConfig = {
-//   name: 'New Tools',
+//   name: 'Newtools',
 //   tagline:
-//     'This is a New Tools site for Mkdirs, the best directory website template',
+//     'This is a Newtools site for Mkdirs, the best directory website template',
 //   description:
-//     'This is a New Tools site for Mkdirs template. Mkdirs is the ultimate directory website template. With Mkdirs, you can build any trending and profitable directory website in minutes, packed with Listings, Newsletter, Payment, CMS, Blog, Authentication, SEO, Themes and more',
+//     'This is a Newtools site for Mkdirs template. Mkdirs is the ultimate directory website template. With Mkdirs, you can build any trending and profitable directory website in minutes, packed with Listings, Newsletter, Payment, CMS, Blog, Authentication, SEO, Themes and more',
 //   keywords: [
 //     'Directory',
 //     'Template',
@@ -21,7 +21,7 @@
 //     'Stripe',
 //     'Vercel',
 //   ],
-//   author: 'New Tools',
+//   author: 'Newtools',
 //   url: SITE_URL,
 //   // please increase the version number when you update the image
 //   image: `${SITE_URL}/og.png?v=1`,
@@ -96,7 +96,7 @@ export type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  name: "New Tools",
+  name: "Newtools",
   tagline: "Tech Hub for Startups & Solopreneurs",
   description:
     "Explore a curated collection of cutting-edge AI tools, frameworks, and boilerplates designed for developers, startups, and solopreneurs — all in one place.",
@@ -125,7 +125,7 @@ export const siteConfig: SiteConfig = {
     "Auth.js",
     "Resend",
   ],
-  author: "New Tools Team",
+  author: "Newtools Team",
   url: process.env.SITE_URL || "https://www.newtools.io",
   image: `${process.env.SITE_URL || "https://www.newtools.io"}/og.png?v=2`,
   mail: "support@newtools.io",
@@ -169,7 +169,7 @@ export const siteConfig: SiteConfig = {
   },
   favicon: `${process.env.SITE_URL || "https://www.newtools.io"}/favicon.ico`,
   openGraph: {
-    title: "New Tools: Tech Hub for Startups & Solopreneurs",
+    title: "Newtools: Tech Hub for Startups & Solopreneurs",
     description:
       "Explore a curated collection of AI tools, frameworks, and boilerplates for developers, startups, and solopreneurs.",
     image: `${process.env.SITE_URL || "https://www.newtools.io"}/og.png?v=2`,

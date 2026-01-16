@@ -21,7 +21,11 @@ export function constructMetadata({
   keywords?: string[];
   author?: string;
 } = {}): Metadata {
-  const fullTitle = title ? `${title} - ${siteConfig.name}` : siteConfig.name;
+  // If title already includes the site name (e.g., "Newtools – ..."), use it as-is
+  // Otherwise, format it as "Site Name – Title"
+  const fullTitle = title 
+    ? (title.includes(`${siteConfig.name} –`) || title === siteConfig.name ? title : `${siteConfig.name} – ${title}`)
+    : siteConfig.name;
   return {
     title: fullTitle,
     description,

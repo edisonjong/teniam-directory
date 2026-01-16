@@ -76,7 +76,7 @@ import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
 export const metadata = constructMetadata({
-  title: siteConfig.openGraph.title,
+  title: "Newtools – Tech Hub for Startups & Solopreneurs",
   description: siteConfig.openGraph.description,
   canonicalUrl: `${siteConfig.url}`,
 });

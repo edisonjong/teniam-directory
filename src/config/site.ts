@@ -169,9 +169,9 @@ export const siteConfig: SiteConfig = {
   },
   favicon: `${process.env.SITE_URL || "https://www.newtools.io"}/favicon.ico`,
   openGraph: {
-    title: "Newtools: Tech Hub for Startups & Solopreneurs",
+    title: "Tech Hub for Startups & Solopreneurs",
     description:
-      "Explore a curated collection of AI tools, frameworks, and boilerplates for developers, startups, and solopreneurs.",
+      "Explore a curated collection of cutting-edge AI tools, frameworks, and boilerplates designed for developers, startups, and innovators — all in one place.",
     image: `${process.env.SITE_URL || "https://www.newtools.io"}/og.png?v=2`,
     type: "website",
     url: "https://www.newtools.io",

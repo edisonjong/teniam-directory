@@ -28,8 +28,8 @@ import { NavProjects } from "./ui/nav-projects";
 // This is sample data.
 const data = {
   user: {
-    name: "teniam",
-    email: "support@teniam.com",
+    name: "New Tools",
+    email: "support@newtools.io",
     avatar: "/logo.jpeg",
   },
   teams: [

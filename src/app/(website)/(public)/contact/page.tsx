@@ -19,7 +19,7 @@ export default function ContactSection() {
           Contact Sales
         </h1>
         <p className="mt-4 text-center">
-          Teniam delivers advanced application solutions, driving meaningful
+          New Tools delivers advanced application solutions, driving meaningful
           collaborations, reliable support, and creative advertising strategies
           designed to boost your business growth. Partner with us to unlock your
           full potential.

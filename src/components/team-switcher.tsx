@@ -52,7 +52,7 @@ export function TeamSwitcher({
               <AvatarFallback>{'T'}</AvatarFallback>
             </Avatar>
             {/* <Logo className="rounded-full" src="/logo.png" /> */}
-            {/* <h4 className="font-bold ml-1">Teniam</h4> */}
+            {/* <h4 className="font-bold ml-1">New Tools</h4> */}
           </Link>
         </div>
         {/* <DropdownMenu>

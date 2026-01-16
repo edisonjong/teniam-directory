@@ -63,10 +63,10 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
               >
                 <Avatar className="w-10 h-10">
                   <AvatarImage src="/solution-icon.png" />
-                  <AvatarFallback>{'T'}</AvatarFallback>
+                  <AvatarFallback>{'N'}</AvatarFallback>
                 </Avatar>
 
-                <h4 className="font-bold">Teniam</h4>
+                <h4 className="font-bold">New Tools</h4>
               </Link>
               {/* <Logo className="rounded-full" src="/logo.jpeg" /> */}
               <button

@@ -26,7 +26,7 @@ export default function FAQsTwo() {
       id: "item-3",
       question: "What's included in the Free Plan?",
       answer:
-        "Get a basic listing with 1 dofollow SEO link at no cost, ideal for trying Teniam with standard visibility.",
+        "Get a basic listing with 1 dofollow SEO link at no cost, ideal for trying New Tools with standard visibility.",
     },
     {
       id: "item-4",
@@ -38,7 +38,7 @@ export default function FAQsTwo() {
       id: "item-5",
       question: "What does the Featured Plan's spotlight shine border do?",
       answer:
-        "The spotlight shine border highlights your listing with a visually striking design and includes side menu placement for greater visibility across Teniam.",
+        "The spotlight shine border highlights your listing with a visually striking design and includes side menu placement for greater visibility across New Tools.",
     },
     {
       id: "item-6",

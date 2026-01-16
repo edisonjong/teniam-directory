@@ -11,23 +11,23 @@ export default function PrivacyPolicy() {
       <div className="space-y-10">
         <section>
           <p className="mb-4">
-            Welcome to Teniam (“we,” “us,” or “our”). At Teniam, we are
+            Welcome to New Tools (“we,” “us,” or “our”). At New Tools, we are
             committed to protecting your privacy and ensuring the security of
             your personal information. This Privacy Policy explains how we
             collect, use, disclose, and protect your information when you visit
             our website at
             <a
-              href="https://teniam.com"
+              href="https://newtools.io"
               className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
-              teniam.com
+              newtools.io
             </a>
             or use our services, including our directory at
             <a
-              href="https://teniam.com/directories"
+              href="https://newtools.io/directories"
               className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
-              teniam.com/directories
+              newtools.io/directories
             </a>
             . By accessing our website, you agree to the terms of this Privacy
             Policy.
@@ -77,10 +77,10 @@ export default function PrivacyPolicy() {
             <li>
               To respond to inquiries sent to{" "}
               <a
-                href="mailto:support@teniam.com"
+                href="mailto:support@newtools.io"
                 className="text-blue-600 dark:text-blue-400 underline"
               >
-                support@teniam.com
+                support@newtools.io
               </a>
               .
             </li>
@@ -136,10 +136,10 @@ export default function PrivacyPolicy() {
           <p className="mt-2">
             To exercise these rights, contact us at
             <a
-              href="mailto:support@teniam.com"
+              href="mailto:support@newtools.io"
               className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
-              support@teniam.com
+              support@newtools.io
             </a>
             .
           </p>
@@ -169,10 +169,10 @@ export default function PrivacyPolicy() {
             © Images may be copyright protected. If you believe your image has
             been used without permission, contact
             <a
-              href="mailto:support@teniam.com"
+              href="mailto:support@newtools.io"
               className="text-blue-600 dark:text-blue-400 underline ml-1"
             >
-              support@teniam.com
+              support@newtools.io
             </a>
             .
           </p>
@@ -215,19 +215,19 @@ export default function PrivacyPolicy() {
           <p>
             Email:{" "}
             <a
-              href="mailto:support@teniam.com"
+              href="mailto:support@newtools.io"
               className="text-blue-600 dark:text-blue-400 underline"
             >
-              support@teniam.com
+              support@newtools.io
             </a>
           </p>
           <p>
             Website:{" "}
             <a
-              href="https://teniam.com"
+              href="https://newtools.io"
               className="text-blue-600 dark:text-blue-400 underline"
             >
-              teniam.com
+              newtools.io
             </a>
           </p>
         </section>

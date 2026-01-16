@@ -21,7 +21,7 @@ export default function Features() {
             We've handpicked the best boilerplates, templates, AI tools, and
             software to help you build and scale quickly.
             <br />
-            Teniam is your go-to platform for discovering tech that saves time
+            New Tools is your go-to platform for discovering tech that saves time
             and sparks innovation.
           </p>
         </div>

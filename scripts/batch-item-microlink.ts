@@ -73,7 +73,7 @@ const client = createClient({
  * Note: This script requires proper environment variables in .env
  */
 const links = [
-  "https://www.teniam.com/",
+  "https://www.newtools.io/",
   "https://achromatic.dev",
   // Add more links here...
 ];

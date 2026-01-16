@@ -5,31 +5,31 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 const links = [
   {
     title: "Features",
-    href: "https://www.teniam.com/#features",
+    href: "https://www.newtools.io/#features",
   },
   {
     title: "Solutions",
-    href: "https://www.teniam.com/#solution",
+    href: "https://www.newtools.io/#solution",
   },
   {
     title: "Pricing",
-    href: "https://www.teniam.com/pricing",
+    href: "https://www.newtools.io/pricing",
   },
   {
     title: "Blogs",
-    href: "https://www.teniam.com/blog",
+    href: "https://www.newtools.io/blog",
   },
   {
     title: "Directory",
-    href: "https://www.teniam.com/directories",
+    href: "https://www.newtools.io/directories",
   },
   {
     title: "Privacy Policy",
-    href: "https://www.teniam.com/privacy-policy",
+    href: "https://www.newtools.io/privacy-policy",
   },
   {
     title: "Contact",
-    href: "https://www.teniam.com/contact",
+    href: "https://www.newtools.io/contact",
   },
 ];
 
@@ -45,7 +45,7 @@ export default function FooterSection() {
           >
             <Avatar className="w-10 h-10">
               <AvatarImage src="/solution-icon.png" />
-              <AvatarFallback>{"T"}</AvatarFallback>
+            <AvatarFallback>{"N"}</AvatarFallback>
             </Avatar>
           </Link>
         </Link>
@@ -63,7 +63,7 @@ export default function FooterSection() {
         </div>
         <div className="my-8 flex flex-wrap justify-center gap-6 text-sm">
           <Link
-            href="https://x.com/teniamhub"
+            href="https://x.com/newtools.io"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="X"
@@ -83,7 +83,7 @@ export default function FooterSection() {
             </svg>
           </Link>
           <Link
-            href="https://www.instagram.com/teniamhub/"
+            href="https://instagram.com/newtools.io"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
@@ -103,7 +103,7 @@ export default function FooterSection() {
             </svg>
           </Link>
           <Link
-            href="https://www.facebook.com/teniamhub"
+            href="https://www.facebook.com/newtools.io"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook"
@@ -123,7 +123,7 @@ export default function FooterSection() {
             </svg>
           </Link>
           <Link
-            href="https://www.tiktok.com/@teniamhub"
+            href="https://www.tiktok.com/@newtools.io"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="TikTok"
@@ -143,7 +143,7 @@ export default function FooterSection() {
             </svg>
           </Link>
           <Link
-            href="https://bsky.app/profile/teniamhub.bsky.social"
+            href="https://bsky.app/profile/newtools.io.bsky.social"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Bluesky"
@@ -162,7 +162,7 @@ export default function FooterSection() {
           </Link>
 
           <Link
-            href="https://www.pinterest.com/teniamhub/"
+            href="https://www.pinterest.com/newtools.io/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Pinterest"
@@ -184,7 +184,7 @@ export default function FooterSection() {
         </div>
         <span className="text-muted-foreground block text-center text-sm">
           {" "}
-          © 2025 Teniam. All rights reserved.
+          © 2025 New Tools. All rights reserved.
         </span>
       </div>
     </footer>

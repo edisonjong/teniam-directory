@@ -193,6 +193,7 @@ export default function HeroSection() {
                     width="2700"
                     height="1440"
                   />
+                  {/* hero image */}
                   <Image
                     className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
                     src="/Teniam-Image.png"

@@ -62,7 +62,7 @@ export const HeroHeader = ({ scroll = false, config }: NavBarProps) => {
                 className="flex items-center space-x-2"
               >
                 <Avatar className="w-10 h-10">
-                  <AvatarImage src="/solution-icon.png" />
+                  <AvatarImage src="/newtools logo.png" />
                   <AvatarFallback>{'N'}</AvatarFallback>
                 </Avatar>
 

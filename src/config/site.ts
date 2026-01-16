@@ -136,7 +136,7 @@ export const siteConfig: SiteConfig = {
   },
   links: {
     twitter: "https://x.com/newtools.io",
-    github: "https://github.com/newtools",
+    github: "https://github.com/newtools-directories",
     youtube: "https://www.youtube.com/@newtools.io",
     instagram: "https://instagram.com/newtools.io",
     facebook: "https://www.facebook.com/newtools.io",

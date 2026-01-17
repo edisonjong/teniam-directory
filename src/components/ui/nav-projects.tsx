@@ -105,48 +105,53 @@ export function NavProjects({
     }];
   });
 
-  // Get category groups from JSON config
+  // Get category groups from JSON config (this is the source of truth)
   const toolboxCategories = sidebarCategories.toolbox;
   const buildAssetsCategories = sidebarCategories.buildAssets;
 
-  // Helper function to match category names (exact match first, then partial)
-  const matchesCategory = (categoryName: string, targetNames: string[]): boolean => {
-    const normalized = categoryName.toLowerCase().trim();
-    return targetNames.some((target) => {
-      const normalizedTarget = target.toLowerCase().trim();
+  // Helper function to find a category from Sanity that matches a JSON category name
+  const findMatchingCategory = (jsonCategoryName: string): typeof flatCategories[0] | null => {
+    const normalizedJson = jsonCategoryName.toLowerCase().trim();
+    return flatCategories.find((item) => {
+      const normalizedItem = (item.name || '').toLowerCase().trim();
       // Exact match
-      if (normalized === normalizedTarget) return true;
+      if (normalizedItem === normalizedJson) return true;
       // Partial matches for variations
-      if (normalized.includes(normalizedTarget) || normalizedTarget.includes(normalized)) {
+      if (normalizedItem.includes(normalizedJson) || normalizedJson.includes(normalizedItem)) {
         // Additional checks for common variations
-        if (normalizedTarget === 'ai tools' && normalized.includes('ai') && !normalized.includes('tool')) return false;
-        if (normalizedTarget === 'developer tools' && normalized === 'devtool') return true;
-        if (normalizedTarget === 'design tools' && normalized === 'design') return true;
-        if (normalizedTarget === 'marketing tools' && normalized === 'marketing') return true;
-        if (normalizedTarget === 'hosting & infra' && (normalized.includes('hosting') || normalized.includes('infra'))) return true;
-        if (normalizedTarget === 'payments' && normalized === 'payment') return true;
-        if (normalizedTarget === 'ui kits' && (normalized.includes('ui kit') || normalized === 'ui')) return true;
+        if (normalizedJson === 'ai tools' && normalizedItem.includes('ai') && !normalizedItem.includes('tool')) return false;
+        if (normalizedJson === 'developer tools' && normalizedItem === 'devtool') return true;
+        if (normalizedJson === 'design tools' && normalizedItem === 'design') return true;
+        if (normalizedJson === 'marketing tools' && normalizedItem === 'marketing') return true;
+        if (normalizedJson === 'hosting & infra' && (normalizedItem.includes('hosting') || normalizedItem.includes('infra'))) return true;
+        if (normalizedJson === 'payments' && normalizedItem === 'payment') return true;
+        if (normalizedJson === 'ui kits' && (normalizedItem.includes('ui kit') || normalizedItem === 'ui')) return true;
         return true;
       }
       return false;
-    });
+    }) || null;
   };
 
-  // Filter categories into groups
-  const toolboxItems = flatCategories.filter((item) =>
-    matchesCategory(item.name || '', toolboxCategories)
-  );
+  // Build items in the order specified in JSON (JSON is source of truth)
+  const toolboxItems = toolboxCategories
+    .map(findMatchingCategory)
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
-  const buildAssetsItems = flatCategories.filter((item) =>
-    matchesCategory(item.name || '', buildAssetsCategories)
-  );
+  const buildAssetsItems = buildAssetsCategories
+    .map(findMatchingCategory)
+    .filter((item): item is NonNullable<typeof item> => item !== null);
 
   // Other categories not in the defined groups
-  const otherItems = flatCategories.filter(
-    (item) =>
-      !matchesCategory(item.name || '', toolboxCategories) &&
-      !matchesCategory(item.name || '', buildAssetsCategories)
-  );
+  const allJsonCategories = [...toolboxCategories, ...buildAssetsCategories];
+  const otherItems = flatCategories.filter((item) => {
+    const itemName = (item.name || '').toLowerCase().trim();
+    return !allJsonCategories.some((jsonCat) => {
+      const jsonCatName = jsonCat.toLowerCase().trim();
+      return itemName === jsonCatName || 
+             itemName.includes(jsonCatName) || 
+             jsonCatName.includes(itemName);
+    });
+  });
 
   const renderCategoryItem = (item: {
     _id: string;

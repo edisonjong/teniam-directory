@@ -15,14 +15,10 @@ export default function Features() {
       <div className="@container mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
-            Built to cover your needs
+            Built for builders, not browsers.
           </h2>
           <p className="mt-4">
-            We've handpicked the best boilerplates, templates, AI tools, and
-            software to help you build and scale quickly.
-            <br />
-            Newtools is your go-to platform for discovering tech that saves time
-            and sparks innovation.
+            We hand-pick tools and build assets that save time, reduce complexity, and help you ship faster — whether you're launching a startup or building solo.
           </p>
         </div>
         <div className="@min-4xl:max-w-full @min-4xl:grid-cols-3 mx-auto mt-8 grid max-w-sm gap-6 *:text-center md:mt-16">
@@ -32,14 +28,12 @@ export default function Features() {
                 <Wrench className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">Handpicked Tools</h3>
+              <h3 className="mt-6 font-medium">Handpicked picks</h3>
             </CardHeader>
 
             <CardContent>
               <p className="text-sm">
-                Discover top-tier technologies like Next.js,
-                <br />
-                Astro, and Vercel.
+                Discover curated AI tools, software, and platforms that solve real problems.
               </p>
             </CardContent>
           </Card>
@@ -50,12 +44,12 @@ export default function Features() {
                 <Search className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">Seamless Navigation</h3>
+              <h3 className="mt-6 font-medium">Fast discovery</h3>
             </CardHeader>
 
             <CardContent>
               <p className="text-sm">
-                Browse and filter with ease to find the perfect solution.
+                Browse by category, compare alternatives, and find the right tool in minutes.
               </p>
             </CardContent>
           </Card>
@@ -66,12 +60,12 @@ export default function Features() {
                 <UserPlus className="size-6" aria-hidden />
               </CardDecorator>
 
-              <h3 className="mt-6 font-medium">Community Contributions</h3>
+              <h3 className="mt-6 font-medium">Curated submissions</h3>
             </CardHeader>
 
             <CardContent>
               <p className="text-sm">
-                Submit your favorite tools to share with the world.
+                Submit your product or favourite tool — every listing is reviewed to keep quality high.
               </p>
             </CardContent>
           </Card>

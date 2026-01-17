@@ -96,7 +96,7 @@ export const NotifySubmissionToUserEmail = ({
               </span>
               <span style={footerRight}>
                 <Link style={anchor} href={siteConfig.links.twitter}>
-                  Twitter
+                  X
                 </Link>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <Link style={anchor} href={siteConfig.links.github}>

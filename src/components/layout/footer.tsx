@@ -42,10 +42,10 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
                   href={siteConfig.links.twitter}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label="Twitter"
+                  aria-label="X"
                   className="inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
                 >
-                  <Icons.twitter className="size-4" aria-hidden="true" />
+                  <Icons.x className="size-4" aria-hidden="true" />
                 </Link>
               )}
               {siteConfig.links.youtube && (

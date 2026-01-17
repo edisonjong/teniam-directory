@@ -10,6 +10,6 @@ export const heroConfig: HeroConfig = {
   label: {
     text: "Introducing Mkdirs on",
     href: "https://x.com/javayhu",
-    icon: "twitter",
+    icon: "x",
   },
 };

@@ -109,7 +109,7 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-3 text-balance text-6xl md:text-7xl lg:mt-6 xl:text-[5.25rem]"
                 >
-                  Tech Hub for Startups & Soloprenuers
+                  Newtools — curated tools to build faster.
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -119,9 +119,7 @@ export default function HeroSection() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Explore a curated collection of cutting-edge AI tools,
-                  frameworks, and Boilerplates designed for developers,
-                  startups, and innovators — all in one place.
+                  Discover high-quality AI tools, developer software, templates, and boilerplates — curated for builders, startups, and creators.
                 </TextEffect>
 
                 <AnimatedGroup
@@ -148,7 +146,7 @@ export default function HeroSection() {
                       className="rounded-xl px-5 text-base"
                     >
                       <Link href="/directories">
-                        <span className="text-nowrap">Browse All Tools</span>
+                        <span className="text-nowrap">Explore Toolbox</span>
                       </Link>
                     </Button>
                   </div>
@@ -159,11 +157,14 @@ export default function HeroSection() {
                     variant="ghost"
                     className="h-10.5 rounded-xl px-5"
                   >
-                    <Link href="/auth/register">
+                    <Link href="/submit">
                       <span className="text-nowrap">Submit a Tool</span>
                     </Link>
                   </Button>
                 </AnimatedGroup>
+                <p className="text-muted-foreground mt-6 text-center text-sm">
+                  No spam. No noise. Just tools worth using.
+                </p>
               </div>
             </div>
 

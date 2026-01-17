@@ -49,7 +49,7 @@ export const NotifySubmissionToUserEmail = ({
         <Container style={container}>
           <Section style={box}>
             <Img
-              src={`${baseUrl}/newtools%20logo.png`}
+              src={`${baseUrl}/newtools_logo.jpeg`}
               width="32"
               height="32"
               alt="Logo"

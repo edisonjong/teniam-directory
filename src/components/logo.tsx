@@ -8,14 +8,14 @@ interface LogoProps {
 
 export const Logo = ({
   className,
-  src = '/newtools logo.png',
+  src = '/newtools_logo.jpeg',
   alt = 'Logo',
 }: LogoProps) => {
   return <img src={src} alt={alt} className={cn('w-10 h-10', className)} />;
 };
 export const SolutionLogo = ({
   className,
-  src = '/newtools logo.png',
+  src = '/newtools_logo.jpeg',
   alt = 'Logo',
 }: LogoProps) => {
   return <img src={src} alt={alt} className={cn('w-10 h-10', className)} />;

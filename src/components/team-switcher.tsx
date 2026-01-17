@@ -48,7 +48,7 @@ export function TeamSwitcher({
             className="flex items-center space-x-2"
           >
             <Avatar className="w-10 h-10">
-              <AvatarImage src="/newtools logo.png" />
+              <AvatarImage src="/newtools_logo.jpeg" />
               <AvatarFallback>{'T'}</AvatarFallback>
             </Avatar>
             {/* <Logo className="rounded-full" src="/logo.png" /> */}

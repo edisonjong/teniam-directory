@@ -6,7 +6,7 @@ export function OrganizationSchema() {
     "@type": "Organization",
     "name": siteConfig.name,
     "url": siteConfig.url,
-    "logo": `${siteConfig.url}/newtools logo.png`,
+    "logo": `${siteConfig.url}/newtools_logo.jpeg`,
     "description": siteConfig.description,
     "sameAs": [
       siteConfig.links.twitter,

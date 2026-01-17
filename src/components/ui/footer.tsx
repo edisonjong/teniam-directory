@@ -44,7 +44,7 @@ export default function FooterSection() {
             className="flex items-center space-x-2"
           >
             <Avatar className="w-10 h-10">
-              <AvatarImage src="/newtools logo.png" />
+              <AvatarImage src="/newtools_logo.jpeg" />
             <AvatarFallback>{"N"}</AvatarFallback>
             </Avatar>
           </Link>

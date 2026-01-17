@@ -23,12 +23,18 @@ export default async function Products() {
         <div className="mx-auto max-w-5xl px-6">
           <div className="text-center">
             <h2 className="text-balance text-3xl font-semibold md:text-4xl">
-              Explore directory
+              Explore the Toolbox
             </h2>
             <p className="text-muted-foreground mt-6">
-              Explore our Directory to find trusted contacts and resources.
-              Discover essential details and connect swiftly with the solutions
-              you need, all in one place.
+              Browse curated tools across AI, development, design, marketing, and more — plus build assets like templates and boilerplates.
+            </p>
+          </div>
+          <div className="text-center mt-8">
+            <h3 className="text-balance text-2xl font-semibold md:text-3xl">
+              Featured listings
+            </h3>
+            <p className="text-muted-foreground mt-2 text-sm">
+              A curated selection of tools worth checking out this week.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 mt-12">
@@ -114,7 +120,7 @@ export default async function Products() {
         <div className=" flex justify-center">
           <Button asChild size="lg">
             <Link href="/directories" className="cursor-pointer">
-              <span>View More</span>
+              <span>Explore Toolbox</span>
             </Link>
           </Button>
         </div>

@@ -5,144 +5,123 @@ export default function About() {
         About Newtools
       </h1>
 
-      <p className="mb-4 text-gray-800 dark:text-gray-300">
-        Welcome to Newtools, your ultimate tech hub for discovering the tools,
-        ideas, and inspiration to build and launch faster. We’re here to connect
-        you with the latest AI tools, boilerplates, and templates that make
-        starting a project or scaling a startup a whole lot easier. Whether
-        you’re a solopreneur coding your next big idea, a founder looking for
-        the perfect tech stack, or a developer hunting for time-saving
-        resources, our directory at{" "}
-        <a
-          href="https://www.newtools.io/directories"
-          className="text-blue-600 dark:text-blue-400 hover:underline"
-        >
-          newtools.io/directories
-        </a>{" "}
-        is your one-stop spot to find what’s hot in tech.
+      <p className="mb-6 text-gray-800 dark:text-gray-300">
+        Newtools is a curated hub for discovering tools that help builders ship faster — from AI tools and developer software to templates, boilerplates, and build assets.
       </p>
 
       <p className="mb-6 text-gray-800 dark:text-gray-300">
-        We launched Newtools because we're obsessed with the hustle of tech
-        entrepreneurs and the game-changing potential of AI. From cutting-edge
-        AI HCCtools that streamline workflows to ready-to-use boilerplates and
-        templates that cut development time, we’re all about helping you move
-        from idea to launch at lightning speed. Our platform isn’t just a
-        list—it’s a curated collection of the best resources and startups
-        driving the tech world forward, handpicked for innovators like you.
+        We don't aim to list everything. We aim to list what matters.
       </p>
 
+      <hr className="my-8 border-gray-300 dark:border-gray-700" />
+
       <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-        Why Newtools?
+        What we do
       </h2>
 
-      <ul className="list-disc list-inside mb-6 text-gray-800 dark:text-gray-300 space-y-3">
-        <li>
-          <strong>Discover Cutting-Edge AI Tools</strong>: Stay ahead with the
-          latest AI-powered solutions, from automation to analytics, designed to
-          supercharge your projects.
-        </li>
-        <li>
-          <strong>Grab Boilerplates & Templates</strong>: Find pre-built code,
-          designs, and frameworks to kickstart your startup or side hustle
-          without reinventing the wheel.
-        </li>
-        <li>
-          <strong>Launch Faster</strong>: Our directory at{" "}
-          <a
-          href="https://www.newtools.io/directories"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            newtools.io/directories
-          </a>{" "}
-          is packed with tools and resources to help you build, test, and launch
-          in record time.
-        </li>
-        <li>
-          <strong>Join the Tech Community</strong>: Connect with us on{" "}
-          <a
-            href="https://x.com/newtools.io"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            X
-          </a>
-          ,{" "}
-          <a
-            href="https://instagram.com/newtools.io"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            Instagram
-          </a>
-          ,{" "}
-          <a
-            href="https://www.facebook.com/newtools.io"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            Facebook
-          </a>
-          ,{" "}
-          <a
-            href="https://www.tiktok.com/@newtools.io"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            TikTok
-          </a>
-          ,{" "}
-          <a
-            href="https://bsky.app/profile/newtools.io.bsky.social"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            Bluesky
-          </a>
-          , and{" "}
-          <a
-            href="https://www.pinterest.com/newtools.io"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            Pinterest
-          </a>{" "}
-          for the latest tech tips, startup stories, and more.
-        </li>
+      <p className="mb-4 text-gray-800 dark:text-gray-300">
+        Newtools helps you:
+      </p>
+
+      <ul className="list-disc list-inside mb-6 text-gray-800 dark:text-gray-300 space-y-2">
+        <li>discover high-quality tools faster</li>
+        <li>compare options with less noise</li>
+        <li>find build assets like templates and boilerplates in one place</li>
+        <li>submit products to reach founders, developers, and creators</li>
       </ul>
 
+      <hr className="my-8 border-gray-300 dark:border-gray-700" />
+
       <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-        Our Mission
+        Why Newtools exists
       </h2>
 
-      <p className="mb-6 text-gray-800 dark:text-gray-300">
-        At Newtools, we're on a mission to fuel the tech revolution by making it
-        dead simple to find the tools and resources you need to succeed. We
-        believe every solopreneur, developer, and startup deserves access to the
-        best AI tools and templates to turn their vision into reality. Whether
-        you’re building the next unicorn or a passion project, we’re here to
-        help you get there faster with a community that’s all about innovation
-        and action.
+      <p className="mb-4 text-gray-800 dark:text-gray-300">
+        The internet has endless lists of tools — but most directories are unfiltered, outdated, or filled with duplicates.
       </p>
 
+      <p className="mb-4 text-gray-800 dark:text-gray-300">
+        Newtools was built to be the opposite:
+      </p>
+
+      <ul className="list-disc list-inside mb-6 text-gray-800 dark:text-gray-300 space-y-2">
+        <li>curated, not cluttered</li>
+        <li>useful, not spammy</li>
+        <li>simple to browse and easy to trust</li>
+      </ul>
+
+      <hr className="my-8 border-gray-300 dark:border-gray-700" />
+
       <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-        Dive In!
+        AI-assisted, human-reviewed
+      </h2>
+
+      <p className="mb-4 text-gray-800 dark:text-gray-300">
+        Newtools uses AI-assisted formatting guidelines to help standardise submissions and improve clarity — including summaries, key features, and category suggestions.
+      </p>
+
+      <p className="mb-4 text-gray-800 dark:text-gray-300">
+        However, every listing is still reviewed before it goes live. We may edit and adjust submissions on your behalf to:
+      </p>
+
+      <ul className="list-disc list-inside mb-4 text-gray-800 dark:text-gray-300 space-y-2">
+        <li>improve readability</li>
+        <li>correct categories or tags</li>
+        <li>remove misleading claims</li>
+        <li>keep the directory clean and trustworthy</li>
+      </ul>
+
+      <p className="mb-6 text-gray-800 dark:text-gray-300">
+        If a listing can't be verified or doesn't meet our quality standard, it won't be published.
+      </p>
+
+      <hr className="my-8 border-gray-300 dark:border-gray-700" />
+
+      <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        Affiliate transparency
+      </h2>
+
+      <p className="mb-4 text-gray-800 dark:text-gray-300">
+        Some listings include affiliate links. You never pay extra — it simply helps support Newtools and keep the platform running.
+      </p>
+
+      <p className="mb-6 text-gray-800 dark:text-gray-300">
+        We do not accept payment to approve low-quality listings. Visibility upgrades never replace quality review.
+      </p>
+
+      <hr className="my-8 border-gray-300 dark:border-gray-700" />
+
+      <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        Who Newtools is for
+      </h2>
+
+      <p className="mb-4 text-gray-800 dark:text-gray-300">
+        Newtools is built for:
+      </p>
+
+      <ul className="list-disc list-inside mb-6 text-gray-800 dark:text-gray-300 space-y-2">
+        <li>founders and indie hackers</li>
+        <li>developers and builders</li>
+        <li>startups launching products</li>
+        <li>marketers and creators</li>
+        <li>anyone who wants better tools with less searching</li>
+      </ul>
+
+      <hr className="my-8 border-gray-300 dark:border-gray-700" />
+
+      <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+        Contact
       </h2>
 
       <p className="mb-6 text-gray-800 dark:text-gray-300">
-        Ready to supercharge your next project? Explore our directory at{" "}
+        For partnerships, featured placements, or corrections, contact us via our{" "}
         <a
-          href="https://www.newtools.io/directories"
+          href="/contact"
           className="text-blue-600 dark:text-blue-400 hover:underline"
         >
-            newtools.io/directories
-        </a>{" "}
-        to discover the AI tools, boilerplates, and templates that’ll take you
-        from zero to launch. Got a tool or startup you want to share? Hit us up
-        at{" "}
-        <a
-          href="mailto:support@newtools.io"
-          className="text-blue-600 dark:text-blue-400 hover:underline"
-        >
-          support@newtools.io
-        </a>{" "}
-        —we’re always excited to hear from the tech community. Follow us on
-        social media at @newtools.io to stay in the loop on the latest trends and
-        tools shaking up the tech world.
+          contact page
+        </a>
+        .
       </p>
     </main>
   );

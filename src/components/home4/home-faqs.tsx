@@ -12,57 +12,75 @@ export default function FAQsTwo() {
   const faqItems = [
     {
       id: "item-1",
-      question: "How do I submit a tool?",
+      question: "How do I submit a tool or build asset?",
       answer:
-        "Choose a plan (Free, Featured, or Sponsored) and submit via our quick form. Free listings take 3-5 business days for review; Featured and Sponsored get priority (1-2 days).",
+        "Submit your link with a short description, category, and tags. Every listing is reviewed before it goes live so the directory stays clean and useful.",
     },
     {
       id: "item-2",
       question: "What kinds of tools can I list?",
       answer:
-        "We welcome innovative boilerplates, templates, AI tools, and software designed to help startups and solopreneurs build and scale.",
+        "You can submit: AI tools, Developer tools & frameworks, Design and marketing tools, Automation and analytics platforms, Build assets like templates, themes, UI kits, and boilerplates. If it helps people build faster, it belongs here.",
     },
     {
       id: "item-3",
-      question: "What's included in the Free Plan?",
+      question: "Do you approve every submission?",
       answer:
-        "Get a basic listing with 1 dofollow SEO link at no cost, ideal for trying Newtools with standard visibility.",
+        "No. We reject low-effort clones, spam submissions, broken links, and anything misleading. The goal is quality over quantity.",
     },
     {
       id: "item-4",
-      question: "How do dofollow links boost my SEO?",
+      question: "Is it free to be listed?",
       answer:
-        "Our dofollow links improve your site's search engine ranking, driving more traffic to your boilerplate, template, or software.",
+        "Yes. Free listings are available and reviewed. Paid plans only exist to boost visibility — not to bypass quality checks.",
     },
     {
       id: "item-5",
-      question: "What does the Featured Plan's spotlight shine border do?",
+      question: "What's the difference between Featured and Sponsored?",
       answer:
-        "The spotlight shine border highlights your listing with a visually striking design and includes side menu placement for greater visibility across Newtools.",
+        "Featured listings get a visibility boost in category pages and appear in featured areas. Sponsored listings get top placement and stronger exposure across the directory for a limited time.",
     },
     {
       id: "item-6",
-      question: "How does the Sponsor Plan differ from Featured?",
+      question: "How long does a listing stay live?",
       answer:
-        "Sponsor includes all Featured benefits (spotlight shine border and side menu) plus exclusive sidebar promotion on nearly every page for maximum exposure.",
+        "Listings stay live unless they become outdated, unsafe, or misleading. We may update categories and tags over time to keep the directory accurate.",
     },
     {
       id: "item-7",
-      question: "Can I upgrade from the Free Plan?",
+      question: "Can I edit my listing after approval?",
       answer:
-        "Yes, upgrade to Featured or Sponsor anytime to unlock the spotlight shine border, side menu, or sidebar placement.",
+        "Yes. You can request updates to your listing details (description, tags, screenshots, links). This helps keep everything fresh and accurate.",
     },
     {
       id: "item-8",
-      question: "Can I edit my listing after submission?",
+      question: "Do you use affiliate links?",
       answer:
-        "Definitely, update your listing anytime via your account dashboard to keep your boilerplate, template, or AI tool current.",
+        "Some listings include affiliate links. You never pay extra — it simply helps support Newtools and keep the platform running.",
     },
     {
       id: "item-9",
-      question: "How long does my listing last?",
+      question: "How do categories and tags work?",
       answer:
-        "Free and Featured listings are permanent with an active subscription; Sponsor listings run weekly with flexible scheduling.",
+        "Each listing belongs to one main category, and can include multiple tags (like free-plan, open-source, or shopify) to make searching easier.",
+    },
+    {
+      id: "item-10",
+      question: "How fast is the review process?",
+      answer:
+        "Most submissions are reviewed within 24–72 hours, depending on volume. Featured listings may be reviewed faster.",
+    },
+    {
+      id: "item-11",
+      question: "Do you accept tools from PartnerStack / affiliate programs?",
+      answer:
+        "Yes — as long as the tool is legitimate and useful. Affiliate links are welcome, but quality and relevance come first.",
+    },
+    {
+      id: "item-12",
+      question: "I can't find what I'm looking for — can I request a category or tool?",
+      answer:
+        "Yes. If enough people request it, we'll add it to our curated roadmap or publish a comparison post.",
     },
   ];
 

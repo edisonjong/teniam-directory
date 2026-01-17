@@ -38,7 +38,7 @@ export const NotifySubmissionEmail = ({
   itemName,
   reviewLink,
 }: NotifySubmissionEmailProps) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>

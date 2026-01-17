@@ -25,7 +25,7 @@ import {
 } from "./email-formats";
 
 export const NewsletterWelcomeEmail = ({ email }: { email: string }) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const unsubscribeUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}`;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
 

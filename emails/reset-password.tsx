@@ -38,7 +38,7 @@ export const ResetPasswordEmail = ({
   userName,
   resetLink,
 }: ResetPasswordEmailProps) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>

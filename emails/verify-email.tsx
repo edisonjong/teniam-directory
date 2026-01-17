@@ -34,7 +34,7 @@ interface VerifyEmailProps {
  * https://demo.react.email/preview/welcome/stripe-welcome
  */
 export const VerifyEmail = ({ confirmLink }: VerifyEmailProps) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>

@@ -1,0 +1,24 @@
+{
+  "fixedItems": [
+    "Featured",
+    "Ads",
+    "Bookmarks"
+  ],
+  "toolbox": [
+    "AI Tools",
+    "Developer Tools",
+    "Design Tools",
+    "Marketing Tools",
+    "Automation",
+    "Analytics",
+    "Hosting & Infra",
+    "Payments"
+  ],
+  "buildAssets": [
+    "Boilerplates",
+    "Templates",
+    "Themes",
+    "UI Kits",
+    "Components"
+  ]
+}

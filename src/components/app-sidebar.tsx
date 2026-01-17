@@ -24,6 +24,7 @@ import {
 import { TechDirectoryContext } from "./ui/tech-directory-context";
 import { NavMain } from "./ui/nav-main";
 import { NavProjects } from "./ui/nav-projects";
+import sidebarCategories from "@/config/sidebar-categories.json";
 
 // This is sample data.
 const data = {
@@ -167,36 +168,31 @@ export function AppSidebar({
   setSelectedPlatform: (platform: Platform) => void;
   selectedPlatform: Platform;
 }) {
-  const staticItems = [
-    {
-      title: "Featured",
-      url: "#featured",
-      icon: Star,
-      id: "featured",
-      items: [],
-    },
-    {
-      title: "Ads",
-      url: "#ads",
-      icon: Megaphone,
-      id: "sponsor",
-      items: [],
-    },
-    {
-      title: "Bookmarks",
-      url: "#bookmarks",
-      icon: Bookmark,
-      id: "bookmark",
-      items: [],
-    },
-    // {
-    //   title: "Tags",
-    //   url: "#tags",
-    //   icon: Tags,
-    //   id: "tags",
-    //   items: [],
-    // },
-  ];
+  // Map fixed items from JSON config to sidebar items
+  const fixedItemsConfig = sidebarCategories.fixedItems;
+  const iconMap: Record<string, LucideIcon> = {
+    Featured: Star,
+    Ads: Megaphone,
+    Bookmarks: Bookmark,
+  };
+  const idMap: Record<string, string> = {
+    Featured: "featured",
+    Ads: "sponsor",
+    Bookmarks: "bookmark",
+  };
+  const urlMap: Record<string, string> = {
+    Featured: "#featured",
+    Ads: "#ads",
+    Bookmarks: "#bookmarks",
+  };
+
+  const staticItems = fixedItemsConfig.map((item) => ({
+    title: item,
+    url: urlMap[item] || `#${item.toLowerCase()}`,
+    icon: iconMap[item] || Star,
+    id: idMap[item] || item.toLowerCase(),
+    items: [],
+  }));
   const navMainItems = [...staticItems];
 
   return (

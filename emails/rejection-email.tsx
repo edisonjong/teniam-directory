@@ -38,7 +38,7 @@ export const RejectionEmail = ({
   userName,
   dashboardLink,
 }: RejectionEmailProps) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>

@@ -38,7 +38,7 @@ export const PaymentSuccessEmail = ({
   userName,
   itemLink,
 }: PaymentSuccessEmailProps) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>

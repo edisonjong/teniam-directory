@@ -40,7 +40,7 @@ export const NotifySubmissionToUserEmail = ({
   itemName,
   statusLink,
 }: NotifySubmissionToUserEmailProps) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>

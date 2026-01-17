@@ -35,7 +35,7 @@ interface ApprovalEmailProps {
  * https://demo.react.email/preview/welcome/stripe-welcome
  */
 export const ApprovalEmail = ({ userName, itemLink }: ApprovalEmailProps) => {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getBaseUrl() || siteConfig.url;
   const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>

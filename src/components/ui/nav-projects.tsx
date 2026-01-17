@@ -155,13 +155,25 @@ export function NavProjects({
   };
 
   // Build items in the order specified (hardcoded categories are source of truth)
-  const toolboxItems = toolboxCategories
-    .map(findMatchingCategory)
-    .filter((item): item is NonNullable<typeof item> => item !== null);
+  // Store both the display name (from hardcoded list) and the matched Sanity category
+  type CategoryItem = {
+    displayName: string;
+    sanityCategory: FlatCategory;
+  };
 
-  const buildAssetsItems = buildAssetsCategories
-    .map(findMatchingCategory)
-    .filter((item): item is NonNullable<typeof item> => item !== null);
+  const toolboxItems: CategoryItem[] = toolboxCategories
+    .map((displayName) => {
+      const matched = findMatchingCategory(displayName);
+      return matched ? { displayName, sanityCategory: matched } : null;
+    })
+    .filter((item): item is CategoryItem => item !== null);
+
+  const buildAssetsItems: CategoryItem[] = buildAssetsCategories
+    .map((displayName) => {
+      const matched = findMatchingCategory(displayName);
+      return matched ? { displayName, sanityCategory: matched } : null;
+    })
+    .filter((item): item is CategoryItem => item !== null);
 
   // Other categories not in the defined groups
   const allDefinedCategories = [...toolboxCategories, ...buildAssetsCategories];
@@ -175,25 +187,20 @@ export function NavProjects({
     });
   });
 
-  const renderCategoryItem = (item: {
-    _id: string;
-    slug: { current: string };
-    name: string;
-    icon?: string;
-  }) => {
+  const renderCategoryItem = (item: CategoryItem) => {
     const Icon =
-      ((item.icon &&
-        Icons[item.icon as keyof typeof Icons]) as Icons.LucideIcon) ||
+      ((item.sanityCategory.icon &&
+        Icons[item.sanityCategory.icon as keyof typeof Icons]) as Icons.LucideIcon) ||
       Icons.Dot;
 
     return (
-      <SidebarMenuItem key={item.name}>
+      <SidebarMenuItem key={item.sanityCategory._id}>
         <SidebarMenuButton
-          isActive={queryValue === item.slug.current}
-          onClick={() => handleCategoryClick(item)}
+          isActive={queryValue === item.sanityCategory.slug.current}
+          onClick={() => handleCategoryClick(item.sanityCategory)}
         >
           {Icon && <Icon className="h-4 w-4" />}
-          <span>{item.name}</span>
+          <span>{item.displayName}</span>
         </SidebarMenuButton>
       </SidebarMenuItem>
     );
@@ -223,7 +230,24 @@ export function NavProjects({
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
           <SidebarGroupLabel>Categories</SidebarGroupLabel>
           <SidebarMenu>
-            {otherItems.map(renderCategoryItem)}
+            {otherItems.map((item) => {
+              const Icon =
+                ((item.icon &&
+                  Icons[item.icon as keyof typeof Icons]) as Icons.LucideIcon) ||
+                Icons.Dot;
+
+              return (
+                <SidebarMenuItem key={item._id}>
+                  <SidebarMenuButton
+                    isActive={queryValue === item.slug.current}
+                    onClick={() => handleCategoryClick(item)}
+                  >
+                    {Icon && <Icon className="h-4 w-4" />}
+                    <span>{item.name}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroup>
       )}

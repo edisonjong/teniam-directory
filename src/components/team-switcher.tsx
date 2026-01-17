@@ -49,7 +49,7 @@ export function TeamSwitcher({
           >
             <Avatar className="w-10 h-10">
               <AvatarImage src="/newtools_logo.jpeg" />
-              <AvatarFallback>{'T'}</AvatarFallback>
+              <AvatarFallback>{'N'}</AvatarFallback>
             </Avatar>
             {/* <Logo className="rounded-full" src="/logo.png" /> */}
             {/* <h4 className="font-bold ml-1">Newtools</h4> */}

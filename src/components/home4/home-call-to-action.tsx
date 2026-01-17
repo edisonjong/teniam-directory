@@ -18,22 +18,20 @@ export default function CallToAction() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="text-center">
           <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
-            Explore Tech Solutions
+            Find the right tool faster.
           </h2>
-          <p className="mt-4">Find tools and services fast.</p>
+          <p className="mt-4">Explore curated software and build assets — updated weekly.</p>
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <Button
-              size="lg"
-              className="cursor-pointer"
-              onClick={() => gettingStarted()}
-            >
-              <span>Get Started</span>
+            <Button asChild size="lg">
+              <Link href="/directories">
+                <span>Browse Toolbox</span>
+              </Link>
             </Button>
 
             <Button asChild size="lg" variant="outline">
-              <Link href="/directories">
-                <span>Browse All</span>
+              <Link href="/submit">
+                <span>Submit a Tool</span>
               </Link>
             </Button>
           </div>

@@ -172,12 +172,10 @@ export function PricingPlans({ item }: PricingPlansProps) {
       <div className="mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl space-y-6 text-center">
           <h1 className="text-center text-4xl font-semibold lg:text-5xl">
-            Pricing that Scales with You
+            Pricing for visibility
           </h1>
           <p>
-            Get your AI tools, frameworks, or boilerplates featured on Newtools'
-            tech directory to reach developers, startups, and innovators.
-            Affordable pricing to boost your visibility.
+            Submitting a tool is free. Upgrade only if you want extra exposure.
           </p>
         </div>
 

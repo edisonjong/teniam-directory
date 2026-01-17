@@ -15,7 +15,6 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 // import { Brain, LucideIcon } from "lucide-react";
 import * as Icons from "lucide-react";
-import sidebarCategories from "@/config/sidebar-categories.json";
 
 // Function to generate a consistent color based on the tag name
 function stringToColor(str: string) {
@@ -86,7 +85,14 @@ export function NavProjects({
   };
 
   // Flatten categories from groups if needed
-  const flatCategories = categories.flatMap((item) => {
+  type FlatCategory = {
+    _id: string;
+    name: string;
+    slug: { current: string };
+    icon?: string;
+  };
+  
+  const flatCategories: FlatCategory[] = categories.flatMap((item) => {
     // Check if this is a group with nested categories
     if ('categories' in item && Array.isArray(item.categories) && item.categories.length > 0) {
       return item.categories.map((cat) => ({
@@ -105,34 +111,50 @@ export function NavProjects({
     }];
   });
 
-  // Get category groups from JSON config (this is the source of truth)
-  const toolboxCategories = sidebarCategories.toolbox;
-  const buildAssetsCategories = sidebarCategories.buildAssets;
+  // Category groups (hardcoded)
+  const toolboxCategories = [
+    "AI Tools",
+    "Developer Tools",
+    "Design Tools",
+    "Marketing Tools",
+    "Automation",
+    "Analytics",
+    "Hosting & Infra",
+    "Payments",
+  ];
+  
+  const buildAssetsCategories = [
+    "Boilerplates",
+    "Templates",
+    "Themes",
+    "UI Kits",
+    "Components",
+  ];
 
-  // Helper function to find a category from Sanity that matches a JSON category name
-  const findMatchingCategory = (jsonCategoryName: string): typeof flatCategories[0] | null => {
-    const normalizedJson = jsonCategoryName.toLowerCase().trim();
+  // Helper function to find a category from Sanity that matches a category name
+  const findMatchingCategory = (categoryName: string): FlatCategory | null => {
+    const normalizedTarget = categoryName.toLowerCase().trim();
     return flatCategories.find((item) => {
       const normalizedItem = (item.name || '').toLowerCase().trim();
       // Exact match
-      if (normalizedItem === normalizedJson) return true;
+      if (normalizedItem === normalizedTarget) return true;
       // Partial matches for variations
-      if (normalizedItem.includes(normalizedJson) || normalizedJson.includes(normalizedItem)) {
+      if (normalizedItem.includes(normalizedTarget) || normalizedTarget.includes(normalizedItem)) {
         // Additional checks for common variations
-        if (normalizedJson === 'ai tools' && normalizedItem.includes('ai') && !normalizedItem.includes('tool')) return false;
-        if (normalizedJson === 'developer tools' && normalizedItem === 'devtool') return true;
-        if (normalizedJson === 'design tools' && normalizedItem === 'design') return true;
-        if (normalizedJson === 'marketing tools' && normalizedItem === 'marketing') return true;
-        if (normalizedJson === 'hosting & infra' && (normalizedItem.includes('hosting') || normalizedItem.includes('infra'))) return true;
-        if (normalizedJson === 'payments' && normalizedItem === 'payment') return true;
-        if (normalizedJson === 'ui kits' && (normalizedItem.includes('ui kit') || normalizedItem === 'ui')) return true;
+        if (normalizedTarget === 'ai tools' && normalizedItem.includes('ai') && !normalizedItem.includes('tool')) return false;
+        if (normalizedTarget === 'developer tools' && normalizedItem === 'devtool') return true;
+        if (normalizedTarget === 'design tools' && normalizedItem === 'design') return true;
+        if (normalizedTarget === 'marketing tools' && normalizedItem === 'marketing') return true;
+        if (normalizedTarget === 'hosting & infra' && (normalizedItem.includes('hosting') || normalizedItem.includes('infra'))) return true;
+        if (normalizedTarget === 'payments' && normalizedItem === 'payment') return true;
+        if (normalizedTarget === 'ui kits' && (normalizedItem.includes('ui kit') || normalizedItem === 'ui')) return true;
         return true;
       }
       return false;
     }) || null;
   };
 
-  // Build items in the order specified in JSON (JSON is source of truth)
+  // Build items in the order specified (hardcoded categories are source of truth)
   const toolboxItems = toolboxCategories
     .map(findMatchingCategory)
     .filter((item): item is NonNullable<typeof item> => item !== null);
@@ -142,14 +164,14 @@ export function NavProjects({
     .filter((item): item is NonNullable<typeof item> => item !== null);
 
   // Other categories not in the defined groups
-  const allJsonCategories = [...toolboxCategories, ...buildAssetsCategories];
+  const allDefinedCategories = [...toolboxCategories, ...buildAssetsCategories];
   const otherItems = flatCategories.filter((item) => {
     const itemName = (item.name || '').toLowerCase().trim();
-    return !allJsonCategories.some((jsonCat) => {
-      const jsonCatName = jsonCat.toLowerCase().trim();
-      return itemName === jsonCatName || 
-             itemName.includes(jsonCatName) || 
-             jsonCatName.includes(itemName);
+    return !allDefinedCategories.some((definedCat) => {
+      const definedCatName = definedCat.toLowerCase().trim();
+      return itemName === definedCatName || 
+             itemName.includes(definedCatName) || 
+             definedCatName.includes(itemName);
     });
   });
 

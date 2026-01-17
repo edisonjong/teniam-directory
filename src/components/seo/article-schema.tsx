@@ -47,7 +47,7 @@ export function ArticleSchema({ post }: ArticleSchemaProps) {
       "name": siteConfig.name,
       "logo": {
         "@type": "ImageObject",
-        "url": `${siteConfig.url}/newtools_logo.jpeg`,
+        "url": `${siteConfig.url}/newtools_logo.png`,
       },
     },
     "mainEntityOfPage": {

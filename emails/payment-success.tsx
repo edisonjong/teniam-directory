@@ -39,6 +39,7 @@ export const PaymentSuccessEmail = ({
   itemLink,
 }: PaymentSuccessEmailProps) => {
   const baseUrl = getBaseUrl();
+  const logoUrl = `${baseUrl}/newtools_logo.png`;
   return (
     <Html>
       <Head />
@@ -47,7 +48,7 @@ export const PaymentSuccessEmail = ({
         <Container style={container}>
           <Section style={box}>
             <Img
-              src={`${baseUrl}/newtools_logo.jpeg`}
+              src={logoUrl}
               width="32"
               height="32"
               alt="Logo"

@@ -30,7 +30,7 @@ const data = {
   user: {
     name: "newtools",
     email: "support@newtools.io",
-    avatar: "/newtools_logo.jpeg",
+    avatar: "/newtools_logo.png",
   },
   teams: [
     {

@@ -27,6 +27,7 @@ import {
 export const NewsletterWelcomeEmail = ({ email }: { email: string }) => {
   const baseUrl = getBaseUrl();
   const unsubscribeUrl = `${baseUrl}/unsubscribe?email=${encodeURIComponent(email)}`;
+  const logoUrl = `${baseUrl}/newtools_logo.png`;
 
   return (
     <Html>
@@ -36,7 +37,7 @@ export const NewsletterWelcomeEmail = ({ email }: { email: string }) => {
         <Container style={container}>
           <Section style={box}>
             <Img
-              src={`${baseUrl}/newtools_logo.jpeg`}
+              src={logoUrl}
               width="32"
               height="32"
               alt="Logo"

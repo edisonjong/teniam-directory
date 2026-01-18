@@ -161,14 +161,14 @@ export function SubmitForm({
       }
 
       const data = response.data;
-      
+
       // Note: The AI response now includes full mini-review data:
       // - one_liner, what_it_does, best_for, key_features, pros, cons
       // - pricing_snapshot, setup_time, learning_curve
       // - use_this_if, skip_this_if, alternatives, faq
       // These fields are available in `data` but not yet used in the form.
       // They will be used when the full mini-review schema is implemented.
-      
+
       if (data.name) {
         form.setValue("name", data.name);
       }
@@ -203,10 +203,10 @@ export function SubmitForm({
 
       // convert categories and tags to array of ids from categoryList and tagList
       // Handle both new single category and legacy categories array
-      const categoriesToUse = data.category 
-        ? [data.category] 
+      const categoriesToUse = data.category
+        ? [data.category]
         : (data.categories || []);
-      
+
       if (categoriesToUse.length > 0) {
         form.setValue(
           "categories",
@@ -258,15 +258,15 @@ export function SubmitForm({
   return (
     <Form {...form}>
       <form onSubmit={onSubmit}>
-        <Card className="overflow-hidden">
-          <CardContent className="mt-6 space-y-6">
+        <Card className="overflow-hidden border-border shadow-lg">
+          <CardContent className="mt-6 space-y-8">
             <div className="flex flex-col md:flex-row md:space-x-4 space-y-6 md:space-y-0">
               <FormField
                 control={form.control}
                 name="link"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel>Link</FormLabel>
+                    <FormLabel className="text-base font-medium">Link</FormLabel>
                     <div className="relative">
                       <FormControl>
                         <Input

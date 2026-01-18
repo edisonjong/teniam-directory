@@ -49,17 +49,18 @@ export default async function CustomPage({ params }: CustomPageProps) {
   // console.log("markdownContent", markdownContent);
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="inline-block text-2xl font-bold">{page.title}</h1>
-        {page.excerpt && (
-          <p className="mt-4 text-lg text-muted-foreground">{page.excerpt}</p>
-        )}
+    <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mb-8">
+        <div className="rounded-lg border border-border bg-card p-8 shadow-sm">
+          <h1 className="text-4xl font-bold mb-4">{page.title}</h1>
+          {page.excerpt && (
+            <p className="text-lg text-muted-foreground leading-relaxed">{page.excerpt}</p>
+          )}
+        </div>
       </div>
-      <hr className="my-4" />
-      <article className="">
+      <article className="rounded-lg border border-border bg-card p-8 shadow-sm">
         {markdownContent && <CustomMdx source={markdownContent} />}
       </article>
-    </div>
+    </main>
   );
 }

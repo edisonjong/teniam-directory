@@ -70,8 +70,8 @@ export default function AdvertisePage() {
         </section>
 
         {/* What you can promote */}
-        <section className="bg-zinc-50 dark:bg-transparent rounded-2xl p-8 md:p-12">
-          <div className="text-center mb-8">
+        <section className="w-full flex flex-col gap-6">
+          <div className="text-center">
             <h2 className="text-balance text-3xl font-semibold md:text-4xl mb-4">
               What you can promote
             </h2>
@@ -115,7 +115,7 @@ export default function AdvertisePage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {/* Free listing */}
-            <Card className="relative flex flex-col shadow-sm">
+            <Card className="relative flex flex-col">
               <CardHeader>
                 <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-muted">
                   <Target className="size-6 text-primary" />
@@ -150,8 +150,8 @@ export default function AdvertisePage() {
             </Card>
 
             {/* Featured listing */}
-            <Card className="relative flex flex-col shadow-sm border-primary/20">
-              <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground shadow">
+            <Card className="relative flex flex-col">
+              <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
                 Popular
               </span>
               <CardHeader>
@@ -188,7 +188,7 @@ export default function AdvertisePage() {
             </Card>
 
             {/* Sponsored placement */}
-            <Card className="relative flex flex-col shadow-sm">
+            <Card className="relative flex flex-col">
               <CardHeader>
                 <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-muted">
                   <Zap className="size-6 text-primary" />
@@ -225,18 +225,18 @@ export default function AdvertisePage() {
         </section>
 
         {/* AI-assisted listing improvements */}
-        <section className="bg-zinc-50 dark:bg-transparent rounded-2xl p-8 md:p-12">
+        <section className="w-full flex flex-col gap-6">
+          <div className="text-center">
+            <h2 className="text-balance text-3xl font-semibold md:text-4xl mb-4">
+              AI-assisted listing improvements
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+              Newtools uses AI-assisted formatting guidelines to help listings
+              look clean and consistent. To maximise quality and conversion, we
+              may refine your listing content on your behalf — including:
+            </p>
+          </div>
           <div className="max-w-3xl mx-auto space-y-6">
-            <div className="text-center">
-              <h2 className="text-balance text-3xl font-semibold md:text-4xl mb-4">
-                AI-assisted listing improvements
-              </h2>
-              <p className="text-muted-foreground text-lg">
-                Newtools uses AI-assisted formatting guidelines to help listings
-                look clean and consistent. To maximise quality and conversion, we
-                may refine your listing content on your behalf — including:
-              </p>
-            </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="flex items-start gap-3">
                 <Check className="size-5 text-primary shrink-0 mt-0.5" />
@@ -304,7 +304,7 @@ export default function AdvertisePage() {
             <Accordion
               type="single"
               collapsible
-              className="bg-card ring-muted w-full rounded-2xl border px-8 py-3 shadow-sm ring-4 dark:ring-0"
+              className="bg-card w-full border px-8 py-3"
             >
               {faqs.map((faq, index) => (
                 <AccordionItem

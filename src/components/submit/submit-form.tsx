@@ -161,29 +161,66 @@ export function SubmitForm({
       }
 
       const data = response.data;
+      
+      // Note: The AI response now includes full mini-review data:
+      // - one_liner, what_it_does, best_for, key_features, pros, cons
+      // - pricing_snapshot, setup_time, learning_curve
+      // - use_this_if, skip_this_if, alternatives, faq
+      // These fields are available in `data` but not yet used in the form.
+      // They will be used when the full mini-review schema is implemented.
+      
       if (data.name) {
         form.setValue("name", data.name);
       }
-      if (data.description) {
+      // Use one_liner as description if available, fallback to description
+      if (data.one_liner) {
+        form.setValue("description", data.one_liner);
+      } else if (data.description) {
         form.setValue("description", data.description);
       }
-      if (data.introduction) {
+      // Build introduction from mini-review fields if available
+      if (data.what_it_does || data.best_for || data.key_features) {
+        let intro = "";
+        if (data.what_it_does) {
+          intro += `${data.what_it_does}\n\n`;
+        }
+        if (data.best_for && data.best_for.length > 0) {
+          intro += `## Best For\n${data.best_for.map((b: string) => `- ${b}`).join("\n")}\n\n`;
+        }
+        if (data.key_features && data.key_features.length > 0) {
+          intro += `## Key Features\n${data.key_features.map((f: string) => `- ${f}`).join("\n")}\n\n`;
+        }
+        if (data.pros && data.pros.length > 0) {
+          intro += `## Pros\n${data.pros.map((p: string) => `- ${p}`).join("\n")}\n\n`;
+        }
+        if (data.cons && data.cons.length > 0) {
+          intro += `## Cons\n${data.cons.map((c: string) => `- ${c}`).join("\n")}`;
+        }
+        form.setValue("introduction", intro);
+      } else if (data.introduction) {
         form.setValue("introduction", data.introduction);
       }
 
       // convert categories and tags to array of ids from categoryList and tagList
-      if (data.categories) {
+      // Handle both new single category and legacy categories array
+      const categoriesToUse = data.category 
+        ? [data.category] 
+        : (data.categories || []);
+      
+      if (categoriesToUse.length > 0) {
         form.setValue(
           "categories",
-          data.categories.map(
-            (category) => categoryList.find((c) => c.name === category)?._id
-          )
+          categoriesToUse
+            .map((category: string) => categoryList.find((c) => c.name === category)?._id)
+            .filter((id: string | undefined) => id !== undefined)
         );
       }
       if (data.tags) {
         form.setValue(
           "tags",
-          data.tags.map((tag) => tagList.find((t) => t.name === tag)?._id)
+          data.tags
+            .map((tag: string) => tagList.find((t) => t.name === tag)?._id)
+            .filter((id: string | undefined) => id !== undefined)
         );
       }
       if (data.coreTechnologies) {

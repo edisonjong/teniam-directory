@@ -39,11 +39,14 @@ export async function generateMetadata({
 
   const imageProps = post?.image ? urlForImage(post?.image) : null;
 
+  // Blog posts: use post feature image, fallback to default
+  const ogImage = imageProps?.src || siteConfig.image;
+
   return constructMetadata({
-    title: `${post.title}`,
+    title: `${post.title} | Newtools`,
     description: post.excerpt,
     canonicalUrl: `${siteConfig.url}/blog/${params.slug}`,
-    image: imageProps?.src,
+    image: ogImage,
   });
 }
 
@@ -79,9 +82,9 @@ export default async function PostPage({ params }: PostPageProps) {
     excerpt: post.excerpt || undefined,
     image: imageProps
       ? {
-          src: imageProps.src,
-          alt: post.image?.alt || post.title,
-        }
+        src: imageProps.src,
+        alt: post.image?.alt || post.title,
+      }
       : undefined,
     publishedAt: publishDate,
     // updatedAt: post._updatedAt || undefined,

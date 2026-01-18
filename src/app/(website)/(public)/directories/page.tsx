@@ -16,8 +16,10 @@ import {
 import { constructMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/config/site";
 export const metadata = constructMetadata({
-  title: "Directories",
-  canonicalUrl: `${siteConfig.url}/`,
+  title: "Toolbox | Newtools",
+  description: "Browse curated AI tools, developer tools, design tools, marketing tools, and build assets — no spam, just the best.",
+  canonicalUrl: `${siteConfig.url}/directories`,
+  image: `${siteConfig.url}/og.png`,
 });
 const Page = async ({
   searchParams,

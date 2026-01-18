@@ -76,9 +76,10 @@ import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
 export const metadata = constructMetadata({
-  title: "Newtools – Tech Hub for Startups & Solopreneurs",
-  description: siteConfig.openGraph.description,
+  title: "Newtools | Curated Tools to Build Faster in 2026",
+  description: "Discover high-quality AI tools, developer software, templates, and boilerplates — curated for builders, startups, and creators.",
   canonicalUrl: `${siteConfig.url}`,
+  image: `${siteConfig.url}/og.png`,
 });
 
 export default async function LandingPage() {

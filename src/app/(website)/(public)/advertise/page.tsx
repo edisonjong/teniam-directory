@@ -5,10 +5,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { HeaderSection } from "@/components/shared/header-section";
 import { FAQSchema } from "@/components/seo/faq-schema";
 import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
+import { Check, Sparkles, Zap, Target } from "lucide-react";
 import Link from "next/link";
 
 export const metadata = constructMetadata({
@@ -45,7 +54,7 @@ export default function AdvertisePage() {
   return (
     <>
       <FAQSchema faqs={faqs} />
-      <div className="w-full mx-auto flex flex-col gap-16 mt-8 pb-16 max-w-4xl px-6">
+      <div className="w-full mx-auto flex flex-col gap-16 py-16 md:py-32 max-w-6xl px-6">
         {/* Hero Section */}
         <section className="w-full flex flex-col gap-6">
           <HeaderSection
@@ -55,138 +64,231 @@ export default function AdvertisePage() {
             subtitle="Reach builders, startups, and creators actively searching for tools — with curated placement options designed for visibility."
             subtitleAs="p"
           />
-          <p className="text-center text-muted-foreground">
+          <p className="text-center text-muted-foreground text-lg">
             Newtools is not a spam directory. Every listing is reviewed.
           </p>
         </section>
 
         {/* What you can promote */}
-        <section className="w-full flex flex-col gap-6">
-          <h2 className="text-2xl font-semibold">What you can promote</h2>
-          <p className="text-muted-foreground">
-            You can submit and promote:
-          </p>
-          <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-            <li>AI tools</li>
-            <li>developer tools & software</li>
-            <li>design and marketing tools</li>
-            <li>automation and analytics platforms</li>
-            <li>
-              build assets like templates, boilerplates, themes, UI kits, and
-              components
-            </li>
-          </ul>
-        </section>
-
-        {/* Promotion options */}
-        <section className="w-full flex flex-col gap-8">
-          <h2 className="text-2xl font-semibold">Promotion options</h2>
-
-          <div className="flex flex-col gap-8">
-            {/* Free listing */}
-            <div className="border rounded-lg p-6 space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Free listing (reviewed)
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  Best for early-stage tools.
-                </p>
-              </div>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                <li>standard listing placement</li>
-                <li>category + tag visibility</li>
-                <li>reviewed before publishing</li>
-              </ul>
-              <div className="pt-4">
-                <Button asChild>
-                  <Link href="/submit">Submit Free</Link>
-                </Button>
-              </div>
+        <section className="bg-zinc-50 dark:bg-transparent rounded-2xl p-8 md:p-12">
+          <div className="text-center mb-8">
+            <h2 className="text-balance text-3xl font-semibold md:text-4xl mb-4">
+              What you can promote
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              You can submit and promote:
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 max-w-3xl mx-auto">
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">AI tools</span>
             </div>
-
-            {/* Featured listing */}
-            <div className="border rounded-lg p-6 space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Featured listing (boosted visibility)
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  Best for launches and faster discovery.
-                </p>
-              </div>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                <li>featured badge</li>
-                <li>higher placement in category pages</li>
-                <li>included in featured sections</li>
-              </ul>
-              <div className="pt-4">
-                <Button asChild>
-                  <Link href="/submit">Get Featured</Link>
-                </Button>
-              </div>
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">Developer tools & software</span>
             </div>
-
-            {/* Sponsored placement */}
-            <div className="border rounded-lg p-6 space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold mb-2">
-                  Sponsored placement (maximum exposure)
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  Best for serious visibility.
-                </p>
-              </div>
-              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                <li>top placement in selected category</li>
-                <li>sponsored exposure across the directory</li>
-                <li>limited slots per period</li>
-              </ul>
-              <div className="pt-4">
-                <Button asChild>
-                  <Link href="/submit">Sponsor a Spot</Link>
-                </Button>
-              </div>
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">Design and marketing tools</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">Automation and analytics platforms</span>
+            </div>
+            <div className="flex items-start gap-3 md:col-span-2">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">
+                Build assets like templates, boilerplates, themes, UI kits, and components
+              </span>
             </div>
           </div>
         </section>
 
+        {/* Promotion options */}
+        <section className="w-full flex flex-col gap-8">
+          <div className="text-center">
+            <h2 className="text-balance text-3xl font-semibold md:text-4xl mb-4">
+              Promotion options
+            </h2>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Free listing */}
+            <Card className="relative flex flex-col shadow-sm">
+              <CardHeader>
+                <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-muted">
+                  <Target className="size-6 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Free listing</CardTitle>
+                <CardDescription className="text-base">
+                  Best for early-stage tools.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <hr className="border-dashed" />
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Standard listing placement</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Category + tag visibility</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Reviewed before publishing</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter className="mt-auto">
+                <Button asChild className="w-full">
+                  <Link href="/submit">Submit Free</Link>
+                </Button>
+              </CardFooter>
+            </Card>
+
+            {/* Featured listing */}
+            <Card className="relative flex flex-col shadow-sm border-primary/20">
+              <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground shadow">
+                Popular
+              </span>
+              <CardHeader>
+                <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-primary/10">
+                  <Sparkles className="size-6 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Featured listing</CardTitle>
+                <CardDescription className="text-base">
+                  Best for launches and faster discovery.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <hr className="border-dashed" />
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Featured badge</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Higher placement in category pages</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Included in featured sections</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter className="mt-auto">
+                <Button asChild className="w-full">
+                  <Link href="/submit">Get Featured</Link>
+                </Button>
+              </CardFooter>
+            </Card>
+
+            {/* Sponsored placement */}
+            <Card className="relative flex flex-col shadow-sm">
+              <CardHeader>
+                <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-muted">
+                  <Zap className="size-6 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Sponsored placement</CardTitle>
+                <CardDescription className="text-base">
+                  Best for serious visibility.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <hr className="border-dashed" />
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Top placement in selected category</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Sponsored exposure across the directory</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="size-4 text-primary" />
+                    <span>Limited slots per period</span>
+                  </li>
+                </ul>
+              </CardContent>
+              <CardFooter className="mt-auto">
+                <Button asChild className="w-full">
+                  <Link href="/submit">Sponsor a Spot</Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </section>
+
         {/* AI-assisted listing improvements */}
-        <section className="w-full flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">
-            AI-assisted listing improvements
-          </h2>
-          <p className="text-muted-foreground">
-            Newtools uses AI-assisted formatting guidelines to help listings
-            look clean and consistent. To maximise quality and conversion, we
-            may refine your listing content on your behalf — including:
-          </p>
-          <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-            <li>rewriting the summary for clarity</li>
-            <li>tightening key feature bullets</li>
-            <li>improving category + tag accuracy</li>
-            <li>ensuring the listing follows our review format</li>
-          </ul>
-          <p className="text-muted-foreground mt-4">
-            Paid placement never replaces review standards.
-          </p>
+        <section className="bg-zinc-50 dark:bg-transparent rounded-2xl p-8 md:p-12">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <div className="text-center">
+              <h2 className="text-balance text-3xl font-semibold md:text-4xl mb-4">
+                AI-assisted listing improvements
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Newtools uses AI-assisted formatting guidelines to help listings
+                look clean and consistent. To maximise quality and conversion, we
+                may refine your listing content on your behalf — including:
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="flex items-start gap-3">
+                <Check className="size-5 text-primary shrink-0 mt-0.5" />
+                <span className="text-muted-foreground">Rewriting the summary for clarity</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Check className="size-5 text-primary shrink-0 mt-0.5" />
+                <span className="text-muted-foreground">Tightening key feature bullets</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Check className="size-5 text-primary shrink-0 mt-0.5" />
+                <span className="text-muted-foreground">Improving category + tag accuracy</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <Check className="size-5 text-primary shrink-0 mt-0.5" />
+                <span className="text-muted-foreground">Ensuring the listing follows our review format</span>
+              </div>
+            </div>
+            <p className="text-center text-muted-foreground mt-6 font-medium">
+              Paid placement never replaces review standards.
+            </p>
+          </div>
         </section>
 
         {/* Why promote on Newtools */}
-        <section className="w-full flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Why promote on Newtools?</h2>
-          <p className="text-muted-foreground">
-            Because people don't come here to browse randomly — they come here
-            looking for tools to use.
-          </p>
-          <div>
-            <p className="font-medium mb-2">What you get:</p>
-            <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-              <li>visibility inside relevant categories</li>
-              <li>a builder-first audience</li>
-              <li>curated credibility (not clutter)</li>
-              <li>optional affiliate-friendly outbound links</li>
-            </ul>
+        <section className="w-full flex flex-col gap-6">
+          <div className="text-center">
+            <h2 className="text-balance text-3xl font-semibold md:text-4xl mb-4">
+              Why promote on Newtools?
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Because people don't come here to browse randomly — they come here
+              looking for tools to use.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 max-w-3xl mx-auto">
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">Visibility inside relevant categories</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">A builder-first audience</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">Curated credibility (not clutter)</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <Check className="size-5 text-primary shrink-0 mt-0.5" />
+              <span className="text-muted-foreground">Optional affiliate-friendly outbound links</span>
+            </div>
           </div>
         </section>
 
@@ -225,19 +327,25 @@ export default function AdvertisePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full flex flex-col gap-6 items-center text-center py-8">
-          <h2 className="text-2xl font-semibold">Ready to submit?</h2>
-          <p className="text-muted-foreground max-w-2xl">
-            Submit your tool for review or boost your placement for extra
-            visibility.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg">
-              <Link href="/submit">Submit a Tool</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="/pricing">View Pricing</Link>
-            </Button>
+        <section className="py-16 md:py-24">
+          <div className="mx-auto max-w-5xl px-6">
+            <div className="text-center">
+              <h2 className="text-balance text-4xl font-semibold lg:text-5xl">
+                Ready to submit?
+              </h2>
+              <p className="mt-4 text-muted-foreground text-lg">
+                Submit your tool for review or boost your placement for extra
+                visibility.
+              </p>
+              <div className="mt-12 flex flex-wrap justify-center gap-4">
+                <Button asChild size="lg">
+                  <Link href="/submit">Submit a Tool</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link href="/pricing">View Pricing</Link>
+                </Button>
+              </div>
+            </div>
           </div>
         </section>
       </div>

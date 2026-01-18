@@ -474,7 +474,7 @@ import { LogoImage, ProductCard } from "@/components/ui/product-card";
 import { AnimatedCard } from "@/components/ui/animated-card";
 import { Safari } from "@/components/magicui/safari";
 import SponsorItemCard from "@/components/item/item-card-sponsor";
-import { constructMetadata } from "@/lib/metadata";
+import { constructMetadata, getOgImageIfExists } from "@/lib/metadata";
 import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
 import BackToDirectoryButton from "@/components/ui/back-to-directory-button";
@@ -504,12 +504,32 @@ export async function generateMetadata({
     return;
   }
 
+  // Image priority: 1) Item OG image, 2) Item screenshot/logo, 3) Default
+  const itemOgImage = getOgImageIfExists(`og/item/${params.slug}.png`);
   const imageProps = item?.image ? urlForImage(item?.image) : null;
+
+  // Determine which image to use
+  let ogImage = siteConfig.image; // Default fallback
+  if (itemOgImage) {
+    ogImage = itemOgImage;
+  } else if (imageProps?.src) {
+    // Use item image if it's large enough (check width/height if available)
+    // For now, we'll use it if it exists
+    ogImage = imageProps.src;
+  }
+
+  // Build description: use mini-review one-liner + short summary (keep under ~160 chars)
+  // If description is too long, truncate it
+  let description = item.description || "";
+  if (description.length > 160) {
+    description = description.substring(0, 157) + "...";
+  }
+
   return constructMetadata({
-    title: `${item.name}`,
-    description: item.description,
+    title: `${item.name} | Newtools`,
+    description,
     canonicalUrl: `${siteConfig.url}/item/${params.slug}`,
-    image: imageProps?.src,
+    image: ogImage,
   });
 }
 interface ItemPageProps {

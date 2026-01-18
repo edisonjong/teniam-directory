@@ -8,7 +8,7 @@ import {
   ITEMS_PER_PAGE,
   SORT_FILTER_LIST,
 } from "@/lib/constants";
-import { constructMetadata } from "@/lib/metadata";
+import { constructMetadata, getOgImageIfExists } from "@/lib/metadata";
 import type { CategoryQueryResult, SponsorItemListQueryResult } from "@/sanity.types";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { categoryQuery, sponsorItemListQuery } from "@/sanity/lib/queries";
@@ -30,16 +30,18 @@ export async function generateMetadata({
     return;
   }
 
-  const ogImageUrl = new URL(`${siteConfig.url}/api/og`);
-  ogImageUrl.searchParams.append("title", category.name);
-  ogImageUrl.searchParams.append("description", category.description || "");
-  ogImageUrl.searchParams.append("type", "Category");
+  // Check for category-specific OG image, fallback to default
+  const categoryOgImage = getOgImageIfExists(`og/category/${params.slug}.png`);
+  const ogImage = categoryOgImage || siteConfig.image;
+
+  // Build description template: "Curated {category} tools and resources — updated regularly. Browse top picks, tags, and alternatives."
+  const description = category.description || `Curated ${category.name} tools and resources — updated regularly. Browse top picks, tags, and alternatives.`;
 
   return constructMetadata({
-    title: `${category.name}`,
-    description: category.description,
+    title: `${category.name} | Newtools`,
+    description,
     canonicalUrl: `${siteConfig.url}/category/${params.slug}`,
-    // image: ogImageUrl.toString(),
+    image: ogImage,
   });
 }
 

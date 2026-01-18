@@ -1,5 +1,24 @@
 import { siteConfig } from "@/config/site";
 import type { Metadata } from "next";
+import { existsSync } from "fs";
+import { join } from "path";
+
+/**
+ * Check if an OG image exists in the public directory
+ * @param imagePath - Relative path from public directory (e.g., "og/category/ai-tools.png")
+ * @returns Absolute URL if file exists, null otherwise
+ */
+export function getOgImageIfExists(imagePath: string): string | null {
+  try {
+    const publicPath = join(process.cwd(), "public", imagePath);
+    if (existsSync(publicPath)) {
+      return `${siteConfig.url}/${imagePath}`;
+    }
+  } catch (error) {
+    // Silently fail if file check fails
+  }
+  return null;
+}
 
 /**
  * Construct the metadata object for the current page (in docs/guides)
@@ -23,7 +42,7 @@ export function constructMetadata({
 } = {}): Metadata {
   // If title already includes the site name (e.g., "Newtools – ..."), use it as-is
   // Otherwise, format it as "Site Name – Title"
-  const fullTitle = title 
+  const fullTitle = title
     ? (title.includes(`${siteConfig.name} –`) || title === siteConfig.name ? title : `${siteConfig.name} – ${title}`)
     : siteConfig.name;
   return {
@@ -50,8 +69,8 @@ export function constructMetadata({
     },
     alternates: canonicalUrl
       ? {
-          canonical: canonicalUrl,
-        }
+        canonical: canonicalUrl,
+      }
       : undefined,
     verification: {
       ...(process.env.GOOGLE_SITE_VERIFICATION && {
@@ -75,10 +94,10 @@ export function constructMetadata({
       siteName: siteConfig.name,
       images: [
         {
-          url: image,
+          url: image.startsWith("http") ? image : `${siteConfig.url}${image.startsWith("/") ? "" : "/"}${image}`,
           width: 1200,
           height: 630,
-          alt: title || siteConfig.name,
+          alt: fullTitle || "Newtools — curated tools to build faster",
         },
       ],
     },
@@ -86,7 +105,7 @@ export function constructMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [image],
+      images: [image.startsWith("http") ? image : `${siteConfig.url}${image.startsWith("/") ? "" : "/"}${image}`],
       site: siteConfig.twitter.site,
       creator: siteConfig.twitter.creator,
     },

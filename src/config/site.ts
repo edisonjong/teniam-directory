@@ -127,7 +127,7 @@ export const siteConfig: SiteConfig = {
   ],
   author: "Newtools Team",
   url: process.env.SITE_URL || "https://www.newtools.io",
-  image: `${process.env.SITE_URL || "https://www.newtools.io"}/og.png?v=2`,
+  image: `${process.env.SITE_URL || "https://www.newtools.io"}/og.png`,
   mail: "support@newtools.io",
   utm: {
     source: "newtools.io",
@@ -135,7 +135,7 @@ export const siteConfig: SiteConfig = {
     campaign: "site_navigation",
   },
   links: {
-    twitter: "https://x.com/newtools.io",
+    twitter: "https://x.com/newtoolsio",
     github: "https://github.com/newtools-directories",
     youtube: "https://www.youtube.com/@newtools.io",
     instagram: "https://instagram.com/newtools.io",
@@ -172,13 +172,13 @@ export const siteConfig: SiteConfig = {
     title: "Tech Hub for Startups & Solopreneurs",
     description:
       "Explore a curated collection of cutting-edge AI tools, frameworks, and boilerplates designed for developers, startups, and innovators — all in one place.",
-    image: `${process.env.SITE_URL || "https://www.newtools.io"}/og.png?v=2`,
+    image: `${process.env.SITE_URL || "https://www.newtools.io"}/og.png`,
     type: "website",
     url: "https://www.newtools.io",
   },
   twitter: {
     card: "summary_large_image",
-    site: "@newtools.io",
+    site: "@newtoolsio",
     creator: "@newtools.io",
   },
   features: [

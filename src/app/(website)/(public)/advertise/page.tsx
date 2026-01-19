@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/components/ui/accordion"
 import {
   Card,
   CardContent,
@@ -12,216 +12,336 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { HeaderSection } from "@/components/shared/header-section";
-import { FAQSchema } from "@/components/seo/faq-schema";
-import { siteConfig } from "@/config/site";
-import { constructMetadata } from "@/lib/metadata";
-import { Check, Sparkles, Zap, Target } from "lucide-react";
-import Link from "next/link";
-
-export const metadata = constructMetadata({
-  title: "Advertise",
-  description:
-    "Promote your product on Newtools. Reach builders, startups, and creators with curated placement options designed for visibility.",
-  canonicalUrl: `${siteConfig.url}/advertise`,
-});
+} from "@/components/ui/card"
+import {
+  Check,
+  Sparkles,
+  Globe,
+  List,
+  Tag,
+  Settings,
+  Zap,
+  Users,
+  Shield,
+  Clock,
+  Link2,
+  Wand2,
+  FileText,
+  Layers,
+  HelpCircle,
+  Hourglass,
+  MessageSquare,
+} from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
 
 const faqs = [
   {
     question: "Can I promote an affiliate offer?",
     answer:
       "Yes. Affiliate-friendly listings are allowed as long as the product is legitimate and relevant.",
+    icon: FileText,
   },
   {
     question: "Do you accept submissions from PartnerStack?",
     answer:
       "Yes — many tools listed on Newtools run affiliate programs. Quality always comes first.",
+    icon: Globe,
   },
   {
     question: "How fast do listings go live?",
     answer:
       "Most submissions are reviewed within 24–72 hours, depending on volume. Featured listings may be reviewed faster.",
+    icon: Hourglass,
   },
   {
     question: "Can you help improve my listing copy?",
     answer:
       "Yes. We may edit listings for clarity and accuracy so they perform better and match our format.",
+    icon: MessageSquare,
   },
-];
+]
 
 export default function AdvertisePage() {
   return (
-    <>
-      <FAQSchema faqs={faqs} />
-      <div className="w-full mx-auto flex flex-col gap-8 sm:gap-10 md:gap-12 py-8 sm:py-12 md:py-16 lg:py-24 max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background">
+      <div className="w-full mx-auto flex flex-col gap-24 py-16 lg:py-24 max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
-        <section className="w-full flex flex-col gap-4 sm:gap-6">
-          <div className="rounded-lg border border-border bg-card p-6 sm:p-8 md:p-10 lg:p-12 shadow-sm">
-            <HeaderSection
-              labelAs="h1"
-              title="Promote your product on Newtools"
-              titleAs="h2"
-              subtitle="Reach builders, startups, and creators actively searching for tools — with curated placement options designed for visibility."
-              subtitleAs="p"
-            />
-            <p className="text-center text-muted-foreground text-base sm:text-lg mt-4 sm:mt-6">
-              Newtools is not a spam directory. Every listing is reviewed.
-            </p>
+        <section className="w-full">
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            <div className="flex-1 max-w-xl">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+                Promote your product on Newtools
+              </h1>
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Reach builders, startups, and creators actively searching for
+                tools — with curated placement options designed for visibility.
+              </p>
+              <div className="flex flex-row gap-4">
+                <Button asChild size="lg" className="px-6">
+                  <Link href="/submit">Submit a Tool</Link>
+                </Button>
+                <Button asChild variant="ghost" size="lg" className="px-6">
+                  <Link href="#pricing">View Pricing</Link>
+                </Button>
+              </div>
+            </div>
+            <div className="flex-1 w-full lg:w-auto">
+              <div className="aspect-[4/3] w-full max-w-lg ml-auto rounded-lg border border-border bg-background flex items-center justify-center">
+                <div className="w-8 h-8 rounded border-2 border-orange-400 bg-orange-100 flex items-center justify-center">
+                  <span className="text-orange-600 text-xs font-bold">N</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Logo Bar */}
+        <section className="w-full">
+          <div className="flex flex-col sm:flex-row items-center gap-8">
+            <div className="flex-shrink-0 border-r border-border pr-8">
+              <p className="text-sm text-muted-foreground text-right leading-tight">
+                Powering the best
+                <br />
+                teams
+              </p>
+            </div>
+            <div className="flex-1 flex items-center justify-between gap-6 sm:gap-8 overflow-x-auto">
+              <Image
+                src="/deepseek.svg"
+                alt="DeepSeek"
+                width={120}
+                height={40}
+                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/claude.svg"
+                alt="Claude"
+                width={120}
+                height={40}
+                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/gemini.svg"
+                alt="Gemini"
+                width={120}
+                height={40}
+                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/copilot.svg"
+                alt="Copilot"
+                width={120}
+                height={40}
+                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/groq.svg"
+                alt="Groq"
+                width={120}
+                height={40}
+                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/inflection.svg"
+                alt="Inflection"
+                width={120}
+                height={40}
+                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+              <Image
+                src="/perplexity.svg"
+                alt="Perplexity"
+                width={120}
+                height={40}
+                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+            </div>
           </div>
         </section>
 
         {/* What you can promote */}
-        <section className="w-full flex flex-col gap-4 sm:gap-6">
-          <div className="rounded-lg border border-border bg-card p-6 sm:p-8 shadow-sm">
-            <div className="text-center mb-6 sm:mb-8">
-              <h2 className="text-balance text-2xl sm:text-3xl font-semibold md:text-4xl mb-3 sm:mb-4">
-                What you can promote
-              </h2>
-              <p className="text-muted-foreground text-base sm:text-lg">
-                You can submit and promote:
+        <section className="w-full flex flex-col gap-12">
+          <div className="text-center">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-6">
+              What you can promote
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-3xl mx-auto leading-relaxed">
+              You can submit and promote AI tools, developer tools & software, design and
+              marketing tools, automation and analytics platforms, and build assets like
+              templates, boilerplates, themes, UI kits, and components.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border border border-border rounded-lg overflow-hidden">
+            <div className="bg-background p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="h-5 w-5 text-foreground" />
+                <h3 className="font-semibold">Visibility Inside Categories</h3>
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Get discovered where people are actually looking for solutions.
               </p>
             </div>
-            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto">
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">AI tools</span>
+            <div className="bg-background p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Globe className="h-5 w-5 text-foreground" />
+                <h3 className="font-semibold">Builder-First Audience</h3>
               </div>
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Developer tools & software</span>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Reach the creators and entrepreneurs who need your tool.
+              </p>
+            </div>
+            <div className="bg-background p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Shield className="h-5 w-5 text-foreground" />
+                <h3 className="font-semibold">Curated Credibility</h3>
               </div>
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Design and marketing tools</span>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Every listing is reviewed, not spam or clutter.
+              </p>
+            </div>
+            <div className="bg-background p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Clock className="h-5 w-5 text-foreground" />
+                <h3 className="font-semibold">Fast Review Process</h3>
               </div>
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Automation and analytics platforms</span>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Most submissions reviewed within 24-72 hours.
+              </p>
+            </div>
+            <div className="bg-background p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Link2 className="h-5 w-5 text-foreground" />
+                <h3 className="font-semibold">Affiliate Friendly</h3>
               </div>
-              <div className="flex items-start gap-3 sm:col-span-2 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-                  Build assets like templates, boilerplates, themes, UI kits, and components
-                </span>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Optional affiliate-friendly outbound links supported.
+              </p>
+            </div>
+            <div className="bg-background p-8">
+              <div className="flex items-center gap-2 mb-3">
+                <Wand2 className="h-5 w-5 text-foreground" />
+                <h3 className="font-semibold">AI-Assisted Improvements</h3>
               </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                We refine listings for clarity and better performance.
+              </p>
             </div>
           </div>
         </section>
 
         {/* Promotion options */}
-        <section className="w-full flex flex-col gap-6 sm:gap-8">
+        <section id="pricing" className="w-full flex flex-col gap-12">
           <div className="text-center">
-            <h2 className="text-balance text-2xl sm:text-3xl font-semibold md:text-4xl mb-3 sm:mb-4">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
               Promotion options
             </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Choose the placement tier that fits your visibility goals. Every listing is reviewed before
+              publishing.
+            </p>
           </div>
 
-          <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
             {/* Free listing */}
-            <Card className="relative flex flex-col border-2 shadow-md hover:shadow-lg transition-shadow duration-200 h-full">
-              <CardHeader className="p-6 sm:p-6">
-                <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-muted border border-border">
-                  <Target className="size-6 text-primary" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Free listing</CardTitle>
-                <CardDescription className="text-sm sm:text-base">
-                  Best for early-stage tools.
+            <Card className="relative flex flex-col border bg-background h-full">
+              <CardHeader className="p-6 pb-4">
+                <CardTitle className="text-base font-medium text-foreground">Free listing</CardTitle>
+                <div className="text-4xl font-bold mt-2">$0</div>
+                <CardDescription className="text-sm text-muted-foreground mt-2">
+                  Best for early-stage tools
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 p-6 sm:p-6 pt-0">
-                <hr className="border-dashed border-border" />
-                <ul className="space-y-3 text-sm">
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Standard listing placement</span>
+              <CardContent className="p-6 pt-0 flex-1">
+                <div className="border-t border-dashed border-border my-4" />
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Standard listing placement</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Category + tag visibility</span>
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Category + tag visibility</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Reviewed before publishing</span>
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Reviewed before publishing</span>
                   </li>
                 </ul>
               </CardContent>
-              <CardFooter className="mt-auto pt-6 border-t border-border p-6 sm:p-6">
-                <Button asChild className="w-full">
+              <CardFooter className="p-6 pt-0">
+                <Button asChild variant="outline" className="w-full bg-transparent">
                   <Link href="/submit">Submit Free</Link>
                 </Button>
               </CardFooter>
             </Card>
 
             {/* Featured listing */}
-            <Card className="relative flex flex-col border-2 border-primary/20 shadow-lg hover:shadow-xl transition-shadow duration-200 h-full">
-              <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground shadow-md">
+            <Card className="relative flex flex-col border bg-background h-full">
+              <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-400 px-3 py-1 text-xs font-medium text-white">
                 Popular
               </span>
-              <CardHeader className="p-6 sm:p-6">
-                <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-primary/10 border border-primary/20">
-                  <Sparkles className="size-6 text-primary" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Featured listing</CardTitle>
-                <CardDescription className="text-sm sm:text-base">
-                  Best for launches and faster discovery.
+              <CardHeader className="p-6 pb-4">
+                <CardTitle className="text-base font-medium text-foreground">Featured listing</CardTitle>
+                <div className="text-4xl font-bold mt-2">Contact</div>
+                <CardDescription className="text-sm text-muted-foreground mt-2">
+                  Best for launches and faster discovery
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 p-6 sm:p-6 pt-0">
-                <hr className="border-dashed border-border" />
-                <ul className="space-y-3 text-sm">
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Featured badge</span>
+              <CardContent className="p-6 pt-0 flex-1">
+                <div className="border-t border-dashed border-border my-4" />
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Featured badge</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Higher placement in category pages</span>
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Higher placement in category pages</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Included in featured sections</span>
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Included in featured sections</span>
                   </li>
                 </ul>
               </CardContent>
-              <CardFooter className="mt-auto pt-6 border-t border-border p-6 sm:p-6">
+              <CardFooter className="p-6 pt-0">
                 <Button asChild className="w-full">
-                  <Link href="/submit">Get Featured</Link>
+                  <Link href="/contact">Get Featured</Link>
                 </Button>
               </CardFooter>
             </Card>
 
             {/* Sponsored placement */}
-            <Card className="relative flex flex-col border-2 shadow-md hover:shadow-lg transition-shadow duration-200 h-full md:col-span-2 lg:col-span-1">
-              <CardHeader className="p-6 sm:p-6">
-                <div className="mb-4 flex size-12 items-center justify-center rounded-lg bg-muted border border-border">
-                  <Zap className="size-6 text-primary" />
-                </div>
-                <CardTitle className="text-lg sm:text-xl">Sponsored placement</CardTitle>
-                <CardDescription className="text-sm sm:text-base">
-                  Best for serious visibility.
+            <Card className="relative flex flex-col border bg-background h-full">
+              <CardHeader className="p-6 pb-4">
+                <CardTitle className="text-base font-medium text-foreground">Sponsored placement</CardTitle>
+                <div className="text-4xl font-bold mt-2">Contact</div>
+                <CardDescription className="text-sm text-muted-foreground mt-2">
+                  Best for serious visibility
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 p-6 sm:p-6 pt-0">
-                <hr className="border-dashed border-border" />
-                <ul className="space-y-3 text-sm">
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Top placement in selected category</span>
+              <CardContent className="p-6 pt-0 flex-1">
+                <div className="border-t border-dashed border-border my-4" />
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Top placement in selected category</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Sponsored exposure across the directory</span>
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Sponsored exposure across directory</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <Check className="size-4 sm:size-5 text-primary shrink-0 mt-0.5" />
-                    <span className="leading-relaxed">Limited slots per period</span>
+                  <li className="flex items-center gap-3 text-sm">
+                    <Check className="h-4 w-4 text-foreground flex-shrink-0" />
+                    <span>Limited slots per period</span>
                   </li>
                 </ul>
               </CardContent>
-              <CardFooter className="mt-auto pt-6 border-t border-border p-6 sm:p-6">
-                <Button asChild className="w-full">
-                  <Link href="/submit">Sponsor a Spot</Link>
+              <CardFooter className="p-6 pt-0">
+                <Button asChild variant="outline" className="w-full bg-transparent">
+                  <Link href="/contact">Sponsor a Spot</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -229,107 +349,101 @@ export default function AdvertisePage() {
         </section>
 
         {/* AI-assisted listing improvements */}
-        <section className="w-full flex flex-col gap-4 sm:gap-6">
-          <div className="rounded-lg border border-border bg-card p-6 sm:p-8 shadow-sm">
-            <div className="text-center mb-6 sm:mb-8">
-              <h2 className="text-balance text-2xl sm:text-3xl font-semibold md:text-4xl mb-3 sm:mb-4">
-                AI-assisted listing improvements
+        <section className="w-full flex flex-col gap-12">
+          <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center">
+            <div className="flex-1">
+              <h2 className="text-3xl sm:text-4xl font-bold">
+                AI-assisted listing
+                <br />
+                improvements
               </h2>
-              <p className="text-muted-foreground text-base sm:text-lg max-w-3xl mx-auto">
-                Newtools uses AI-assisted formatting guidelines to help listings
-                look clean and consistent. To maximise quality and conversion, we
-                may refine your listing content on your behalf — including:
+            </div>
+            <div className="flex-1">
+              <p className="text-muted-foreground text-base leading-relaxed">
+                Newtools uses AI-assisted formatting guidelines to help listings look clean and consistent. We may
+                refine your listing content on your behalf to maximize quality and conversion.
               </p>
             </div>
-            <div className="max-w-3xl mx-auto space-y-6">
-              <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
-                <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                  <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Rewriting the summary for clarity</span>
-                </div>
-                <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                  <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Tightening key feature bullets</span>
-                </div>
-                <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                  <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Improving category + tag accuracy</span>
-                </div>
-                <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                  <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                  <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Ensuring the listing follows our review format</span>
-                </div>
+          </div>
+
+          {/* Illustration placeholder */}
+          <div className="w-full rounded-lg border border-border bg-muted/30 aspect-[16/6] flex items-start justify-start p-4">
+            <span className="text-sm text-muted-foreground">payments illustration light</span>
+          </div>
+
+          {/* Feature grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Sparkles className="h-4 w-4 text-foreground" />
+                <h3 className="font-semibold text-sm">Rewriting Summary</h3>
               </div>
-              <div className="pt-6 border-t border-border">
-                <p className="text-center text-muted-foreground text-sm sm:text-base font-medium">
-                  Paid placement never replaces review standards.
-                </p>
+              <p className="text-sm text-muted-foreground">
+                We refine your summary for clarity and impact.
+              </p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Globe className="h-4 w-4 text-foreground" />
+                <h3 className="font-semibold text-sm">Feature Bullets</h3>
               </div>
+              <p className="text-sm text-muted-foreground">
+                Tightening key feature bullets for better readability.
+              </p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Tag className="h-4 w-4 text-foreground" />
+                <h3 className="font-semibold text-sm">Category Accuracy</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Improving category and tag accuracy for discoverability.
+              </p>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Settings className="h-4 w-4 text-foreground" />
+                <h3 className="font-semibold text-sm">Review Format</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Ensuring listings follow our review standards.
+              </p>
             </div>
           </div>
         </section>
 
         {/* Why promote on Newtools */}
-        <section className="w-full flex flex-col gap-4 sm:gap-6">
-          <div className="rounded-lg border border-border bg-card p-6 sm:p-8 shadow-sm">
-            <div className="text-center mb-6 sm:mb-8">
-              <h2 className="text-balance text-2xl sm:text-3xl font-semibold md:text-4xl mb-3 sm:mb-4">
-                Why promote on Newtools?
-              </h2>
-              <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto">
-                Because people don't come here to browse randomly — they come here
-                looking for tools to use.
-              </p>
-            </div>
-            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto">
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Visibility inside relevant categories</span>
-              </div>
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">A builder-first audience</span>
-              </div>
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Curated credibility (not clutter)</span>
-              </div>
-              <div className="flex items-start gap-3 p-4 sm:p-5 rounded-lg border border-border/50 hover:bg-muted/50 hover:border-border transition-all">
-                <Check className="size-5 sm:size-6 text-primary shrink-0 mt-0.5" />
-                <span className="text-muted-foreground text-sm sm:text-base leading-relaxed">Optional affiliate-friendly outbound links</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQ Section */}
-        <section className="w-full flex flex-col gap-6 sm:gap-8">
+        <section className="w-full flex flex-col gap-12">
           <div className="text-center">
-            <HeaderSection
-              label="FAQ"
-              title="Frequently asked questions"
-              titleAs="h2"
-            />
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+              Why promote
+              <br />
+              on Newtools?
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Because people don't come here to browse randomly — they come here looking for tools to
+              use.
+            </p>
           </div>
 
-          <div className="w-full">
-            <div className="rounded-lg border border-border bg-card shadow-sm overflow-hidden">
-              <Accordion
-                type="single"
-                collapsible
-                className="w-full"
-              >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* FAQ Accordion */}
+            <div>
+              <Accordion type="single" collapsible className="w-full">
                 {faqs.map((faq, index) => (
                   <AccordionItem
                     key={index}
                     value={`item-${index}`}
-                    className="border-b border-border last:border-b-0 px-4 sm:px-6 py-2"
+                    className="border-b border-border"
                   >
-                    <AccordionTrigger className="cursor-pointer text-sm sm:text-base hover:no-underline py-3 sm:py-4 text-left">
-                      {faq.question}
+                    <AccordionTrigger className="py-4 hover:no-underline text-left">
+                      <div className="flex items-center gap-3">
+                        <faq.icon className="h-4 w-4 text-foreground flex-shrink-0" />
+                        <span className="text-sm font-medium">{faq.question}</span>
+                      </div>
                     </AccordionTrigger>
-                    <AccordionContent className="pb-3 sm:pb-4">
-                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    <AccordionContent className="pb-4 pl-7">
+                      <p className="text-sm text-muted-foreground leading-relaxed">
                         {faq.answer}
                       </p>
                     </AccordionContent>
@@ -337,34 +451,41 @@ export default function AdvertisePage() {
                 ))}
               </Accordion>
             </div>
-          </div>
-        </section>
 
-        {/* CTA Section */}
-        <section className="py-4 sm:py-6 md:py-8">
-          <div className="mx-auto max-w-5xl">
-            <div className="rounded-lg border border-border bg-card p-6 sm:p-8 md:p-10 lg:p-12 shadow-sm">
+            {/* Dark visualization */}
+            <div className="rounded-xl bg-zinc-900 p-8 aspect-[4/3] flex items-center justify-center">
               <div className="text-center">
-                <h2 className="text-balance text-2xl sm:text-3xl md:text-4xl font-semibold lg:text-5xl mb-3 sm:mb-4">
-                  Ready to submit?
-                </h2>
-                <p className="mt-3 sm:mt-4 text-muted-foreground text-base sm:text-lg mb-6 sm:mb-8">
-                  Submit your tool for review or boost your placement for extra
-                  visibility.
-                </p>
-                <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-                  <Button asChild size="lg" className="shadow-md w-full sm:w-auto">
-                    <Link href="/submit">Submit a Tool</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="shadow-sm w-full sm:w-auto">
-                    <Link href="/pricing">View Pricing</Link>
-                  </Button>
+                <p className="text-xs text-zinc-500 mb-4">Database visualization</p>
+                <div className="w-8 h-8 mx-auto rounded border-2 border-blue-500 bg-blue-500/20 flex items-center justify-center">
+                  <span className="text-blue-400 text-xs font-bold">N</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* CTA Section */}
+        <section className="w-full">
+          <div className="rounded-2xl border border-border bg-background p-12 md:p-16">
+            <div className="text-center max-w-xl mx-auto">
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+                Ready to submit?
+              </h2>
+              <p className="text-muted-foreground text-lg mb-8">
+                Submit your tool for review or boost your placement for extra visibility.
+              </p>
+              <div className="flex flex-row justify-center gap-4">
+                <Button asChild size="lg" className="px-6">
+                  <Link href="/submit">Submit a Tool</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="px-6 bg-transparent">
+                  <Link href="#pricing">View Pricing</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </>
-  );
+    </div>
+  )
 }

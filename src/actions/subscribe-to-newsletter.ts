@@ -18,31 +18,40 @@ export async function subscribeToNewsletter(
       return { status: "error", message: "Invalid input" };
     }
 
-    // Check if Resend is configured
-    if (!process.env.RESEND_AUDIENCE_ID) {
-      console.error("subscribeToNewsletter, RESEND_AUDIENCE_ID is not configured");
-      return {
-        status: "error",
-        message: "Newsletter service is not configured. Please contact support.",
-      };
+    // Try to create contact in audience (optional - may fail if API key doesn't have permissions)
+    let contactCreated = false;
+    if (process.env.RESEND_AUDIENCE_ID) {
+      try {
+        const subscribedResult = await resend.contacts.create({
+          email: validatedInput.data.email,
+          unsubscribed: false,
+          audienceId: process.env.RESEND_AUDIENCE_ID,
+        });
+        console.log("subscribeToNewsletter, subscribedResult", subscribedResult);
+
+        if (subscribedResult.error) {
+          // Check if error is due to API key restrictions
+          if (subscribedResult.error.message?.includes("restricted") ||
+            subscribedResult.error.message?.includes("permission")) {
+            console.warn("subscribeToNewsletter, API key restricted - skipping contact creation");
+          } else {
+            console.warn("subscribeToNewsletter, error creating contact:", subscribedResult.error);
+          }
+        } else {
+          contactCreated = true;
+        }
+      } catch (contactError: any) {
+        // If contact creation fails due to permissions, continue with email sending
+        if (contactError?.message?.includes("restricted") ||
+          contactError?.message?.includes("permission")) {
+          console.warn("subscribeToNewsletter, API key restricted - skipping contact creation");
+        } else {
+          console.warn("subscribeToNewsletter, error creating contact:", contactError);
+        }
+      }
     }
 
-    const subscribedResult = await resend.contacts.create({
-      email: validatedInput.data.email,
-      unsubscribed: false,
-      audienceId: process.env.RESEND_AUDIENCE_ID,
-    });
-    console.log("subscribeToNewsletter, subscribedResult", subscribedResult);
-
-    if (subscribedResult.error) {
-      console.error("subscribeToNewsletter, error creating contact:", subscribedResult.error);
-      return {
-        status: "error",
-        message: subscribedResult.error.message || "Failed to subscribe. Please try again.",
-      };
-    }
-
-    // Try to send welcome email (non-blocking)
+    // Send welcome email (this should work with restricted API keys)
     try {
       const emailSentResult = await resend.emails.send({
         from: process.env.RESEND_EMAIL_FROM || "onboarding@resend.dev",
@@ -53,15 +62,27 @@ export async function subscribeToNewsletter(
       console.log("subscribeToNewsletter, emailSentResult", emailSentResult);
 
       if (emailSentResult.error) {
-        console.warn("subscribeToNewsletter, error sending welcome email:", emailSentResult.error);
-        // Still return success since contact was created
+        console.error("subscribeToNewsletter, error sending welcome email:", emailSentResult.error);
+        return {
+          status: "error",
+          message: emailSentResult.error.message || "Failed to send welcome email. Please try again.",
+        };
       }
-    } catch (emailError) {
-      console.warn("subscribeToNewsletter, error sending welcome email:", emailError);
-      // Still return success since contact was created
-    }
 
-    return { status: "success", message: "Successfully subscribed to the newsletter!" };
+      // Return success even if contact creation failed (as long as email was sent)
+      return {
+        status: "success",
+        message: contactCreated
+          ? "Successfully subscribed to the newsletter!"
+          : "Welcome email sent! (Note: Contact list may not be updated due to API restrictions)"
+      };
+    } catch (emailError: any) {
+      console.error("subscribeToNewsletter, error sending welcome email:", emailError);
+      return {
+        status: "error",
+        message: emailError?.message || "Failed to send welcome email. Please try again.",
+      };
+    }
   } catch (error) {
     console.error("subscribeToNewsletter, error:", error);
     return {

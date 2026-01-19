@@ -2,13 +2,14 @@ import type { MarketingConfig } from '@/types';
 
 export const marketingConfig: MarketingConfig = {
   menus: [
-    { title: 'Features', href: '#features', key: 'features' },
-    { title: 'Solution', href: '#solution', key: 'solution' },
+    { title: 'Home', href: '/', key: 'home' },
+    { title: 'Toolbox', href: '/directories', key: 'toolbox' },
+    { title: 'Build Assets', href: '/directories?tab=build-assets', key: 'build-assets' },
     { title: 'Pricing', href: '/pricing', key: 'pricing' },
-    { title: 'About', href: '/about', key: 'about' },
-    { title: 'Blogs', href: '/blog', key: 'blog' },
+    { title: 'Advertise', href: '/advertise', key: 'advertise' },
+    { title: 'Submit', href: '/submit', key: 'submit' },
+    { title: 'Blog', href: '/blog', key: 'blog' },
     { title: 'Contact', href: '/contact', key: 'contact' },
-    // { title: 'Marketplace', href: '/marketplace', key: 'marketplace' },
   ],
 };
 

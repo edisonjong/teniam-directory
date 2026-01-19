@@ -89,10 +89,14 @@ export default function AdvertisePage() {
               </div>
             </div>
             <div className="flex-1 w-full lg:w-auto">
-              <div className="aspect-[4/3] w-full max-w-lg ml-auto rounded-lg border border-border bg-background flex items-center justify-center">
-                <div className="w-8 h-8 rounded border-2 border-orange-400 bg-orange-100 flex items-center justify-center">
-                  <span className="text-orange-600 text-xs font-bold">N</span>
-                </div>
+              <div className="aspect-[4/3] w-full max-w-lg ml-auto rounded-lg border border-border bg-background overflow-hidden">
+                <Image
+                  src="/promote_product.jpeg"
+                  alt="Promote your product on Newtools"
+                  width={800}
+                  height={600}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>

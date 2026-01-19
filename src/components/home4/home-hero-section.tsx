@@ -7,6 +7,8 @@ import { HeroHeader } from './hero-header';
 import { AnimatedGroup } from '../ui/animated-group';
 import { TextEffect } from '../ui/text-effect';
 import { marketingConfig } from '@/config/marketing';
+import { InfiniteSlider } from '@/components/motion-primitives/infinite-slider';
+import { ProgressiveBlur } from '@/components/motion-primitives/progressive-blur';
 
 const transitionVariants = {
   item: {
@@ -207,89 +209,102 @@ export default function HeroSection() {
             </AnimatedGroup>
           </div>
         </section>
-        <section className="bg-background pb-16 pt-16 md:pb-32">
-          <div className="group relative m-auto max-w-5xl px-6">
-            <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-              <Link
-                href="/"
-                className="block text-sm duration-150 hover:opacity-75"
-              >
-                <span> Meet Our Customers</span>
+        <section className="bg-background overflow-hidden py-16">
+          <div className="group relative m-auto max-w-7xl px-6">
+            <div className="flex flex-col items-center md:flex-row">
+              <div className="md:max-w-44 md:border-r md:pr-6">
+                <p className="text-end text-sm">Meet Our Customers</p>
+              </div>
+              <div className="relative py-6 md:w-[calc(100%-11rem)]">
+                <InfiniteSlider
+                  speedOnHover={20}
+                  speed={40}
+                  gap={112}>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-5 w-fit dark:invert"
+                      src="/deepseek.svg"
+                      alt="DeepSeek Logo"
+                      height={20}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-4 w-fit dark:invert"
+                      src="/claude.svg"
+                      alt="Claude Logo"
+                      height={16}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-4 w-fit dark:invert"
+                      src="/gemini.svg"
+                      alt="Gemini Logo"
+                      height={16}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-5 w-fit dark:invert"
+                      src="/copilot.svg"
+                      alt="Copilot Logo"
+                      height={20}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-5 w-fit dark:invert"
+                      src="/groq.svg"
+                      alt="Groq Logo"
+                      height={20}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-4 w-fit dark:invert"
+                      src="/inflection.svg"
+                      alt="Inflection Logo"
+                      height={16}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-7 w-fit dark:invert"
+                      src="/perplexity.svg"
+                      alt="Perplexity Logo"
+                      height={28}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-5 w-fit dark:invert"
+                      src="/openai.svg"
+                      alt="OpenAI Logo"
+                      height={20}
+                      width={120}
+                    />
+                  </div>
+                </InfiniteSlider>
 
-                <ChevronRight className="ml-1 inline-block size-3" />
-              </Link>
-            </div>
-            <div className="group-hover:blur-xs mx-auto mt-12  grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 sm:gap-x-16 sm:gap-y-14">
-              <div className="flex">
-                <Image
-                  className="mx-auto  w-fit dark:invert"
-                  src="/groq.svg"
-                  alt="Grok Logo"
-                  width={70}
-                  height={70}
+                <div className="bg-gradient-to-r from-background absolute inset-y-0 left-0 w-20"></div>
+                <div className="bg-gradient-to-l from-background absolute inset-y-0 right-0 w-20"></div>
+                <ProgressiveBlur
+                  className="pointer-events-none absolute left-0 top-0 h-full w-20"
+                  direction="left"
+                  blurIntensity={1}
                 />
-              </div>
-              <div className="flex">
-                <Image
-                  className="mx-auto  w-fit dark:invert"
-                  src="/claude.svg"
-                  alt="Claude Logo"
-                  width={70}
-                  height={70}
-                />
-              </div>
-              <div className="flex">
-                <Image
-                  className="mx-auto  w-fit dark:invert"
-                  src="/openai.svg"
-                  alt="OpenAI Logo"
-                  width={70}
-                  height={70}
-                />
-              </div>
-              <div className="flex">
-                <Image
-                  className="mx-aut mb-[6px] w-fit dark:invert"
-                  src="/gemini.svg"
-                  alt="Gemini Logo"
-                  width={60}
-                  height={60}
-                />
-              </div>
-              <div className="flex">
-                <Image
-                  className="mx-auto  w-fit dark:invert"
-                  src="/deepseek.svg"
-                  alt="Deepseek Logo"
-                  width={100}
-                  height={100}
-                />
-              </div>
-              <div className="flex">
-                <Image
-                  className="mx-auto  w-fit dark:invert"
-                  src="/inflection.svg"
-                  alt="Inflection AI Logo"
-                  width={70}
-                  height={70}
-                />
-              </div>
-              <div className="flex">
-                <Image
-                  className="mx-auto  w-fit dark:invert"
-                  src="/copilot.svg"
-                  alt="Copilot Logo"
-                  width={70}
-                  height={70}
-                />
-              </div>
-              <div className="flex">
-                <Image
-                  className="mx-auto  w-fit dark:invert"
-                  src="/perplexity.svg"
-                  alt="Perplexity Logo"
-                  width={70}
-                  height={70}
+                <ProgressiveBlur
+                  className="pointer-events-none absolute right-0 top-0 h-full w-20"
+                  direction="right"
+                  blurIntensity={1}
                 />
               </div>
             </div>

@@ -14,8 +14,8 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { sponsorItemListQuery } from "@/sanity/lib/queries";
 
 export const metadata = constructMetadata({
-  title: "Tag",
-  description: "Explore by tags",
+  title: "Tags | Newtools",
+  description: "Browse curated tools by tags on Newtools. Discover AI tools, developer software, and build assets organized by technology and use case.",
   canonicalUrl: `${siteConfig.url}/tag`,
 });
 

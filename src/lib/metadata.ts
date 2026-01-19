@@ -48,17 +48,28 @@ export function constructMetadata({
       title.startsWith(`${siteConfig.name} `) ||
       title === siteConfig.name ? title : `${siteConfig.name} – ${title}`)
     : siteConfig.name;
+  const finalKeywords = keywords || siteConfig.keywords;
+  const finalImage = image.startsWith("http") ? image : `${siteConfig.url}${image.startsWith("/") ? "" : "/"}${image}`;
+
   return {
     title: fullTitle,
     description,
-    keywords: keywords || siteConfig.keywords,
+    keywords: finalKeywords,
     authors: [
       {
         name: author,
+        url: siteConfig.url,
       },
     ],
     creator: author,
     publisher: siteConfig.name,
+    applicationName: siteConfig.name,
+    referrer: "origin-when-cross-origin",
+    formatDetection: {
+      email: false,
+      address: false,
+      telephone: false,
+    },
     robots: {
       index: !noIndex,
       follow: !noIndex,
@@ -73,6 +84,9 @@ export function constructMetadata({
     alternates: canonicalUrl
       ? {
         canonical: canonicalUrl,
+        languages: {
+          "en-US": canonicalUrl,
+        },
       }
       : undefined,
     verification: {
@@ -97,10 +111,11 @@ export function constructMetadata({
       siteName: siteConfig.name,
       images: [
         {
-          url: image.startsWith("http") ? image : `${siteConfig.url}${image.startsWith("/") ? "" : "/"}${image}`,
+          url: finalImage,
           width: 1200,
           height: 630,
           alt: fullTitle || "Newtools — curated tools to build faster",
+          type: "image/png",
         },
       ],
     },
@@ -108,16 +123,23 @@ export function constructMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [image.startsWith("http") ? image : `${siteConfig.url}${image.startsWith("/") ? "" : "/"}${image}`],
+      images: [finalImage],
       site: siteConfig.twitter.site,
       creator: siteConfig.twitter.creator,
     },
     icons: {
-      icon: "/favicon.ico",
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      ],
       shortcut: "/favicon-32x32.png",
-      apple: "/favicon.ico.jpeg",
+      apple: [
+        { url: "/favicon.ico.jpeg", sizes: "180x180", type: "image/jpeg" },
+      ],
     },
     metadataBase: new URL(siteConfig.url),
     manifest: `${siteConfig.url}/site.webmanifest`,
+    category: "Technology",
   };
 }

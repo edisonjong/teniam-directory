@@ -13,8 +13,8 @@ import type { SponsorItemListQueryResult } from "@/sanity.types";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { sponsorItemListQuery } from "@/sanity/lib/queries";
 export const metadata = constructMetadata({
-  title: "Category",
-  description: "Explore by category",
+  title: "Categories | Newtools",
+  description: "Browse curated tools by category on Newtools. Explore AI tools, developer tools, design tools, marketing tools, and build assets.",
   canonicalUrl: `${siteConfig.url}/category`,
 });
 

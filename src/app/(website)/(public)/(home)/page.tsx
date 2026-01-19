@@ -72,6 +72,7 @@
 // import { HomeContent } from "@/components/home2/home2-content";
 // import HomeContent from '@/components/home4/home-content';
 import HomeContent from "@/components/home4/home-content";
+import { WebSiteSchema } from "@/components/seo/website-schema";
 import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
@@ -80,8 +81,24 @@ export const metadata = constructMetadata({
   description: "Discover high-quality AI tools, developer software, templates, and boilerplates — curated for builders, startups, and creators.",
   canonicalUrl: `${siteConfig.url}/`,
   image: `${siteConfig.url}/og.png`,
+  keywords: [
+    ...siteConfig.keywords,
+    "best AI tools 2026",
+    "developer tools directory",
+    "startup tools",
+    "boilerplates",
+    "templates",
+    "curated tools",
+    "build faster",
+    "productivity tools",
+  ],
 });
 
 export default async function LandingPage() {
-  return <HomeContent />;
+  return (
+    <>
+      <WebSiteSchema />
+      <HomeContent />
+    </>
+  );
 }

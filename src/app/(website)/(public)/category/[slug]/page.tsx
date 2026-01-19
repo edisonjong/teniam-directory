@@ -1,6 +1,7 @@
 import ItemGrid from "@/components/item/item-grid";
 import EmptyGrid from "@/components/shared/empty-grid";
 import CustomPagination from "@/components/shared/pagination";
+import { ItemListSchema } from "@/components/seo/itemlist-schema";
 import { siteConfig } from "@/config/site";
 import { getItems } from "@/data/item";
 import {
@@ -78,24 +79,42 @@ export default async function CategoryPage({
     totalPages,
   );
 
+  const category = await sanityFetch<CategoryQueryResult>({
+    query: categoryQuery,
+    params: { slug: params.slug },
+  });
+
+  const categoryName = category?.name || params.slug;
+  const categoryDescription = category?.description || `Curated ${categoryName} tools and resources`;
+
   return (
-    <div>
-      {/* when no items are found */}
-      {items?.length === 0 && <EmptyGrid />}
-
-      {/* when items are found */}
+    <>
       {items && items.length > 0 && (
-        <section className="">
-          <ItemGrid items={items} sponsorItems={sponsorItems} showSponsor={showSponsor} />
-
-          <div className="mt-8 flex items-center justify-center">
-            <CustomPagination
-              routePreix={`/category/${params.slug}`}
-              totalPages={totalPages}
-            />
-          </div>
-        </section>
+        <ItemListSchema
+          items={items}
+          name={`${categoryName} Tools`}
+          description={categoryDescription}
+          url={`${siteConfig.url}/category/${params.slug}`}
+        />
       )}
-    </div>
+      <div>
+        {/* when no items are found */}
+        {items?.length === 0 && <EmptyGrid />}
+
+        {/* when items are found */}
+        {items && items.length > 0 && (
+          <section className="">
+            <ItemGrid items={items} sponsorItems={sponsorItems} showSponsor={showSponsor} />
+
+            <div className="mt-8 flex items-center justify-center">
+              <CustomPagination
+                routePreix={`/category/${params.slug}`}
+                totalPages={totalPages}
+              />
+            </div>
+          </section>
+        )}
+      </div>
+    </>
   );
 }

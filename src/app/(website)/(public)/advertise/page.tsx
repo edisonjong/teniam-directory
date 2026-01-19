@@ -36,6 +36,14 @@ import Link from "next/link"
 import Image from "next/image"
 import { InfiniteSlider } from '@/components/motion-primitives/infinite-slider'
 import { ProgressiveBlur } from '@/components/motion-primitives/progressive-blur'
+import { siteConfig } from "@/config/site";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Advertise | Newtools",
+  description: "Promote your product on Newtools. Reach founders, developers, and creators with featured listings, sponsored placements, and AI-assisted listing improvements.",
+  canonicalUrl: `${siteConfig.url}/advertise`,
+});
 
 const faqs = [
   {

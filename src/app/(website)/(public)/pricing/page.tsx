@@ -9,8 +9,8 @@ import { siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/metadata";
 
 export const metadata = constructMetadata({
-  title: "Pricing",
-  description: "Choose a pricing plan for submitting your product",
+  title: "Pricing | Newtools",
+  description: "Choose a pricing plan to submit your product to Newtools. Free and paid submission options available. Reach founders, developers, and creators.",
   canonicalUrl: `${siteConfig.url}/pricing`,
 });
 

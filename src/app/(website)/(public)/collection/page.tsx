@@ -9,8 +9,8 @@ import { COLLECTIONS_PER_PAGE } from "@/lib/constants";
 import { constructMetadata } from "@/lib/metadata";
 
 export const metadata = constructMetadata({
-  title: "Collection",
-  description: "Explore by collection",
+  title: "Collections | Newtools",
+  description: "Browse curated tool collections on Newtools. Discover handpicked sets of tools organized by theme, use case, or technology stack.",
   canonicalUrl: `${siteConfig.url}/collection`,
 });
 

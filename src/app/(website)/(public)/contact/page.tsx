@@ -10,10 +10,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card } from "@/components/ui/card";
+import { WebPageSchema } from "@/components/seo/webpage-schema";
+import { siteConfig } from "@/config/site";
+import { constructMetadata } from "@/lib/metadata";
+
+export const metadata = constructMetadata({
+  title: "Contact | Newtools",
+  description: "Contact Newtools for partnerships, featured placements, corrections, or general inquiries. We're here to help.",
+  canonicalUrl: `${siteConfig.url}/contact`,
+  keywords: [
+    ...siteConfig.keywords,
+    "contact newtools",
+    "partnerships",
+    "featured placements",
+  ],
+});
 
 export default function ContactSection() {
   return (
-    <section className="py-32">
+    <>
+      <WebPageSchema
+        name="Contact Newtools"
+        description="Contact Newtools for partnerships, featured placements, corrections, or general inquiries. We're here to help."
+        url={`${siteConfig.url}/contact`}
+      />
+      <section className="py-32">
       <div className="mx-auto max-w-3xl px-8 lg:px-0">
         <h1 className="text-center text-4xl font-semibold lg:text-5xl">
           Contact Sales
@@ -100,5 +121,6 @@ export default function ContactSection() {
         </Card>
       </div>
     </section>
+    </>
   );
 }

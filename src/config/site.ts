@@ -149,7 +149,7 @@ export const siteConfig: SiteConfig = {
     { label: "Features", href: "/features" },
     { label: "Solutions", href: "/solutions" },
     { label: "Pricing", href: "/pricing" },
-    { label: "Blog", href: "/blog" },
+    { label: "Blog", href: "/blogs" },
     { label: "Directory", href: "/directory" },
 
     { label: "Contact", href: "/contact" },

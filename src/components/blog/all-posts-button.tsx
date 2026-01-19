@@ -12,7 +12,7 @@ export default function AllPostsButton() {
       className="inline-flex items-center gap-2 group"
       asChild
     >
-      <Link href="/blog" prefetch={false}>
+      <Link href="/blogs" prefetch={false}>
         <ArrowLeftIcon
           className="w-5 h-5 
                     transition-transform duration-200 group-hover:-translate-x-1"

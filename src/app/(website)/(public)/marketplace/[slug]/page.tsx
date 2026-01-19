@@ -42,7 +42,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: `${post.title}`,
     description: post.excerpt,
-    canonicalUrl: `${siteConfig.url}/blog/${params.slug}`,
+    canonicalUrl: `${siteConfig.url}/blogs/${params.slug}`,
     image: imageProps?.src,
   });
 }
@@ -189,7 +189,7 @@ export default async function PostPage({ params }: PostPageProps) {
                 {post.categories?.map((category) => (
                   <li key={category._id}>
                     <Link
-                      href={`/blog/category/${category.slug.current}`}
+                      href={`/blogs/category/${category.slug.current}`}
                       className="text-sm link-underline"
                     >
                       {category.name}

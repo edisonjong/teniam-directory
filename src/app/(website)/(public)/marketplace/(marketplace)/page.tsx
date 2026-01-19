@@ -47,7 +47,7 @@ export default async function BlogIndexPage({
           <MarketPlaceGrid posts={posts} />
 
           <div className="mt-8 flex items-center justify-center">
-            <CustomPagination routePreix="/blog" totalPages={totalPages} />
+            <CustomPagination routePreix="/blogs" totalPages={totalPages} />
           </div>
         </div>
       )}

@@ -15,12 +15,12 @@ type BlogCardProps = {
 export default function BlogCard({ post }: BlogCardProps) {
   const pathname = usePathname();
   const isBlogDetailPage =
-    pathname.startsWith("/blog/") && pathname !== "/blog";
+    pathname.startsWith("/blogs/") && pathname !== "/blogs";
   const imageProps = post?.image ? urlForImage(post.image) : null;
   const imageBlurDataURL = post?.image?.blurDataURL || null;
   const publishDate = post.publishDate || post._createdAt;
   const date = getLocaleDate(publishDate);
-  const postUrlPrefix = "/blog";
+  const postUrlPrefix = "/blogs";
 
   return (
     <div className="group cursor-pointer flex flex-col gap-4">

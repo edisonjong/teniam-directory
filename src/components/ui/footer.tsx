@@ -17,7 +17,7 @@ const links = [
   },
   {
     title: "Blogs",
-    href: "https://www.newtools.io/blog",
+    href: "https://www.newtools.io/blogs",
   },
   {
     title: "Directory",

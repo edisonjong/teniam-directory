@@ -13,7 +13,7 @@ export const publicRoutes = [
   '/tag(/.*)?',
   '/item(/.*)?',
   '/contact(/.*)?',
-  '/blog(/.*)?',
+  '/blogs(/.*)?',
   '/pricing(/.*)?',
 
   '/about(/.*)?',

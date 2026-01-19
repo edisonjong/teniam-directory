@@ -110,7 +110,7 @@ export async function HomeContent() {
               </h2>
             </div>
 
-            {/* <Link href="/blog" className="text-lg group flex items-center gap-2">
+            {/* <Link href="/blogs" className="text-lg group flex items-center gap-2">
               <span>More</span>
               <ArrowRightIcon className="size-4 icon-scale" />
             </Link> */}
@@ -120,7 +120,7 @@ export async function HomeContent() {
 
           <Button asChild variant="default" size="lg" className="mx-auto">
             <Link
-              href="/blog"
+              href="/blogs"
               className="text-lg font-semibold px-16 group flex items-center gap-2"
             >
               <span className="tracking-wider">More Blog Posts</span>

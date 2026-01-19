@@ -9,7 +9,7 @@ import { constructMetadata } from '@/lib/metadata';
 export const metadata = constructMetadata({
   title: 'Blog',
   description: 'Read our latest blog posts',
-  canonicalUrl: `${siteConfig.url}/blog`,
+  canonicalUrl: `${siteConfig.url}/blogs`,
 });
 
 export default async function BlogIndexPage({
@@ -35,7 +35,7 @@ export default async function BlogIndexPage({
           <BlogGrid posts={posts} />
 
           <div className="mt-8 flex items-center justify-center">
-            <CustomPagination routePreix="/blog" totalPages={totalPages} />
+            <CustomPagination routePreix="/blogs" totalPages={totalPages} />
           </div>
         </div>
       )}

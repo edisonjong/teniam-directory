@@ -34,7 +34,7 @@ export async function generateMetadata({
   return constructMetadata({
     title: `${category.name}`,
     description: category.description,
-    canonicalUrl: `${siteConfig.url}/blog/category/${params.slug}`,
+    canonicalUrl: `${siteConfig.url}/blogs/category/${params.slug}`,
     // image: ogImageUrl.toString(),
   });
 }
@@ -73,7 +73,7 @@ export default async function BlogCategoryPage({
 
           <div className="mt-8 flex items-center justify-center">
             <CustomPagination
-              routePreix={`/blog/${params.slug}`}
+              routePreix={`/blogs/category/${params.slug}`}
               totalPages={totalPages}
             />
           </div>

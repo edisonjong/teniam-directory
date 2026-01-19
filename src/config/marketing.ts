@@ -7,7 +7,7 @@ export const marketingConfig: MarketingConfig = {
     { title: 'Pricing', href: '/pricing', key: 'pricing' },
     { title: 'Advertise', href: '/advertise', key: 'advertise' },
     { title: 'Submit', href: '/submit', key: 'submit' },
-    { title: 'Blog', href: '/blog', key: 'blog' },
+    { title: 'Blog', href: '/blogs', key: 'blog' },
     { title: 'Contact', href: '/contact', key: 'contact' },
   ],
 };
@@ -49,7 +49,7 @@ export const marketingConfig: MarketingConfig = {
 // },
 // {
 //   title: "Blog",
-//   href: "/blog",
+//   href: "/blogs",
 //   icon: "blog",
 // },
 // {

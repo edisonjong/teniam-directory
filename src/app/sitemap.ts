@@ -56,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
     },
     {
-      url: "blog",
+      url: "blogs",
       lastModified: new Date(),
     },
     {
@@ -232,7 +232,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const blog of blogListQueryResult) {
     if (blog.slug) {
-      const routeUrl = `/blog/${blog.slug}`;
+      const routeUrl = `/blogs/${blog.slug}`;
       // console.log(`sitemap, url:${site_url}${routeUrl}`);
       sitemapList.push({
         url: `${site_url}${routeUrl}`,
@@ -245,7 +245,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const blogCategory of blogCategoryListQueryResult) {
     if (blogCategory.slug) {
-      const routeUrl = `/blog/category/${blogCategory.slug}`;
+      const routeUrl = `/blogs/category/${blogCategory.slug}`;
       // console.log(`sitemap, url:${site_url}${routeUrl}`);
       sitemapList.push({
         url: `${site_url}${routeUrl}`,
@@ -255,7 +255,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const pageCount = Math.ceil(blogCategory.count / ITEMS_PER_PAGE);
       console.log(`sitemap, blog category:${blogCategory.slug}, count:${blogCategory.count}, pageCount:${pageCount}`);
       for (let i = 2; i <= pageCount; i++) {
-        const routeUrl = `/blog/category/${blogCategory.slug}?page=${i}`;
+        const routeUrl = `/blogs/category/${blogCategory.slug}?page=${i}`;
         sitemapList.push({
           url: `${site_url}${routeUrl}`,
           lastModified: new Date(blogCategory._updatedAt).toISOString(),

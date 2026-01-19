@@ -21,7 +21,7 @@ interface ArticleSchemaProps {
 }
 
 export function ArticleSchema({ post }: ArticleSchemaProps) {
-  const postUrl = `${siteConfig.url}/blog/${post.slug}`;
+  const postUrl = `${siteConfig.url}/blogs/${post.slug}`;
 
   const schema = {
     "@context": "https://schema.org",

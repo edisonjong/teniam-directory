@@ -55,7 +55,7 @@ export function BlogCategoryListMobile({
           <ul className="mb-14 w-full p-3 text-muted-foreground">
             <FilterItemMobile
               title="All"
-              href="/blog"
+              href="/blogs"
               active={!slug}
               clickAction={closeDrawer}
             />
@@ -64,7 +64,7 @@ export function BlogCategoryListMobile({
               <FilterItemMobile
                 key={item.slug.current}
                 title={item.name}
-                href={`/blog/category/${item.slug.current}`}
+                href={`/blogs/category/${item.slug.current}`}
                 active={item.slug.current === slug}
                 clickAction={closeDrawer}
               />

@@ -37,10 +37,7 @@ import FooterSection from '@/components/ui/footer';
 import { siteConfig } from '@/config/site';
 import { constructMetadata } from '@/lib/metadata';
 
-export const metadata = constructMetadata({
-  title: '',
-  canonicalUrl: `${siteConfig.url}/`,
-});
+// Metadata is defined in page.tsx, no need to override here
 
 export default function HomeLayout({
   children,

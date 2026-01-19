@@ -78,7 +78,7 @@ import { constructMetadata } from "@/lib/metadata";
 export const metadata = constructMetadata({
   title: "Newtools | Curated Tools to Build Faster in 2026",
   description: "Discover high-quality AI tools, developer software, templates, and boilerplates — curated for builders, startups, and creators.",
-  canonicalUrl: `${siteConfig.url}`,
+  canonicalUrl: `${siteConfig.url}/`,
   image: `${siteConfig.url}/og.png`,
 });
 

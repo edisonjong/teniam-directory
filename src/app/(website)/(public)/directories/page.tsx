@@ -19,7 +19,7 @@ export const metadata = constructMetadata({
   title: "Toolbox | Newtools",
   description: "Browse curated AI tools, developer tools, design tools, marketing tools, and build assets — no spam, just the best.",
   canonicalUrl: `${siteConfig.url}/directories`,
-  image: `${siteConfig.url}/og.png`,
+  image: `/newtools-image.jpeg`,
 });
 const Page = async ({
   searchParams,

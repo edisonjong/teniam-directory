@@ -34,6 +34,8 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { InfiniteSlider } from '@/components/motion-primitives/infinite-slider'
+import { ProgressiveBlur } from '@/components/motion-primitives/progressive-blur'
 
 const faqs = [
   {
@@ -97,65 +99,95 @@ export default function AdvertisePage() {
         </section>
 
         {/* Logo Bar */}
-        <section className="w-full">
-          <div className="flex flex-col sm:flex-row items-center gap-8">
-            <div className="flex-shrink-0 border-r border-border pr-8">
-              <p className="text-sm text-muted-foreground text-right leading-tight">
-                Powering the best
-                <br />
-                teams
-              </p>
-            </div>
-            <div className="flex-1 flex items-center justify-between gap-6 sm:gap-8 overflow-x-auto">
-              <Image
-                src="/deepseek.svg"
-                alt="DeepSeek"
-                width={120}
-                height={40}
-                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-              <Image
-                src="/claude.svg"
-                alt="Claude"
-                width={120}
-                height={40}
-                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-              <Image
-                src="/gemini.svg"
-                alt="Gemini"
-                width={120}
-                height={40}
-                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-              <Image
-                src="/copilot.svg"
-                alt="Copilot"
-                width={120}
-                height={40}
-                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-              <Image
-                src="/groq.svg"
-                alt="Groq"
-                width={120}
-                height={40}
-                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-              <Image
-                src="/inflection.svg"
-                alt="Inflection"
-                width={120}
-                height={40}
-                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-              <Image
-                src="/perplexity.svg"
-                alt="Perplexity"
-                width={120}
-                height={40}
-                className="h-8 w-auto flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
+        <section className="bg-background overflow-hidden py-16">
+          <div className="group relative m-auto max-w-7xl px-6">
+            <div className="flex flex-col items-center md:flex-row">
+              <div className="md:max-w-44 md:border-r md:pr-6">
+                <p className="text-end text-sm">Powering the best teams</p>
+              </div>
+              <div className="relative py-6 md:w-[calc(100%-11rem)]">
+                <InfiniteSlider
+                  speedOnHover={20}
+                  speed={40}
+                  gap={112}>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-5 w-fit dark:invert"
+                      src="/deepseek.svg"
+                      alt="DeepSeek Logo"
+                      height={20}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-4 w-fit dark:invert"
+                      src="/claude.svg"
+                      alt="Claude Logo"
+                      height={16}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-4 w-fit dark:invert"
+                      src="/gemini.svg"
+                      alt="Gemini Logo"
+                      height={16}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-5 w-fit dark:invert"
+                      src="/copilot.svg"
+                      alt="Copilot Logo"
+                      height={20}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-5 w-fit dark:invert"
+                      src="/groq.svg"
+                      alt="Groq Logo"
+                      height={20}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-4 w-fit dark:invert"
+                      src="/inflection.svg"
+                      alt="Inflection Logo"
+                      height={16}
+                      width={120}
+                    />
+                  </div>
+                  <div className="flex">
+                    <Image
+                      className="mx-auto h-7 w-fit dark:invert"
+                      src="/perplexity.svg"
+                      alt="Perplexity Logo"
+                      height={28}
+                      width={120}
+                    />
+                  </div>
+                </InfiniteSlider>
+
+                <div className="bg-gradient-to-r from-background absolute inset-y-0 left-0 w-20"></div>
+                <div className="bg-gradient-to-l from-background absolute inset-y-0 right-0 w-20"></div>
+                <ProgressiveBlur
+                  className="pointer-events-none absolute left-0 top-0 h-full w-20"
+                  direction="left"
+                  blurIntensity={1}
+                />
+                <ProgressiveBlur
+                  className="pointer-events-none absolute right-0 top-0 h-full w-20"
+                  direction="right"
+                  blurIntensity={1}
+                />
+              </div>
             </div>
           </div>
         </section>

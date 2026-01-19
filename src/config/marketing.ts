@@ -2,7 +2,6 @@ import type { MarketingConfig } from '@/types';
 
 export const marketingConfig: MarketingConfig = {
   menus: [
-    { title: 'Home', href: '/', key: 'home' },
     { title: 'Toolbox', href: '/directories', key: 'toolbox' },
     { title: 'Build Assets', href: '/directories?tab=build-assets', key: 'build-assets' },
     { title: 'Pricing', href: '/pricing', key: 'pricing' },

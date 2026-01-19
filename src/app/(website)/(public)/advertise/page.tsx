@@ -398,9 +398,15 @@ export default function AdvertisePage() {
             </div>
           </div>
 
-          {/* Illustration placeholder */}
-          <div className="w-full rounded-lg border border-border bg-muted/30 aspect-[16/6] flex items-start justify-start p-4">
-            <span className="text-sm text-muted-foreground">payments illustration light</span>
+          {/* Illustration */}
+          <div className="w-full rounded-lg border border-border bg-muted/30 aspect-[16/6] overflow-hidden">
+            <Image
+              src="/ai_assisted.jpeg"
+              alt="AI-assisted listing improvements"
+              width={1200}
+              height={450}
+              className="w-full h-full object-cover"
+            />
           </div>
 
           {/* Feature grid */}
@@ -484,14 +490,15 @@ export default function AdvertisePage() {
               </Accordion>
             </div>
 
-            {/* Dark visualization */}
-            <div className="rounded-xl bg-zinc-900 p-8 aspect-[4/3] flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-xs text-zinc-500 mb-4">Database visualization</p>
-                <div className="w-8 h-8 mx-auto rounded border-2 border-blue-500 bg-blue-500/20 flex items-center justify-center">
-                  <span className="text-blue-400 text-xs font-bold">N</span>
-                </div>
-              </div>
+            {/* Data visualization */}
+            <div className="rounded-xl bg-zinc-900 p-8 aspect-[4/3] flex items-center justify-center overflow-hidden">
+              <Image
+                src="/data_visual.svg"
+                alt="Data visualization"
+                width={800}
+                height={600}
+                className="w-full h-full object-contain"
+              />
             </div>
           </div>
         </section>

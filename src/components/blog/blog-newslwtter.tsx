@@ -43,19 +43,22 @@ export default function BlogNewsLetter() {
   function onSubmit(data: NewsletterFormData) {
     startTransition(() => {
       subscribeToNewsletter({ email: data.email })
-        .then((data) => {
-          switch (data.status) {
+        .then((result) => {
+          switch (result.status) {
             case "success":
-              toast.success("Thank you for subscribing to our newsletter");
+              toast.success(result.message || "Thank you for subscribing to our newsletter");
               form.reset();
+              break;
+            case "error":
+              toast.error(result.message || "Something went wrong, please try again");
               break;
             default:
               toast.error("Something went wrong, please try again");
           }
         })
         .catch((error) => {
-          console.error("SubscribeSection, onSubmit, error:", error);
-          toast.error("Something went wrong");
+          console.error("BlogNewsLetter, onSubmit, error:", error);
+          toast.error(error?.message || "Something went wrong");
         });
     });
   }

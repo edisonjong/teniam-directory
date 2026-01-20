@@ -36,7 +36,7 @@ export function NewsletterForm() {
         .then((result) => {
           switch (result.status) {
             case "success":
-              toast.success(result.message || "Thank you for subscribing to our newsletter");
+              toast.success("Subscription sent successfully!");
               form.reset();
               break;
             case "error":

@@ -541,26 +541,26 @@ Create a helpful, non-generic directory entry that looks like a mini review and 
 Tool URL: ${url}
 Tool Name: ${toolName}
 
-Return JSON with the following keys (all fields have defaults, so provide what you can):
+Return JSON with the following keys:
 
-- one_liner: outcome-based tagline (max 90 chars) - aim for 1, but can be empty
-- what_it_does: 2–3 lines in plain English (no buzzwords) - aim for 2-3 lines, but can be shorter
-- best_for: bullets describing who this tool is best for - aim for 3, but any number is fine
-- key_features: bullets with specific features - aim for 5, but any number is fine
-- pros: bullets with pros/advantages - aim for 3, but any number is fine
-- cons: bullets with cons/limitations - aim for 2, but any number is fine
+- one_liner: outcome-based tagline (max 90 chars)
+- what_it_does: 2–3 lines in plain English (no buzzwords)
+- best_for: 3 bullets
+- key_features: 5 bullets (specific, not generic)
+- pros: 3 bullets
+- cons: 2 bullets
 - pricing_snapshot:
-  - free_plan: yes/no/unknown (default: unknown)
-  - trial: yes/no/unknown (default: unknown)
-  - paid: yes/no/unknown (default: unknown)
+  - free_plan: yes/no/unknown
+  - trial: yes/no/unknown
+  - paid: yes/no/unknown
   - notes: short and cautious (avoid guessing)
-- setup_time: one of [5 min, 30 min, 1–2 hours, varies] (default: varies)
-- learning_curve: one of [easy, medium, advanced] (default: medium)
-- use_this_if: bullets describing when to use - aim for 2, but any number is fine
-- skip_this_if: bullets describing when to skip - aim for 2, but any number is fine
-- alternatives: items with {name, best_for_reason} - aim for 3, but any number is fine
-- faq: items with {question, answer} - aim for 3, but any number is fine
-- tags: tags from our tag list - aim for 5-8, but any number is fine
+- setup_time: one of [5 min, 30 min, 1–2 hours, varies]
+- learning_curve: one of [easy, medium, advanced]
+- use_this_if: 2 bullets
+- skip_this_if: 2 bullets
+- alternatives: 3 items with {name, best_for_reason}
+- faq: 3 items with {question, answer}
+- tags: 5–8 tags from our tag list
 - category: choose ONE from:
   [AI Tools, Developer Tools, Design Tools, Marketing Tools, Automation, Analytics, Hosting & Infra, Payments,
    Boilerplates, Templates, Themes, UI Kits, Components, Icons & Assets]
@@ -571,7 +571,6 @@ Rules:
 - Prefer factual statements; if unsure, mark as "unknown" or "varies".
 - Mention 1–2 realistic use cases.
 - Keep it concise and scannable.
-- If you cannot determine a field, use empty string/array or "unknown" - do not guess.
 
 Available Categories (choose ONE that best matches, or empty string if none match):
 ${availableCategories.join(', ')}
@@ -583,9 +582,7 @@ Available Core Technologies (optional):
 ${availableCoreTechnologies.join(', ')}
 
 Content to analyze:
-${truncatedContent}
-
-Please analyze the content and provide all fields. Use defaults/empty values if information is not available.`,
+${truncatedContent}`,
       });
     } catch (generateError) {
       console.error('fetchWebsiteInfoWithAI, generateObject error:', generateError);

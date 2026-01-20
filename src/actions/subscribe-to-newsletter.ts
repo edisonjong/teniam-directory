@@ -72,9 +72,7 @@ export async function subscribeToNewsletter(
       // Return success even if contact creation failed (as long as email was sent)
       return {
         status: "success",
-        message: contactCreated
-          ? "Successfully subscribed to the newsletter!"
-          : "Welcome email sent! (Note: Contact list may not be updated due to API restrictions)"
+        message: "Subscription sent successfully!"
       };
     } catch (emailError: any) {
       console.error("subscribeToNewsletter, error sending welcome email:", emailError);

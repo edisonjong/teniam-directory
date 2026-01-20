@@ -1,37 +1,13 @@
 import { Logo } from "@/components/logo";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { marketingConfig } from "@/config/marketing";
 
-const links = [
-  {
-    title: "Features",
-    href: "https://www.newtools.io/#features",
-  },
-  {
-    title: "Solutions",
-    href: "https://www.newtools.io/#solution",
-  },
-  {
-    title: "Pricing",
-    href: "https://www.newtools.io/pricing",
-  },
-  {
-    title: "Blogs",
-    href: "https://www.newtools.io/blogs",
-  },
-  {
-    title: "Directory",
-    href: "https://www.newtools.io/directories",
-  },
-  {
-    title: "Privacy Policy",
-    href: "https://www.newtools.io/privacy-policy",
-  },
-  {
-    title: "Contact",
-    href: "https://www.newtools.io/contact",
-  },
-];
+// Use navbar menu items from marketing config - syncs with navbar
+const links = marketingConfig.menus.map((menu) => ({
+  title: menu.title,
+  href: menu.href,
+}));
 
 export default function FooterSection() {
   return (
@@ -45,7 +21,7 @@ export default function FooterSection() {
           >
             <Avatar className="w-10 h-10">
               <AvatarImage src="/newtools_logo.png" />
-            <AvatarFallback>{"N"}</AvatarFallback>
+              <AvatarFallback>{"N"}</AvatarFallback>
             </Avatar>
           </Link>
         </Link>

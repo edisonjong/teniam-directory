@@ -379,12 +379,32 @@ export function SubmitForm({
       if (data.imageId) {
         form.setValue("imageId", data.imageId);
         setImageUrl(data.image);
+
+        // Check if placeholder was used
+        if (data.image?.includes('placeholder') || data.imageId?.includes('placeholder')) {
+          console.log("ℹ️ Placeholder image was used - you can upload your own image");
+          toast.info("Logo/image couldn't be fetched automatically. Please upload your own image.", {
+            duration: 5000,
+          });
+        }
+      } else {
+        console.log("ℹ️ No image was fetched - you can upload your own image");
+        toast.info("Logo/image couldn't be fetched automatically. Please upload your own image.", {
+          duration: 5000,
+        });
       }
 
       // notify ImageUpload component to show the icon
       if (SUPPORT_ITEM_ICON && data.iconId) {
         form.setValue("iconId" as keyof SubmitFormData, data.iconId);
         setIconUrl(data.icon);
+
+        // Check if placeholder was used
+        if (data.icon?.includes('placeholder') || data.iconId?.includes('placeholder')) {
+          console.log("ℹ️ Placeholder icon was used - you can upload your own icon");
+        }
+      } else if (SUPPORT_ITEM_ICON) {
+        console.log("ℹ️ No icon was fetched - you can upload your own icon");
       }
 
       // Force form to update and trigger validation

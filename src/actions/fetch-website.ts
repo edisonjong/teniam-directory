@@ -8,6 +8,7 @@ import { deepseek } from '@ai-sdk/deepseek';
 import { openai } from '@ai-sdk/openai';
 import { generateObject } from 'ai';
 import { z } from 'zod';
+import mql from '@microlink/mql';
 
 /**
  * Website info schema - Mini Review Format
@@ -322,8 +323,61 @@ export const fetchWebsiteInfo = async (url: string) => {
 
     console.log('fetchWebsiteInfo, url:', url, 'websiteInfo:', websiteInfo);
 
-    // Safely fetch and upload images with error handling
-    if (websiteInfo.image && websiteInfo.icon) {
+    // Enrich image/icon with Microlink metadata when missing
+    try {
+      if (!websiteInfo.image || !websiteInfo.icon) {
+        const microlinkResult = await mql(url, {});
+        const microlinkData: any = microlinkResult?.data;
+
+        if (!websiteInfo.image && microlinkData?.image?.url) {
+          websiteInfo.image = microlinkData.image.url;
+        }
+        if (!websiteInfo.icon && microlinkData?.logo?.url) {
+          websiteInfo.icon = microlinkData.logo.url;
+        }
+      }
+    } catch (microlinkError) {
+      console.warn('fetchWebsiteInfo, Microlink enrichment failed, will use placeholder if needed:', microlinkError);
+    }
+
+    // Use placeholder.svg as fallback for missing images/icons
+    let usingPlaceholderImage = false;
+    let usingPlaceholderIcon = false;
+
+    if (!websiteInfo.image || !websiteInfo.icon) {
+      try {
+        // Fetch placeholder from public folder
+        const placeholderUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/placeholder.svg`;
+        const placeholderResponse = await fetch(placeholderUrl);
+
+        if (placeholderResponse.ok) {
+          const placeholderBuffer = Buffer.from(await placeholderResponse.arrayBuffer());
+
+          // Upload placeholder to Sanity
+          const placeholderAsset = await sanityClient.assets.upload('image', placeholderBuffer, {
+            filename: 'placeholder.svg',
+          });
+
+          if (!websiteInfo.image) {
+            websiteInfo.image = placeholderAsset.url;
+            websiteInfo.imageId = placeholderAsset._id;
+            usingPlaceholderImage = true;
+            console.log('fetchWebsiteInfo, using placeholder for image - user can upload their own');
+          }
+          if (!websiteInfo.icon) {
+            websiteInfo.icon = placeholderAsset.url;
+            websiteInfo.iconId = placeholderAsset._id;
+            usingPlaceholderIcon = true;
+            console.log('fetchWebsiteInfo, using placeholder for icon - user can upload their own');
+          }
+        }
+      } catch (placeholderError) {
+        console.warn('fetchWebsiteInfo, failed to load placeholder, images will be empty:', placeholderError);
+      }
+    }
+
+    // Safely fetch and upload actual images with error handling (skip if placeholder was used)
+    if (websiteInfo.image && websiteInfo.icon && !usingPlaceholderImage && !usingPlaceholderIcon) {
       try {
         const [iconResponse, imageResponse] = await Promise.allSettled([
           fetch(websiteInfo.icon),
@@ -369,17 +423,69 @@ export const fetchWebsiteInfo = async (url: string) => {
               websiteInfo.imageId = imageAsset._id;
             } catch (uploadError) {
               console.error('fetchWebsiteInfo, upload error:', uploadError);
-              // Continue without uploaded images - use original URLs
+              // If upload fails, fallback to placeholder
+              if (!websiteInfo.imageId) {
+                try {
+                  const placeholderUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/placeholder.svg`;
+                  const placeholderResponse = await fetch(placeholderUrl);
+                  if (placeholderResponse.ok) {
+                    const placeholderBuffer = Buffer.from(await placeholderResponse.arrayBuffer());
+                    const placeholderAsset = await sanityClient.assets.upload('image', placeholderBuffer, {
+                      filename: 'placeholder.svg',
+                    });
+                    websiteInfo.image = placeholderAsset.url;
+                    websiteInfo.imageId = placeholderAsset._id;
+                    usingPlaceholderImage = true;
+                    console.log('fetchWebsiteInfo, using placeholder for image after upload failure - user can upload their own');
+                  }
+                } catch (placeholderError) {
+                  console.warn('fetchWebsiteInfo, placeholder fallback also failed:', placeholderError);
+                }
+              }
             }
           } else {
-            console.warn('fetchWebsiteInfo, image/icon fetch failed, using original URLs');
+            // If fetch fails, use placeholder
+            if (!websiteInfo.imageId) {
+              try {
+                const placeholderUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/placeholder.svg`;
+                const placeholderResponse = await fetch(placeholderUrl);
+                if (placeholderResponse.ok) {
+                  const placeholderBuffer = Buffer.from(await placeholderResponse.arrayBuffer());
+                  const placeholderAsset = await sanityClient.assets.upload('image', placeholderBuffer, {
+                    filename: 'placeholder.svg',
+                  });
+                  websiteInfo.image = placeholderAsset.url;
+                  websiteInfo.imageId = placeholderAsset._id;
+                  usingPlaceholderImage = true;
+                  console.log('fetchWebsiteInfo, using placeholder for image after fetch failure - user can upload their own');
+                }
+              } catch (placeholderError) {
+                console.warn('fetchWebsiteInfo, placeholder fallback failed:', placeholderError);
+              }
+            }
           }
-        } else {
-          console.warn('fetchWebsiteInfo, image/icon fetch failed, using original URLs');
         }
       } catch (imageError) {
         console.error('fetchWebsiteInfo, image processing error:', imageError);
-        // Continue without processing images
+        // Use placeholder as fallback
+        if (!websiteInfo.imageId) {
+          try {
+            const placeholderUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/placeholder.svg`;
+            const placeholderResponse = await fetch(placeholderUrl);
+            if (placeholderResponse.ok) {
+              const placeholderBuffer = Buffer.from(await placeholderResponse.arrayBuffer());
+              const placeholderAsset = await sanityClient.assets.upload('image', placeholderBuffer, {
+                filename: 'placeholder.svg',
+              });
+              websiteInfo.image = placeholderAsset.url;
+              websiteInfo.imageId = placeholderAsset._id;
+              usingPlaceholderImage = true;
+              console.log('fetchWebsiteInfo, using placeholder for image after processing error - user can upload their own');
+            }
+          } catch (placeholderError) {
+            console.warn('fetchWebsiteInfo, placeholder fallback failed:', placeholderError);
+          }
+        }
       }
     }
 
@@ -578,7 +684,8 @@ Return ONLY valid JSON (no markdown, no code blocks) with the following structur
     {"question": "Question 3", "answer": "Answer 3"}
   ],
   "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
-  "category": "ONE category from the list below"
+  "category": "ONE category from the list below",
+  "coreTechnologies": ["tech1", "tech2", "tech3"]
 }
 
 Rules:
@@ -595,7 +702,7 @@ ${availableCategories.join(', ')}
 Available Tags (select from these, or empty array if none match):
 ${availableTags.join(', ')}
 
-Available Core Technologies (optional):
+Available Core Technologies (select from these, or empty array if none match):
 ${availableCoreTechnologies.join(', ')}
 
 Content to analyze:

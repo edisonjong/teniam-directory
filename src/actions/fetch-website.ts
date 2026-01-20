@@ -3,8 +3,8 @@
 import { slugify } from '@/lib/utils';
 import type { Category, CoreTechnologies, Tag } from '@/sanity.types';
 import { sanityClient } from '@/sanity/lib/client';
+import { GoogleGenAI } from '@google/genai';
 import { deepseek } from '@ai-sdk/deepseek';
-import { google } from '@ai-sdk/google';
 import { openai } from '@ai-sdk/openai';
 import { generateObject } from 'ai';
 import { z } from 'zod';
@@ -490,34 +490,41 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       htmlContent = ''; // Continue with empty content
     }
 
-    let aiModel = null;
+    // Initialize Google GenAI if provider is google
+    let googleAI = null;
     if (
       process.env.DEFAULT_AI_PROVIDER === 'google' &&
       process.env.GOOGLE_GENERATIVE_AI_API_KEY !== undefined
     ) {
-      aiModel = google('gemini-2.0-flash-exp', {
-        structuredOutputs: true,
+      googleAI = new GoogleGenAI({
+        apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
       });
     } else if (
       process.env.DEFAULT_AI_PROVIDER === 'deepseek' &&
       process.env.DEEPSEEK_API_KEY !== undefined
     ) {
-      aiModel = deepseek('deepseek-chat', {
+      // Keep deepseek using AI SDK for now
+      const aiModel = deepseek('deepseek-chat', {
         // structuredOutputs: true,
       });
+      // Handle deepseek separately below
     } else if (
       process.env.DEFAULT_AI_PROVIDER === 'openai' &&
       process.env.OPENAI_API_KEY !== undefined
     ) {
-      aiModel = openai('gpt-4o-mini', {
+      // Keep openai using AI SDK for now
+      const aiModel = openai('gpt-4o-mini', {
         structuredOutputs: true,
       });
+      // Handle openai separately below
     }
 
-    if (aiModel === null) {
+    // If not using Google GenAI, return null (fallback to AI SDK for other providers)
+    if (!googleAI && process.env.DEFAULT_AI_PROVIDER === 'google') {
       return null;
     }
-    console.log('fetchWebsiteInfoWithAI, aiModel:', aiModel);
+
+    console.log('fetchWebsiteInfoWithAI, using Google GenAI directly');
 
     // Extract tool name from URL or HTML if possible
     const toolName = urlObj.hostname.replace('www.', '').split('.')[0] || 'Tool';
@@ -530,10 +537,136 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
 
     let result;
     try {
-      result = await generateObject({
-        model: aiModel,
-        schema: WebsiteInfoSchema,
-        prompt: `You are writing a mini-review listing for Newtools.io.
+      if (googleAI) {
+        // Use direct Google GenAI SDK
+        const prompt = `You are writing a mini-review listing for Newtools.io.
+
+Goal:
+Create a helpful, non-generic directory entry that looks like a mini review and is SEO-friendly.
+
+Tool URL: ${url}
+Tool Name: ${toolName}
+
+Return ONLY valid JSON (no markdown, no code blocks) with the following structure:
+
+{
+  "name": "Tool name",
+  "one_liner": "outcome-based tagline (max 90 chars)",
+  "what_it_does": "2–3 lines in plain English (no buzzwords)",
+  "best_for": ["bullet 1", "bullet 2", "bullet 3"],
+  "key_features": ["feature 1", "feature 2", "feature 3", "feature 4", "feature 5"],
+  "pros": ["pro 1", "pro 2", "pro 3"],
+  "cons": ["con 1", "con 2"],
+  "pricing_snapshot": {
+    "free_plan": "yes/no/unknown",
+    "trial": "yes/no/unknown",
+    "paid": "yes/no/unknown",
+    "notes": "short and cautious (avoid guessing)"
+  },
+  "setup_time": "5 min" | "30 min" | "1–2 hours" | "varies",
+  "learning_curve": "easy" | "medium" | "advanced",
+  "use_this_if": ["reason 1", "reason 2"],
+  "skip_this_if": ["reason 1", "reason 2"],
+  "alternatives": [
+    {"name": "Alternative 1", "best_for_reason": "why"},
+    {"name": "Alternative 2", "best_for_reason": "why"},
+    {"name": "Alternative 3", "best_for_reason": "why"}
+  ],
+  "faq": [
+    {"question": "Question 1", "answer": "Answer 1"},
+    {"question": "Question 2", "answer": "Answer 2"},
+    {"question": "Question 3", "answer": "Answer 3"}
+  ],
+  "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+  "category": "ONE category from the list below"
+}
+
+Rules:
+- Do NOT use vague phrases like "best tool for everyone".
+- Include at least one real differentiator.
+- Prefer factual statements; if unsure, mark as "unknown" or "varies".
+- Mention 1–2 realistic use cases.
+- Keep it concise and scannable.
+- Return ONLY the JSON object, no other text.
+
+Available Categories (choose ONE that best matches, or empty string if none match):
+${availableCategories.join(', ')}
+
+Available Tags (select from these, or empty array if none match):
+${availableTags.join(', ')}
+
+Available Core Technologies (optional):
+${availableCoreTechnologies.join(', ')}
+
+Content to analyze:
+${truncatedContent}`;
+
+        const response = await googleAI.models.generateContent({
+          model: 'gemini-3-flash-preview',
+          contents: prompt,
+        });
+
+        // Extract text from response
+        // The response structure may vary, so handle both .text and .response.text
+        const responseText = response.text || response.response?.text || response.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+        if (!responseText) {
+          console.error('fetchWebsiteInfoWithAI, no text in response:', response);
+          return null;
+        }
+
+        // Parse JSON from response (handle markdown code blocks if present)
+        let jsonText = responseText.trim();
+
+        // Remove markdown code blocks if present
+        if (jsonText.startsWith('```json')) {
+          jsonText = jsonText.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+        } else if (jsonText.startsWith('```')) {
+          jsonText = jsonText.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+
+        // Parse JSON
+        let parsedData;
+        try {
+          parsedData = JSON.parse(jsonText);
+        } catch (parseError) {
+          console.error('fetchWebsiteInfoWithAI, JSON parse error:', parseError);
+          console.error('Response text (first 500 chars):', responseText.substring(0, 500));
+          return null;
+        }
+
+        // Validate against schema
+        const validatedData = WebsiteInfoSchema.parse(parsedData);
+
+        // Return in the same format as generateObject for compatibility
+        result = {
+          object: validatedData,
+        };
+      } else {
+        // Fallback to AI SDK for other providers (deepseek, openai)
+        let aiModel = null;
+        if (
+          process.env.DEFAULT_AI_PROVIDER === 'deepseek' &&
+          process.env.DEEPSEEK_API_KEY !== undefined
+        ) {
+          aiModel = deepseek('deepseek-chat', {});
+        } else if (
+          process.env.DEFAULT_AI_PROVIDER === 'openai' &&
+          process.env.OPENAI_API_KEY !== undefined
+        ) {
+          aiModel = openai('gpt-4o-mini', {
+            structuredOutputs: true,
+          });
+        }
+
+        if (aiModel === null) {
+          return null;
+        }
+
+        result = await generateObject({
+          model: aiModel,
+          schema: WebsiteInfoSchema,
+          prompt: `You are writing a mini-review listing for Newtools.io.
 
 Goal:
 Create a helpful, non-generic directory entry that looks like a mini review and is SEO-friendly.
@@ -583,9 +716,10 @@ ${availableCoreTechnologies.join(', ')}
 
 Content to analyze:
 ${truncatedContent}`,
-      });
+        });
+      }
     } catch (generateError) {
-      console.error('fetchWebsiteInfoWithAI, generateObject error:', generateError);
+      console.error('fetchWebsiteInfoWithAI, generateContent/generateObject error:', generateError);
       // Return null to trigger fallback in fetchWebsiteInfo
       return null;
     }

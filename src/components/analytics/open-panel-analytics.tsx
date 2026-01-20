@@ -10,27 +10,53 @@ import { useEffect } from "react";
  */
 export default function OpenPanelAnalytics() {
   useEffect(() => {
-    // Suppress OpenPanel errors in console to prevent 401 errors from cluttering logs
+    // Suppress OpenPanel network errors in console (401, 403, etc.)
     const originalError = console.error;
+    const originalWarn = console.warn;
+
+    // Suppress console.error for OpenPanel
     console.error = (...args) => {
-      if (args[0]?.includes?.('openpanel') || args[0]?.includes?.('api.openpanel.dev')) {
+      const errorMessage = args[0]?.toString() || '';
+      if (
+        errorMessage.includes('openpanel') ||
+        errorMessage.includes('api.openpanel.dev') ||
+        errorMessage.includes('op1.js') ||
+        args.some(arg => arg?.toString?.()?.includes?.('openpanel'))
+      ) {
         // Silently ignore OpenPanel errors
         return;
       }
       originalError.apply(console, args);
     };
 
+    // Suppress console.warn for OpenPanel
+    console.warn = (...args) => {
+      const warnMessage = args[0]?.toString() || '';
+      if (
+        warnMessage.includes('openpanel') ||
+        warnMessage.includes('api.openpanel.dev')
+      ) {
+        // Silently ignore OpenPanel warnings
+        return;
+      }
+      originalWarn.apply(console, args);
+    };
+
     return () => {
       console.error = originalError;
+      console.warn = originalWarn;
     };
   }, []);
 
-  if (process.env.NODE_ENV !== "production") {
+  const clientId = process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID;
+
+  // Don't initialize if clientId is missing or invalid
+  if (!clientId || clientId.trim() === "" || clientId === "undefined") {
     return null;
   }
 
-  const clientId = process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID;
-  if (!clientId || clientId.trim() === "") {
+  // Only initialize in production if clientId is valid
+  if (process.env.NODE_ENV !== "production") {
     return null;
   }
 
@@ -45,7 +71,6 @@ export default function OpenPanelAnalytics() {
     );
   } catch (error) {
     // Fail silently if OpenPanel fails to initialize
-    console.warn("OpenPanel analytics failed to initialize:", error);
     return null;
   }
 }

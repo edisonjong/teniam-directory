@@ -157,6 +157,7 @@ const MiniReviewSchema = z.object({
   cover_image_url: z.string().nullable().default(null),
   category: z.string().default(''),
   tags: z.array(z.string()).default([]),
+  coreTechnologies: z.array(z.string()).default([]),
   pricing_model: z.enum(['free', 'freemium', 'paid', 'unknown']).default('unknown'),
   summary: z.string().default(''),
   quick_take: z.string().default(''),
@@ -221,6 +222,8 @@ export const fetchWebsiteInfo = async (url: string) => {
     // If AI fetch fails, create a minimal fallback structure
     if (fetchedData === null || !fetchedData.object) {
       console.warn('fetchWebsiteInfo, AI fetch failed, using fallback data');
+      console.warn('fetchWebsiteInfo, fetchedData:', fetchedData);
+      console.warn('fetchWebsiteInfo, This usually means the AI API call failed (network timeout, API error, etc.)');
       let fallbackName = 'Tool';
       try {
         const urlObj = new URL(url);
@@ -754,6 +757,7 @@ JSON SCHEMA (must match exactly):
   "cover_image_url": null,
   "category": "",
   "tags": [],
+  "coreTechnologies": [],
   "pricing_model": "",
   "summary": "",
   "quick_take": "",
@@ -880,7 +884,7 @@ ${JSON.stringify(inputPayload, null, 2)}`;
           description: mini.summary || '',
           introduction: introductionFromMini,
           categories: [],
-          coreTechnologies: [],
+          coreTechnologies: mini.coreTechnologies || [],
           image: mini.cover_image_url || '',
           icon: mini.logo_url || '',
         };
@@ -969,6 +973,11 @@ ${truncatedContent}`,
       }
     } catch (generateError) {
       console.error('fetchWebsiteInfoWithAI, generateContent/generateObject error:', generateError);
+      console.error('fetchWebsiteInfoWithAI, error details:', {
+        message: generateError instanceof Error ? generateError.message : String(generateError),
+        stack: generateError instanceof Error ? generateError.stack : undefined,
+        name: generateError instanceof Error ? generateError.name : undefined,
+      });
       // Return null to trigger fallback in fetchWebsiteInfo
       return null;
     }

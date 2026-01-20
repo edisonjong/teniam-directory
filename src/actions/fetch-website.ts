@@ -3,7 +3,7 @@
 import { slugify } from '@/lib/utils';
 import type { Category, CoreTechnologies, Tag } from '@/sanity.types';
 import { sanityClient } from '@/sanity/lib/client';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { deepseek } from '@ai-sdk/deepseek';
 import { openai } from '@ai-sdk/openai';
 import { generateObject } from 'ai';
@@ -496,9 +496,9 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       process.env.DEFAULT_AI_PROVIDER === 'google' &&
       process.env.GOOGLE_GENERATIVE_AI_API_KEY !== undefined
     ) {
-      googleAI = new GoogleGenAI({
-        apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-      });
+      googleAI = new GoogleGenerativeAI(
+        process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+      );
     } else if (
       process.env.DEFAULT_AI_PROVIDER === 'deepseek' &&
       process.env.DEEPSEEK_API_KEY !== undefined
@@ -601,14 +601,11 @@ ${availableCoreTechnologies.join(', ')}
 Content to analyze:
 ${truncatedContent}`;
 
-        const response = await googleAI.models.generateContent({
-          model: 'gemini-3-flash-preview',
-          contents: prompt,
-        });
+        const model = googleAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+        const response = await model.generateContent(prompt);
 
         // Extract text from response
-        // The response structure may vary, so handle both .text and .response.text
-        const responseText = response.text || response.response?.text || response.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const responseText = response.response.text() || '';
 
         if (!responseText) {
           console.error('fetchWebsiteInfoWithAI, no text in response:', response);

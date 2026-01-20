@@ -12,7 +12,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import Link from "next/link";
 // import { Brain, LucideIcon } from "lucide-react";
 import * as Icons from "lucide-react";
 
@@ -33,30 +34,31 @@ export function NavProjects({
 }: {
   categories: (
     | {
-        name: string;
-        url?: string;
-        _id: string;
-        avatar?: string;
-        icon?: string;
-        slug: { current: string };
-      }
+      name: string;
+      url?: string;
+      _id: string;
+      avatar?: string;
+      icon?: string;
+      slug: { current: string };
+    }
     | {
+      name: string;
+      slug: { current: string };
+      _id: string;
+      categories?: {
         name: string;
         slug: { current: string };
         _id: string;
-        categories?: {
-          name: string;
-          slug: { current: string };
-          _id: string;
-          icon?: string;
-        }[];
-      }
+        icon?: string;
+      }[];
+    }
   )[];
   setSelectedCategory: (category: Category) => void;
   selectedCategory: Category;
 }) {
   const { isMobile, setOpenMobile } = useSidebar();
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const keys = Array.from(searchParams.keys());
   const selectedKey = keys[0] === "f" ? keys[1] : keys[0];
@@ -91,7 +93,7 @@ export function NavProjects({
     slug: { current: string };
     icon?: string;
   };
-  
+
   const flatCategories: FlatCategory[] = categories.flatMap((item) => {
     // Check if this is a group with nested categories
     if ('categories' in item && Array.isArray(item.categories) && item.categories.length > 0) {
@@ -122,7 +124,7 @@ export function NavProjects({
     "Hosting & Infra",
     "Payments",
   ];
-  
+
   const buildAssetsCategories = [
     "Boilerplates",
     "Templates",
@@ -181,9 +183,9 @@ export function NavProjects({
     const itemName = (item.name || '').toLowerCase().trim();
     return !allDefinedCategories.some((definedCat) => {
       const definedCatName = definedCat.toLowerCase().trim();
-      return itemName === definedCatName || 
-             itemName.includes(definedCatName) || 
-             definedCatName.includes(itemName);
+      return itemName === definedCatName ||
+        itemName.includes(definedCatName) ||
+        definedCatName.includes(itemName);
     });
   });
 
@@ -225,6 +227,20 @@ export function NavProjects({
           </SidebarMenu>
         </SidebarGroup>
       )}
+
+      <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+        <SidebarGroupLabel>Resources</SidebarGroupLabel>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <Link href="/blogs">
+                <Icons.BookOpen className="h-4 w-4" />
+                <span>Blogs</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
 
       {otherItems.length > 0 && (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">

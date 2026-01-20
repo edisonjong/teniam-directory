@@ -38,7 +38,7 @@ import type {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SmileIcon, Wand2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -67,6 +67,30 @@ export function SubmitForm({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [iconUrl, setIconUrl] = useState("");
+
+  // Remove any duplicate tags coming from Sanity (by normalized name)
+  const uniqueTagList = useMemo(() => {
+    const seen = new Set<string>();
+
+    const result = tagList.filter((tag) => {
+      const key = (tag.name || "").trim().toLowerCase();
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    if (result.length !== tagList.length) {
+      console.log(
+        "SubmitForm, uniqueTagList: de-duplicated tags",
+        "original size=",
+        tagList.length,
+        "unique size=",
+        result.length,
+      );
+    }
+
+    return result;
+  }, [tagList]);
 
   // set default values for form fields and validation schema
   const form = useForm<SubmitFormData>({
@@ -573,7 +597,7 @@ export function SubmitForm({
                     <FormControl>
                       <MultiSelect
                         className="shadow-none"
-                        options={tagList.map((tag) => ({
+                        options={uniqueTagList.map((tag) => ({
                           value: tag._id,
                           label: tag.name || "",
                         }))}

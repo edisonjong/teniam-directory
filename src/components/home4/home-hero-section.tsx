@@ -215,12 +215,12 @@ export default function HeroSection() {
               <div className="md:max-w-44 md:border-r md:pr-6">
                 <p className="text-end text-sm">Discover the Best AI Tools</p>
               </div>
-              <div className="relative py-6 md:w-[calc(100%-11rem)]">
+              <div className="relative py-2 md:w-[calc(100%-11rem)]">
                 <InfiniteSlider
                   speedOnHover={20}
                   speed={40}
-                  gap={112}>
-                  <div className="flex">
+                  gap={16}>
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-5 w-fit dark:invert"
                       src="/deepseek.svg"
@@ -229,7 +229,7 @@ export default function HeroSection() {
                       width={120}
                     />
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-4 w-fit dark:invert"
                       src="/claude.svg"
@@ -238,7 +238,7 @@ export default function HeroSection() {
                       width={120}
                     />
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-4 w-fit dark:invert"
                       src="/gemini.svg"
@@ -247,7 +247,7 @@ export default function HeroSection() {
                       width={120}
                     />
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-5 w-fit dark:invert"
                       src="/copilot.svg"
@@ -256,7 +256,7 @@ export default function HeroSection() {
                       width={120}
                     />
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-5 w-fit dark:invert"
                       src="/groq.svg"
@@ -265,7 +265,7 @@ export default function HeroSection() {
                       width={120}
                     />
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-4 w-fit dark:invert"
                       src="/inflection.svg"
@@ -274,7 +274,7 @@ export default function HeroSection() {
                       width={120}
                     />
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-7 w-fit dark:invert"
                       src="/perplexity.svg"
@@ -283,7 +283,7 @@ export default function HeroSection() {
                       width={120}
                     />
                   </div>
-                  <div className="flex">
+                  <div className="flex items-center">
                     <Image
                       className="mx-auto h-5 w-fit dark:invert"
                       src="/openai.svg"

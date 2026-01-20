@@ -167,77 +167,114 @@ export function SubmitForm({
         return;
       }
 
-      const data = response.data;
+      let data = response.data;
 
-      // Debug: Log the full response only in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log("SubmitForm, AI response data:", JSON.stringify(data, null, 2));
-      }
+      // Debug: Log the full response (always show for debugging)
+      console.log("SubmitForm, AI response data (raw):", JSON.stringify(data, null, 2));
 
-      // Fill name
-      if (data?.name) {
-        form.setValue("name", data.name);
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Filled name:", data.name);
-        }
+      // Clean and normalize data with regex
+      const cleanString = (str: any): string => {
+        if (!str) return '';
+        const cleaned = String(str)
+          .replace(/\s+/g, ' ') // Replace multiple spaces with single space
+          .replace(/\n{3,}/g, '\n\n') // Replace 3+ newlines with 2
+          .trim();
+        return cleaned;
+      };
+
+      const cleanArray = (arr: any): string[] => {
+        if (!Array.isArray(arr)) return [];
+        return arr
+          .map(item => cleanString(item))
+          .filter(item => item.length > 0);
+      };
+
+      // Clean all string fields
+      data = {
+        ...data,
+        name: cleanString(data?.name || ''),
+        one_liner: cleanString(data?.one_liner || ''),
+        what_it_does: cleanString(data?.what_it_does || ''),
+        description: cleanString(data?.description || ''),
+        introduction: cleanString(data?.introduction || ''),
+        category: cleanString(data?.category || ''),
+        best_for: cleanArray(data?.best_for),
+        key_features: cleanArray(data?.key_features),
+        pros: cleanArray(data?.pros),
+        cons: cleanArray(data?.cons),
+        use_this_if: cleanArray(data?.use_this_if),
+        skip_this_if: cleanArray(data?.skip_this_if),
+        tags: cleanArray(data?.tags),
+        categories: cleanArray(data?.categories),
+        coreTechnologies: cleanArray(data?.coreTechnologies),
+      };
+
+      console.log("SubmitForm, AI response data (cleaned):", JSON.stringify(data, null, 2));
+
+      // Fill name (required field)
+      if (data.name && data.name.trim().length > 0) {
+        form.setValue("name", data.name.trim());
+        console.log("✓ Filled name:", data.name);
       }
 
       // Use one_liner as description if available, fallback to description
-      if (data?.one_liner) {
-        form.setValue("description", data.one_liner);
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Filled description (one_liner):", data.one_liner);
-        }
-      } else if (data?.description) {
-        form.setValue("description", data.description);
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Filled description:", data.description);
-        }
+      const descriptionValue = data.one_liner || data.description || '';
+      if (descriptionValue.trim().length > 0) {
+        form.setValue("description", descriptionValue.trim());
+        console.log("✓ Filled description:", descriptionValue.substring(0, 50) + '...');
+      } else {
+        console.warn("⚠ No description found in AI response");
       }
 
       // Build introduction from mini-review fields if available
       let intro = "";
-      if (data?.what_it_does) {
-        intro += `${data.what_it_does}\n\n`;
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Added what_it_does to intro");
-        }
+
+      if (data.what_it_does && data.what_it_does.trim().length > 0) {
+        intro += `${data.what_it_does.trim()}\n\n`;
+        console.log("✓ Added what_it_does to intro");
       }
-      if (data?.best_for && Array.isArray(data.best_for) && data.best_for.length > 0) {
-        intro += `## Best For\n${data.best_for.map((b: string) => `- ${b}`).join("\n")}\n\n`;
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Added best_for to intro:", data.best_for.length, "items");
-        }
-      }
-      if (data?.key_features && Array.isArray(data.key_features) && data.key_features.length > 0) {
-        intro += `## Key Features\n${data.key_features.map((f: string) => `- ${f}`).join("\n")}\n\n`;
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Added key_features to intro:", data.key_features.length, "items");
-        }
-      }
-      if (data?.pros && Array.isArray(data.pros) && data.pros.length > 0) {
-        intro += `## Pros\n${data.pros.map((p: string) => `- ${p}`).join("\n")}\n\n`;
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Added pros to intro:", data.pros.length, "items");
-        }
-      }
-      if (data?.cons && Array.isArray(data.cons) && data.cons.length > 0) {
-        intro += `## Cons\n${data.cons.map((c: string) => `- ${c}`).join("\n")}`;
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Added cons to intro:", data.cons.length, "items");
+
+      if (data.best_for && Array.isArray(data.best_for) && data.best_for.length > 0) {
+        const bestForItems = data.best_for.filter((b: string) => b && b.trim().length > 0);
+        if (bestForItems.length > 0) {
+          intro += `## Best For\n${bestForItems.map((b: string) => `- ${b.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added best_for to intro:", bestForItems.length, "items");
         }
       }
 
-      if (intro.trim()) {
-        form.setValue("introduction", intro);
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Filled introduction (length:", intro.length, "chars)");
+      if (data.key_features && Array.isArray(data.key_features) && data.key_features.length > 0) {
+        const features = data.key_features.filter((f: string) => f && f.trim().length > 0);
+        if (features.length > 0) {
+          intro += `## Key Features\n${features.map((f: string) => `- ${f.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added key_features to intro:", features.length, "items");
         }
-      } else if (data?.introduction) {
-        form.setValue("introduction", data.introduction);
-        if (process.env.NODE_ENV === 'development') {
-          console.log("✓ Filled introduction (legacy)");
+      }
+
+      if (data.pros && Array.isArray(data.pros) && data.pros.length > 0) {
+        const pros = data.pros.filter((p: string) => p && p.trim().length > 0);
+        if (pros.length > 0) {
+          intro += `## Pros\n${pros.map((p: string) => `- ${p.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added pros to intro:", pros.length, "items");
         }
+      }
+
+      if (data.cons && Array.isArray(data.cons) && data.cons.length > 0) {
+        const cons = data.cons.filter((c: string) => c && c.trim().length > 0);
+        if (cons.length > 0) {
+          intro += `## Cons\n${cons.map((c: string) => `- ${c.trim()}`).join("\n")}`;
+          console.log("✓ Added cons to intro:", cons.length, "items");
+        }
+      }
+
+      const finalIntro = intro.trim();
+      if (finalIntro.length > 0) {
+        form.setValue("introduction", finalIntro);
+        console.log("✓ Filled introduction (length:", finalIntro.length, "chars)");
+      } else if (data.introduction && data.introduction.trim().length > 0) {
+        form.setValue("introduction", data.introduction.trim());
+        console.log("✓ Filled introduction (legacy)");
+      } else {
+        console.warn("⚠ No introduction content found in AI response");
       }
 
       // Helper function to find matching ID by name (case-insensitive, trimmed)
@@ -267,56 +304,75 @@ export function SubmitForm({
 
       // convert categories and tags to array of ids from categoryList and tagList
       // Handle both new single category and legacy categories array
-      const categoriesToUse = data?.category
-        ? [data.category]
-        : (data?.categories || []);
+      const categoriesToUse = (data.category && data.category.trim().length > 0)
+        ? [data.category.trim()]
+        : (data.categories && data.categories.length > 0 ? data.categories : []);
+
+      console.log("🔍 Looking for categories:", categoriesToUse);
+      console.log("📋 Available categories:", categoryList.map(c => c.name).filter(Boolean).slice(0, 10));
 
       if (categoriesToUse.length > 0) {
         const categoryIds = categoriesToUse
-          .map((category: string) => findIdByName(category, categoryList))
+          .map((category: string) => {
+            const cleaned = category.trim();
+            if (!cleaned) return undefined;
+            return findIdByName(cleaned, categoryList);
+          })
           .filter((id: string | undefined): id is string => id !== undefined);
+
         if (categoryIds.length > 0) {
           form.setValue("categories", categoryIds);
-          if (process.env.NODE_ENV === 'development') {
-            console.log("✓ Filled categories:", categoryIds.length, "items");
-          }
-        } else if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Filled categories:", categoryIds.length, "items", categoryIds);
+        } else {
           console.warn("⚠ No matching categories found for:", categoriesToUse);
           console.warn("Available categories:", categoryList.map(c => c.name).filter(Boolean));
         }
-      } else if (process.env.NODE_ENV === 'development') {
+      } else {
         console.warn("⚠ No categories in AI response");
       }
 
-      if (data?.tags && Array.isArray(data.tags) && data.tags.length > 0) {
-        const tagIds = data.tags
+      if (data.tags && Array.isArray(data.tags) && data.tags.length > 0) {
+        const cleanedTags = data.tags
+          .map((tag: string) => tag?.trim())
+          .filter((tag: string) => tag && tag.length > 0);
+
+        console.log("🔍 Looking for tags:", cleanedTags);
+        console.log("📋 Available tags (first 20):", tagList.slice(0, 20).map(t => t.name).filter(Boolean));
+
+        const tagIds = cleanedTags
           .map((tag: string) => findIdByName(tag, tagList))
           .filter((id: string | undefined): id is string => id !== undefined);
+
         if (tagIds.length > 0) {
           form.setValue("tags", tagIds);
-          if (process.env.NODE_ENV === 'development') {
-            console.log("✓ Filled tags:", tagIds.length, "items");
-          }
-        } else if (process.env.NODE_ENV === 'development') {
-          console.warn("⚠ No matching tags found for:", data.tags);
-          console.warn("Available tags (first 10):", tagList.slice(0, 10).map(t => t.name).filter(Boolean));
+          console.log("✓ Filled tags:", tagIds.length, "items", tagIds);
+        } else {
+          console.warn("⚠ No matching tags found for:", cleanedTags);
+          console.warn("Available tags (first 20):", tagList.slice(0, 20).map(t => t.name).filter(Boolean));
         }
-      } else if (process.env.NODE_ENV === 'development') {
-        console.warn("⚠ No tags in AI response");
+      } else {
+        console.warn("⚠ No tags in AI response or tags array is empty");
       }
 
-      if (data?.coreTechnologies && Array.isArray(data.coreTechnologies) && data.coreTechnologies.length > 0) {
-        const techIds = data.coreTechnologies
+      if (data.coreTechnologies && Array.isArray(data.coreTechnologies) && data.coreTechnologies.length > 0) {
+        const cleanedTechs = data.coreTechnologies
+          .map((tech: string) => tech?.trim())
+          .filter((tech: string) => tech && tech.length > 0);
+
+        console.log("🔍 Looking for core technologies:", cleanedTechs);
+
+        const techIds = cleanedTechs
           .map((technology: string) => findIdByName(technology, coreTechnologyList))
           .filter((id: string | undefined): id is string => id !== undefined);
+
         if (techIds.length > 0) {
           form.setValue("coreTechnologies", techIds);
-          if (process.env.NODE_ENV === 'development') {
-            console.log("✓ Filled coreTechnologies:", techIds.length, "items");
-          }
-        } else if (process.env.NODE_ENV === 'development') {
-          console.warn("⚠ No matching core technologies found for:", data.coreTechnologies);
+          console.log("✓ Filled coreTechnologies:", techIds.length, "items", techIds);
+        } else {
+          console.warn("⚠ No matching core technologies found for:", cleanedTechs);
         }
+      } else {
+        console.warn("⚠ No core technologies in AI response");
       }
 
       // notify ImageUpload component to show the image
@@ -331,13 +387,36 @@ export function SubmitForm({
         setIconUrl(data.icon);
       }
 
-      // Trigger form validation to show any errors
+      // Force form to update and trigger validation
       form.trigger();
 
-      toast.success("AI fetch website info completed!");
-      if (process.env.NODE_ENV === 'development') {
-        console.log("✅ AI autofill completed successfully");
-      }
+      // Small delay to ensure form state updates
+      setTimeout(() => {
+        form.trigger();
+      }, 100);
+
+      // Summary of what was filled
+      const filledFields = [];
+      if (form.getValues("name")) filledFields.push("name");
+      if (form.getValues("description")) filledFields.push("description");
+      if (form.getValues("introduction")) filledFields.push("introduction");
+      if (form.getValues("categories")?.length > 0) filledFields.push("categories");
+      if (form.getValues("tags")?.length > 0) filledFields.push("tags");
+      if (form.getValues("coreTechnologies")?.length > 0) filledFields.push("coreTechnologies");
+      if (form.getValues("imageId")) filledFields.push("image");
+      if (form.getValues("iconId")) filledFields.push("icon");
+
+      console.log("✅ AI autofill completed! Filled fields:", filledFields.join(", "));
+      console.log("📊 Form values summary:", {
+        name: form.getValues("name")?.substring(0, 30),
+        description: form.getValues("description")?.substring(0, 30),
+        introductionLength: form.getValues("introduction")?.length || 0,
+        categoriesCount: form.getValues("categories")?.length || 0,
+        tagsCount: form.getValues("tags")?.length || 0,
+        coreTechnologiesCount: form.getValues("coreTechnologies")?.length || 0,
+      });
+
+      toast.success(`AI autofill completed! Filled ${filledFields.length} fields.`);
     } catch (error) {
       console.error("SubmitForm, handleAIFetch, error:", error);
       toast.error("Failed to fetch website info");

@@ -99,7 +99,7 @@ export default function AdvertisePage() {
             <div className="flex-1 w-full lg:w-auto">
               <div className="aspect-[4/3] w-full max-w-lg ml-auto rounded-lg border border-border bg-background overflow-hidden">
                 <Image
-                  src="/promote_product.jpeg"
+                  src="/promote_product.png"
                   alt="Promote your product on Newtools"
                   width={800}
                   height={600}
@@ -413,7 +413,7 @@ export default function AdvertisePage() {
           {/* Illustration */}
           <div className="w-full rounded-lg border border-border bg-muted/30 aspect-[16/6] overflow-hidden">
             <Image
-              src="/ai_assisted.jpeg"
+              src="/ai_assisted.png"
               alt="AI-assisted listing improvements"
               width={1200}
               height={450}
@@ -505,7 +505,7 @@ export default function AdvertisePage() {
             {/* Data visualization */}
             <div className="rounded-xl bg-zinc-900 p-8 aspect-[4/3] flex items-center justify-center overflow-hidden">
               <Image
-                src="/data_visual.svg"
+                src="/data_visuals.png"
                 alt="Data visualization"
                 width={800}
                 height={600}

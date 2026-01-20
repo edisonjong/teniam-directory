@@ -155,82 +155,168 @@ export function SubmitForm({
       const response = await fetchWebsite(link);
       console.log("SubmitForm, handleAIFetch, response:", response);
       if (response.status === "error") {
-        toast.error(response.message);
+        toast.error(response.message || "Failed to fetch website info");
+        setDialogOpen(false);
+        return;
+      }
+
+      if (!response.data) {
+        console.error("SubmitForm, handleAIFetch, no data in response:", response);
+        toast.error("No data received from AI. Please try again.");
         setDialogOpen(false);
         return;
       }
 
       const data = response.data;
 
-      // Note: The AI response now includes full mini-review data:
-      // - one_liner, what_it_does, best_for, key_features, pros, cons
-      // - pricing_snapshot, setup_time, learning_curve
-      // - use_this_if, skip_this_if, alternatives, faq
-      // These fields are available in `data` but not yet used in the form.
-      // They will be used when the full mini-review schema is implemented.
+      // Debug: Log the full response only in development
+      if (process.env.NODE_ENV === 'development') {
+        console.log("SubmitForm, AI response data:", JSON.stringify(data, null, 2));
+      }
 
-      if (data.name) {
+      // Fill name
+      if (data?.name) {
         form.setValue("name", data.name);
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Filled name:", data.name);
+        }
       }
+
       // Use one_liner as description if available, fallback to description
-      if (data.one_liner) {
+      if (data?.one_liner) {
         form.setValue("description", data.one_liner);
-      } else if (data.description) {
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Filled description (one_liner):", data.one_liner);
+        }
+      } else if (data?.description) {
         form.setValue("description", data.description);
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Filled description:", data.description);
+        }
       }
+
       // Build introduction from mini-review fields if available
-      if (data.what_it_does || data.best_for || data.key_features) {
-        let intro = "";
-        if (data.what_it_does) {
-          intro += `${data.what_it_does}\n\n`;
+      let intro = "";
+      if (data?.what_it_does) {
+        intro += `${data.what_it_does}\n\n`;
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Added what_it_does to intro");
         }
-        if (data.best_for && data.best_for.length > 0) {
-          intro += `## Best For\n${data.best_for.map((b: string) => `- ${b}`).join("\n")}\n\n`;
-        }
-        if (data.key_features && data.key_features.length > 0) {
-          intro += `## Key Features\n${data.key_features.map((f: string) => `- ${f}`).join("\n")}\n\n`;
-        }
-        if (data.pros && data.pros.length > 0) {
-          intro += `## Pros\n${data.pros.map((p: string) => `- ${p}`).join("\n")}\n\n`;
-        }
-        if (data.cons && data.cons.length > 0) {
-          intro += `## Cons\n${data.cons.map((c: string) => `- ${c}`).join("\n")}`;
-        }
-        form.setValue("introduction", intro);
-      } else if (data.introduction) {
-        form.setValue("introduction", data.introduction);
       }
+      if (data?.best_for && Array.isArray(data.best_for) && data.best_for.length > 0) {
+        intro += `## Best For\n${data.best_for.map((b: string) => `- ${b}`).join("\n")}\n\n`;
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Added best_for to intro:", data.best_for.length, "items");
+        }
+      }
+      if (data?.key_features && Array.isArray(data.key_features) && data.key_features.length > 0) {
+        intro += `## Key Features\n${data.key_features.map((f: string) => `- ${f}`).join("\n")}\n\n`;
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Added key_features to intro:", data.key_features.length, "items");
+        }
+      }
+      if (data?.pros && Array.isArray(data.pros) && data.pros.length > 0) {
+        intro += `## Pros\n${data.pros.map((p: string) => `- ${p}`).join("\n")}\n\n`;
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Added pros to intro:", data.pros.length, "items");
+        }
+      }
+      if (data?.cons && Array.isArray(data.cons) && data.cons.length > 0) {
+        intro += `## Cons\n${data.cons.map((c: string) => `- ${c}`).join("\n")}`;
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Added cons to intro:", data.cons.length, "items");
+        }
+      }
+
+      if (intro.trim()) {
+        form.setValue("introduction", intro);
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Filled introduction (length:", intro.length, "chars)");
+        }
+      } else if (data?.introduction) {
+        form.setValue("introduction", data.introduction);
+        if (process.env.NODE_ENV === 'development') {
+          console.log("✓ Filled introduction (legacy)");
+        }
+      }
+
+      // Helper function to find matching ID by name (case-insensitive, trimmed)
+      const findIdByName = (
+        name: string,
+        list: Array<{ _id: string; name?: string | null }>
+      ): string | undefined => {
+        if (!name) return undefined;
+        const normalizedName = name.trim().toLowerCase();
+
+        // First try exact match (case-insensitive)
+        let match = list.find((item) => {
+          const itemName = item.name?.trim().toLowerCase();
+          return itemName === normalizedName;
+        });
+        if (match) return match._id;
+
+        // Then try partial match (contains)
+        match = list.find((item) => {
+          const itemName = item.name?.trim().toLowerCase() || '';
+          return itemName.includes(normalizedName) || normalizedName.includes(itemName);
+        });
+        if (match) return match._id;
+
+        return undefined;
+      };
 
       // convert categories and tags to array of ids from categoryList and tagList
       // Handle both new single category and legacy categories array
-      const categoriesToUse = data.category
+      const categoriesToUse = data?.category
         ? [data.category]
-        : (data.categories || []);
+        : (data?.categories || []);
 
       if (categoriesToUse.length > 0) {
-        form.setValue(
-          "categories",
-          categoriesToUse
-            .map((category: string) => categoryList.find((c) => c.name === category)?._id)
-            .filter((id: string | undefined) => id !== undefined)
-        );
+        const categoryIds = categoriesToUse
+          .map((category: string) => findIdByName(category, categoryList))
+          .filter((id: string | undefined): id is string => id !== undefined);
+        if (categoryIds.length > 0) {
+          form.setValue("categories", categoryIds);
+          if (process.env.NODE_ENV === 'development') {
+            console.log("✓ Filled categories:", categoryIds.length, "items");
+          }
+        } else if (process.env.NODE_ENV === 'development') {
+          console.warn("⚠ No matching categories found for:", categoriesToUse);
+          console.warn("Available categories:", categoryList.map(c => c.name).filter(Boolean));
+        }
+      } else if (process.env.NODE_ENV === 'development') {
+        console.warn("⚠ No categories in AI response");
       }
-      if (data.tags) {
-        form.setValue(
-          "tags",
-          data.tags
-            .map((tag: string) => tagList.find((t) => t.name === tag)?._id)
-            .filter((id: string | undefined) => id !== undefined)
-        );
+
+      if (data?.tags && Array.isArray(data.tags) && data.tags.length > 0) {
+        const tagIds = data.tags
+          .map((tag: string) => findIdByName(tag, tagList))
+          .filter((id: string | undefined): id is string => id !== undefined);
+        if (tagIds.length > 0) {
+          form.setValue("tags", tagIds);
+          if (process.env.NODE_ENV === 'development') {
+            console.log("✓ Filled tags:", tagIds.length, "items");
+          }
+        } else if (process.env.NODE_ENV === 'development') {
+          console.warn("⚠ No matching tags found for:", data.tags);
+          console.warn("Available tags (first 10):", tagList.slice(0, 10).map(t => t.name).filter(Boolean));
+        }
+      } else if (process.env.NODE_ENV === 'development') {
+        console.warn("⚠ No tags in AI response");
       }
-      if (data.coreTechnologies) {
-        form.setValue(
-          "coreTechnologies",
-          data.coreTechnologies.map(
-            (technology) =>
-              coreTechnologyList.find((t) => t.name === technology)?._id
-          )
-        );
+
+      if (data?.coreTechnologies && Array.isArray(data.coreTechnologies) && data.coreTechnologies.length > 0) {
+        const techIds = data.coreTechnologies
+          .map((technology: string) => findIdByName(technology, coreTechnologyList))
+          .filter((id: string | undefined): id is string => id !== undefined);
+        if (techIds.length > 0) {
+          form.setValue("coreTechnologies", techIds);
+          if (process.env.NODE_ENV === 'development') {
+            console.log("✓ Filled coreTechnologies:", techIds.length, "items");
+          }
+        } else if (process.env.NODE_ENV === 'development') {
+          console.warn("⚠ No matching core technologies found for:", data.coreTechnologies);
+        }
       }
 
       // notify ImageUpload component to show the image
@@ -245,7 +331,13 @@ export function SubmitForm({
         setIconUrl(data.icon);
       }
 
+      // Trigger form validation to show any errors
+      form.trigger();
+
       toast.success("AI fetch website info completed!");
+      if (process.env.NODE_ENV === 'development') {
+        console.log("✅ AI autofill completed successfully");
+      }
     } catch (error) {
       console.error("SubmitForm, handleAIFetch, error:", error);
       toast.error("Failed to fetch website info");

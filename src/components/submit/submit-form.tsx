@@ -268,144 +268,79 @@ export function SubmitForm({
         console.warn("⚠ No description found in AI response");
       }
 
-      // Use the server-built introduction (already complete from all mini-review fields)
-      // Only fall back to building from individual fields if introduction is missing
-      let finalIntro = '';
+      // Build introduction from mini-review fields if available
+      let intro = "";
 
-      if (data.introduction && data.introduction.trim().length > 0) {
-        // Server already built a complete introduction from all mini-review fields
-        finalIntro = data.introduction.trim();
-        console.log("✓ Using server-built introduction (length:", finalIntro.length, "chars)");
-      } else {
-        // Fallback: build introduction from individual fields if server didn't provide it
-        let intro = "";
+      if (data.what_it_does && data.what_it_does.trim().length > 0) {
+        intro += `${data.what_it_does.trim()}\n\n`;
+        console.log("✓ Added what_it_does to intro");
+      }
 
-        if (data.what_it_does && data.what_it_does.trim().length > 0) {
-          intro += `${data.what_it_does.trim()}\n\n`;
-          console.log("✓ Added what_it_does to intro");
-        }
-
-        if (data.best_for && Array.isArray(data.best_for) && data.best_for.length > 0) {
-          const bestForItems = data.best_for.filter((b: string) => b && b.trim().length > 0);
-          if (bestForItems.length > 0) {
-            intro += `## Best For\n${bestForItems.map((b: string) => `- ${b.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added best_for to intro:", bestForItems.length, "items");
-          }
-        }
-
-        if (data.key_features && Array.isArray(data.key_features) && data.key_features.length > 0) {
-          const features = data.key_features.filter((f: string) => f && f.trim().length > 0);
-          if (features.length > 0) {
-            intro += `## Key Features\n${features.map((f: string) => `- ${f.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added key_features to intro:", features.length, "items");
-          }
-        }
-
-        if (data.use_this_if && Array.isArray(data.use_this_if) && data.use_this_if.length > 0) {
-          const useThisIf = data.use_this_if.filter((u: string) => u && u.trim().length > 0);
-          if (useThisIf.length > 0) {
-            intro += `## What It's Good At\n${useThisIf.map((u: string) => `- ${u.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added use_this_if to intro:", useThisIf.length, "items");
-          }
-        }
-
-        if (data.skip_this_if && Array.isArray(data.skip_this_if) && data.skip_this_if.length > 0) {
-          const skipThisIf = data.skip_this_if.filter((s: string) => s && s.trim().length > 0);
-          if (skipThisIf.length > 0) {
-            intro += `## Where It Breaks\n${skipThisIf.map((s: string) => `- ${s.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added skip_this_if to intro:", skipThisIf.length, "items");
-          }
-        }
-
-        if (data.pros && Array.isArray(data.pros) && data.pros.length > 0) {
-          const pros = data.pros.filter((p: string) => p && p.trim().length > 0);
-          if (pros.length > 0) {
-            intro += `## Pros\n${pros.map((p: string) => `- ${p.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added pros to intro:", pros.length, "items");
-          }
-        }
-
-        if (data.cons && Array.isArray(data.cons) && data.cons.length > 0) {
-          const cons = data.cons.filter((c: string) => c && c.trim().length > 0);
-          if (cons.length > 0) {
-            intro += `## Cons\n${cons.map((c: string) => `- ${c.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added cons to intro:", cons.length, "items");
-          }
-        }
-
-        finalIntro = intro.trim();
-        if (finalIntro.length > 0) {
-          console.log("✓ Built introduction from individual fields (length:", finalIntro.length, "chars)");
+      if (data.best_for && Array.isArray(data.best_for) && data.best_for.length > 0) {
+        const bestForItems = data.best_for.filter((b: string) => b && b.trim().length > 0);
+        if (bestForItems.length > 0) {
+          intro += `## Best For\n${bestForItems.map((b: string) => `- ${b.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added best_for to intro:", bestForItems.length, "items");
         }
       }
 
+      if (data.key_features && Array.isArray(data.key_features) && data.key_features.length > 0) {
+        const features = data.key_features.filter((f: string) => f && f.trim().length > 0);
+        if (features.length > 0) {
+          intro += `## Key Features\n${features.map((f: string) => `- ${f.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added key_features to intro:", features.length, "items");
+        }
+      }
+
+      if (data.pros && Array.isArray(data.pros) && data.pros.length > 0) {
+        const pros = data.pros.filter((p: string) => p && p.trim().length > 0);
+        if (pros.length > 0) {
+          intro += `## Pros\n${pros.map((p: string) => `- ${p.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added pros to intro:", pros.length, "items");
+        }
+      }
+
+      if (data.cons && Array.isArray(data.cons) && data.cons.length > 0) {
+        const cons = data.cons.filter((c: string) => c && c.trim().length > 0);
+        if (cons.length > 0) {
+          intro += `## Cons\n${cons.map((c: string) => `- ${c.trim()}`).join("\n")}`;
+          console.log("✓ Added cons to intro:", cons.length, "items");
+        }
+      }
+
+      const finalIntro = intro.trim();
       if (finalIntro.length > 0) {
         form.setValue("introduction", finalIntro);
-        console.log("✓ Filled introduction (final length:", finalIntro.length, "chars)");
+        console.log("✓ Filled introduction (length:", finalIntro.length, "chars)");
+      } else if (data.introduction && data.introduction.trim().length > 0) {
+        form.setValue("introduction", data.introduction.trim());
+        console.log("✓ Filled introduction (legacy)");
       } else {
         console.warn("⚠ No introduction content found in AI response");
       }
 
-      // Helper function to normalize strings for matching
-      const normalizeForMatching = (str: string): string => {
-        return str
-          .trim()
-          .toLowerCase()
-          .replace(/[^\w\s]/g, '') // Remove special characters
-          .replace(/\s+/g, ' ') // Normalize whitespace
-          .trim();
-      };
-
-      // Helper function to find matching ID by name (case-insensitive, fuzzy matching)
+      // Helper function to find matching ID by name (case-insensitive, trimmed)
       const findIdByName = (
         name: string,
         list: Array<{ _id: string; name?: string | null }>
       ): string | undefined => {
         if (!name) return undefined;
-        const normalizedName = normalizeForMatching(name);
+        const normalizedName = name.trim().toLowerCase();
 
-        // First try exact match (case-insensitive, normalized)
+        // First try exact match (case-insensitive)
         let match = list.find((item) => {
-          if (!item.name) return false;
-          const itemName = normalizeForMatching(item.name);
+          const itemName = item.name?.trim().toLowerCase();
           return itemName === normalizedName;
         });
-        if (match) {
-          console.log(`  ✓ Exact match found: "${name}" → "${match.name}"`);
-          return match._id;
-        }
+        if (match) return match._id;
 
-        // Then try partial match (contains) - normalized
+        // Then try partial match (contains)
         match = list.find((item) => {
-          if (!item.name) return false;
-          const itemName = normalizeForMatching(item.name);
+          const itemName = item.name?.trim().toLowerCase() || '';
           return itemName.includes(normalizedName) || normalizedName.includes(itemName);
         });
-        if (match) {
-          console.log(`  ✓ Partial match found: "${name}" → "${match.name}"`);
-          return match._id;
-        }
+        if (match) return match._id;
 
-        // Try word-by-word matching (if search term has multiple words)
-        if (normalizedName.includes(' ')) {
-          const searchWords = normalizedName.split(' ').filter(w => w.length > 2);
-          match = list.find((item) => {
-            if (!item.name) return false;
-            const itemName = normalizeForMatching(item.name);
-            const itemWords = itemName.split(' ').filter(w => w.length > 2);
-            // Check if at least 50% of search words are in item words
-            const matchingWords = searchWords.filter(sw =>
-              itemWords.some(iw => iw.includes(sw) || sw.includes(iw))
-            );
-            return matchingWords.length >= Math.ceil(searchWords.length * 0.5);
-          });
-          if (match) {
-            console.log(`  ✓ Word-based match found: "${name}" → "${match.name}"`);
-            return match._id;
-          }
-        }
-
-        console.log(`  ✗ No match found for: "${name}"`);
         return undefined;
       };
 
@@ -416,33 +351,23 @@ export function SubmitForm({
         : (data.categories && data.categories.length > 0 ? data.categories : []);
 
       console.log("🔍 Looking for categories:", categoriesToUse);
-      console.log("📋 Available categories (total:", categoryList.length, "):",
-        categoryList.map(c => c.name).filter(Boolean).slice(0, 20));
+      console.log("📋 Available categories:", categoryList.map(c => c.name).filter(Boolean).slice(0, 10));
 
       if (categoriesToUse.length > 0) {
-        console.log("🔎 Matching categories...");
         const categoryIds = categoriesToUse
           .map((category: string) => {
             const cleaned = category.trim();
-            if (!cleaned) {
-              console.log(`  ⚠ Skipping empty category`);
-              return undefined;
-            }
-            console.log(`  🔍 Searching for category: "${cleaned}"`);
+            if (!cleaned) return undefined;
             return findIdByName(cleaned, categoryList);
           })
           .filter((id: string | undefined): id is string => id !== undefined);
 
         if (categoryIds.length > 0) {
           form.setValue("categories", categoryIds);
-          const matchedNames = categoryIds.map(id => {
-            const cat = categoryList.find(c => c._id === id);
-            return cat?.name || id;
-          });
-          console.log("✓ Filled categories:", categoryIds.length, "items:", matchedNames);
+          console.log("✓ Filled categories:", categoryIds.length, "items", categoryIds);
         } else {
           console.warn("⚠ No matching categories found for:", categoriesToUse);
-          console.warn("💡 Available categories:", categoryList.map(c => c.name).filter(Boolean));
+          console.warn("Available categories:", categoryList.map(c => c.name).filter(Boolean));
         }
       } else {
         console.warn("⚠ No categories in AI response");
@@ -454,31 +379,18 @@ export function SubmitForm({
           .filter((tag: string) => tag && tag.length > 0);
 
         console.log("🔍 Looking for tags:", cleanedTags);
-        console.log("📋 Available tags (total:", uniqueTagList.length, ", showing first 30):",
-          uniqueTagList.slice(0, 30).map(t => t.name).filter(Boolean));
+        console.log("📋 Available tags (first 20):", tagList.slice(0, 20).map(t => t.name).filter(Boolean));
 
-        if (cleanedTags.length > 0) {
-          console.log("🔎 Matching tags...");
-          const tagIds = cleanedTags
-            .map((tag: string) => {
-              console.log(`  🔍 Searching for tag: "${tag}"`);
-              return findIdByName(tag, uniqueTagList);
-            })
-            .filter((id: string | undefined): id is string => id !== undefined);
+        const tagIds = cleanedTags
+          .map((tag: string) => findIdByName(tag, tagList))
+          .filter((id: string | undefined): id is string => id !== undefined);
 
-          if (tagIds.length > 0) {
-            form.setValue("tags", tagIds);
-            const matchedNames = tagIds.map(id => {
-              const tag = uniqueTagList.find(t => t._id === id);
-              return tag?.name || id;
-            });
-            console.log("✓ Filled tags:", tagIds.length, "items:", matchedNames);
-          } else {
-            console.warn("⚠ No matching tags found for:", cleanedTags);
-            console.warn("💡 Available tags (first 30):", uniqueTagList.slice(0, 30).map(t => t.name).filter(Boolean));
-          }
+        if (tagIds.length > 0) {
+          form.setValue("tags", tagIds);
+          console.log("✓ Filled tags:", tagIds.length, "items", tagIds);
         } else {
-          console.warn("⚠ All tags were empty after cleaning");
+          console.warn("⚠ No matching tags found for:", cleanedTags);
+          console.warn("Available tags (first 20):", tagList.slice(0, 20).map(t => t.name).filter(Boolean));
         }
       } else {
         console.warn("⚠ No tags in AI response or tags array is empty");
@@ -490,31 +402,16 @@ export function SubmitForm({
           .filter((tech: string) => tech && tech.length > 0);
 
         console.log("🔍 Looking for core technologies:", cleanedTechs);
-        console.log("📋 Available core technologies (total:", coreTechnologyList.length, "):",
-          coreTechnologyList.map(t => t.name).filter(Boolean).slice(0, 20));
 
-        if (cleanedTechs.length > 0) {
-          console.log("🔎 Matching core technologies...");
-          const techIds = cleanedTechs
-            .map((technology: string) => {
-              console.log(`  🔍 Searching for core technology: "${technology}"`);
-              return findIdByName(technology, coreTechnologyList);
-            })
-            .filter((id: string | undefined): id is string => id !== undefined);
+        const techIds = cleanedTechs
+          .map((technology: string) => findIdByName(technology, coreTechnologyList))
+          .filter((id: string | undefined): id is string => id !== undefined);
 
-          if (techIds.length > 0) {
-            form.setValue("coreTechnologies", techIds);
-            const matchedNames = techIds.map(id => {
-              const tech = coreTechnologyList.find(t => t._id === id);
-              return tech?.name || id;
-            });
-            console.log("✓ Filled coreTechnologies:", techIds.length, "items:", matchedNames);
-          } else {
-            console.warn("⚠ No matching core technologies found for:", cleanedTechs);
-            console.warn("💡 Available core technologies:", coreTechnologyList.map(t => t.name).filter(Boolean));
-          }
+        if (techIds.length > 0) {
+          form.setValue("coreTechnologies", techIds);
+          console.log("✓ Filled coreTechnologies:", techIds.length, "items", techIds);
         } else {
-          console.warn("⚠ All core technologies were empty after cleaning");
+          console.warn("⚠ No matching core technologies found for:", cleanedTechs);
         }
       } else {
         console.warn("⚠ No core technologies in AI response");

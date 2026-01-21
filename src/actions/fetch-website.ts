@@ -11,7 +11,7 @@ import { z } from 'zod';
 import mql from '@microlink/mql';
 
 /**
- * Website info schema - Mini Review Format
+ * Website info schema
  *
  * 1. when AI generates the image and icon, it will return the image URL and icon URL
  * 2. when the image and icon are uploaded to Sanity, the image reference Id and icon reference Id will be set to the image and icon
@@ -148,31 +148,6 @@ const WebsiteInfoSchema = z.object({
   iconId: z.string().optional().describe('Website logo image reference Id'),
 });
 
-// New mini-review schema used for Gemini output
-const MiniReviewSchema = z.object({
-  title: z.string().default(''),
-  slug: z.string().default(''),
-  website_url: z.string().default(''),
-  logo_url: z.string().nullable().default(null),
-  cover_image_url: z.string().nullable().default(null),
-  category: z.string().default(''),
-  tags: z.array(z.string()).default([]),
-  coreTechnologies: z.array(z.string()).default([]),
-  pricing_model: z.enum(['free', 'freemium', 'paid', 'unknown']).default('unknown'),
-  summary: z.string().default(''),
-  quick_take: z.string().default(''),
-  best_for: z.array(z.string()).default([]),
-  key_features: z.array(z.string()).default([]),
-  what_its_good_at: z.array(z.string()).default([]),
-  where_it_breaks: z.array(z.string()).default([]),
-  real_workflow: z.array(z.string()).default([]),
-  pros: z.array(z.string()).default([]),
-  cons: z.array(z.string()).default([]),
-  alternatives: z.array(z.string()).default([]),
-  newtools_verdict: z.string().default(''),
-  last_reviewed: z.string().default(''),
-});
-
 export type ServerActionResponse = {
   status: 'success' | 'error';
   message?: string;
@@ -268,14 +243,6 @@ export const fetchWebsiteInfo = async (url: string) => {
     // Safely extract data with fallbacks
     const obj = fetchedData.object || {};
 
-    // Map the new mini-review structure to the existing schema
-    // For backward compatibility, we'll use one_liner as description if description is not provided
-    const description = obj.description || obj.one_liner || '';
-    const introduction = obj.introduction ||
-      (obj.what_it_does || obj.best_for?.length || obj.key_features?.length
-        ? `${obj.what_it_does || ''}\n\n## Best For\n${(obj.best_for || []).map((b: string) => `- ${b}`).join('\n')}\n\n## Key Features\n${(obj.key_features || []).map((f: string) => `- ${f}`).join('\n')}`
-        : '');
-
     // Convert single category to array for backward compatibility
     const categories = obj.category
       ? [obj.category]
@@ -286,7 +253,7 @@ export const fetchWebsiteInfo = async (url: string) => {
     try {
       websiteInfo = WebsiteInfoSchema.parse({
         name: obj.name || 'Tool',
-        one_liner: obj.one_liner || description,
+        one_liner: obj.one_liner || '',
         what_it_does: obj.what_it_does || '',
         best_for: Array.isArray(obj.best_for) ? obj.best_for : [],
         key_features: Array.isArray(obj.key_features) ? obj.key_features : [],
@@ -307,9 +274,9 @@ export const fetchWebsiteInfo = async (url: string) => {
         tags: Array.isArray(obj.tags) ? obj.tags : [],
         category: obj.category || categories[0] || '',
         // Legacy fields for backward compatibility
-        description,
-        introduction,
-        categories,
+        description: obj.description || obj.one_liner || '',
+        introduction: obj.introduction || '',
+        categories: categories,
         coreTechnologies: Array.isArray(obj.coreTechnologies) ? obj.coreTechnologies : [],
         image: obj.image || '',
         icon: obj.icon || `https://s2.googleusercontent.com/s2/favicons?domain=${url}&sz=128`,
@@ -319,7 +286,7 @@ export const fetchWebsiteInfo = async (url: string) => {
       // Use safe defaults if parsing fails
       websiteInfo = WebsiteInfoSchema.parse({
         name: obj.name || 'Tool',
-        one_liner: description,
+        one_liner: obj.one_liner || '',
         what_it_does: '',
         best_for: [],
         key_features: [],
@@ -668,120 +635,64 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       ? htmlContent.substring(0, maxContentLength) + '... (truncated)'
       : htmlContent;
 
-    // Fetch a list of existing tools from Sanity to use as approved alternatives
-    let approvedAlternatives: string[] = [];
-    try {
-      const tools = await sanityClient.fetch<Array<{ name?: string | null }>>(
-        `*[_type == "item" && defined(slug.current) && defined(publishDate) && forceHidden != true][0...20]{ name }`,
-      );
-      approvedAlternatives = (tools || [])
-        .map((tool) => tool.name?.trim())
-        .filter((name): name is string => !!name);
-    } catch (altError) {
-      console.warn('fetchWebsiteInfoWithAI, error fetching approved alternatives:', altError);
-    }
-
     let result;
     try {
       if (googleAI) {
-        // Use direct Google GenAI SDK with the new mini-review prompt
-        const inputPayload = {
-          url,
-          page_title: toolName,
-          meta_description: '',
-          page_text: truncatedContent,
-          og_title: '',
-          og_description: '',
-          og_image_url: '',
-          logo_url: '',
-          favicon_url: '',
-          homepage_screenshot_url: '',
-          approved_alternatives: approvedAlternatives,
-          approved_tags: availableTags,
-        };
-
-        const prompt = `You are Newtools.io — a curated tech hub.
-Your job is to generate a HIGH-TRUST directory listing that reads like a real human mini review (not generic AI marketing).
-
-IMPORTANT RULES:
-- Do NOT invent facts. If something cannot be confirmed from the provided data, write "Not confirmed".
-- Do NOT use hype words like "revolutionary", "game-changing", "best ever".
-- Write like a practical builder/reviewer: clear, specific, honest.
-- Keep sentences short. Avoid fluff.
-- Output must be structured and consistent across listings.
-
-ASSET RULES (logo + homepage image):
-- If logo_url is available, use it.
-- If not, use favicon_url if present.
-- For a cover image, prefer og_image_url (OpenGraph). If missing, use homepage_screenshot_url. If none available, return null.
-
-CATEGORY RULES:
-Choose exactly ONE category from this list:
-- AI Tools
-- Developer Tools
-- Design Tools
-- Marketing Tools
-- Automation
-- Analytics
-- Hosting & Infra
-- Payments
-- Boilerplates
-- Templates
-- Themes
-- UI Kits
-- Components
-
-TAG RULES:
-Select 3–6 tags that best match the tool, based on the approved tag list provided by the system.
-If no approved tags are provided, generate sensible tags but keep them broad and universal.
-
-PRICING RULES:
-Set pricing_model to one of: free, freemium, paid, unknown
-Only choose free/freemium/paid if confirmed by the text. Otherwise choose unknown.
-
-ALTERNATIVES RULES (VERY IMPORTANT):
-- Alternatives MUST be selected ONLY from the provided list: approved_alternatives
-- DO NOT add alternatives from the public web
-- Pick exactly 3 relevant alternatives based on the tool type and category
-- If the approved_alternatives list is empty or irrelevant, return an empty array []
-
-OUTPUT:
-Return a single valid JSON object only. No markdown. No extra commentary.
-
-JSON SCHEMA (must match exactly):
-{
-  "title": "",
-  "slug": "",
-  "website_url": "",
-  "logo_url": null,
-  "cover_image_url": null,
-  "category": "",
-  "tags": [],
-  "coreTechnologies": [],
-  "pricing_model": "",
-  "summary": "",
-  "quick_take": "",
-  "best_for": [],
-  "key_features": [],
-  "what_its_good_at": [],
-  "where_it_breaks": [],
-  "real_workflow": [],
-  "pros": [],
-  "cons": [],
-  "alternatives": [],
-  "newtools_verdict": "",
-  "last_reviewed": ""
-}
-
-NOW GENERATE THE LISTING FROM THE PROVIDED INPUT DATA.
-
-Here is the input data (JSON):
-${JSON.stringify(inputPayload, null, 2)}`;
-
+        // Use direct Google GenAI SDK with original prompt
         const model = googleAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
-        const response = await model.generateContent(prompt);
 
-        // Extract text from response
+        const prompt = `You are writing a mini-review listing for Newtools.io.
+
+Goal:
+Create a helpful, non-generic directory entry that looks like a mini review and is SEO-friendly.
+
+Tool URL: ${url}
+Tool Name: ${toolName}
+
+Return JSON with the following keys:
+
+- one_liner: outcome-based tagline (max 90 chars)
+- what_it_does: 2–3 lines in plain English (no buzzwords)
+- best_for: 3 bullets
+- key_features: 5 bullets (specific, not generic)
+- pros: 3 bullets
+- cons: 2 bullets
+- pricing_snapshot:
+  - free_plan: yes/no/unknown
+  - trial: yes/no/unknown
+  - paid: yes/no/unknown
+  - notes: short and cautious (avoid guessing)
+- setup_time: one of [5 min, 30 min, 1–2 hours, varies]
+- learning_curve: one of [easy, medium, advanced]
+- use_this_if: 2 bullets
+- skip_this_if: 2 bullets
+- alternatives: 3 items with {name, best_for_reason}
+- faq: 3 items with {question, answer}
+- tags: 5–8 tags from our tag list
+- category: choose ONE from:
+  [AI Tools, Developer Tools, Design Tools, Marketing Tools, Automation, Analytics, Hosting & Infra, Payments,
+   Boilerplates, Templates, Themes, UI Kits, Components, Icons & Assets]
+
+Rules:
+- Do NOT use vague phrases like "best tool for everyone".
+- Include at least one real differentiator.
+- Prefer factual statements; if unsure, mark as "unknown" or "varies".
+- Mention 1–2 realistic use cases.
+- Keep it concise and scannable.
+
+Available Categories (choose ONE that best matches, or empty string if none match):
+${availableCategories.join(', ')}
+
+Available Tags (select from these, or empty array if none match):
+${availableTags.join(', ')}
+
+Available Core Technologies (optional):
+${availableCoreTechnologies.join(', ')}
+
+Content to analyze:
+${truncatedContent}`;
+
+        const response = await model.generateContent(prompt);
         const responseText = response.response.text() || '';
 
         if (!responseText) {
@@ -791,8 +702,6 @@ ${JSON.stringify(inputPayload, null, 2)}`;
 
         // Parse JSON from response (handle markdown code blocks if present)
         let jsonText = responseText.trim();
-
-        // Remove markdown code blocks if present
         if (jsonText.startsWith('```json')) {
           jsonText = jsonText.replace(/^```json\s*/, '').replace(/\s*```$/, '');
         } else if (jsonText.startsWith('```')) {
@@ -809,88 +718,8 @@ ${JSON.stringify(inputPayload, null, 2)}`;
           return null;
         }
 
-        // Validate against the mini-review schema
-        const mini = MiniReviewSchema.parse(parsedData);
-
-        // Map mini-review schema to the existing WebsiteInfoSchema shape
-        const pricingSnapshotFromModel = (() => {
-          switch (mini.pricing_model) {
-            case 'free':
-              return { free_plan: 'yes', trial: 'unknown', paid: 'no', notes: '' };
-            case 'freemium':
-              return { free_plan: 'yes', trial: 'unknown', paid: 'yes', notes: '' };
-            case 'paid':
-              return { free_plan: 'no', trial: 'unknown', paid: 'yes', notes: '' };
-            case 'unknown':
-            default:
-              return { free_plan: 'unknown', trial: 'unknown', paid: 'unknown', notes: '' };
-          }
-        })();
-
-        const introductionFromMini = (() => {
-          let intro = '';
-
-          if (mini.quick_take) {
-            intro += `${mini.quick_take.trim()}\n\n`;
-          }
-          if (mini.best_for && mini.best_for.length > 0) {
-            intro += `## Best For\n${mini.best_for.map((b) => `- ${b}`).join('\n')}\n\n`;
-          }
-          if (mini.key_features && mini.key_features.length > 0) {
-            intro += `## Key Features\n${mini.key_features.map((f) => `- ${f}`).join('\n')}\n\n`;
-          }
-          if (mini.what_its_good_at && mini.what_its_good_at.length > 0) {
-            intro += `## What It's Good At\n${mini.what_its_good_at.map((w) => `- ${w}`).join('\n')}\n\n`;
-          }
-          if (mini.where_it_breaks && mini.where_it_breaks.length > 0) {
-            intro += `## Where It Breaks\n${mini.where_it_breaks.map((w) => `- ${w}`).join('\n')}\n\n`;
-          }
-          if (mini.real_workflow && mini.real_workflow.length > 0) {
-            intro += `## Real Workflow\n${mini.real_workflow.map((step, idx) => `${idx + 1}. ${step}`).join('\n')}\n\n`;
-          }
-          if (mini.alternatives && mini.alternatives.length > 0) {
-            intro += `## Alternatives\n${mini.alternatives.map((a) => `- ${a}`).join('\n')}\n\n`;
-          }
-          if (mini.newtools_verdict) {
-            intro += `## Newtools Verdict\n${mini.newtools_verdict.trim()}\n\n`;
-          }
-
-          return intro.trim();
-        })();
-
-        const websiteObject = {
-          name: mini.title || toolName,
-          one_liner: mini.summary || '',
-          what_it_does: mini.quick_take || '',
-          best_for: mini.best_for || [],
-          key_features: mini.key_features || [],
-          pros: mini.pros || [],
-          cons: mini.cons || [],
-          pricing_snapshot: pricingSnapshotFromModel,
-          setup_time: 'varies',
-          learning_curve: 'medium',
-          use_this_if: mini.what_its_good_at || [],
-          skip_this_if: mini.where_it_breaks || [],
-          alternatives: (mini.alternatives || []).map((alt) => {
-            const [name, reason] = alt.split(' — ');
-            return {
-              name: name || '',
-              best_for_reason: (reason || '').trim(),
-            };
-          }),
-          faq: [],
-          tags: mini.tags || [],
-          category: mini.category || '',
-          description: mini.summary || '',
-          introduction: introductionFromMini,
-          categories: [],
-          coreTechnologies: mini.coreTechnologies || [],
-          image: mini.cover_image_url || '',
-          icon: mini.logo_url || '',
-        };
-
-        // Validate against existing WebsiteInfoSchema and return
-        const validatedData = WebsiteInfoSchema.parse(websiteObject);
+        // Validate against WebsiteInfoSchema
+        const validatedData = WebsiteInfoSchema.parse(parsedData);
 
         result = {
           object: validatedData,

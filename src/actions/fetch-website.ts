@@ -641,69 +641,107 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       ? htmlContent.substring(0, maxContentLength) + '... (truncated)'
       : htmlContent;
 
+    // Fetch approved alternatives from Sanity (for now, let AI generate them)
+    let approvedAlternatives: string[] = [];
+    try {
+      const tools = await sanityClient.fetch<Array<{ name?: string | null }>>(
+        `*[_type == "item" && defined(slug.current) && defined(publishDate) && forceHidden != true][0...20]{ name }`,
+      );
+      approvedAlternatives = (tools || [])
+        .map((tool) => tool.name?.trim())
+        .filter((name): name is string => !!name);
+    } catch (altError) {
+      console.warn('fetchWebsiteInfoWithAI, error fetching approved alternatives:', altError);
+    }
+
     let result;
     try {
       if (googleAI) {
-        // Use direct Google GenAI SDK
-        const prompt = `You are writing a mini-review listing for Newtools.io.
+        // Use direct Google GenAI SDK with new mini-review prompt
+        const prompt = `You are Newtools.io — a curated tech hub.
+Your job is to generate a HIGH-TRUST directory listing that reads like a real human mini review (not generic AI marketing).
 
-Goal:
-Create a helpful, non-generic directory entry that looks like a mini review and is SEO-friendly.
+IMPORTANT RULES:
+- Do NOT invent facts. If something cannot be confirmed from the provided data, write "Not confirmed".
+- Do NOT use hype words like "revolutionary", "game-changing", "best ever".
+- Write like a practical builder/reviewer: clear, specific, honest.
+- Keep sentences short. Avoid fluff.
+- Output must be structured and consistent across listings.
+
+CATEGORY RULES:
+Choose exactly ONE category from this list:
+${availableCategories.length > 0 ? availableCategories.join('\n- ') : '- AI Tools\n- Developer Tools\n- Design Tools\n- Marketing Tools\n- Automation\n- Analytics\n- Hosting & Infra\n- Payments\n- Boilerplates\n- Templates\n- Themes\n- UI Kits\n- Components'}
+
+TAG RULES:
+Select 3–6 tags that best match the tool, based on the approved tag list provided by the system.
+If no approved tags are provided, generate sensible tags but keep them broad and universal.
+
+PRICING RULES:
+Set pricing_model to one of: free, freemium, paid, unknown
+Only choose free/freemium/paid if confirmed by the text. Otherwise choose unknown.
+
+ALTERNATIVES RULES (VERY IMPORTANT):
+- Alternatives MUST be selected ONLY from the provided list: approved_alternatives
+- DO NOT add alternatives from the public web
+- Pick exactly 3 relevant alternatives based on the tool type and category
+- If the approved_alternatives list is empty or irrelevant, return an empty array []
+- Format each as: "Tool Name — 1 short reason"
+
+OUTPUT:
+Return a single valid JSON object only. No markdown. No extra commentary.
+
+JSON SCHEMA (must match exactly):
+{
+  "title": "",
+  "slug": "",
+  "website_url": "",
+  "logo_url": null,
+  "cover_image_url": null,
+  "category": "",
+  "tags": [],
+  "pricing_model": "",
+  "summary": "",
+  "quick_take": "",
+  "best_for": [],
+  "key_features": [],
+  "what_its_good_at": [],
+  "where_it_breaks": [],
+  "real_workflow": [],
+  "pros": [],
+  "cons": [],
+  "alternatives": [],
+  "newtools_verdict": "",
+  "last_reviewed": ""
+}
+
+WRITING GUIDELINES FOR EACH FIELD:
+- summary: 140–180 characters, plain English, what it is + who it's for.
+- quick_take: 2–4 sentences, honest overview (no hype).
+- best_for: exactly 3 bullets.
+- key_features: exactly 5 bullets.
+- what_its_good_at: 3–5 bullets with specific outcomes.
+- where_it_breaks: exactly 2 bullets (honest tradeoffs).
+- real_workflow: 4–6 steps (imperative style: "Do X", "Then Y").
+- pros: exactly 3 bullets.
+- cons: exactly 2 bullets.
+- alternatives: exactly 3 items, chosen ONLY from approved_alternatives. Format each as: "Tool Name — 1 short reason"
+- newtools_verdict: 2–3 sentences, practical recommendation.
+- slug: lowercase, hyphen-separated, based on title.
+- last_reviewed: today's date in YYYY-MM-DD format.
+
+Available Tags (select from these, or empty array if none match):
+${availableTags.length > 0 ? availableTags.join(', ') : 'None provided'}
+
+Available Core Technologies (select from these, or empty array if none match):
+${availableCoreTechnologies.length > 0 ? availableCoreTechnologies.join(', ') : 'None provided'}
+
+Approved Alternatives (choose exactly 3 from this list, or empty array if none match):
+${approvedAlternatives.length > 0 ? approvedAlternatives.join(', ') : 'None provided'}
+
+NOW GENERATE THE LISTING FROM THE PROVIDED INPUT DATA.
 
 Tool URL: ${url}
 Tool Name: ${toolName}
-
-Return ONLY valid JSON (no markdown, no code blocks) with the following structure:
-
-{
-  "name": "Tool name",
-  "one_liner": "outcome-based tagline (max 90 chars)",
-  "what_it_does": "2–3 lines in plain English (no buzzwords)",
-  "best_for": ["bullet 1", "bullet 2", "bullet 3"],
-  "key_features": ["feature 1", "feature 2", "feature 3", "feature 4", "feature 5"],
-  "pros": ["pro 1", "pro 2", "pro 3"],
-  "cons": ["con 1", "con 2"],
-  "pricing_snapshot": {
-    "free_plan": "yes/no/unknown",
-    "trial": "yes/no/unknown",
-    "paid": "yes/no/unknown",
-    "notes": "short and cautious (avoid guessing)"
-  },
-  "setup_time": "5 min" | "30 min" | "1–2 hours" | "varies",
-  "learning_curve": "easy" | "medium" | "advanced",
-  "use_this_if": ["reason 1", "reason 2"],
-  "skip_this_if": ["reason 1", "reason 2"],
-  "alternatives": [
-    {"name": "Alternative 1", "best_for_reason": "why"},
-    {"name": "Alternative 2", "best_for_reason": "why"},
-    {"name": "Alternative 3", "best_for_reason": "why"}
-  ],
-  "faq": [
-    {"question": "Question 1", "answer": "Answer 1"},
-    {"question": "Question 2", "answer": "Answer 2"},
-    {"question": "Question 3", "answer": "Answer 3"}
-  ],
-  "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
-  "category": "ONE category from the list below",
-  "coreTechnologies": ["tech1", "tech2", "tech3"]
-}
-
-Rules:
-- Do NOT use vague phrases like "best tool for everyone".
-- Include at least one real differentiator.
-- Prefer factual statements; if unsure, mark as "unknown" or "varies".
-- Mention 1–2 realistic use cases.
-- Keep it concise and scannable.
-- Return ONLY the JSON object, no other text.
-
-Available Categories (choose ONE that best matches, or empty string if none match):
-${availableCategories.join(', ')}
-
-Available Tags (select from these, or empty array if none match):
-${availableTags.join(', ')}
-
-Available Core Technologies (select from these, or empty array if none match):
-${availableCoreTechnologies.join(', ')}
 
 Content to analyze:
 ${truncatedContent}`;
@@ -739,8 +777,130 @@ ${truncatedContent}`;
           return null;
         }
 
+        // Map new mini-review format to existing schema
+        const mappedData = {
+          // Map title to name
+          name: parsedData.title || parsedData.name || toolName,
+
+          // Map summary to one_liner and description
+          one_liner: parsedData.summary || parsedData.one_liner || '',
+          description: parsedData.summary || parsedData.description || '',
+
+          // Map quick_take to what_it_does
+          what_it_does: parsedData.quick_take || parsedData.what_it_does || '',
+
+          // Keep existing fields
+          best_for: parsedData.best_for || [],
+          key_features: parsedData.key_features || [],
+          pros: parsedData.pros || [],
+          cons: parsedData.cons || [],
+
+          // Map pricing_model to pricing_snapshot object
+          pricing_snapshot: (() => {
+            if (parsedData.pricing_snapshot) {
+              return parsedData.pricing_snapshot;
+            }
+            // Convert pricing_model string to pricing_snapshot object
+            const pricingModel = parsedData.pricing_model || 'unknown';
+            switch (pricingModel) {
+              case 'free':
+                return { free_plan: 'yes', trial: 'unknown', paid: 'no', notes: '' };
+              case 'freemium':
+                return { free_plan: 'yes', trial: 'unknown', paid: 'yes', notes: '' };
+              case 'paid':
+                return { free_plan: 'no', trial: 'unknown', paid: 'yes', notes: '' };
+              case 'unknown':
+              default:
+                return { free_plan: 'unknown', trial: 'unknown', paid: 'unknown', notes: '' };
+            }
+          })(),
+
+          setup_time: parsedData.setup_time || 'varies',
+          learning_curve: parsedData.learning_curve || 'medium',
+
+          // Map what_its_good_at to use_this_if
+          use_this_if: parsedData.what_its_good_at || parsedData.use_this_if || [],
+
+          // Map where_it_breaks to skip_this_if
+          skip_this_if: parsedData.where_it_breaks || parsedData.skip_this_if || [],
+
+          // Map alternatives from string format "Tool Name — reason" to object format
+          alternatives: (() => {
+            if (!parsedData.alternatives || !Array.isArray(parsedData.alternatives)) {
+              return [];
+            }
+            return parsedData.alternatives.map((alt: string | { name: string; best_for_reason: string }) => {
+              // If already an object, return as is
+              if (typeof alt === 'object' && alt !== null && 'name' in alt) {
+                return alt;
+              }
+              // If string format "Tool Name — reason", parse it
+              if (typeof alt === 'string') {
+                const [name, ...reasonParts] = alt.split(' — ');
+                return {
+                  name: name?.trim() || '',
+                  best_for_reason: reasonParts.join(' — ').trim() || '',
+                };
+              }
+              return { name: String(alt || ''), best_for_reason: '' };
+            });
+          })(),
+
+          faq: parsedData.faq || [],
+          tags: parsedData.tags || [],
+          category: parsedData.category || '',
+          categories: parsedData.categories || [],
+          coreTechnologies: parsedData.coreTechnologies || [],
+
+          // Build introduction from new fields
+          introduction: (() => {
+            let intro = '';
+
+            if (parsedData.quick_take) {
+              intro += `${parsedData.quick_take.trim()}\n\n`;
+            }
+
+            if (parsedData.best_for && parsedData.best_for.length > 0) {
+              intro += `## Best For\n${parsedData.best_for.map((b: string) => `- ${b}`).join('\n')}\n\n`;
+            }
+
+            if (parsedData.key_features && parsedData.key_features.length > 0) {
+              intro += `## Key Features\n${parsedData.key_features.map((f: string) => `- ${f}`).join('\n')}\n\n`;
+            }
+
+            if (parsedData.what_its_good_at && parsedData.what_its_good_at.length > 0) {
+              intro += `## What It's Good At\n${parsedData.what_its_good_at.map((w: string) => `- ${w}`).join('\n')}\n\n`;
+            }
+
+            if (parsedData.where_it_breaks && parsedData.where_it_breaks.length > 0) {
+              intro += `## Where It Breaks\n${parsedData.where_it_breaks.map((w: string) => `- ${w}`).join('\n')}\n\n`;
+            }
+
+            if (parsedData.real_workflow && parsedData.real_workflow.length > 0) {
+              intro += `## Real Workflow\n${parsedData.real_workflow.map((step: string, idx: number) => `${idx + 1}. ${step}`).join('\n')}\n\n`;
+            }
+
+            if (parsedData.pros && parsedData.pros.length > 0) {
+              intro += `## Pros\n${parsedData.pros.map((p: string) => `- ${p}`).join('\n')}\n\n`;
+            }
+
+            if (parsedData.cons && parsedData.cons.length > 0) {
+              intro += `## Cons\n${parsedData.cons.map((c: string) => `- ${c}`).join('\n')}\n\n`;
+            }
+
+            if (parsedData.newtools_verdict) {
+              intro += `## Newtools Verdict\n${parsedData.newtools_verdict.trim()}\n\n`;
+            }
+
+            return intro.trim();
+          })(),
+
+          image: parsedData.cover_image_url || parsedData.image || '',
+          icon: parsedData.logo_url || parsedData.icon || '',
+        };
+
         // Validate against schema
-        const validatedData = WebsiteInfoSchema.parse(parsedData);
+        const validatedData = WebsiteInfoSchema.parse(mappedData);
 
         // Return in the same format as generateObject for compatibility
         result = {

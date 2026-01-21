@@ -58,7 +58,7 @@ export default function OverviewSection({ item, sponsorItem }) {
                         className={cn(
                           'text-4xl tracking-wider font-bold flex items-center gap-2',
                           item.featured &&
-                            'text-gradient_indigo-purple font-semibold'
+                          'text-gradient_indigo-purple font-semibold'
                         )}
                       >
                         {item.name}
@@ -113,6 +113,116 @@ export default function OverviewSection({ item, sponsorItem }) {
               >
                 <ItemCustomMdx source={item.introduction} />
               </MotionWrapper>
+
+              {/* Use This If / What It's Good At */}
+              {item?.use_this_if && Array.isArray(item.use_this_if) && item.use_this_if.length > 0 && (
+                <MotionWrapper
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.0 }}
+                  className="mt-8"
+                >
+                  <h3 className="mb-3 text-lg font-medium">What It's Good At</h3>
+                  <ul className="space-y-2">
+                    {item.use_this_if.map((reason: string, index: number) => (
+                      <li key={index} className="flex items-start gap-2 text-sm">
+                        <span className="text-primary mt-1">✓</span>
+                        <span className="text-muted-foreground">{reason}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </MotionWrapper>
+              )}
+
+              {/* Skip This If / Where It Breaks */}
+              {item?.skip_this_if && Array.isArray(item.skip_this_if) && item.skip_this_if.length > 0 && (
+                <MotionWrapper
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.1 }}
+                  className="mt-6"
+                >
+                  <h3 className="mb-3 text-lg font-medium">Where It Breaks</h3>
+                  <ul className="space-y-2">
+                    {item.skip_this_if.map((reason: string, index: number) => (
+                      <li key={index} className="flex items-start gap-2 text-sm">
+                        <span className="text-destructive mt-1">✗</span>
+                        <span className="text-muted-foreground">{reason}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </MotionWrapper>
+              )}
+
+              {/* Pricing Snapshot */}
+              {item?.pricing_snapshot && (
+                <MotionWrapper
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.2 }}
+                  className="mt-6"
+                >
+                  <h3 className="mb-3 text-lg font-medium">Pricing</h3>
+                  <div className="flex flex-wrap gap-3 text-sm">
+                    {item.pricing_snapshot.free_plan !== 'unknown' && (
+                      <span className={cn(
+                        "px-3 py-1 rounded-full border",
+                        item.pricing_snapshot.free_plan === 'yes'
+                          ? "bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20"
+                          : "bg-muted text-muted-foreground"
+                      )}>
+                        {item.pricing_snapshot.free_plan === 'yes' ? 'Free Plan Available' : 'No Free Plan'}
+                      </span>
+                    )}
+                    {item.pricing_snapshot.trial !== 'unknown' && (
+                      <span className={cn(
+                        "px-3 py-1 rounded-full border",
+                        item.pricing_snapshot.trial === 'yes'
+                          ? "bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/20"
+                          : "bg-muted text-muted-foreground"
+                      )}>
+                        {item.pricing_snapshot.trial === 'yes' ? 'Trial Available' : 'No Trial'}
+                      </span>
+                    )}
+                    {item.pricing_snapshot.paid !== 'unknown' && (
+                      <span className={cn(
+                        "px-3 py-1 rounded-full border",
+                        item.pricing_snapshot.paid === 'yes'
+                          ? "bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-500/20"
+                          : "bg-muted text-muted-foreground"
+                      )}>
+                        {item.pricing_snapshot.paid === 'yes' ? 'Paid Plans Available' : 'No Paid Plans'}
+                      </span>
+                    )}
+                  </div>
+                  {item.pricing_snapshot.notes && (
+                    <p className="mt-2 text-sm text-muted-foreground">{item.pricing_snapshot.notes}</p>
+                  )}
+                </MotionWrapper>
+              )}
+
+              {/* Alternatives */}
+              {item?.alternatives && Array.isArray(item.alternatives) && item.alternatives.length > 0 && (
+                <MotionWrapper
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 1.3 }}
+                  className="mt-6"
+                >
+                  <h3 className="mb-3 text-lg font-medium">Alternatives</h3>
+                  <ul className="space-y-3">
+                    {item.alternatives.map((alt: any, index: number) => (
+                      <li key={index} className="flex flex-col gap-1 text-sm">
+                        <span className="font-medium">{alt.name || alt}</span>
+                        {alt.best_for_reason && (
+                          <span className="text-muted-foreground ml-4">{alt.best_for_reason}</span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </MotionWrapper>
+              )}
+
               <h3 className="mt-6 mb-2 text-lg font-medium">Tags</h3>
               <MotionWrapper
                 initial={{ opacity: 0, y: 20 }}

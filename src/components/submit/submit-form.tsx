@@ -171,6 +171,13 @@ export function SubmitForm({
 
       // Debug: Log the full response (always show for debugging)
       console.log("SubmitForm, AI response data (raw):", JSON.stringify(data, null, 2));
+      console.log("SubmitForm, AI response keys:", Object.keys(data));
+      console.log("SubmitForm, AI response has description:", !!data.description);
+      console.log("SubmitForm, AI response has one_liner:", !!data.one_liner);
+      console.log("SubmitForm, AI response has what_it_does:", !!data.what_it_does);
+      console.log("SubmitForm, AI response has introduction:", !!data.introduction);
+      console.log("SubmitForm, AI response tags:", data.tags);
+      console.log("SubmitForm, AI response categories:", data.categories);
 
       // Clean and normalize data with regex
       const cleanString = (str: any): string => {

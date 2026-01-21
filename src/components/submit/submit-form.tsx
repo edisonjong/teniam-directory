@@ -171,13 +171,6 @@ export function SubmitForm({
 
       // Debug: Log the full response (always show for debugging)
       console.log("SubmitForm, AI response data (raw):", JSON.stringify(data, null, 2));
-      console.log("SubmitForm, AI response keys:", Object.keys(data));
-      console.log("SubmitForm, AI response has description:", !!data.description);
-      console.log("SubmitForm, AI response has one_liner:", !!data.one_liner);
-      console.log("SubmitForm, AI response has what_it_does:", !!data.what_it_does);
-      console.log("SubmitForm, AI response has introduction:", !!data.introduction);
-      console.log("SubmitForm, AI response tags:", data.tags);
-      console.log("SubmitForm, AI response categories:", data.categories);
 
       // Clean and normalize data with regex
       const cleanString = (str: any): string => {
@@ -196,32 +189,24 @@ export function SubmitForm({
           .filter(item => item.length > 0);
       };
 
-      // Clean all string fields (handle both old and new format)
-      const dataAny = data as any;
+      // Clean all string fields
       data = {
         ...data,
-        name: cleanString(data?.name || dataAny?.title || ''),
-        one_liner: cleanString(data?.one_liner || dataAny?.summary || ''),
-        what_it_does: cleanString(data?.what_it_does || dataAny?.quick_take || ''),
-        description: cleanString(data?.description || dataAny?.summary || ''),
+        name: cleanString(data?.name || ''),
+        one_liner: cleanString(data?.one_liner || ''),
+        what_it_does: cleanString(data?.what_it_does || ''),
+        description: cleanString(data?.description || ''),
         introduction: cleanString(data?.introduction || ''),
         category: cleanString(data?.category || ''),
         best_for: cleanArray(data?.best_for),
         key_features: cleanArray(data?.key_features),
         pros: cleanArray(data?.pros),
         cons: cleanArray(data?.cons),
-        use_this_if: cleanArray(data?.use_this_if || dataAny?.what_its_good_at),
-        skip_this_if: cleanArray(data?.skip_this_if || dataAny?.where_it_breaks),
+        use_this_if: cleanArray(data?.use_this_if),
+        skip_this_if: cleanArray(data?.skip_this_if),
         tags: cleanArray(data?.tags),
         categories: cleanArray(data?.categories),
         coreTechnologies: cleanArray(data?.coreTechnologies),
-        alternatives: data?.alternatives || [],
-        pricing_snapshot: data?.pricing_snapshot || {
-          free_plan: 'unknown',
-          trial: 'unknown',
-          paid: 'unknown',
-          notes: '',
-        },
       };
 
       console.log("SubmitForm, AI response data (cleaned):", JSON.stringify(data, null, 2));
@@ -241,74 +226,55 @@ export function SubmitForm({
         console.warn("⚠ No description found in AI response");
       }
 
-      // Use the server-built introduction if available, otherwise build from fields
-      if (data.introduction && data.introduction.trim().length > 0) {
+      // Build introduction from mini-review fields if available
+      let intro = "";
+
+      if (data.what_it_does && data.what_it_does.trim().length > 0) {
+        intro += `${data.what_it_does.trim()}\n\n`;
+        console.log("✓ Added what_it_does to intro");
+      }
+
+      if (data.best_for && Array.isArray(data.best_for) && data.best_for.length > 0) {
+        const bestForItems = data.best_for.filter((b: string) => b && b.trim().length > 0);
+        if (bestForItems.length > 0) {
+          intro += `## Best For\n${bestForItems.map((b: string) => `- ${b.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added best_for to intro:", bestForItems.length, "items");
+        }
+      }
+
+      if (data.key_features && Array.isArray(data.key_features) && data.key_features.length > 0) {
+        const features = data.key_features.filter((f: string) => f && f.trim().length > 0);
+        if (features.length > 0) {
+          intro += `## Key Features\n${features.map((f: string) => `- ${f.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added key_features to intro:", features.length, "items");
+        }
+      }
+
+      if (data.pros && Array.isArray(data.pros) && data.pros.length > 0) {
+        const pros = data.pros.filter((p: string) => p && p.trim().length > 0);
+        if (pros.length > 0) {
+          intro += `## Pros\n${pros.map((p: string) => `- ${p.trim()}`).join("\n")}\n\n`;
+          console.log("✓ Added pros to intro:", pros.length, "items");
+        }
+      }
+
+      if (data.cons && Array.isArray(data.cons) && data.cons.length > 0) {
+        const cons = data.cons.filter((c: string) => c && c.trim().length > 0);
+        if (cons.length > 0) {
+          intro += `## Cons\n${cons.map((c: string) => `- ${c.trim()}`).join("\n")}`;
+          console.log("✓ Added cons to intro:", cons.length, "items");
+        }
+      }
+
+      const finalIntro = intro.trim();
+      if (finalIntro.length > 0) {
+        form.setValue("introduction", finalIntro);
+        console.log("✓ Filled introduction (length:", finalIntro.length, "chars)");
+      } else if (data.introduction && data.introduction.trim().length > 0) {
         form.setValue("introduction", data.introduction.trim());
-        console.log("✓ Filled introduction from server (length:", data.introduction.length, "chars)");
+        console.log("✓ Filled introduction (legacy)");
       } else {
-        // Build introduction from mini-review fields if available
-        let intro = "";
-
-        if (data.what_it_does && data.what_it_does.trim().length > 0) {
-          intro += `${data.what_it_does.trim()}\n\n`;
-          console.log("✓ Added what_it_does to intro");
-        }
-
-        if (data.best_for && Array.isArray(data.best_for) && data.best_for.length > 0) {
-          const bestForItems = data.best_for.filter((b: string) => b && b.trim().length > 0);
-          if (bestForItems.length > 0) {
-            intro += `## Best For\n${bestForItems.map((b: string) => `- ${b.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added best_for to intro:", bestForItems.length, "items");
-          }
-        }
-
-        if (data.key_features && Array.isArray(data.key_features) && data.key_features.length > 0) {
-          const features = data.key_features.filter((f: string) => f && f.trim().length > 0);
-          if (features.length > 0) {
-            intro += `## Key Features\n${features.map((f: string) => `- ${f.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added key_features to intro:", features.length, "items");
-          }
-        }
-
-        if (data.use_this_if && Array.isArray(data.use_this_if) && data.use_this_if.length > 0) {
-          const useThisIf = data.use_this_if.filter((u: string) => u && u.trim().length > 0);
-          if (useThisIf.length > 0) {
-            intro += `## What It's Good At\n${useThisIf.map((u: string) => `- ${u.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added use_this_if to intro:", useThisIf.length, "items");
-          }
-        }
-
-        if (data.skip_this_if && Array.isArray(data.skip_this_if) && data.skip_this_if.length > 0) {
-          const skipThisIf = data.skip_this_if.filter((s: string) => s && s.trim().length > 0);
-          if (skipThisIf.length > 0) {
-            intro += `## Where It Breaks\n${skipThisIf.map((s: string) => `- ${s.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added skip_this_if to intro:", skipThisIf.length, "items");
-          }
-        }
-
-        if (data.pros && Array.isArray(data.pros) && data.pros.length > 0) {
-          const pros = data.pros.filter((p: string) => p && p.trim().length > 0);
-          if (pros.length > 0) {
-            intro += `## Pros\n${pros.map((p: string) => `- ${p.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added pros to intro:", pros.length, "items");
-          }
-        }
-
-        if (data.cons && Array.isArray(data.cons) && data.cons.length > 0) {
-          const cons = data.cons.filter((c: string) => c && c.trim().length > 0);
-          if (cons.length > 0) {
-            intro += `## Cons\n${cons.map((c: string) => `- ${c.trim()}`).join("\n")}\n\n`;
-            console.log("✓ Added cons to intro:", cons.length, "items");
-          }
-        }
-
-        const finalIntro = intro.trim();
-        if (finalIntro.length > 0) {
-          form.setValue("introduction", finalIntro);
-          console.log("✓ Filled introduction (length:", finalIntro.length, "chars)");
-        } else {
-          console.warn("⚠ No introduction content found in AI response");
-        }
+        console.warn("⚠ No introduction content found in AI response");
       }
 
       // Helper function to find matching ID by name (case-insensitive, trimmed)

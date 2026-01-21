@@ -236,23 +236,92 @@ export const fetchWebsiteInfo = async (url: string) => {
       });
     }
 
-    // The data from fetchWebsiteInfoWithAI is already mapped and validated
-    // Use it directly - no need to re-parse
-    const websiteInfo = fetchedData.object;
+    console.log('fetchWebsiteInfo, url:', url, 'fetchedData:', fetchedData);
 
-    // Log summary to verify all fields are populated
-    console.log('fetchWebsiteInfo, data summary:', {
-      name: websiteInfo.name,
-      hasDescription: !!websiteInfo.description,
-      hasOneLiner: !!websiteInfo.one_liner,
-      hasWhatItDoes: !!websiteInfo.what_it_does,
-      hasIntroduction: !!websiteInfo.introduction,
-      tagsCount: websiteInfo.tags?.length || 0,
-      categoriesCount: websiteInfo.categories?.length || 0,
-      coreTechnologiesCount: websiteInfo.coreTechnologies?.length || 0,
-      hasImage: !!websiteInfo.image,
-      hasIcon: !!websiteInfo.icon,
-    });
+    // Safely extract data with fallbacks
+    const obj = fetchedData.object || {};
+
+    // Map the new mini-review structure to the existing schema
+    // For backward compatibility, we'll use one_liner as description if description is not provided
+    const description = obj.description || obj.one_liner || '';
+    const introduction = obj.introduction ||
+      (obj.what_it_does || obj.best_for?.length || obj.key_features?.length
+        ? `${obj.what_it_does || ''}\n\n## Best For\n${(obj.best_for || []).map((b: string) => `- ${b}`).join('\n')}\n\n## Key Features\n${(obj.key_features || []).map((f: string) => `- ${f}`).join('\n')}`
+        : '');
+
+    // Convert single category to array for backward compatibility
+    const categories = obj.category
+      ? [obj.category]
+      : (obj.categories || []);
+
+    // Safely parse with fallbacks
+    let websiteInfo;
+    try {
+      websiteInfo = WebsiteInfoSchema.parse({
+        name: obj.name || 'Tool',
+        one_liner: obj.one_liner || description,
+        what_it_does: obj.what_it_does || '',
+        best_for: Array.isArray(obj.best_for) ? obj.best_for : [],
+        key_features: Array.isArray(obj.key_features) ? obj.key_features : [],
+        pros: Array.isArray(obj.pros) ? obj.pros : [],
+        cons: Array.isArray(obj.cons) ? obj.cons : [],
+        pricing_snapshot: obj.pricing_snapshot || {
+          free_plan: 'unknown',
+          trial: 'unknown',
+          paid: 'unknown',
+          notes: '',
+        },
+        setup_time: obj.setup_time || 'varies',
+        learning_curve: obj.learning_curve || 'medium',
+        use_this_if: Array.isArray(obj.use_this_if) ? obj.use_this_if : [],
+        skip_this_if: Array.isArray(obj.skip_this_if) ? obj.skip_this_if : [],
+        alternatives: Array.isArray(obj.alternatives) ? obj.alternatives : [],
+        faq: Array.isArray(obj.faq) ? obj.faq : [],
+        tags: Array.isArray(obj.tags) ? obj.tags : [],
+        category: obj.category || categories[0] || '',
+        // Legacy fields for backward compatibility
+        description,
+        introduction,
+        categories,
+        coreTechnologies: Array.isArray(obj.coreTechnologies) ? obj.coreTechnologies : [],
+        image: obj.image || '',
+        icon: obj.icon || `https://s2.googleusercontent.com/s2/favicons?domain=${url}&sz=128`,
+      });
+    } catch (parseError) {
+      console.error('fetchWebsiteInfo, schema parse error:', parseError);
+      // Use safe defaults if parsing fails
+      websiteInfo = WebsiteInfoSchema.parse({
+        name: obj.name || 'Tool',
+        one_liner: description,
+        what_it_does: '',
+        best_for: [],
+        key_features: [],
+        pros: [],
+        cons: [],
+        pricing_snapshot: {
+          free_plan: 'unknown',
+          trial: 'unknown',
+          paid: 'unknown',
+          notes: '',
+        },
+        setup_time: 'varies',
+        learning_curve: 'medium',
+        use_this_if: [],
+        skip_this_if: [],
+        alternatives: [],
+        faq: [],
+        tags: [],
+        category: categories[0] || '',
+        description,
+        introduction,
+        categories,
+        coreTechnologies: [],
+        image: '',
+        icon: `https://s2.googleusercontent.com/s2/favicons?domain=${url}&sz=128`,
+      });
+    }
+
+    console.log('fetchWebsiteInfo, url:', url, 'websiteInfo:', websiteInfo);
 
     // Enrich image/icon with Microlink metadata when missing
     try {
@@ -572,23 +641,10 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
       ? htmlContent.substring(0, maxContentLength) + '... (truncated)'
       : htmlContent;
 
-    // Fetch approved alternatives from Sanity (for now, let AI generate them)
-    let approvedAlternatives: string[] = [];
-    try {
-      const tools = await sanityClient.fetch<Array<{ name?: string | null }>>(
-        `*[_type == "item" && defined(slug.current) && defined(publishDate) && forceHidden != true][0...20]{ name }`,
-      );
-      approvedAlternatives = (tools || [])
-        .map((tool) => tool.name?.trim())
-        .filter((name): name is string => !!name);
-    } catch (altError) {
-      console.warn('fetchWebsiteInfoWithAI, error fetching approved alternatives:', altError);
-    }
-
     let result;
     try {
       if (googleAI) {
-        // Use direct Google GenAI SDK with new mini-review prompt
+        // Use direct Google GenAI SDK
         const prompt = `You are Newtools.io — a curated tech hub.
 Your job is to generate a HIGH-TRUST directory listing that reads like a real human mini review (not generic AI marketing).
 
@@ -599,9 +655,26 @@ IMPORTANT RULES:
 - Keep sentences short. Avoid fluff.
 - Output must be structured and consistent across listings.
 
+ASSET RULES (logo + homepage image):
+- If logo_url is available, use it.
+- If not, use favicon_url if present.
+- For a cover image, prefer og_image_url (OpenGraph). If missing, use homepage_screenshot_url. If none available, return null.
+
 CATEGORY RULES:
 Choose exactly ONE category from this list:
-${availableCategories.length > 0 ? availableCategories.map(cat => `- ${cat}`).join('\n') : '- AI Tools\n- Developer Tools\n- Design Tools\n- Marketing Tools\n- Automation\n- Analytics\n- Hosting & Infra\n- Payments\n- Boilerplates\n- Templates\n- Themes\n- UI Kits\n- Components'}
+- AI Tools
+- Developer Tools
+- Design Tools
+- Marketing Tools
+- Automation
+- Analytics
+- Hosting & Infra
+- Payments
+- Boilerplates
+- Templates
+- Themes
+- UI Kits
+- Components
 
 TAG RULES:
 Select 3–6 tags that best match the tool, based on the approved tag list provided by the system.
@@ -616,12 +689,23 @@ ALTERNATIVES RULES (VERY IMPORTANT):
 - DO NOT add alternatives from the public web
 - Pick exactly 3 relevant alternatives based on the tool type and category
 - If the approved_alternatives list is empty or irrelevant, return an empty array []
-- Format each as: "Tool Name — 1 short reason"
 
 OUTPUT:
-Return ONLY a valid JSON object. No markdown code blocks. No extra text before or after. Start with { and end with }.
+Return a single valid JSON object only. No markdown. No extra commentary.
 
-CRITICAL: The response must be valid JSON that can be parsed directly with JSON.parse(). Do not wrap in markdown code blocks.
+INPUT DATA YOU RECEIVE:
+- url: ${url}
+- page_title: (extracted from page content)
+- meta_description: (extracted from page content)
+- page_text: (provided below, may be long)
+- og_title: (optional, extracted from page)
+- og_description: (optional, extracted from page)
+- og_image_url: (optional, extracted from page)
+- logo_url: (optional, extracted from page)
+- favicon_url: (optional, extracted from page)
+- homepage_screenshot_url: (optional, extracted from page)
+- approved_tags: ${availableTags.length > 0 ? JSON.stringify(availableTags) : '[]'}
+- approved_alternatives: [] (empty for now, fetch from AI)
 
 JSON SCHEMA (must match exactly):
 {
@@ -657,26 +741,21 @@ WRITING GUIDELINES FOR EACH FIELD:
 - real_workflow: 4–6 steps (imperative style: "Do X", "Then Y").
 - pros: exactly 3 bullets.
 - cons: exactly 2 bullets.
-- alternatives: exactly 3 items, chosen ONLY from approved_alternatives. Format each as: "Tool Name — 1 short reason"
+- alternatives: exactly 3 items, chosen ONLY from approved_alternatives.
+  Format each as: "Tool Name — 1 short reason"
 - newtools_verdict: 2–3 sentences, practical recommendation.
 - slug: lowercase, hyphen-separated, based on title.
-- last_reviewed: today's date in YYYY-MM-DD format.
+- last_reviewed: today's date in YYYY-MM-DD.
 
-Available Tags (select from these, or empty array if none match):
-${availableTags.length > 0 ? availableTags.join(', ') : 'None provided'}
+Available Categories (choose ONE that best matches):
+${availableCategories.length > 0 ? availableCategories.join(', ') : 'AI Tools, Developer Tools, Design Tools, Marketing Tools, Automation, Analytics, Hosting & Infra, Payments, Boilerplates, Templates, Themes, UI Kits, Components'}
 
-Available Core Technologies (select from these, or empty array if none match):
-${availableCoreTechnologies.length > 0 ? availableCoreTechnologies.join(', ') : 'None provided'}
-
-Approved Alternatives (choose exactly 3 from this list, or empty array if none match):
-${approvedAlternatives.length > 0 ? approvedAlternatives.join(', ') : 'None provided'}
+Available Tags (select 3–6 from these, or generate sensible tags if none match):
+${availableTags.length > 0 ? availableTags.join(', ') : '(generate sensible tags)'}
 
 NOW GENERATE THE LISTING FROM THE PROVIDED INPUT DATA.
 
-Tool URL: ${url}
-Tool Name: ${toolName}
-
-Content to analyze:
+Page content to analyze:
 ${truncatedContent}`;
 
         const model = googleAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
@@ -700,188 +779,18 @@ ${truncatedContent}`;
           jsonText = jsonText.replace(/^```\s*/, '').replace(/\s*```$/, '');
         }
 
-        // Try to extract JSON if there's extra text
-        const jsonMatch = jsonText.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          jsonText = jsonMatch[0];
-        }
-
         // Parse JSON
         let parsedData;
         try {
           parsedData = JSON.parse(jsonText);
-          console.log('fetchWebsiteInfoWithAI, parsed JSON successfully');
-          console.log('fetchWebsiteInfoWithAI, parsedData keys:', Object.keys(parsedData));
-          console.log('fetchWebsiteInfoWithAI, parsedData sample:', {
-            title: parsedData.title,
-            summary: parsedData.summary?.substring(0, 50),
-            quick_take: parsedData.quick_take?.substring(0, 50),
-            tags: parsedData.tags,
-            category: parsedData.category,
-          });
         } catch (parseError) {
           console.error('fetchWebsiteInfoWithAI, JSON parse error:', parseError);
-          console.error('Response text (first 1000 chars):', responseText.substring(0, 1000));
-          console.error('Cleaned jsonText (first 500 chars):', jsonText.substring(0, 500));
+          console.error('Response text (first 500 chars):', responseText.substring(0, 500));
           return null;
         }
 
-        // Map new mini-review format to existing schema
-        // Ensure all arrays are actually arrays and strings are strings
-        const mappedData = {
-          // Map title to name
-          name: String(parsedData.title || parsedData.name || toolName).trim(),
-
-          // Map summary to one_liner and description
-          one_liner: String(parsedData.summary || parsedData.one_liner || '').trim(),
-          description: String(parsedData.summary || parsedData.description || parsedData.one_liner || '').trim(),
-
-          // Map quick_take to what_it_does
-          what_it_does: String(parsedData.quick_take || parsedData.what_it_does || '').trim(),
-
-          // Ensure arrays are arrays and filter out empty values
-          best_for: Array.isArray(parsedData.best_for) ? parsedData.best_for.filter((b: any) => b && String(b).trim()) : [],
-          key_features: Array.isArray(parsedData.key_features) ? parsedData.key_features.filter((f: any) => f && String(f).trim()) : [],
-          pros: Array.isArray(parsedData.pros) ? parsedData.pros.filter((p: any) => p && String(p).trim()) : [],
-          cons: Array.isArray(parsedData.cons) ? parsedData.cons.filter((c: any) => c && String(c).trim()) : [],
-
-          // Map pricing_model to pricing_snapshot object
-          pricing_snapshot: (() => {
-            if (parsedData.pricing_snapshot && typeof parsedData.pricing_snapshot === 'object') {
-              return parsedData.pricing_snapshot;
-            }
-            // Convert pricing_model string to pricing_snapshot object
-            const pricingModel = String(parsedData.pricing_model || 'unknown').toLowerCase();
-            switch (pricingModel) {
-              case 'free':
-                return { free_plan: 'yes', trial: 'unknown', paid: 'no', notes: '' };
-              case 'freemium':
-                return { free_plan: 'yes', trial: 'unknown', paid: 'yes', notes: '' };
-              case 'paid':
-                return { free_plan: 'no', trial: 'unknown', paid: 'yes', notes: '' };
-              case 'unknown':
-              default:
-                return { free_plan: 'unknown', trial: 'unknown', paid: 'unknown', notes: '' };
-            }
-          })(),
-
-          setup_time: parsedData.setup_time || 'varies',
-          learning_curve: parsedData.learning_curve || 'medium',
-
-          // Map what_its_good_at to use_this_if
-          use_this_if: Array.isArray(parsedData.what_its_good_at)
-            ? parsedData.what_its_good_at.filter((w: any) => w && String(w).trim())
-            : (Array.isArray(parsedData.use_this_if) ? parsedData.use_this_if.filter((u: any) => u && String(u).trim()) : []),
-
-          // Map where_it_breaks to skip_this_if
-          skip_this_if: Array.isArray(parsedData.where_it_breaks)
-            ? parsedData.where_it_breaks.filter((w: any) => w && String(w).trim())
-            : (Array.isArray(parsedData.skip_this_if) ? parsedData.skip_this_if.filter((s: any) => s && String(s).trim()) : []),
-
-          // Map alternatives from string format "Tool Name — reason" to object format
-          alternatives: (() => {
-            if (!parsedData.alternatives || !Array.isArray(parsedData.alternatives)) {
-              return [];
-            }
-            return parsedData.alternatives
-              .filter((alt: any) => alt !== null && alt !== undefined)
-              .map((alt: string | { name: string; best_for_reason: string }) => {
-                // If already an object, return as is
-                if (typeof alt === 'object' && alt !== null && 'name' in alt) {
-                  return {
-                    name: String(alt.name || '').trim(),
-                    best_for_reason: String(alt.best_for_reason || '').trim(),
-                  };
-                }
-                // If string format "Tool Name — reason", parse it
-                if (typeof alt === 'string' && alt.trim()) {
-                  const [name, ...reasonParts] = alt.split(' — ');
-                  return {
-                    name: (name || '').trim(),
-                    best_for_reason: reasonParts.join(' — ').trim(),
-                  };
-                }
-                return { name: String(alt || '').trim(), best_for_reason: '' };
-              })
-              .filter((alt: { name: string; best_for_reason: string }) => alt.name.length > 0);
-          })(),
-
-          faq: Array.isArray(parsedData.faq) ? parsedData.faq.filter((f: any) => f && typeof f === 'object') : [],
-          tags: Array.isArray(parsedData.tags) ? parsedData.tags.filter((t: any) => t && String(t).trim()) : [],
-          category: String(parsedData.category || '').trim(),
-          categories: Array.isArray(parsedData.categories) ? parsedData.categories.filter((c: any) => c && String(c).trim()) : [],
-          coreTechnologies: Array.isArray(parsedData.coreTechnologies) ? parsedData.coreTechnologies.filter((ct: any) => ct && String(ct).trim()) : [],
-
-          // Build introduction from new fields
-          introduction: (() => {
-            let intro = '';
-
-            if (parsedData.quick_take && String(parsedData.quick_take).trim()) {
-              intro += `${String(parsedData.quick_take).trim()}\n\n`;
-            }
-
-            if (parsedData.best_for && Array.isArray(parsedData.best_for) && parsedData.best_for.length > 0) {
-              const bestForItems = parsedData.best_for.filter((b: any) => b && String(b).trim());
-              if (bestForItems.length > 0) {
-                intro += `## Best For\n${bestForItems.map((b: string) => `- ${String(b).trim()}`).join('\n')}\n\n`;
-              }
-            }
-
-            if (parsedData.key_features && Array.isArray(parsedData.key_features) && parsedData.key_features.length > 0) {
-              const features = parsedData.key_features.filter((f: any) => f && String(f).trim());
-              if (features.length > 0) {
-                intro += `## Key Features\n${features.map((f: string) => `- ${String(f).trim()}`).join('\n')}\n\n`;
-              }
-            }
-
-            if (parsedData.what_its_good_at && Array.isArray(parsedData.what_its_good_at) && parsedData.what_its_good_at.length > 0) {
-              const goodAt = parsedData.what_its_good_at.filter((w: any) => w && String(w).trim());
-              if (goodAt.length > 0) {
-                intro += `## What It's Good At\n${goodAt.map((w: string) => `- ${String(w).trim()}`).join('\n')}\n\n`;
-              }
-            }
-
-            if (parsedData.where_it_breaks && Array.isArray(parsedData.where_it_breaks) && parsedData.where_it_breaks.length > 0) {
-              const breaks = parsedData.where_it_breaks.filter((w: any) => w && String(w).trim());
-              if (breaks.length > 0) {
-                intro += `## Where It Breaks\n${breaks.map((w: string) => `- ${String(w).trim()}`).join('\n')}\n\n`;
-              }
-            }
-
-            if (parsedData.real_workflow && Array.isArray(parsedData.real_workflow) && parsedData.real_workflow.length > 0) {
-              const workflow = parsedData.real_workflow.filter((step: any) => step && String(step).trim());
-              if (workflow.length > 0) {
-                intro += `## Real Workflow\n${workflow.map((step: string, idx: number) => `${idx + 1}. ${String(step).trim()}`).join('\n')}\n\n`;
-              }
-            }
-
-            if (parsedData.pros && Array.isArray(parsedData.pros) && parsedData.pros.length > 0) {
-              const pros = parsedData.pros.filter((p: any) => p && String(p).trim());
-              if (pros.length > 0) {
-                intro += `## Pros\n${pros.map((p: string) => `- ${String(p).trim()}`).join('\n')}\n\n`;
-              }
-            }
-
-            if (parsedData.cons && Array.isArray(parsedData.cons) && parsedData.cons.length > 0) {
-              const cons = parsedData.cons.filter((c: any) => c && String(c).trim());
-              if (cons.length > 0) {
-                intro += `## Cons\n${cons.map((c: string) => `- ${String(c).trim()}`).join('\n')}\n\n`;
-              }
-            }
-
-            if (parsedData.newtools_verdict && String(parsedData.newtools_verdict).trim()) {
-              intro += `## Newtools Verdict\n${String(parsedData.newtools_verdict).trim()}\n\n`;
-            }
-
-            return intro.trim();
-          })(),
-
-          image: String(parsedData.cover_image_url || parsedData.image || '').trim(),
-          icon: String(parsedData.logo_url || parsedData.icon || '').trim(),
-        };
-
-        // Validate against schema - Zod will apply defaults for missing fields
-        const validatedData = WebsiteInfoSchema.parse(mappedData);
+        // Validate against schema
+        const validatedData = WebsiteInfoSchema.parse(parsedData);
 
         // Return in the same format as generateObject for compatibility
         result = {

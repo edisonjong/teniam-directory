@@ -11,7 +11,7 @@ import { z } from 'zod';
 import mql from '@microlink/mql';
 
 /**
- * Website info schema
+ * Website info schema - Mini Review Format
  *
  * 1. when AI generates the image and icon, it will return the image URL and icon URL
  * 2. when the image and icon are uploaded to Sanity, the image reference Id and icon reference Id will be set to the image and icon
@@ -197,8 +197,6 @@ export const fetchWebsiteInfo = async (url: string) => {
     // If AI fetch fails, create a minimal fallback structure
     if (fetchedData === null || !fetchedData.object) {
       console.warn('fetchWebsiteInfo, AI fetch failed, using fallback data');
-      console.warn('fetchWebsiteInfo, fetchedData:', fetchedData);
-      console.warn('fetchWebsiteInfo, This usually means the AI API call failed (network timeout, API error, etc.)');
       let fallbackName = 'Tool';
       try {
         const urlObj = new URL(url);
@@ -243,6 +241,14 @@ export const fetchWebsiteInfo = async (url: string) => {
     // Safely extract data with fallbacks
     const obj = fetchedData.object || {};
 
+    // Map the new mini-review structure to the existing schema
+    // For backward compatibility, we'll use one_liner as description if description is not provided
+    const description = obj.description || obj.one_liner || '';
+    const introduction = obj.introduction ||
+      (obj.what_it_does || obj.best_for?.length || obj.key_features?.length
+        ? `${obj.what_it_does || ''}\n\n## Best For\n${(obj.best_for || []).map((b: string) => `- ${b}`).join('\n')}\n\n## Key Features\n${(obj.key_features || []).map((f: string) => `- ${f}`).join('\n')}`
+        : '');
+
     // Convert single category to array for backward compatibility
     const categories = obj.category
       ? [obj.category]
@@ -253,7 +259,7 @@ export const fetchWebsiteInfo = async (url: string) => {
     try {
       websiteInfo = WebsiteInfoSchema.parse({
         name: obj.name || 'Tool',
-        one_liner: obj.one_liner || '',
+        one_liner: obj.one_liner || description,
         what_it_does: obj.what_it_does || '',
         best_for: Array.isArray(obj.best_for) ? obj.best_for : [],
         key_features: Array.isArray(obj.key_features) ? obj.key_features : [],
@@ -274,9 +280,9 @@ export const fetchWebsiteInfo = async (url: string) => {
         tags: Array.isArray(obj.tags) ? obj.tags : [],
         category: obj.category || categories[0] || '',
         // Legacy fields for backward compatibility
-        description: obj.description || obj.one_liner || '',
-        introduction: obj.introduction || '',
-        categories: categories,
+        description,
+        introduction,
+        categories,
         coreTechnologies: Array.isArray(obj.coreTechnologies) ? obj.coreTechnologies : [],
         image: obj.image || '',
         icon: obj.icon || `https://s2.googleusercontent.com/s2/favicons?domain=${url}&sz=128`,
@@ -286,7 +292,7 @@ export const fetchWebsiteInfo = async (url: string) => {
       // Use safe defaults if parsing fails
       websiteInfo = WebsiteInfoSchema.parse({
         name: obj.name || 'Tool',
-        one_liner: obj.one_liner || '',
+        one_liner: description,
         what_it_does: '',
         best_for: [],
         key_features: [],
@@ -638,9 +644,7 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
     let result;
     try {
       if (googleAI) {
-        // Use direct Google GenAI SDK with original prompt
-        const model = googleAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
-
+        // Use direct Google GenAI SDK
         const prompt = `You are writing a mini-review listing for Newtools.io.
 
 Goal:
@@ -649,29 +653,40 @@ Create a helpful, non-generic directory entry that looks like a mini review and 
 Tool URL: ${url}
 Tool Name: ${toolName}
 
-Return JSON with the following keys:
+Return ONLY valid JSON (no markdown, no code blocks) with the following structure:
 
-- one_liner: outcome-based tagline (max 90 chars)
-- what_it_does: 2–3 lines in plain English (no buzzwords)
-- best_for: 3 bullets
-- key_features: 5 bullets (specific, not generic)
-- pros: 3 bullets
-- cons: 2 bullets
-- pricing_snapshot:
-  - free_plan: yes/no/unknown
-  - trial: yes/no/unknown
-  - paid: yes/no/unknown
-  - notes: short and cautious (avoid guessing)
-- setup_time: one of [5 min, 30 min, 1–2 hours, varies]
-- learning_curve: one of [easy, medium, advanced]
-- use_this_if: 2 bullets
-- skip_this_if: 2 bullets
-- alternatives: 3 items with {name, best_for_reason}
-- faq: 3 items with {question, answer}
-- tags: 5–8 tags from our tag list
-- category: choose ONE from:
-  [AI Tools, Developer Tools, Design Tools, Marketing Tools, Automation, Analytics, Hosting & Infra, Payments,
-   Boilerplates, Templates, Themes, UI Kits, Components, Icons & Assets]
+{
+  "name": "Tool name",
+  "one_liner": "outcome-based tagline (max 90 chars)",
+  "what_it_does": "2–3 lines in plain English (no buzzwords)",
+  "best_for": ["bullet 1", "bullet 2", "bullet 3"],
+  "key_features": ["feature 1", "feature 2", "feature 3", "feature 4", "feature 5"],
+  "pros": ["pro 1", "pro 2", "pro 3"],
+  "cons": ["con 1", "con 2"],
+  "pricing_snapshot": {
+    "free_plan": "yes/no/unknown",
+    "trial": "yes/no/unknown",
+    "paid": "yes/no/unknown",
+    "notes": "short and cautious (avoid guessing)"
+  },
+  "setup_time": "5 min" | "30 min" | "1–2 hours" | "varies",
+  "learning_curve": "easy" | "medium" | "advanced",
+  "use_this_if": ["reason 1", "reason 2"],
+  "skip_this_if": ["reason 1", "reason 2"],
+  "alternatives": [
+    {"name": "Alternative 1", "best_for_reason": "why"},
+    {"name": "Alternative 2", "best_for_reason": "why"},
+    {"name": "Alternative 3", "best_for_reason": "why"}
+  ],
+  "faq": [
+    {"question": "Question 1", "answer": "Answer 1"},
+    {"question": "Question 2", "answer": "Answer 2"},
+    {"question": "Question 3", "answer": "Answer 3"}
+  ],
+  "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+  "category": "ONE category from the list below",
+  "coreTechnologies": ["tech1", "tech2", "tech3"]
+}
 
 Rules:
 - Do NOT use vague phrases like "best tool for everyone".
@@ -679,6 +694,7 @@ Rules:
 - Prefer factual statements; if unsure, mark as "unknown" or "varies".
 - Mention 1–2 realistic use cases.
 - Keep it concise and scannable.
+- Return ONLY the JSON object, no other text.
 
 Available Categories (choose ONE that best matches, or empty string if none match):
 ${availableCategories.join(', ')}
@@ -686,13 +702,16 @@ ${availableCategories.join(', ')}
 Available Tags (select from these, or empty array if none match):
 ${availableTags.join(', ')}
 
-Available Core Technologies (optional):
+Available Core Technologies (select from these, or empty array if none match):
 ${availableCoreTechnologies.join(', ')}
 
 Content to analyze:
 ${truncatedContent}`;
 
+        const model = googleAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
         const response = await model.generateContent(prompt);
+
+        // Extract text from response
         const responseText = response.response.text() || '';
 
         if (!responseText) {
@@ -702,6 +721,8 @@ ${truncatedContent}`;
 
         // Parse JSON from response (handle markdown code blocks if present)
         let jsonText = responseText.trim();
+
+        // Remove markdown code blocks if present
         if (jsonText.startsWith('```json')) {
           jsonText = jsonText.replace(/^```json\s*/, '').replace(/\s*```$/, '');
         } else if (jsonText.startsWith('```')) {
@@ -718,9 +739,10 @@ ${truncatedContent}`;
           return null;
         }
 
-        // Validate against WebsiteInfoSchema
+        // Validate against schema
         const validatedData = WebsiteInfoSchema.parse(parsedData);
 
+        // Return in the same format as generateObject for compatibility
         result = {
           object: validatedData,
         };
@@ -802,11 +824,6 @@ ${truncatedContent}`,
       }
     } catch (generateError) {
       console.error('fetchWebsiteInfoWithAI, generateContent/generateObject error:', generateError);
-      console.error('fetchWebsiteInfoWithAI, error details:', {
-        message: generateError instanceof Error ? generateError.message : String(generateError),
-        stack: generateError instanceof Error ? generateError.stack : undefined,
-        name: generateError instanceof Error ? generateError.name : undefined,
-      });
       // Return null to trigger fallback in fetchWebsiteInfo
       return null;
     }

@@ -38,7 +38,7 @@ import type {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SmileIcon, Wand2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -67,30 +67,6 @@ export function SubmitForm({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [iconUrl, setIconUrl] = useState("");
-
-  // Remove any duplicate tags coming from Sanity (by normalized name)
-  const uniqueTagList = useMemo(() => {
-    const seen = new Set<string>();
-
-    const result = tagList.filter((tag) => {
-      const key = (tag.name || "").trim().toLowerCase();
-      if (!key || seen.has(key)) return false;
-      seen.add(key);
-      return true;
-    });
-
-    if (result.length !== tagList.length) {
-      console.log(
-        "SubmitForm, uniqueTagList: de-duplicated tags",
-        "original size=",
-        tagList.length,
-        "unique size=",
-        result.length,
-      );
-    }
-
-    return result;
-  }, [tagList]);
 
   // set default values for form fields and validation schema
   const form = useForm<SubmitFormData>({
@@ -179,37 +155,19 @@ export function SubmitForm({
       const response = await fetchWebsite(link);
       console.log("SubmitForm, handleAIFetch, response:", response);
       if (response.status === "error") {
-        console.error("SubmitForm, handleAIFetch, error response:", response);
-        toast.error(response.message || "Failed to fetch website info. Check console for details.");
+        toast.error(response.message || "Failed to fetch website info");
         setDialogOpen(false);
         return;
       }
 
       if (!response.data) {
         console.error("SubmitForm, handleAIFetch, no data in response:", response);
-        toast.error("No data received from AI. The AI call may have failed (check browser console for details).");
+        toast.error("No data received from AI. Please try again.");
         setDialogOpen(false);
         return;
       }
 
       let data = response.data;
-
-      // Check if only name is filled (indicates AI failure)
-      const hasOnlyName = data.name && !data.description && !data.introduction &&
-        (!data.categories || data.categories.length === 0) &&
-        (!data.tags || data.tags.length === 0);
-
-      if (hasOnlyName) {
-        console.warn("SubmitForm, handleAIFetch, WARNING: Only name field is filled. This indicates the AI call likely failed.");
-        console.warn("SubmitForm, handleAIFetch, data received:", {
-          name: data.name,
-          hasDescription: !!data.description,
-          hasIntroduction: !!data.introduction,
-          categoriesCount: data.categories?.length || 0,
-          tagsCount: data.tags?.length || 0,
-        });
-        toast.warning("AI autofill partially failed - only name was filled. This may indicate a network timeout or API error. Check browser console for details.");
-      }
 
       // Debug: Log the full response (always show for debugging)
       console.log("SubmitForm, AI response data (raw):", JSON.stringify(data, null, 2));
@@ -615,7 +573,7 @@ export function SubmitForm({
                     <FormControl>
                       <MultiSelect
                         className="shadow-none"
-                        options={uniqueTagList.map((tag) => ({
+                        options={tagList.map((tag) => ({
                           value: tag._id,
                           label: tag.name || "",
                         }))}

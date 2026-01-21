@@ -645,86 +645,34 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
     try {
       if (googleAI) {
         // Use direct Google GenAI SDK
-        const prompt = `You are Newtools.io — a curated tech hub.
-Your job is to generate a HIGH-TRUST directory listing that reads like a real human mini review (not generic AI marketing).
+        const prompt = `You are writing a mini-review listing for Newtools.io.
 
-IMPORTANT RULES:
-- Do NOT invent facts. If something cannot be confirmed from the provided data, write "Not confirmed".
-- Do NOT use hype words like "revolutionary", "game-changing", "best ever".
-- Write like a practical builder/reviewer: clear, specific, honest.
-- Keep sentences short. Avoid fluff.
-- Output must be structured and consistent across listings.
+Goal:
+Create a helpful, non-generic directory entry that looks like a mini review and is SEO-friendly.
 
-ASSET RULES (logo + homepage image):
-- If logo_url is available, use it.
-- If not, use favicon_url if present.
-- For a cover image, prefer og_image_url (OpenGraph). If missing, use homepage_screenshot_url. If none available, return null.
+Tool URL: ${url}
+Tool Name: ${toolName}
 
-CATEGORY RULES:
-Choose exactly ONE category from this list:
-- AI Tools
-- Developer Tools
-- Design Tools
-- Marketing Tools
-- Automation
-- Analytics
-- Hosting & Infra
-- Payments
-- Boilerplates
-- Templates
-- Themes
-- UI Kits
-- Components
+Return ONLY valid JSON (no markdown, no code blocks) with the following structure:
 
-TAG RULES:
-Select 3–6 tags that best match the tool, based on the approved tag list provided by the system.
-If no approved tags are provided, generate sensible tags but keep them broad and universal.
-
-PRICING RULES:
-Set pricing_model to one of: free, freemium, paid, unknown
-Only choose free/freemium/paid if confirmed by the text. Otherwise choose unknown.
-
-ALTERNATIVES RULES (VERY IMPORTANT):
-- Alternatives MUST be selected ONLY from the provided list: approved_alternatives
-- DO NOT add alternatives from the public web
-- Pick exactly 3 relevant alternatives based on the tool type and category
-- If the approved_alternatives list is empty or irrelevant, return an empty array []
-
-OUTPUT:
-Return a single valid JSON object only. No markdown. No extra commentary.
-
-INPUT DATA YOU RECEIVE:
-- page_title: (extracted from page content)
-- meta_description: (extracted from page content)
-- page_text: (provided below, may be long)
-- og_title: (optional, extracted from page)
-- og_description: (optional, extracted from page)
-- og_image_url: (optional, extracted from page)
-- logo_url: (optional, extracted from page)
-- favicon_url: (optional, extracted from page)
-- homepage_screenshot_url: (optional, extracted from page)
-- approved_tags: ${availableTags.length > 0 ? JSON.stringify(availableTags) : '[]'}
-- approved_alternatives: [] (empty for now, fetch from AI)
-
-JSON SCHEMA (must match exactly):
 {
-  "name": "",
-  "one_liner": "",
-  "what_it_does": "",
-  "best_for": [],
-  "key_features": [],
-  "pros": [],
-  "cons": [],
+  "name": "Tool name",
+  "one_liner": "outcome-based tagline (max 90 chars)",
+  "what_it_does": "2–3 lines in plain English (no buzzwords)",
+  "best_for": ["bullet 1", "bullet 2", "bullet 3"],
+  "key_features": ["feature 1", "feature 2", "feature 3", "feature 4", "feature 5"],
+  "pros": ["pro 1", "pro 2", "pro 3"],
+  "cons": ["con 1", "con 2"],
   "pricing_snapshot": {
     "free_plan": "yes/no/unknown",
     "trial": "yes/no/unknown",
     "paid": "yes/no/unknown",
-    "notes": ""
+    "notes": "short and cautious (avoid guessing)"
   },
   "setup_time": "5 min" | "30 min" | "1–2 hours" | "varies",
   "learning_curve": "easy" | "medium" | "advanced",
-  "use_this_if": [],
-  "skip_this_if": [],
+  "use_this_if": ["reason 1", "reason 2"],
+  "skip_this_if": ["reason 1", "reason 2"],
   "alternatives": [
     {"name": "Alternative 1", "best_for_reason": "why"},
     {"name": "Alternative 2", "best_for_reason": "why"},
@@ -735,43 +683,29 @@ JSON SCHEMA (must match exactly):
     {"question": "Question 2", "answer": "Answer 2"},
     {"question": "Question 3", "answer": "Answer 3"}
   ],
-  "tags": [],
-  "category": "",
-  "coreTechnologies": []
+  "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"],
+  "category": "ONE category from the list below",
+  "coreTechnologies": ["tech1", "tech2", "tech3"]
 }
 
-WRITING GUIDELINES FOR EACH FIELD:
-- one_liner: 140–180 characters, plain English, what it is + who it's for (outcome-based tagline, max 90 chars).
-- what_it_does: 2–4 sentences, honest overview (no hype) in plain English explaining what the tool does.
-- best_for: exactly 3 bullets describing who this tool is best for.
-- key_features: exactly 5 bullets with specific, not generic features.
-- use_this_if: 3–5 bullets with specific outcomes describing when to use this tool.
-- skip_this_if: exactly 2 bullets (honest tradeoffs) describing when to skip this tool.
-- pros: exactly 3 bullets with pros/advantages.
-- cons: exactly 2 bullets with cons/limitations.
-- alternatives: exactly 3 items, chosen ONLY from approved_alternatives.
-  Format each as object: {"name": "Tool Name", "best_for_reason": "1 short reason"}
-- pricing_snapshot: Set based on confirmed pricing info:
-  - free_plan: "yes" if free plan confirmed, "no" if not, "unknown" if unsure
-  - trial: "yes" if trial confirmed, "no" if not, "unknown" if unsure
-  - paid: "yes" if paid plans confirmed, "no" if not, "unknown" if unsure
-  - notes: short and cautious pricing notes (avoid guessing)
-- setup_time: one of "5 min", "30 min", "1–2 hours", or "varies"
-- learning_curve: one of "easy", "medium", or "advanced"
-- faq: exactly 3 items with question and answer
-- tags: 3–6 tags from approved_tags list, or generate sensible tags if none match
-- category: exactly ONE category from the available categories list
-- coreTechnologies: optional array of core technologies from available list
+Rules:
+- Do NOT use vague phrases like "best tool for everyone".
+- Include at least one real differentiator.
+- Prefer factual statements; if unsure, mark as "unknown" or "varies".
+- Mention 1–2 realistic use cases.
+- Keep it concise and scannable.
+- Return ONLY the JSON object, no other text.
 
-Available Categories (choose ONE that best matches):
-${availableCategories.length > 0 ? availableCategories.join(', ') : 'AI Tools, Developer Tools, Design Tools, Marketing Tools, Automation, Analytics, Hosting & Infra, Payments, Boilerplates, Templates, Themes, UI Kits, Components'}
+Available Categories (choose ONE that best matches, or empty string if none match):
+${availableCategories.join(', ')}
 
-Available Tags (select 3–6 from these, or generate sensible tags if none match):
-${availableTags.length > 0 ? availableTags.join(', ') : '(generate sensible tags)'}
+Available Tags (select from these, or empty array if none match):
+${availableTags.join(', ')}
 
-NOW GENERATE THE LISTING FROM THE PROVIDED INPUT DATA.
+Available Core Technologies (select from these, or empty array if none match):
+${availableCoreTechnologies.join(', ')}
 
-Page content to analyze:
+Content to analyze:
 ${truncatedContent}`;
 
         const model = googleAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });

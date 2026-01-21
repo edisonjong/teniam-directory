@@ -694,7 +694,6 @@ OUTPUT:
 Return a single valid JSON object only. No markdown. No extra commentary.
 
 INPUT DATA YOU RECEIVE:
-- url: ${url}
 - page_title: (extracted from page content)
 - meta_description: (extracted from page content)
 - page_text: (provided below, may be long)
@@ -709,43 +708,60 @@ INPUT DATA YOU RECEIVE:
 
 JSON SCHEMA (must match exactly):
 {
-  "title": "",
-  "slug": "",
-  "website_url": "",
-  "logo_url": null,
-  "cover_image_url": null,
-  "category": "",
-  "tags": [],
-  "pricing_model": "",
-  "summary": "",
-  "quick_take": "",
+  "name": "",
+  "one_liner": "",
+  "what_it_does": "",
   "best_for": [],
   "key_features": [],
-  "what_its_good_at": [],
-  "where_it_breaks": [],
-  "real_workflow": [],
   "pros": [],
   "cons": [],
-  "alternatives": [],
-  "newtools_verdict": "",
-  "last_reviewed": ""
+  "pricing_snapshot": {
+    "free_plan": "yes/no/unknown",
+    "trial": "yes/no/unknown",
+    "paid": "yes/no/unknown",
+    "notes": ""
+  },
+  "setup_time": "5 min" | "30 min" | "1–2 hours" | "varies",
+  "learning_curve": "easy" | "medium" | "advanced",
+  "use_this_if": [],
+  "skip_this_if": [],
+  "alternatives": [
+    {"name": "Alternative 1", "best_for_reason": "why"},
+    {"name": "Alternative 2", "best_for_reason": "why"},
+    {"name": "Alternative 3", "best_for_reason": "why"}
+  ],
+  "faq": [
+    {"question": "Question 1", "answer": "Answer 1"},
+    {"question": "Question 2", "answer": "Answer 2"},
+    {"question": "Question 3", "answer": "Answer 3"}
+  ],
+  "tags": [],
+  "category": "",
+  "coreTechnologies": []
 }
 
 WRITING GUIDELINES FOR EACH FIELD:
-- summary: 140–180 characters, plain English, what it is + who it's for.
-- quick_take: 2–4 sentences, honest overview (no hype).
-- best_for: exactly 3 bullets.
-- key_features: exactly 5 bullets.
-- what_its_good_at: 3–5 bullets with specific outcomes.
-- where_it_breaks: exactly 2 bullets (honest tradeoffs).
-- real_workflow: 4–6 steps (imperative style: "Do X", "Then Y").
-- pros: exactly 3 bullets.
-- cons: exactly 2 bullets.
+- one_liner: 140–180 characters, plain English, what it is + who it's for (outcome-based tagline, max 90 chars).
+- what_it_does: 2–4 sentences, honest overview (no hype) in plain English explaining what the tool does.
+- best_for: exactly 3 bullets describing who this tool is best for.
+- key_features: exactly 5 bullets with specific, not generic features.
+- use_this_if: 3–5 bullets with specific outcomes describing when to use this tool.
+- skip_this_if: exactly 2 bullets (honest tradeoffs) describing when to skip this tool.
+- pros: exactly 3 bullets with pros/advantages.
+- cons: exactly 2 bullets with cons/limitations.
 - alternatives: exactly 3 items, chosen ONLY from approved_alternatives.
-  Format each as: "Tool Name — 1 short reason"
-- newtools_verdict: 2–3 sentences, practical recommendation.
-- slug: lowercase, hyphen-separated, based on title.
-- last_reviewed: today's date in YYYY-MM-DD.
+  Format each as object: {"name": "Tool Name", "best_for_reason": "1 short reason"}
+- pricing_snapshot: Set based on confirmed pricing info:
+  - free_plan: "yes" if free plan confirmed, "no" if not, "unknown" if unsure
+  - trial: "yes" if trial confirmed, "no" if not, "unknown" if unsure
+  - paid: "yes" if paid plans confirmed, "no" if not, "unknown" if unsure
+  - notes: short and cautious pricing notes (avoid guessing)
+- setup_time: one of "5 min", "30 min", "1–2 hours", or "varies"
+- learning_curve: one of "easy", "medium", or "advanced"
+- faq: exactly 3 items with question and answer
+- tags: 3–6 tags from approved_tags list, or generate sensible tags if none match
+- category: exactly ONE category from the available categories list
+- coreTechnologies: optional array of core technologies from available list
 
 Available Categories (choose ONE that best matches):
 ${availableCategories.length > 0 ? availableCategories.join(', ') : 'AI Tools, Developer Tools, Design Tools, Marketing Tools, Automation, Analytics, Hosting & Infra, Payments, Boilerplates, Templates, Themes, UI Kits, Components'}

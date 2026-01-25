@@ -60,6 +60,10 @@ export function SubmitForm({
   categoryList,
   coreTechnologyList,
 }: SubmitFormProps) {
+  // Deduplicate tags by name to prevent duplicates in the dropdown
+  const deduplicatedTagList = tagList.filter((tag, index, self) =>
+    index === self.findIndex((t) => t.name === tag.name)
+  );
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [isUploading, setIsUploading] = useState(false);
@@ -573,7 +577,7 @@ export function SubmitForm({
                     <FormControl>
                       <MultiSelect
                         className="shadow-none"
-                        options={tagList.map((tag) => ({
+                        options={deduplicatedTagList.map((tag) => ({
                           value: tag._id,
                           label: tag.name || "",
                         }))}

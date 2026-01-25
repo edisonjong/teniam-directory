@@ -648,6 +648,8 @@ export const fetchWebsiteInfoWithAI = async (url: string) => {
         const prompt = `You are writing a mini-review listing for Newtools.io.
 
 Goal:
+You are Newtools.io — a curated tech hub.
+Your job is to generate a HIGH-TRUST directory listing that reads like a real human mini review (not generic AI marketing).
 Create a helpful, non-generic directory entry that looks like a mini review and is SEO-friendly.
 
 Tool URL: ${url}

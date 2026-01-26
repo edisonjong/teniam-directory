@@ -101,11 +101,14 @@ export async function getItems({
     hasSponsorItem
   );
 
-  // Add cache busting for better responsiveness
-  const cacheBust = Math.floor(Date.now() / 10000); // Cache bust every 10 seconds
+  // Add intelligent cache busting for better responsiveness
+  // Only bust cache for frequently accessed directory pages, not for stable content
+  const shouldBustCache = currentPage === 1 && itemsPerPage >= 10; // Only for main directory pages
+  const cacheBust = shouldBustCache ? Math.floor(Date.now() / 30000) : 0; // Cache bust every 30 seconds for main pages only
+
   const [totalCount, items] = await Promise.all([
-    sanityFetch<number>({ query: countQuery, disableCache: cacheBust % 2 === 0 }), // Bust cache every other request
-    sanityFetch<ItemListQueryResult>({ query: dataQuery, disableCache: cacheBust % 2 === 0 }),
+    sanityFetch<number>({ query: countQuery, disableCache: shouldBustCache && cacheBust % 2 === 0 }),
+    sanityFetch<ItemListQueryResult>({ query: dataQuery, disableCache: shouldBustCache && cacheBust % 2 === 0 }),
   ]);
   return { items, totalCount };
 }

@@ -700,7 +700,7 @@ export default async function SimplifiedHero({ params }: ItemPageProps) {
                 >
                   {item?.tags && item?.tags?.length > 0 ? (
                     item?.tags?.map((tag, index: number) => (
-                      <Link href={`/directories?tag=${tag.name}`}>
+                      <Link href={`/directories?tag=${tag.slug?.current || tag.name}`}>
                         <Button
                           variant="secondary"
                           size="sm"

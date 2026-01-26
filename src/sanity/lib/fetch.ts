@@ -38,12 +38,31 @@ export async function sanityFetch<QueryResponse>({
       next: { revalidate: 0 },
     });
   }
+  // Determine cache TTL based on query type for optimal performance
+  const getCacheTTL = (query: string): number => {
+    // Shorter TTL for frequently updated content
+    if (query.includes('item') || query.includes('submission')) {
+      return 30; // 30 seconds for directory items and submissions
+    }
+    if (query.includes('blog') || query.includes('post')) {
+      return 60; // 60 seconds for blog content
+    }
+    // Longer TTL for stable content
+    if (query.includes('category') || query.includes('tag') || query.includes('group')) {
+      return 300; // 5 minutes for category/tag data (less frequently updated)
+    }
+    if (query.includes('user') || query.includes('account')) {
+      return 120; // 2 minutes for user data
+    }
+    // Default TTL
+    return 120; // 2 minutes default
+  };
+
   return sanityClient.fetch<QueryResponse>(query, params, {
     perspective: "published",
     // The `published` perspective is available on the API CDN
     useCdn: !disableCache,
-    // When using the `published` perspective we use time-based revalidation
-    // Reduced from 60 seconds to 15 seconds for better responsiveness
-    next: { revalidate: disableCache ? 0 : 15 },
+    // Smart cache TTL based on content type
+    next: { revalidate: disableCache ? 0 : getCacheTTL(query) },
   });
 }

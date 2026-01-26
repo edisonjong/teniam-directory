@@ -59,6 +59,19 @@ export default function ClientComponent({ items, categoryList, tagList }) {
   const [selectedPlatform, setSelectedPlatform] = React.useState<string>();
   const [selectedCategory, setSelectedCategory] = React.useState<string>();
 
+  // Sync state with URL parameters on initial load
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    const filterParam = urlParams.get('f');
+
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    } else if (filterParam) {
+      setSelectedPlatform(filterParam);
+    }
+  }, []);
+
   return (
     <SidebarProvider>
       <TechDirectoryProvider>
@@ -95,6 +108,7 @@ function Content({ items, tagList }) {
     // On initial mount or when items change, sync state
     setFilteredItems(items);
   }, [items]);
+
   const getSortIcon = React.useCallback(() => {
     switch (sortOrder) {
       case 'newest':

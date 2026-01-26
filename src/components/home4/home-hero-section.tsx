@@ -183,27 +183,33 @@ export default function HeroSection() {
                 ...transitionVariants,
               }}
             >
-              <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
+              {/* FIX: Removed -mr-56 which was pushing the content off-screen */}
+              <div className="relative mt-8 overflow-hidden px-4 sm:mt-12 md:mt-20">
                 <div
                   aria-hidden
                   className="bg-linear-to-b to-background absolute inset-0 z-10 from-transparent from-35%"
                 />
-                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                  <Image
-                    className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                    src="/newtools-image.jpeg"
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
-                  />
-                  {/* hero image */}
-                  <Image
-                    className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                    src="/newtools-image.jpeg"
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
-                  />
+
+                <div className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-2xl border bg-background p-2 shadow-lg shadow-zinc-950/15 ring-1 ring-background inset-shadow-2xs dark:inset-shadow-white/20 sm:p-4">
+
+                  <div className="relative aspect-video w-full overflow-hidden rounded-xl">
+                    <Image
+                      className="hidden object-contain dark:block"
+                      src="/newtools-image.jpeg"
+                      alt="app screen dark"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 1200px"
+                    />
+                    <Image
+                      className="z-2 block object-contain dark:hidden"
+                      src="/newtools-image.jpeg"
+                      alt="app screen light"
+                      fill
+                      priority
+                      sizes="(max-width: 768px) 100vw, 1200px"
+                    />
+                  </div>
                 </div>
               </div>
             </AnimatedGroup>

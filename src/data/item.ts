@@ -100,9 +100,12 @@ export async function getItems({
     itemsPerPage,
     hasSponsorItem
   );
+
+  // Add cache busting for better responsiveness
+  const cacheBust = Math.floor(Date.now() / 10000); // Cache bust every 10 seconds
   const [totalCount, items] = await Promise.all([
-    sanityFetch<number>({ query: countQuery }),
-    sanityFetch<ItemListQueryResult>({ query: dataQuery }),
+    sanityFetch<number>({ query: countQuery, disableCache: cacheBust % 2 === 0 }), // Bust cache every other request
+    sanityFetch<ItemListQueryResult>({ query: dataQuery, disableCache: cacheBust % 2 === 0 }),
   ]);
   return { items, totalCount };
 }
@@ -159,8 +162,8 @@ const buildQuery = (
   const tagCondition =
     tagList && tagList.length > 0 && !tagList.includes("all")
       ? `&& count((tags[]->slug.current)[@ in [${tagList
-          .map((t) => `"${t}"`)
-          .join(", ")}]]) == ${tagList.length}`
+        .map((t) => `"${t}"`)
+        .join(", ")}]]) == ${tagList.length}`
       : "";
 
   const offsetStart = (currentPage - 1) * itemsPerPage;

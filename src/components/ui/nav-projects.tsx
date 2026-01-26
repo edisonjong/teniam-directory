@@ -134,24 +134,33 @@ export function NavProjects({
   ];
 
   // Helper function to find a category from Sanity that matches a category name
+  // Use exact slug matching for consistency
   const findMatchingCategory = (categoryName: string): FlatCategory | null => {
     const normalizedTarget = categoryName.toLowerCase().trim();
-    return flatCategories.find((item) => {
+
+    // First try exact name match
+    const exactMatch = flatCategories.find((item) => {
       const normalizedItem = (item.name || '').toLowerCase().trim();
-      // Exact match
-      if (normalizedItem === normalizedTarget) return true;
-      // Partial matches for variations
-      if (normalizedItem.includes(normalizedTarget) || normalizedTarget.includes(normalizedItem)) {
-        // Additional checks for common variations
-        if (normalizedTarget === 'ai tools' && normalizedItem.includes('ai') && !normalizedItem.includes('tool')) return false;
-        if (normalizedTarget === 'developer tools' && normalizedItem === 'devtool') return true;
-        if (normalizedTarget === 'design tools' && normalizedItem === 'design') return true;
-        if (normalizedTarget === 'marketing tools' && normalizedItem === 'marketing') return true;
-        if (normalizedTarget === 'hosting & infra' && (normalizedItem.includes('hosting') || normalizedItem.includes('infra'))) return true;
-        if (normalizedTarget === 'payments' && normalizedItem === 'payment') return true;
-        if (normalizedTarget === 'ui kits' && (normalizedItem.includes('ui kit') || normalizedItem === 'ui')) return true;
-        return true;
-      }
+      return normalizedItem === normalizedTarget;
+    });
+
+    if (exactMatch) return exactMatch;
+
+    // Fallback to slug match if name doesn't match
+    return flatCategories.find((item) => {
+      const slugMatch = item.slug.current.toLowerCase() === normalizedTarget.replace(/\s+/g, '-');
+      if (slugMatch) return true;
+
+      // Additional checks for common variations
+      const normalizedItem = (item.name || '').toLowerCase().trim();
+      if (normalizedTarget === 'ai tools' && normalizedItem.includes('ai') && !normalizedItem.includes('tool')) return false;
+      if (normalizedTarget === 'developer tools' && normalizedItem === 'devtool') return true;
+      if (normalizedTarget === 'design tools' && normalizedItem === 'design') return true;
+      if (normalizedTarget === 'marketing tools' && normalizedItem === 'marketing') return true;
+      if (normalizedTarget === 'hosting & infra' && (normalizedItem.includes('hosting') || normalizedItem.includes('infra'))) return true;
+      if (normalizedTarget === 'payments' && normalizedItem === 'payment') return true;
+      if (normalizedTarget === 'ui kits' && (normalizedItem.includes('ui kit') || normalizedItem === 'ui')) return true;
+
       return false;
     }) || null;
   };

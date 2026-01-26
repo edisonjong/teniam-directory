@@ -156,12 +156,7 @@ const buildQuery = (
   // condition for multiple tags
   // split tag by comma and check if each tag is in tags[]->slug.current
   const tagList = tag ? tag.split(",") : [];
-  // const tagCondition =
-  //   tagList && tagList.length > 0
-  //     ? `&& count((tags[]->slug.current)[@ in [${tagList
-  //         .map((t) => `"${t}"`)
-  //         .join(", ")}]]) == ${tagList.length}`
-  //     : "";
+
   const tagCondition =
     tagList && tagList.length > 0 && !tagList.includes("all")
       ? `&& count((tags[]->slug.current)[@ in [${tagList

@@ -109,6 +109,12 @@ function Content({ items, tagList }) {
     setFilteredItems(items);
   }, [items]);
 
+  // Sync filtered items when search parameters change
+  React.useEffect(() => {
+    setFilteredItems(items);
+  }, [items, queryKey, queryValue]);
+
+
   const getSortIcon = React.useCallback(() => {
     switch (sortOrder) {
       case 'newest':

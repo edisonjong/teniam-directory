@@ -54,8 +54,8 @@ export async function sanityFetch<QueryResponse>({
     if (query.includes('user') || query.includes('account')) {
       return 120; // 2 minutes for user data
     }
-    // Default TTL
-    return 120; // 2 minutes default
+    // Default TTL for directories and other pages
+    return 30; // 30 seconds default for directories page
   };
 
   return sanityClient.fetch<QueryResponse>(query, params, {

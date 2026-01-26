@@ -159,9 +159,11 @@ const buildQuery = (
 
   const tagCondition =
     tagList && tagList.length > 0 && !tagList.includes("all")
-      ? `&& count((tags[]->slug.current)[@ in [${tagList
-        .map((t) => `"${t}"`)
-        .join(", ")}]]) == ${tagList.length}`
+      ? tagList.length === 1
+        ? `&& lower("${tagList[0]}") in tags[]->slug.current[].lower()`
+        : `&& count((tags[]->slug.current)[@ in [${tagList
+          .map((t) => `"${t}"`)
+          .join(", ")}]]) == ${tagList.length}`
       : "";
 
   const offsetStart = (currentPage - 1) * itemsPerPage;

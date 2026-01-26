@@ -64,11 +64,15 @@ export default function ClientComponent({ items, categoryList, tagList }) {
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category');
     const filterParam = urlParams.get('f');
+    const tagParam = urlParams.get('tag');
 
     if (categoryParam) {
       setSelectedCategory(categoryParam);
     } else if (filterParam) {
       setSelectedPlatform(filterParam);
+    } else if (tagParam) {
+      // For tag filtering, we don't need to set a specific category or platform
+      // The server-side filtering will handle this
     }
   }, []);
 

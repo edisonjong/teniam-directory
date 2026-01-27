@@ -175,9 +175,9 @@ function Content({ items, tagList }) {
     }
   }, [router, filterParam]);
   const tagDetail = React.useMemo(() => {
-    if (!tagParam || !tagList?.length) return null;
+    if (!tagParam || !Array.isArray(tagList) || tagList.length === 0) return null;
     return tagList.find(
-      (tag) => tag.name?.toLowerCase() === tagParam.toLowerCase()
+      (tag) => tag?.name?.toLowerCase() === tagParam.toLowerCase()
     );
   }, [tagParam, tagList]);
 
@@ -222,9 +222,9 @@ function Content({ items, tagList }) {
       return 'Bookmarks';
     } else if (filterParam === 'sponsor') {
       return 'Sponsored';
-    } else if (queryKey === 'tag') {
+    } else if (queryKey === 'tag' && queryValue) {
       return queryValue.charAt(0).toUpperCase() + queryValue.slice(1);
-    } else if (queryKey === 'category') {
+    } else if (queryKey === 'category' && queryValue) {
       return queryValue
         ?.split('-')
         ?.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -313,7 +313,7 @@ function Content({ items, tagList }) {
       {tagParam && (
         <div className="gap-2 flex flex-col p-4">
           <div className="text-xl font-semibold">
-            #{tagDetail.name.charAt(0).toUpperCase() + tagParam.slice(1)}
+            #{tagDetail?.name ? tagDetail.name.charAt(0).toUpperCase() + tagDetail.name.slice(1) : tagParam.charAt(0).toUpperCase() + tagParam.slice(1)}
           </div>
 
           {tagDetail?.description && (

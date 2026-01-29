@@ -19,7 +19,7 @@ function isValidOrigin(requestHeaders: Headers): boolean {
     'http://localhost:3000' + studioUrl,
     process.env.NEXT_PUBLIC_SANITY_STUDIO_URL,
     process.env.NEXT_PUBLIC_NEWTOOLS_URL,
-    'https://newtools.io',
+    'https://www.newtools.io',
   ].filter(Boolean);
 
   console.log('isValidOrigin, allowedDomains', allowedDomains);

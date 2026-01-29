@@ -2,6 +2,7 @@ import { getItemInfoById } from '@/data/item';
 import { sendApprovalEmail, sendRejectionEmail } from '@/lib/mail';
 import { PricePlans } from '@/lib/submission';
 import { getDashboardLink, getItemLinkInWebsite } from '@/lib/utils';
+import { studioUrl } from '@/sanity/lib/api';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
@@ -13,7 +14,9 @@ function isValidOrigin(requestHeaders: Headers): boolean {
 
   const allowedDomains = [
     process.env.NEXT_PUBLIC_APP_URL,
-    'http://localhost:3000'
+    'http://localhost:3000',
+    process.env.NEXT_PUBLIC_APP_URL + studioUrl,
+    'http://localhost:3000' + studioUrl,
   ].filter(Boolean);
 
   return allowedDomains.some(domain => 

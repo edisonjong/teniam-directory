@@ -17,9 +17,14 @@ function isValidOrigin(requestHeaders: Headers): boolean {
     'http://localhost:3000',
     process.env.NEXT_PUBLIC_APP_URL + studioUrl,
     'http://localhost:3000' + studioUrl,
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_URL,
+    process.env.NEXT_PUBLIC_NEWTOOLS_URL,
+    'https://newtools.io',
   ].filter(Boolean);
 
-  return allowedDomains.some(domain => 
+  console.log('isValidOrigin, allowedDomains', allowedDomains);
+
+  return allowedDomains.some(domain =>
     origin?.includes(domain as string) ||
     referer?.includes(domain as string)
   );
